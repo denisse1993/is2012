@@ -13,6 +13,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <activity android:name=".Intro2"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="com.Cinnamon.Is.Intro2" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
          <activity android:name=".MainMenu"
                   android:label="@string/app_name">
             <intent-filter>

@@ -21,13 +21,16 @@ public class Intro extends Activity {
 				// TODO Auto-generated method stub
 				try{
 					sleep(3650);
+					
 				}
 				catch(InterruptedException e){
 					e.printStackTrace();
 				}
 				finally {
-					Intent openMainMenu = new Intent("com.Cinnamon.Is.MAINMENU");
-					startActivity(openMainMenu);
+					
+					
+					Intent openIntro2 = new Intent("com.Cinnamon.Is.Intro2");
+					startActivity(openIntro2);
 				}
 			}        	
         };

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">El Misterio de Turing</string>
+    <string name="inicio">Toque la pantalla para continuar</string>
     <string name="app_name">Cinnamon Team</string>
     <string name="NuevaPartida">Nueva Partida</string>
     <string name="Opciones">Opciones</string>
