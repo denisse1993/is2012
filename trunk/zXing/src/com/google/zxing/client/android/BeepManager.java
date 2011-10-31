@@ -35,7 +35,7 @@ public final class BeepManager {
 
   private static final String TAG = BeepManager.class.getSimpleName();
 
-  private static final float BEEP_VOLUME = 0.10f;
+  private static final float BEEP_VOLUME = 0.20f;//0.10f orig
   private static final long VIBRATE_DURATION = 200L;
 
   private final Activity activity;
@@ -93,7 +93,7 @@ public final class BeepManager {
       }
     });
 
-    AssetFileDescriptor file = activity.getResources().openRawResourceFd(R.raw.beep);
+    AssetFileDescriptor file = activity.getResources().openRawResourceFd(R.raw.cameraqr);//beep original
     try {
       mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
       file.close();
