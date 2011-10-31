@@ -250,7 +250,7 @@ public final class CameraManager {
         return null;
       }
       Point screenResolution = configManager.getScreenResolution();
-      int width = screenResolution.x * 1 / 4;//(3/4) original
+      int width = screenResolution.x * 2 / 4;//(3/4) original
       if (width < MIN_FRAME_WIDTH) {
         width = MIN_FRAME_WIDTH;
       } else if (width > MAX_FRAME_WIDTH) {

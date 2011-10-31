@@ -100,6 +100,7 @@ public final class R {
     }
     public static final class raw {
         public static int beep=0x7f050000;
+        public static int cameraqr=0x7f050001;
     }
     public static final class string {
         /**  <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string> 
