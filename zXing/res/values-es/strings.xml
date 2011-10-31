@@ -17,7 +17,7 @@
 <resources>
   <!-- <string name="app_name">Barcode Scanner</string> -->
   <!--  <string name="msg_default_status">Coloque un código de barras en el interior del rectángulo de el visor para escanear.</string>  -->
-  <string name="app_name">Lector QR</string>
+  <string name="app_name">TuringApp</string>
   <string name="app_picker_name">Aplicaciónes</string>
   <string name="bookmark_picker_name">Marcadores</string>
   <string name="button_add_calendar">Añadir a calendario</string>
