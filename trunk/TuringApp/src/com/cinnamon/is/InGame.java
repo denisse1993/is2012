@@ -23,7 +23,7 @@ public class InGame extends Activity implements OnClickListener {
 
 	private String qrLeido;
 
-	private String[] minijuegos = { "AscensorMJ" };
+	private String[] minijuegos = { "ASCENSORMJ" };
 
 	// Constantes para controlar que actividad tratar en onActivityResult
 	private static final int cMapa = 0;
