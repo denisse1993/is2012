@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -48,6 +51,26 @@ public class InGame extends Activity implements OnClickListener {
 		bCamara.setOnClickListener(this);
 		bMochila.setOnClickListener(this);
 	}
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater= getMenuInflater();
+		inflater.inflate(R.layout.ingame, menu);
+		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch (item.getItemId()){
+		case R.id.bCamara:
+			return true;
+		case R.id.bMapa:
+			return true;
+		case R.id.bMochila:
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		
+		}
+		
+		
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -57,7 +80,7 @@ public class InGame extends Activity implements OnClickListener {
 			break;
 		case R.id.bCamara:
 			Intent iScan = new Intent(Intents.Action.SCAN);
-			iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
+			iScan.putExtra("SCAN_MODE", "QR_CODE_MODE"); //a–ade informacion extra al intent
 			startActivityForResult(iScan, cCamara);
 			break;
 		case R.id.bMochila:
@@ -73,7 +96,7 @@ public class InGame extends Activity implements OnClickListener {
 			case cMapa:
 				break;
 			case cCamara:
-				qrLeido = data.getStringExtra("SCAN_RESULT");
+				qrLeido = data.getStringExtra("SCAN_RESULT");//coge la informacion extra del intent
 				lanzaMinijuego(qrLeido);
 				break;
 			case cMochila:
