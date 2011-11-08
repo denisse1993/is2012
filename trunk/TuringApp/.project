@@ -3,6 +3,8 @@
 	<name>TuringApp</name>
 	<comment></comment>
 	<projects>
+		<project>Borrador</project>
+		<project>zXing</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
