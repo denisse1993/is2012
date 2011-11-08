@@ -1,44 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-	 
-    <Button
-        android:id="@+id/bMapa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Mapa" />
 
-    <Button
-        android:id="@+id/bCamara"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Camara" />
-    <Button
-        android:id="@+id/bMochila"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Mochila" />
-    	-->
-    <menu 
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     >
-    <item 
-        android:id="@+id/bMapa"
-        android:title="Mapa"
-        android:icon="@drawable/ic_menu_puzzle" 
-        />
-    <item 
-        android:id="@+id/bCamara"
-        android:title="Camara"
-        android:icon="@drawable/ic_menu_barcode" 
-        />
-    <item 
-        android:id="@+id/bMochila"
-        android:title="Mochila"
-        android:icon="@drawable/ic_menu_business" 
-        />
-    </menu>
-    
+<TextView 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/ComentarioJuego"
+    />
+</LinearLayout>

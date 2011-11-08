@@ -52,13 +52,13 @@ public final class R {
         /**  Messages IDs 
          */
         public static final int auto_focus=0x7f070000;
-        public static final int bAyuda=0x7f07002e;
-        public static final int bCamara=0x7f070024;
-        public static final int bMapa=0x7f070023;
-        public static final int bMochila=0x7f070025;
-        public static final int bNuevaPartida=0x7f07002b;
-        public static final int bOpciones=0x7f07002c;
-        public static final int bSalir=0x7f070030;
+        public static final int bAyuda=0x7f07002b;
+        public static final int bCamara=0x7f070039;
+        public static final int bMapa=0x7f070038;
+        public static final int bMochila=0x7f07003a;
+        public static final int bNuevaPartida=0x7f070028;
+        public static final int bOpciones=0x7f070029;
+        public static final int bSalir=0x7f07002d;
         public static final int back_button=0x7f070021;
         public static final int barcode_image_view=0x7f070010;
         public static final int bookmark_title=0x7f07000b;
@@ -75,40 +75,40 @@ public final class R {
         public static final int help_contents=0x7f070020;
         public static final int image_view=0x7f07001f;
         public static final int launch_product_query=0x7f070004;
-        public static final int linearLayout0=0x7f07002a;
-        public static final int linearLayout1=0x7f070028;
-        public static final int linearLayout2=0x7f070029;
-        public static final int linearLayout3=0x7f07002d;
-        public static final int linearLayout4=0x7f07002f;
+        public static final int linearLayout0=0x7f070027;
+        public static final int linearLayout1=0x7f070025;
+        public static final int linearLayout2=0x7f070026;
+        public static final int linearLayout3=0x7f07002a;
+        public static final int linearLayout4=0x7f07002c;
         public static final int meta_text_view=0x7f070018;
         public static final int meta_text_view_label=0x7f070017;
-        public static final int page_number_view=0x7f070034;
+        public static final int page_number_view=0x7f070031;
         public static final int preview_view=0x7f07000d;
-        public static final int query_button=0x7f070032;
-        public static final int query_text_view=0x7f070031;
+        public static final int query_button=0x7f07002f;
+        public static final int query_text_view=0x7f07002e;
         public static final int quit=0x7f070005;
         public static final int restart_preview=0x7f070006;
         public static final int result_button_view=0x7f07001b;
-        public static final int result_list_view=0x7f070033;
+        public static final int result_list_view=0x7f070030;
         public static final int result_view=0x7f07000f;
         public static final int return_scan_result=0x7f070007;
-        public static final int screen=0x7f070027;
+        public static final int screen=0x7f070024;
         public static final int search_book_contents_failed=0x7f070008;
         public static final int search_book_contents_succeeded=0x7f070009;
-        public static final int share_app_button=0x7f070036;
-        public static final int share_bookmark_button=0x7f070037;
-        public static final int share_clipboard_button=0x7f070039;
-        public static final int share_contact_button=0x7f070038;
-        public static final int share_text_view=0x7f07003a;
+        public static final int share_app_button=0x7f070033;
+        public static final int share_bookmark_button=0x7f070034;
+        public static final int share_clipboard_button=0x7f070036;
+        public static final int share_contact_button=0x7f070035;
+        public static final int share_text_view=0x7f070037;
         public static final int shopper_button=0x7f07001c;
-        public static final int snippet_view=0x7f070035;
+        public static final int snippet_view=0x7f070032;
         public static final int status_view=0x7f07001d;
         public static final int textView1=0x7f07000a;
         public static final int time_text_view=0x7f070016;
         public static final int time_text_view_label=0x7f070015;
         public static final int type_text_view=0x7f070014;
         public static final int type_text_view_label=0x7f070013;
-        public static final int viewAnimator1=0x7f070026;
+        public static final int viewAnimator1=0x7f070023;
         public static final int viewfinder_view=0x7f07000e;
     }
     public static final class layout {
@@ -126,6 +126,9 @@ public final class R {
         public static final int search_book_contents_list_item=0x7f03000b;
         public static final int share=0x7f03000c;
     }
+    public static final class menu {
+        public static final int menuingame=0x7f090000;
+    }
     public static final class raw {
         public static final int beep=0x7f050000;
         public static final int cameraqr=0x7f050001;
@@ -134,6 +137,7 @@ public final class R {
     public static final class string {
         public static final int Ayuda=0x7f080080;
         public static final int Camara=0x7f080083;
+        public static final int ComentarioJuego=0x7f080085;
         public static final int Mapa=0x7f080082;
         public static final int Mochila=0x7f080084;
         public static final int NuevaPartida=0x7f08007e;

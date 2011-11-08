@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/bMapa"
+        android:title="Mapa"
+        android:icon="@drawable/ic_menu_puzzle" 
+        />
+    <item 
+        android:id="@+id/bCamara"
+        android:title="Camara"
+        android:icon="@drawable/ic_menu_barcode" 
+        />
+    <item 
+        android:id="@+id/bMochila"
+        android:title="Mochila"
+        android:icon="@drawable/ic_menu_business" 
+        />
+    </menu>
