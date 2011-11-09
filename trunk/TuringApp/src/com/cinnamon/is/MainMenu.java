@@ -2,6 +2,7 @@ package com.cinnamon.is;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,9 @@ public class MainMenu extends Activity implements OnClickListener {
 
 	Button bNuevaPartida, bOpciones, bAyuda, bSalir;
 
+	MediaPlayer menuTheme;
+	
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -20,10 +24,13 @@ public class MainMenu extends Activity implements OnClickListener {
 	}
 
 	private void inicializar() {
+		menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
+		menuTheme.start();
+		
 		bNuevaPartida = (Button) findViewById(R.id.bNuevaPartida);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
 		bAyuda = (Button) findViewById(R.id.bAyuda);
-		bSalir = (Button) findViewById(R.id.bSalir);
+		bSalir = (Button) findViewById(R.id.bSalir);		
 
 		bNuevaPartida.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
@@ -35,6 +42,11 @@ public class MainMenu extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bNuevaPartida:
+			menuTheme.release();
+			
+			MediaPlayer openingTheme = MediaPlayer.create(MainMenu.this, R.raw.opening);
+			openingTheme.start();
+						
 			Intent iInGame = new Intent(Intents.Action.INGAME);
 			startActivity(iInGame);
 			break;
@@ -53,5 +65,15 @@ public class MainMenu extends Activity implements OnClickListener {
 		}
 
 	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		menuTheme.release();
+		
+	}
+	
+	
 
 }
