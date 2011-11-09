@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * Actividad del juego principal
@@ -20,7 +21,7 @@ public class InGame extends Activity implements OnClickListener {
 
 	// base de datos?¿
 
-	private Button bMapa, bCamara, bMochila;
+	//private Button bMapa, bCamara, bMochila;
 
 	private String qrLeido;
 
@@ -32,12 +33,22 @@ public class InGame extends Activity implements OnClickListener {
 	private static final int cMochila = 2;
 	private static final int cMinijuego = 3;
 	
+	//para la prueba del boton Mapa
+	TextView prMapa;
+	//
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame);
-		//inicializar();
+		
+		//para la prueba del boton Mapa
+	    prMapa = (TextView)findViewById(R.id.pruebaMapa);
+	    registerForContextMenu(prMapa);
+	    //
+		
+		
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,13 +59,20 @@ public class InGame extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.bCamara:
-	            
+	        	Intent iScan = new Intent(Intents.Action.SCAN);
+				iScan.putExtra("SCAN_MODE", "QR_CODE_MODE"); //a–ade informacion extra al intent
+				startActivityForResult(iScan, cCamara);
 	            return true;
 	        case R.id.bMapa:
-	        
+	        	//para la prueba del boton Mapa
+	        	prMapa.setText("He pulsado Mapa");
+	        	//
+	        	//Intent iMapa = new Intent(Intents.Action.MAPA);
+				//startActivity(iMapa);
 	            return true;
 	        case R.id.bMochila:
-	            
+	        	//Intent iMochila = new Intent(Intents.Action.MOCHILA);
+				//startActivity(iMochila);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -62,36 +80,6 @@ public class InGame extends Activity implements OnClickListener {
 	}
 	
 	
-	/*private void inicializar() {
-		bMapa = (Button) findViewById(R.id.bMapa);
-		bCamara = (Button) findViewById(R.id.bCamara);
-		bMochila = (Button) findViewById(R.id.bMochila);
-
-		bMapa.setOnClickListener(this);
-		bCamara.setOnClickListener(this);
-		bMochila.setOnClickListener(this);
-	}*/
-	/*public boolean onCreateOptionsMenu(Menu menu){
-		MenuInflater inflater= getMenuInflater();
-		inflater.inflate(R.layout.ingame, menu);
-		return true;
-	}
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch (item.getItemId()){
-		case R.id.bCamara:
-			return true;
-		case R.id.bMapa:
-			return true;
-		case R.id.bMochila:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		
-		}
-		
-		
-	}*/
-
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -99,9 +87,7 @@ public class InGame extends Activity implements OnClickListener {
 		case R.id.bMapa:
 			break;
 		case R.id.bCamara:
-			Intent iScan = new Intent(Intents.Action.SCAN);
-			iScan.putExtra("SCAN_MODE", "QR_CODE_MODE"); //a–ade informacion extra al intent
-			startActivityForResult(iScan, cCamara);
+			
 			break;
 		case R.id.bMochila:
 			break;

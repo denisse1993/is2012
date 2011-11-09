@@ -49,6 +49,24 @@
         </activity>
         <activity
             android:label="@string/app_name"
+            android:name=".Mochila" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.MOCHILA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".Mapa" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.MAPA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
             android:name=".AscensorMJ" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.ASCENSORMJ" />
@@ -65,6 +83,14 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="android.intent.action.MAPA" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="android.intent.action.MOCHILA" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter >

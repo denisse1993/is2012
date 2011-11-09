@@ -17,6 +17,10 @@ public final class Intents {
 		public static final String MAINMENU = "com.cinnamon.is.MAINMENU";
 
 		public static final String INGAME = "com.cinnamon.is.INGAME";
+		
+		public static final String MAPA = "com.cinnamon.is.android.MAPA";
+		
+		public static final String MOCHILA = "com.cinnamon.is.android.MOCHILA";
 
 		public static final String ASCENSORMJ = "com.cinnamon.is.ASCENSORMJ";
 

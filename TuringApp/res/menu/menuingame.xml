@@ -3,16 +3,16 @@
     <item 
         android:id="@+id/bMapa"
         android:title="Mapa"
-        android:icon="@drawable/ic_menu_puzzle" 
+        android:icon="@drawable/ic_menu_mapa" 
         />
     <item 
         android:id="@+id/bCamara"
         android:title="Camara"
-        android:icon="@drawable/ic_menu_barcode" 
+        android:icon="@drawable/ic_menu_camara" 
         />
     <item 
         android:id="@+id/bMochila"
         android:title="Mochila"
-        android:icon="@drawable/ic_menu_business" 
+        android:icon="@drawable/ic_menu_mochila" 
         />
     </menu>
