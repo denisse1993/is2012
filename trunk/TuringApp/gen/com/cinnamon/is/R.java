@@ -60,8 +60,8 @@ public final class R {
         public static final int bCamara=0x7f07003d;
         public static final int bMapa=0x7f07003c;
         public static final int bMochila=0x7f07003e;
-        public static final int bNuevaPartida=0x7f070029;
-        public static final int bOpciones=0x7f07002a;
+        public static final int bNuevaPartida=0x7f07002a;
+        public static final int bOpciones=0x7f070025;
         public static final int bSalir=0x7f07002e;
         public static final int bVolver=0x7f07003f;
         public static final int back_button=0x7f070021;
@@ -80,9 +80,9 @@ public final class R {
         public static final int help_contents=0x7f070020;
         public static final int image_view=0x7f07001f;
         public static final int launch_product_query=0x7f070004;
-        public static final int linearLayout0=0x7f070028;
-        public static final int linearLayout1=0x7f070026;
-        public static final int linearLayout2=0x7f070027;
+        public static final int linearLayout0=0x7f070029;
+        public static final int linearLayout1=0x7f070024;
+        public static final int linearLayout2=0x7f070028;
         public static final int linearLayout3=0x7f07002b;
         public static final int linearLayout4=0x7f07002d;
         public static final int meta_text_view=0x7f070018;
@@ -101,7 +101,7 @@ public final class R {
         public static final int result_list_view=0x7f070034;
         public static final int result_view=0x7f07000f;
         public static final int return_scan_result=0x7f070007;
-        public static final int screen=0x7f070025;
+        public static final int screen=0x7f070027;
         public static final int search_book_contents_failed=0x7f070008;
         public static final int search_book_contents_succeeded=0x7f070009;
         public static final int share_app_button=0x7f070037;
@@ -117,7 +117,7 @@ public final class R {
         public static final int time_text_view_label=0x7f070015;
         public static final int type_text_view=0x7f070014;
         public static final int type_text_view_label=0x7f070013;
-        public static final int viewAnimator1=0x7f070024;
+        public static final int viewAnimator1=0x7f070026;
         public static final int viewfinder_view=0x7f07000e;
     }
     public static final class layout {
@@ -151,6 +151,7 @@ public final class R {
     }
     public static final class string {
         public static final int Ayuda=0x7f080080;
+        public static final int BotonMenu=0x7f080087;
         public static final int Camara=0x7f080083;
         public static final int ComentarioJuego=0x7f080085;
         public static final int ComentarioMapa=0x7f080086;

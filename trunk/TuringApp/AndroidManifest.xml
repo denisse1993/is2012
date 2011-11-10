@@ -86,14 +86,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter >
-                <action android:name="android.intent.action.MAPA" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter >
-                <action android:name="android.intent.action.MOCHILA" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter >
                 <action android:name="com.cinnamon.is.android.SCAN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
