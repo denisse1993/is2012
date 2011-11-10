@@ -12,4 +12,6 @@
     <string name="Mochila">Mochila</string>
     <string name="ComentarioJuego">Aqui va el juego</string>
     <string name="ComentarioMapa">Aqui va el mapa</string>
+    <string name="BotonMenu">menu contextual</string>
+    <string name="Opciones">Opciones</string>
 </resources>
