@@ -6,6 +6,10 @@
 	<classpathentry kind="lib" path="D:/PROGRAMACION/ANDROID/libs/zXing/core.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/PROGRAMACION/JAVA/JDKS/neuroph-2.5.1/neuroph2.4u1.jar"/>
+	<classpathentry kind="lib" path="D:/PROGRAMACION/JAVA/JDKS/neuroph-2.5.1/neurophVold.jar" sourcepath="D:/PROGRAMACION/JAVA/JDKS/neuroph-2.5.1/sources">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/PROGRAMACION/JAVA/JDKS/neuroph-2.5.1/javadoc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
