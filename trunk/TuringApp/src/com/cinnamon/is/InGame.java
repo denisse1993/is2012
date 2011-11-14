@@ -68,12 +68,12 @@ public class InGame extends Activity implements OnClickListener {
 	        	//para la prueba del boton Mapa
 	        	//prMapa.setText("He pulsado Mapa");
 	        	//
-	        	//Intent iMapa = new Intent(Intents.Action.MAPA);
-				//startActivity(iMapa);
+	        	Intent iMapa = new Intent(Intents.Action.MAPA);
+				startActivity(iMapa);
 	            return true;
 	        case R.id.bMochila:
-	        	//Intent iMochila = new Intent(Intents.Action.MOCHILA);
-				//startActivity(iMochila);
+	        	Intent iMochila = new Intent(Intents.Action.MOCHILA);
+				startActivity(iMochila);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

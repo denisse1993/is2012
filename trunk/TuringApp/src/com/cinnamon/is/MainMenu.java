@@ -32,7 +32,7 @@ public class MainMenu extends Activity implements OnClickListener {
 		inicializar();
 	}
 
-	/** No toquies esto que ahora no lo necesitamos pero puede que en un futuro si
+	/** No toqueis esto que ahora no lo necesitamos pero puede que en un futuro si
 	 * es es layout del main pero hecho en java o parte de él.
 	 */
 	/*private View getContentView() {
