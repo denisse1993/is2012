@@ -16,6 +16,7 @@
             android:name=".Intro" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,14 +25,7 @@
             android:name=".Intro2" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.INTRO2" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:label="@string/app_name"
-            android:name=".InGame" >
-            <intent-filter >
-                <action android:name="com.cinnamon.is.INGAME" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -40,14 +34,25 @@
             android:name=".MainMenu" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.MAINMENU" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
+         <activity
+            android:label="@string/app_name"
+            android:name=".InGame" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.INGAME" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+         <activity
             android:label="@string/app_name"
             android:name=".Mochila" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.MOCHILA" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -56,6 +61,7 @@
             android:name=".Mapa" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.MAPA" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -64,10 +70,12 @@
             android:name=".AscensorMJ" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.ASCENSORMJ" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- Activity del zXing NO MODIFICAR-->
+
+        <!-- Activity del zXing -->
         <activity
             android:configChanges="orientation|keyboardHidden"
             android:name="com.google.zxing.client.android.CaptureActivity"
@@ -76,10 +84,12 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter >
                 <action android:name="com.cinnamon.is.android.SCAN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
