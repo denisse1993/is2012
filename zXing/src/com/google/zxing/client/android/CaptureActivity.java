@@ -158,6 +158,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     resultView = findViewById(R.id.result_view);
     statusView = (TextView) findViewById(R.id.status_view);
+    statusView.setVisibility(View.INVISIBLE);
     handler = null;
     lastResult = null;
     hasSurface = false;
