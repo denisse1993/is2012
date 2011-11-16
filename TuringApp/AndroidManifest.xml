@@ -74,7 +74,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+		<activity
+            android:label="@string/app_name"
+            android:name=".Reinas" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.REINAS" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <!-- Activity del zXing -->
         <activity
             android:configChanges="orientation|keyboardHidden"

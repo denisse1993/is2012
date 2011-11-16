@@ -4,9 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:id="@+id/screen"
-    android:background="@drawable/animacion_intro2">
+    android:background="@drawable/fondomain">
     >
+	<LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:orientation="vertical" 
+        android:background="@drawable/titulo2">
 
+	 </LinearLayout>
+	 <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="140dp"
+        android:gravity="center"
+        android:orientation="vertical" 
+        >
+	    
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/inicio"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+    </LinearLayout>
   
 
 </LinearLayout>

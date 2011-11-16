@@ -23,6 +23,7 @@ public class InGame extends Activity implements OnClickListener {
 	// base de datos?¿
 
 	private Button bOpciones;
+	private Button bReinas;
 
 	private String qrLeido;
 
@@ -42,7 +43,11 @@ public class InGame extends Activity implements OnClickListener {
 
 		bOpciones = (Button) findViewById(R.id.bOpciones);
 		bOpciones.setOnClickListener(this);
+		
 
+		///prueba lanzar juego
+		bReinas = (Button) findViewById(R.id.bReinas);
+		bReinas.setOnClickListener(this);
 	}
 
 	@Override
@@ -85,6 +90,15 @@ public class InGame extends Activity implements OnClickListener {
 			this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL,
 					new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU));
 
+			break;
+		case R.id.bReinas:
+        	//para la prueba del boton Mapa
+        	//prMapa.setText("He pulsado Mapa");
+        	//
+        	Intent iReinas = new Intent(Intents.Action.REINAS);
+			startActivity(iReinas);
+			break;
+		default:
 			break;
 		}
 	}
