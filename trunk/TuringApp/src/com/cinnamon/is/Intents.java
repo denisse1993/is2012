@@ -24,6 +24,9 @@ public final class Intents {
 
 		public static final String ASCENSORMJ = "com.cinnamon.is.ASCENSORMJ";
 
+		//prueba d juego
+		public static final String REINAS = "com.cinnamon.is.REINAS";
+		
 		//este intent hay que poner lo de android asi por el tema de la libreria zXing
 		public static final String SCAN = "com.cinnamon.is.android.SCAN";
 
