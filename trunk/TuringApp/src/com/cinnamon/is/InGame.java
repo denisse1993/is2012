@@ -2,6 +2,7 @@ package com.cinnamon.is;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -20,13 +21,17 @@ import android.widget.Button;
  */
 public class InGame extends Activity implements OnClickListener {
 
-	// base de datos?¿
+	// base de datos
+	private DbAdapter mDbHelper;
+	private Cursor mNotesCursor;
 
 	private Button bOpciones;
 	private Button bReinas;
 
+	// guarda el qr leido
 	private String qrLeido;
 
+	// lista minijuegos
 	private String[] minijuegos = { "ASCENSORMJ" };
 
 	// Constantes para controlar que actividad tratar en onActivityResult
@@ -41,9 +46,18 @@ public class InGame extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame);
 
+		//abre base de datos
+		//mDbHelper = new DbAdapter(this);
+        //mDbHelper.open(true);
+        
 		bOpciones = (Button) findViewById(R.id.bOpciones);
 		bOpciones.setOnClickListener(this);
-		
+
+		boolean scanDirecto = getIntent().getBooleanExtra(
+				Intents.Comun.INGAME_SCAN, false);
+
+		if (scanDirecto)
+			lanzaScan();
 
 		///prueba lanzar juego
 		bReinas = (Button) findViewById(R.id.bReinas);
@@ -55,17 +69,21 @@ public class InGame extends Activity implements OnClickListener {
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menuingame, menu);
-
 		return true;// debe devolver true para que el menu se muestre
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// metodo para que hacer cuando se pulsa el boton de atras
+		// ahora mismo no hace nada
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.bCamara:
-			Intent iScan = new Intent(Intents.Action.SCAN);
-			iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
-			startActivityForResult(iScan, cCamara);
+			lanzaScan();
 			break;
 		case R.id.bMapa:
 			// para la prueba del boton Mapa
@@ -123,6 +141,15 @@ public class InGame extends Activity implements OnClickListener {
 		} else if (resultCode == RESULT_CANCELED) {
 			// si no ha hecho nada
 		}
+	}
+
+	/**
+	 * Metodo que lanza el scaneo de codigos QR
+	 */
+	private void lanzaScan() {
+		Intent iScan = new Intent(Intents.Action.SCAN);
+		iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		startActivityForResult(iScan, cCamara);
 	}
 
 	/**

@@ -38,9 +38,5 @@
             android:gravity="center"
             android:text="@string/Reinas" />
     </LinearLayout>
-    
-
-        
-   
 
 </LinearLayout>
