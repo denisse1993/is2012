@@ -13,16 +13,17 @@
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name=".Intro" >
+            android:name=".Intro"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".Intro2" >
+            android:name=".Intro2"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.INTRO2" />
 
@@ -31,25 +32,28 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".MainMenu" >
+            android:name=".MainMenu"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.MAINMENU" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:label="@string/app_name"
-            android:name=".InGame" >
+            android:name=".InGame"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.INGAME" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:label="@string/app_name"
-            android:name=".Mochila" >
+            android:name=".Mochila"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.MOCHILA" />
 
@@ -58,7 +62,8 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".Mapa" >
+            android:name=".Mapa"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.MAPA" />
 
@@ -67,7 +72,8 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".AscensorMJ" >
+            android:name=".AscensorMJ"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.ASCENSORMJ" />
 
@@ -79,7 +85,6 @@
             android:name=".Reinas" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.REINAS" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
