@@ -17,19 +17,34 @@ public class DbAdapter {
 	private static final String DATABASE_NAME = "data";
 	// Nombres TABLAS
 	private static final String DATABASE_TABLE_INFO = "info";
+	private static final String DATABASE_TABLE_MAPA = "mapa";
 	// Version database
 	private static final int DATABASE_VERSION = 2;
 
-	// Campos tablas
+	// Campos tablas info
 	public static final String INFO_KEY_PLAYER = "player";
 	public static final String INFO_KEY_SCORE = "score";
-	public static final String INFO_KEY_MAPA = "mapa";
 	public static final String INFO_KEY_HOJA = "hoja";
+	//Codificacion mochila
+	// 1-papel 1,2-papel 2,3-papel 3,4-makina,5-papel 1 y 2,6-papel 1 y 3,
+	// 7-papel 2 y 3,8-papel 1,2,3 y makina
 	public static final String INFO_KEY_MOCHILA = "mochila";
+
+	// Campos tablas mapa
+	public static final String MAPA_KEY_FASE1 = "fase1";
+	public static final String MAPA_KEY_FASE2 = "fase2";
+	public static final String MAPA_KEY_FASE3 = "fase3";
+	public static final String MAPA_KEY_FASE4 = "fase4";
 
 	// array con los campos de la tabla info
 	private static final String[] infoCampos = new String[] { INFO_KEY_PLAYER,
-			INFO_KEY_SCORE, INFO_KEY_MAPA, INFO_KEY_HOJA, INFO_KEY_MOCHILA };
+			INFO_KEY_SCORE, INFO_KEY_HOJA, INFO_KEY_MOCHILA, MAPA_KEY_FASE1,
+			MAPA_KEY_FASE2, MAPA_KEY_FASE3, MAPA_KEY_FASE4 };
+
+	// array con los campos de la tabla mapa
+	// private static final String[] mapaCampos = new String[] {
+	// INFO_KEY_PLAYER,
+	// MAPA_KEY_FASE1, MAPA_KEY_FASE2, MAPA_KEY_FASE3, MAPA_KEY_FASE4 };
 	// TAG para el log
 	private static final String TAG = "DbAdapter";
 
@@ -38,21 +53,34 @@ public class DbAdapter {
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
 
-	// Strings para clarificar SQL
+	// Strings para clarificar SQL info
 	public static final String SQLplayer = INFO_KEY_PLAYER
 			+ " text primary key,";
 	public static final String SQLscore = INFO_KEY_SCORE + " integer not null,";
-	public static final String SQLmapa = INFO_KEY_MAPA + " integer not null,";
 	public static final String SQLhoja = INFO_KEY_HOJA + " integer not null,";
 	public static final String SQLmochila = INFO_KEY_MOCHILA
+			+ " integer not null,";
+
+	// Strings para clarificar SQL mapa
+	public static final String SQLfase1 = MAPA_KEY_FASE1 + " integer not null,";
+	public static final String SQLfase2 = MAPA_KEY_FASE2 + " integer not null,";
+	public static final String SQLfase3 = MAPA_KEY_FASE3 + " integer not null,";
+	public static final String SQLfase4 = MAPA_KEY_FASE4
 			+ " integer not null);";
 
 	/**
-	 * Sentencia SQL para crear la base de datos (crear las tablas)
+	 * Sentencia SQL para crear la tabla info (con fases mapas)
 	 */
-	private static final String DATABASE_CREATE = "create table "
-			+ DATABASE_TABLE_INFO + "( " + SQLplayer + SQLscore + SQLmapa
-			+ SQLhoja + SQLmochila;
+	private static final String TABLE_INFO_CREATE = "create table "
+			+ DATABASE_TABLE_INFO + "( " + SQLplayer + SQLscore + SQLhoja
+			+ SQLmochila + SQLfase1 + SQLfase2 + SQLfase3 + SQLfase4;
+
+	/**
+	 * Sentencia SQL para crear la tabla mapa
+	 */
+	// private static final String TABLE_MAPA_CREATE = "create table "
+	// + DATABASE_TABLE_MAPA + "( " + SQLplayer + SQLfase1 + SQLfase2
+	// + SQLfase3 + SQLfase4;
 
 	private static class DbHelper extends SQLiteOpenHelper {
 
@@ -62,7 +90,8 @@ public class DbAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(DATABASE_CREATE);
+			db.execSQL(TABLE_INFO_CREATE);
+			// db.execSQL(TABLE_MAPA_CREATE);
 		}
 
 		@Override
@@ -123,16 +152,27 @@ public class DbAdapter {
 	 *            hoja actual del libro del jugador
 	 * @param mochila
 	 *            elementos que ha conseguido el jugador
+	 * @param fase1
+	 *            jugador en fase 1
+	 * @param fase2
+	 *            jugador en fase 2
+	 * @param fase3
+	 *            jugador en fase 3
+	 * @param fase4
+	 *            jugador en fase 4
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRow(String player, int score, int mapa, int hoja,
-			int mochila) {
+	public long createRow(String player, int score, int hoja, int mochila,
+			int fase1, int fase2, int fase3, int fase4) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(INFO_KEY_PLAYER, player);
 		initialValues.put(INFO_KEY_SCORE, score);
-		initialValues.put(INFO_KEY_MAPA, mapa);
 		initialValues.put(INFO_KEY_HOJA, hoja);
 		initialValues.put(INFO_KEY_MOCHILA, mochila);
+		initialValues.put(MAPA_KEY_FASE1, fase1);
+		initialValues.put(MAPA_KEY_FASE2, fase2);
+		initialValues.put(MAPA_KEY_FASE3, fase3);
+		initialValues.put(MAPA_KEY_FASE4, fase4);
 
 		return mDb.insert(DATABASE_TABLE_INFO, null, initialValues);
 	}
@@ -190,26 +230,39 @@ public class DbAdapter {
 	 *            id de la fila a actualizar
 	 * @param score
 	 *            puntuacion del jugador
-	 * @param mapa
-	 *            posicion del jugador en el mapa
 	 * @param hoja
 	 *            hoja actual del libro del jugador
 	 * @param mochila
 	 *            elementos que ha conseguido el jugador
+	 * @param fase1
+	 *            jugador en fase 1
+	 * @param fase2
+	 *            jugador en fase 2
+	 * @param fase3
+	 *            jugador en fase 3
+	 * @param fase4
+	 *            jugador en fase 4
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
 	public boolean updateRow(String rowId, int score, int mapa, int hoja,
-			int mochila) {
+			int mochila, int fase1, int fase2, int fase3, int fase4) {
 		ContentValues args = new ContentValues();
 		if (score != -1)
 			args.put(INFO_KEY_SCORE, score);
-		if (mapa != -1)
-			args.put(INFO_KEY_MAPA, mapa);
 		if (hoja != -1)
 			args.put(INFO_KEY_HOJA, hoja);
 		if (mochila != -1)
 			args.put(INFO_KEY_MOCHILA, mochila);
+
+		if (fase1 != -1)
+			args.put(MAPA_KEY_FASE1, fase1);
+		if (fase2 != -1)
+			args.put(MAPA_KEY_FASE2, fase2);
+		if (fase3 != -1)
+			args.put(MAPA_KEY_FASE3, fase3);
+		if (fase4 != -1)
+			args.put(MAPA_KEY_FASE4, fase4);
 
 		return mDb.update(DATABASE_TABLE_INFO, args, rowId + "=" + rowId, null) > 0;
 	}
