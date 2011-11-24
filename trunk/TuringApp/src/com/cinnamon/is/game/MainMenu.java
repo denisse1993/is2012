@@ -1,33 +1,32 @@
-package com.cinnamon.is;
-
-import com.cinnamon.is.custom.appeareance.CustomButton;
+package com.cinnamon.is.game;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Path.FillType;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Intents;
 
 public class MainMenu extends Activity implements OnClickListener {
 
-	Button bNuevaPartida, bOpciones, bAyuda, bSalir;
+	private Button bNuevaPartida, bOpciones, bAyuda, bSalir;
 
-	MediaPlayer menuTheme;
+	private MediaPlayer menuTheme;
 
-	/** Called when the activity is first created. */
+	private Jugador jugador;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		// if (!savedInstanceState.isEmpty())
+		// bundleJugador=savedInstanceState;
+		jugador = (Jugador) getIntent().getSerializableExtra(
+				Intents.Comun.JUGADOR);
 		inicializar();
 	}
 
@@ -96,6 +95,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			openingTheme.start();
 
 			Intent iInGame = new Intent(Intents.Action.INGAME);
+			iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iInGame);
 			break;
 
@@ -117,6 +117,5 @@ public class MainMenu extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onPause();
 		menuTheme.release();
-
 	}
 }

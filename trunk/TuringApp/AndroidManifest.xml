@@ -13,7 +13,7 @@
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name=".Intro"
+            android:name=".presentacion.Intro"
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -22,69 +22,79 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".Intro2"
+            android:name=".presentacion.Intro2"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.INTRO2" />
+                <action android:name="com.cinnamon.is.presentacion.INTRO2" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".MainMenu"
+            android:name=".game.MainMenu"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.MAINMENU" />
+                <action android:name="com.cinnamon.is.game.MAINMENU" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".InGame"
+            android:name=".game.InGame"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.INGAME" />
+                <action android:name="com.cinnamon.is.game.INGAME" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".Mochila"
+            android:name=".game.Mochila"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.MOCHILA" />
+                <action android:name="com.cinnamon.is.game.MOCHILA" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".Mapa"
+            android:name=".game.Mapa"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.MAPA" />
+                <action android:name="com.cinnamon.is.game.MAPA" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".AscensorMJ"
+            android:name=".game.Login"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.ASCENSORMJ" />
+                <action android:name="com.cinnamon.is.game.LOGIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-		<activity
+        <activity
             android:label="@string/app_name"
-            android:name=".Reinas" >
+            android:name=".minijuegos.ascensor.AscensorMJ"
+            android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.REINAS" />
+                <action android:name="com.cinnamon.is.minijuegos.ascensor.ASCENSORMJ" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.reinas.Reinas" >
+            <intent-filter >
+               <action android:name="com.cinnamon.is.minijuegos.reinas.REINAS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

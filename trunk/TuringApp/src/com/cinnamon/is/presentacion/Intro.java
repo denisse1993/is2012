@@ -1,9 +1,12 @@
-package com.cinnamon.is;
+package com.cinnamon.is.presentacion;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Intents;
 
 public class Intro extends Activity {
 

@@ -1,4 +1,4 @@
-package com.cinnamon.is;
+package com.cinnamon.is.minijuegos.reinas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +7,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.cinnamon.is.R;
 
 public class GameView extends SurfaceView {
 
