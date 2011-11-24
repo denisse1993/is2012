@@ -258,18 +258,27 @@ public class DbAdapter {
 	 *             si no se ha podido encontrar la fila
 	 */
 	public boolean existsRow(String rowId) {
-		boolean esta = true;
-		
+		Cursor mCursor = null;
 		try {
-			Cursor mCursor = mDb
+			mCursor = mDb
 					.query(true, DATABASE_TABLE_INFO, infoCampos,
-							INFO_KEY_PLAYER + "=" +rowId, null, null, null,
+							INFO_KEY_PLAYER + "=" + rowId, null, null, null,
 							null, null);
 		} catch (SQLException e) {
 			// si no se encuentra la columna
-			esta = false;
+			return false;
 		}
-		return esta;
+		if (mCursor != null)
+			if (mCursor.getCount() <= 0) {
+				mCursor.close();
+				return false;
+			} else {
+				mCursor.close();
+				return true;
+			}
+		else {
+			return false;
+		}
 
 	}
 
@@ -296,8 +305,8 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRow(String rowId, int score, int hoja,
-			int mochila, int fase1, int fase2, int fase3, int fase4) {
+	public boolean updateRow(String rowId, int score, int hoja, int mochila,
+			int fase1, int fase2, int fase3, int fase4) {
 		ContentValues args = new ContentValues();
 		if (score != -1)
 			args.put(INFO_KEY_SCORE, score);
@@ -314,6 +323,7 @@ public class DbAdapter {
 		if (fase4 != -1)
 			args.put(MAPA_KEY_FASE4, fase4);
 
-		return mDb.update(DATABASE_TABLE_INFO, args, rowId + "=" + rowId, null) > 0;
+		return mDb.update(DATABASE_TABLE_INFO, args, INFO_KEY_PLAYER + "="
+				+ rowId, null) > 0;
 	}
 }

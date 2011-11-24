@@ -37,7 +37,7 @@ public class AscensorMJ extends Minijuego {
 	public void onBackPressed() {
 		// termina de contar el tiempo
 		finishTime();
-		jugador.setScore(calcularPuntuacion());
+		jugador.setScore(jugador.getScore() + calcularPuntuacion());
 		Intent r = new Intent();
 		r.putExtra(Intents.Comun.JUGADOR, jugador);
 		setResult(RESULT_OK, r);
