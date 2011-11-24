@@ -1,4 +1,4 @@
-package com.cinnamon.is;
+package com.cinnamon.is.game;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Intents;
 
 /**
  * Actividad del juego principal
@@ -23,10 +28,13 @@ public class InGame extends Activity implements OnClickListener {
 
 	// base de datos
 	private DbAdapter mDbHelper;
-	private Cursor mNotesCursor;
+	private Cursor mCursor;
 
 	private Button bOpciones;
 	private Button bReinas;
+
+	// texview de prueba para comprobar que funciona lo de la puntuacion
+	private TextView tvScoreActual;
 
 	// guarda el qr leido
 	private String qrLeido;
@@ -40,16 +48,19 @@ public class InGame extends Activity implements OnClickListener {
 	private static final int cMochila = 2;
 	private static final int cMinijuego = 3;
 
+	// Jugador creao en login
+	private Jugador jugador;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame);
 
-		//abre base de datos
-		//mDbHelper = new DbAdapter(this);
-        //mDbHelper.open(true);
-        
+		jugador = (Jugador) getIntent().getSerializableExtra(
+				Intents.Comun.JUGADOR);
+
+		tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
 		bOpciones.setOnClickListener(this);
 
@@ -59,9 +70,31 @@ public class InGame extends Activity implements OnClickListener {
 		if (scanDirecto)
 			lanzaScan();
 
-		///prueba lanzar juego
+		// pone el textview la puntuacion del jugador
+		tvScoreActual.setText(String.valueOf(jugador.getScore()));
+
+		// establecer hoja de libro usar la variable hoja de jugador
+		// jugador.getHoja();
+
+		// abre base de datos
+		mDbHelper = new DbAdapter(this);
+		mDbHelper.open(false);
+
+		// prueba lanzar juego
 		bReinas = (Button) findViewById(R.id.bReinas);
 		bReinas.setOnClickListener(this);
+	}
+
+	/*@Override
+	protected void onPause() {
+		super.onPause();
+	}*/
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		mDbHelper.close();
 	}
 
 	@Override
@@ -72,12 +105,12 @@ public class InGame extends Activity implements OnClickListener {
 		return true;// debe devolver true para que el menu se muestre
 	}
 
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		// metodo para que hacer cuando se pulsa el boton de atras
-		// ahora mismo no hace nada
-	}
+	// @Override
+	// public void onBackPressed() {
+	// metodo para que hacer cuando se pulsa el
+	// boton de atras ahoramismo no hace nada
+	// finish();
+	// }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -86,13 +119,13 @@ public class InGame extends Activity implements OnClickListener {
 			lanzaScan();
 			break;
 		case R.id.bMapa:
-			// para la prueba del boton Mapa
-			// prMapa.setText("He pulsado Mapa");
 			Intent iMapa = new Intent(Intents.Action.MAPA);
+			iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iMapa);
 			break;
 		case R.id.bMochila:
 			Intent iMochila = new Intent(Intents.Action.MOCHILA);
+			iMochila.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iMochila);
 			break;
 		}
@@ -110,17 +143,17 @@ public class InGame extends Activity implements OnClickListener {
 
 			break;
 		case R.id.bReinas:
-        	//para la prueba del boton Mapa
-        	//prMapa.setText("He pulsado Mapa");
-        	//
-        	Intent iReinas = new Intent(Intents.Action.REINAS);
-			startActivity(iReinas);
+
+			Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
+			iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
+			startActivityForResult(iReinas, cMinijuego);
 			break;
 		default:
 			break;
 		}
 	}
 
+	// este metodo se ejecuta al volver de la aplicacion
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -135,6 +168,15 @@ public class InGame extends Activity implements OnClickListener {
 			case cMochila:
 				break;
 			case cMinijuego:
+				jugador = (Jugador) data
+						.getSerializableExtra(Intents.Comun.JUGADOR);
+				mDbHelper.updateRow("'" + jugador.getNombre() + "'",
+						jugador.getScore(), jugador.getHoja(),
+						jugador.getMochila(), jugador.getFase1(),
+						jugador.getFase2(), jugador.getFase3(),
+						jugador.getFase4());
+				// pone el textview la puntuacion del jugador
+				tvScoreActual.setText(String.valueOf(jugador.getScore()));
 				break;
 			}
 
@@ -149,6 +191,7 @@ public class InGame extends Activity implements OnClickListener {
 	private void lanzaScan() {
 		Intent iScan = new Intent(Intents.Action.SCAN);
 		iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		iScan.putExtra(Intents.Comun.JUGADOR, jugador);
 		startActivityForResult(iScan, cCamara);
 	}
 
@@ -165,6 +208,7 @@ public class InGame extends Activity implements OnClickListener {
 			// comprobacion de que existe el minijuego leido
 			if (minijuegos[i].equals(qrMiniJuego)) {
 				Intent iMinijuego = new Intent(Intents.Comun.BASE + qrMiniJuego);
+				iMinijuego.putExtra(Intents.Comun.JUGADOR, jugador);
 				startActivityForResult(iMinijuego, cMinijuego);
 			}
 		}

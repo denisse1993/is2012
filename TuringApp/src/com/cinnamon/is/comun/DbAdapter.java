@@ -1,4 +1,4 @@
-package com.cinnamon.is;
+package com.cinnamon.is.comun;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,9 +25,11 @@ public class DbAdapter {
 	public static final String INFO_KEY_PLAYER = "player";
 	public static final String INFO_KEY_SCORE = "score";
 	public static final String INFO_KEY_HOJA = "hoja";
-	//Codificacion mochila
-	// 1-papel 1,2-papel 2,3-papel 3,4-makina,5-papel 1 y 2,6-papel 1 y 3,
-	// 7-papel 2 y 3,8-papel 1,2,3 y makina
+
+	/**
+	 * Codificacion mochila 1-papel 1,2-papel 2,3-papel 3,4-makina,5-papel 1 y
+	 * 2,6-papel 1 y 3, 7-papel 2 y 3,8-papel 1,2,3,9-papel 1,2,3 y makina
+	 */
 	public static final String INFO_KEY_MOCHILA = "mochila";
 
 	// Campos tablas mapa
@@ -56,23 +58,35 @@ public class DbAdapter {
 	// Strings para clarificar SQL info
 	public static final String SQLplayer = INFO_KEY_PLAYER
 			+ " text primary key,";
-	public static final String SQLscore = INFO_KEY_SCORE + " integer not null,";
-	public static final String SQLhoja = INFO_KEY_HOJA + " integer not null,";
-	public static final String SQLmochila = INFO_KEY_MOCHILA
-			+ " integer not null,";
+	public static final String SQLscore = INFO_KEY_SCORE + " integer,";
+	public static final String SQLhoja = INFO_KEY_HOJA + " integer,";
+	public static final String SQLmochila = INFO_KEY_MOCHILA + " integer,";
 
 	// Strings para clarificar SQL mapa
-	public static final String SQLfase1 = MAPA_KEY_FASE1 + " integer not null,";
-	public static final String SQLfase2 = MAPA_KEY_FASE2 + " integer not null,";
-	public static final String SQLfase3 = MAPA_KEY_FASE3 + " integer not null,";
-	public static final String SQLfase4 = MAPA_KEY_FASE4
-			+ " integer not null);";
+	public static final String SQLfase1 = MAPA_KEY_FASE1 + " integer,";
+	public static final String SQLfase2 = MAPA_KEY_FASE2 + " integer,";
+	public static final String SQLfase3 = MAPA_KEY_FASE3 + " integer,";
+	public static final String SQLfase4 = MAPA_KEY_FASE4 + " integer);";
+
+	// Indices Campos tablas info
+	public static final int INFO_IDCOL_PLAYER = 0;
+	public static final int INFO_IDCOL_SCORE = 1;
+	public static final int INFO_IDCOL_HOJA = 2;
+	public static final int INFO_IDCOL_MOCHILA = 3;
+	public static final int MAPA_IDCOL_FASE1 = 4;
+	public static final int MAPA_IDCOL_FASE2 = 5;
+	public static final int MAPA_IDCOL_FASE3 = 6;
+	public static final int MAPA_IDCOL_FASE4 = 7;
 
 	/**
 	 * Sentencia SQL para crear la tabla info (con fases mapas)
 	 */
-	private static final String TABLE_INFO_CREATE = "create table "
-			+ DATABASE_TABLE_INFO + "( " + SQLplayer + SQLscore + SQLhoja
+	private static final String TABLE_INFO_CREATE = "create table if not exists "
+			+ DATABASE_TABLE_INFO
+			+ "( "
+			+ SQLplayer
+			+ SQLscore
+			+ SQLhoja
 			+ SQLmochila + SQLfase1 + SQLfase2 + SQLfase3 + SQLfase4;
 
 	/**
@@ -184,7 +198,7 @@ public class DbAdapter {
 	 *            id de la fila a borrar
 	 * @return true si se ha borrado, false en caso contrario
 	 */
-	public boolean deleteNote(String rowId) {
+	public boolean deleteRow(String rowId) {
 		return mDb.delete(DATABASE_TABLE_INFO, INFO_KEY_PLAYER + "=" + rowId,
 				null) > 0;
 	}
@@ -195,9 +209,14 @@ public class DbAdapter {
 	 * @return Cursor de todas las filas
 	 */
 	public Cursor fetchAllRows() {
+		try {
+			return mDb.query(DATABASE_TABLE_INFO, infoCampos, null, null, null,
+					null, null);
+		} catch (SQLException e) {
+			// si pasa algo raro
+			return null;
+		}
 
-		return mDb.query(DATABASE_TABLE_INFO, infoCampos, null, null, null,
-				null, null);
 	}
 
 	/**
@@ -210,15 +229,47 @@ public class DbAdapter {
 	 *             si no se ha podido encontrar la fila
 	 */
 	public Cursor fetchRow(String rowId) throws SQLException {
+		Cursor mCursor = null;
+		try {
+			mCursor =
 
-		Cursor mCursor =
+			mDb.query(true, DATABASE_TABLE_INFO, infoCampos, INFO_KEY_PLAYER
+					+ "=" + rowId, null, null, null, null, null);
+			if (mCursor != null) {
+				mCursor.moveToFirst();
+			}
 
-		mDb.query(true, DATABASE_TABLE_INFO, infoCampos, INFO_KEY_PLAYER + "="
-				+ rowId, null, null, null, null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
+		} catch (SQLException e) {
+			// si no se encuentra la columna
+			mCursor = null;
 		}
+
 		return mCursor;
+
+	}
+
+	/**
+	 * Devuelve true o false en funcion de si existe la fila o no
+	 * 
+	 * @param rowId
+	 *            id de la fila
+	 * @return true o false
+	 * @throws SQLException
+	 *             si no se ha podido encontrar la fila
+	 */
+	public boolean existsRow(String rowId) {
+		boolean esta = true;
+		
+		try {
+			Cursor mCursor = mDb
+					.query(true, DATABASE_TABLE_INFO, infoCampos,
+							INFO_KEY_PLAYER + "=" +rowId, null, null, null,
+							null, null);
+		} catch (SQLException e) {
+			// si no se encuentra la columna
+			esta = false;
+		}
+		return esta;
 
 	}
 
@@ -245,7 +296,7 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRow(String rowId, int score, int mapa, int hoja,
+	public boolean updateRow(String rowId, int score, int hoja,
 			int mochila, int fase1, int fase2, int fase3, int fase4) {
 		ContentValues args = new ContentValues();
 		if (score != -1)
@@ -254,7 +305,6 @@ public class DbAdapter {
 			args.put(INFO_KEY_HOJA, hoja);
 		if (mochila != -1)
 			args.put(INFO_KEY_MOCHILA, mochila);
-
 		if (fase1 != -1)
 			args.put(MAPA_KEY_FASE1, fase1);
 		if (fase2 != -1)

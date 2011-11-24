@@ -1,4 +1,4 @@
-package com.cinnamon.is;
+package com.cinnamon.is.presentacion;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Intents;
+
 public class Intro2 extends Activity implements OnClickListener {
 
 	public void onClick(View arg0) {
 		if (arg0.getId() == R.id.screen) {
-			Intent openMainMenu = new Intent(Intents.Action.MAINMENU);
-			startActivity(openMainMenu);
+			Intent openLogin = new Intent(Intents.Action.LOGIN);
+			startActivity(openLogin);
 		}
 	}
 

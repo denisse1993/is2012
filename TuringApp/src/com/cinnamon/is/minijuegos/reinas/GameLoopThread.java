@@ -1,4 +1,4 @@
-package com.cinnamon.is;
+package com.cinnamon.is.minijuegos.reinas;
 
 import android.graphics.Canvas;
 

@@ -39,4 +39,10 @@
             android:text="@string/Reinas" />
     </LinearLayout>
 
+	<TextView
+	    android:id="@+id/tVscoreActual"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="TextView" />
+
 </LinearLayout>
