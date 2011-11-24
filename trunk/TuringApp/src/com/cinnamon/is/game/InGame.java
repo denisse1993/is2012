@@ -1,6 +1,8 @@
 package com.cinnamon.is.game;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
@@ -56,25 +59,29 @@ public class InGame extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame);
+		inicializar();
 
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 
-		tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
-		bOpciones = (Button) findViewById(R.id.bOpciones);
-		bOpciones.setOnClickListener(this);
-
-		boolean scanDirecto = getIntent().getBooleanExtra(
-				Intents.Comun.INGAME_SCAN, false);
-
-		if (scanDirecto)
-			lanzaScan();
+		/*
+		 * boolean scanDirecto = getIntent().getBooleanExtra(
+		 * Intents.Comun.INGAME_SCAN, false);
+		 * 
+		 * if (scanDirecto) lanzaScan();
+		 */
 
 		// pone el textview la puntuacion del jugador
 		tvScoreActual.setText(String.valueOf(jugador.getScore()));
 
 		// establecer hoja de libro usar la variable hoja de jugador
 		// jugador.getHoja();
+	}
+
+	private void inicializar() {
+		tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
+		bOpciones = (Button) findViewById(R.id.bOpciones);
+		bOpciones.setOnClickListener(this);
 
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
@@ -85,17 +92,18 @@ public class InGame extends Activity implements OnClickListener {
 		bReinas.setOnClickListener(this);
 	}
 
-	/*@Override
-	protected void onPause() {
-		super.onPause();
-	}*/
-
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		mDbHelper.close();
 	}
+
+	/*
+	 * @Override protected void onResume() { // TODO Auto-generated method stub
+	 * super.onResume(); jugador = (Jugador) getIntent().getSerializableExtra(
+	 * Intents.Comun.JUGADOR); }
+	 */
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,12 +113,29 @@ public class InGame extends Activity implements OnClickListener {
 		return true;// debe devolver true para que el menu se muestre
 	}
 
-	// @Override
-	// public void onBackPressed() {
-	// metodo para que hacer cuando se pulsa el
-	// boton de atras ahoramismo no hace nada
-	// finish();
-	// }
+	@Override
+	public void onBackPressed() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("¿Quieres salir al menu principal?")
+				.setCancelable(false)
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								InGame.this.finish();
+								Intent iMainMenu = new Intent(
+										Intents.Action.MAINMENU);
+								iMainMenu.putExtra(Intents.Comun.JUGADOR,
+										jugador);
+								startActivity(iMainMenu);
+							}
+						})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,14 +144,10 @@ public class InGame extends Activity implements OnClickListener {
 			lanzaScan();
 			break;
 		case R.id.bMapa:
-			Intent iMapa = new Intent(Intents.Action.MAPA);
-			iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivity(iMapa);
+			lanzaMapa();
 			break;
 		case R.id.bMochila:
-			Intent iMochila = new Intent(Intents.Action.MOCHILA);
-			iMochila.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivity(iMochila);
+			lanzaMochila();
 			break;
 		}
 		return false;// devuelve falso para proceso normal
@@ -143,7 +164,6 @@ public class InGame extends Activity implements OnClickListener {
 
 			break;
 		case R.id.bReinas:
-
 			Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
 			iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivityForResult(iReinas, cMinijuego);
@@ -153,36 +173,88 @@ public class InGame extends Activity implements OnClickListener {
 		}
 	}
 
-	// este metodo se ejecuta al volver de la aplicacion
+	// este metodo se ejecuta al volver de la aplicacion lanzada con forresult
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+		boolean scanDirecto, mochilaDirecto, mapaDirecto;
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case cMapa:
+				scanDirecto = data.getBooleanExtra(Intents.Comun.INGAME_SCAN,
+						false);
+				mochilaDirecto = data.getBooleanExtra(Intents.Action.MOCHILA,
+						false);
+				jugador = (Jugador) data
+						.getSerializableExtra(Intents.Comun.JUGADOR);
+				updateJugador();
+				if (scanDirecto)
+					lanzaScan();
+				else if (mochilaDirecto)
+					lanzaMochila();
+				else {
+					// hacer nada
+				}
 				break;
+
 			case cCamara:
 				qrLeido = data.getStringExtra("SCAN_RESULT");
 				lanzaMinijuego(qrLeido);
 				break;
 			case cMochila:
+				scanDirecto = data.getBooleanExtra(Intents.Comun.INGAME_SCAN,
+						false);
+				mapaDirecto = data.getBooleanExtra(Intents.Action.MAPA, false);
+				jugador = (Jugador) data
+						.getSerializableExtra(Intents.Comun.JUGADOR);
+				updateJugador();
+				if (scanDirecto)
+					lanzaScan();
+				else if (mapaDirecto)
+					lanzaMapa();
+				else {
+					// hacer nada
+				}
 				break;
 			case cMinijuego:
 				jugador = (Jugador) data
 						.getSerializableExtra(Intents.Comun.JUGADOR);
-				mDbHelper.updateRow("'" + jugador.getNombre() + "'",
-						jugador.getScore(), jugador.getHoja(),
-						jugador.getMochila(), jugador.getFase1(),
-						jugador.getFase2(), jugador.getFase3(),
-						jugador.getFase4());
-				// pone el textview la puntuacion del jugador
-				tvScoreActual.setText(String.valueOf(jugador.getScore()));
+				updateJugador();
 				break;
 			}
 
 		} else if (resultCode == RESULT_CANCELED) {
 			// si no ha hecho nada
 		}
+	}
+
+	/**
+	 * Metodo que actualiza al jugador
+	 */
+	private void updateJugador() {
+		mDbHelper.updateRow("'" + jugador.getNombre() + "'",
+				jugador.getScore(), jugador.getHoja(), jugador.getMochila(),
+				jugador.getFase1(), jugador.getFase2(), jugador.getFase3(),
+				jugador.getFase4());
+		// pone el textview la puntuacion del jugador
+		tvScoreActual.setText(String.valueOf(jugador.getScore()));
+	}
+
+	/**
+	 * Metodo que lanza la mochila
+	 */
+	private void lanzaMochila() {
+		Intent iMochila = new Intent(Intents.Action.MOCHILA);
+		iMochila.putExtra(Intents.Comun.JUGADOR, jugador);
+		startActivityForResult(iMochila, cMochila);
+	}
+
+	/**
+	 * Metodo que lanza el mapa
+	 */
+	private void lanzaMapa() {
+		Intent iMapa = new Intent(Intents.Action.MAPA);
+		iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
+		startActivityForResult(iMapa, cMapa);
 	}
 
 	/**

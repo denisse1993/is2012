@@ -21,9 +21,7 @@ public class Mochila extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mochila);
-		// if (!savedInstanceState.isEmpty()) {
-		// jugador = (Jugador) savedInstanceState.getSerializable("jugador");
-		// }
+	
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 		// controla objetos escogidos en base a
@@ -37,31 +35,38 @@ public class Mochila extends Activity implements OnClickListener {
 		return true;// debe devolver true para que el menu se muestre
 	}
 
-	/*
-	 * @Override protected void onPause() { Bundle b = new Bundle();
-	 * b.putSerializable("jugador", jugador); onSaveInstanceState(b); }
-	 */
-
 	@Override
 	public void onBackPressed() {
+		Intent iInGame = new Intent();
+		iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
+		iInGame.putExtra(Intents.Comun.INGAME_SCAN, false);
+		setResult(RESULT_OK, iInGame);
 		finish();
-		Intent iInGame = new Intent(Intents.Action.INGAME);
+		/*Intent iInGame = new Intent(Intents.Action.INGAME);
 		iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
 		startActivity(iInGame);
+		finish();*/
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.bCamara:
-			Intent iInGame = new Intent(Intents.Action.INGAME);
+			Intent iInGame = new Intent();
+			iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
+			iInGame.putExtra(Intents.Comun.INGAME_SCAN, true);
+			setResult(RESULT_OK, iInGame);
+			finish();
+			/*Intent iInGame = new Intent(Intents.Action.INGAME);
 			iInGame.putExtra(Intents.Comun.INGAME_SCAN, true);
 			iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivity(iInGame);
+			startActivity(iInGame);*/
 			break;
 		case R.id.bMapa:
-			Intent iMapa = new Intent(Intents.Action.MAPA);
+			Intent iMapa = new Intent();
 			iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivity(iMapa);
+			iMapa.putExtra(Intents.Action.MAPA, true);
+			setResult(RESULT_OK, iMapa);
+			finish();
 			break;
 		case R.id.bVolver:
 			onBackPressed();

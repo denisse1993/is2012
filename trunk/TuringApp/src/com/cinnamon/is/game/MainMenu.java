@@ -2,8 +2,10 @@ package com.cinnamon.is.game;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,16 +19,19 @@ public class MainMenu extends Activity implements OnClickListener {
 
 	private MediaPlayer menuTheme;
 
+	private boolean sonido;// si se activa el sonido o no
+
 	private Jugador jugador;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		// if (!savedInstanceState.isEmpty())
-		// bundleJugador=savedInstanceState;
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
+		SharedPreferences getData = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		sonido = getData.getBoolean("cbSonido", true);
 		inicializar();
 	}
 
@@ -70,8 +75,10 @@ public class MainMenu extends Activity implements OnClickListener {
 	 */
 
 	private void inicializar() {
+
 		menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
-		menuTheme.start();
+		if (sonido)
+			menuTheme.start();
 
 		bNuevaPartida = (Button) findViewById(R.id.bNuevaPartida);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
@@ -89,18 +96,19 @@ public class MainMenu extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.bNuevaPartida:
 			menuTheme.release();
-
 			MediaPlayer openingTheme = MediaPlayer.create(MainMenu.this,
 					R.raw.opening);
-			openingTheme.start();
-
+			if (sonido)
+				openingTheme.start();
 			Intent iInGame = new Intent(Intents.Action.INGAME);
 			iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iInGame);
 			break;
 
 		case R.id.bOpciones:
-
+			Intent iOpciones = new Intent(Intents.Action.OPCIONES);
+			iOpciones.putExtra(Intents.Comun.JUGADOR, jugador);
+			startActivity(iOpciones);
 			break;
 		case R.id.bAyuda:
 
@@ -111,11 +119,13 @@ public class MainMenu extends Activity implements OnClickListener {
 		}
 
 	}
-
+	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 		menuTheme.release();
+		finish();
+		
 	}
 }

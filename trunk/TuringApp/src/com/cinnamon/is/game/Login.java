@@ -83,8 +83,7 @@ public class Login extends Activity implements OnClickListener {
 		case R.id.bLogin:
 			nombre = etLogin.getText().toString();
 			if (!nombre.equals("")) {
-				if (creaJugador())
-					bienvenida();
+				bienvenida(creaJugador());
 			}
 			break;
 		case R.id.bArrancar:
@@ -98,30 +97,42 @@ public class Login extends Activity implements OnClickListener {
 
 	/**
 	 * Metodo que se lanza cuando es un jugador que ya ha jugado
+	 * 
+	 * @param esta
 	 */
-	private void bienvenida() {
+	private void bienvenida(boolean esta) {
 		bLogin.setVisibility(View.INVISIBLE);
 		tvLogin.setVisibility(View.INVISIBLE);
 		etLogin.setVisibility(View.INVISIBLE);
-
 		tvbienvenida.setVisibility(View.VISIBLE);
 		bArrancar.setVisibility(View.VISIBLE);
-		tvbienvenida.setText("Hola " + nombre + " tu puntuación es: "
-				+ jugador.getScore()
-				+ " toca arrancar para ir al menu principal:");
+		if (esta) {
+
+			tvbienvenida.setText("Hola " + nombre + "!\n Tu puntuación es "
+					+ jugador.getScore()
+					+ ".\nToca arrancar para ir al menu principal");
+		} else {
+			tvbienvenida
+					.setText("Hola "
+							+ nombre
+							+ "!\nEs la primera vez que juegas!\nToca arrancar para ir al menu principal:");
+		}
 	}
 
 	/**
 	 * Crea el jugador o recupera la info si existe
+	 * 
+	 * @return true o false en funcion de si existia o no
 	 */
 	private boolean creaJugador() {
 		// leer de la BD si existe nombre
 		// (se le añaden las comillas por sintaxis de SQL)
+		boolean esta;
 		if (!mDbHelper.existsRow("'" + nombre + "'")) {
 			// crear nuevo jugador
 			mDbHelper.createRow(nombre, 0, 0, 0, 0, 0, 0, 0);
 			jugador = new Jugador(nombre);
-			return false;
+			esta = false;
 		} else {
 			// recupera info
 			mCursor = mDbHelper.fetchRow("'" + nombre + "'");
@@ -134,14 +145,16 @@ public class Login extends Activity implements OnClickListener {
 					mCursor.getInt(DbAdapter.MAPA_IDCOL_FASE4),
 					mCursor.getInt(DbAdapter.INFO_IDCOL_HOJA),
 					mCursor.getInt(DbAdapter.INFO_IDCOL_MOCHILA));
-			stopManagingCursor(mCursor);
-			mDbHelper.close();
-			return true;
+			esta = true;
 		}
+		stopManagingCursor(mCursor);
+		mCursor.close();
+		mDbHelper.close();
+		return esta;
 	}
+
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		finish();
 	}
