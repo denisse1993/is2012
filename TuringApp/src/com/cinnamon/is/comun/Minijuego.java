@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.comun;
 
 import android.app.Activity;
@@ -7,7 +14,7 @@ import android.os.Bundle;
  * Actividad abtracta que representa un minijuego
  * 
  * @author Cinnamon Team
- * 
+ * @version 1.3 24.11.2011
  */
 public abstract class Minijuego extends Activity {
 
@@ -34,8 +41,7 @@ public abstract class Minijuego extends Activity {
 	protected long start, elapsed;
 
 	/**
-	 * Variables para pasar de nanosegundos a segundos y hombres mujeres y
-	 * viceversa
+	 * Variables para pasar de nanosegundos a segundos y viceversa
 	 */
 	protected final static double tos = 0.000000001;
 	protected final static double tons = 1000000000;
@@ -46,10 +52,16 @@ public abstract class Minijuego extends Activity {
 		super.onCreate(savedInstanceState);
 	}
 
+	/**
+	 * Inicia el contador de tiempo del minijuego
+	 */
 	protected void startTime() {
 		start = System.nanoTime();
 	}
 
+	/**
+	 * Detiene el contador de tiempo del minijuego y obtiene el tiempo
+	 */
 	protected void finishTime() {
 		elapsed = System.nanoTime() - start;
 	}
@@ -65,7 +77,7 @@ public abstract class Minijuego extends Activity {
 		int score = MAX_SCORE;
 		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
 		// se tarda en cada uno, o dejarlo para todos igual
-		if (elapsedS < 5)//5segundos
+		if (elapsedS < 5)// 5segundos
 			return score;
 		else if (elapsedS >= 5 && elapsedS < 10)
 			return score - 200;
@@ -79,6 +91,7 @@ public abstract class Minijuego extends Activity {
 			return 0;
 	}
 
+	//getters & setters
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}

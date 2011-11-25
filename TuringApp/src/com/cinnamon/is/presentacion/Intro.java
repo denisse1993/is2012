@@ -1,3 +1,14 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
+
+/**
+ * Paquete para clases con caracter visual y de presentacion
+ */
 package com.cinnamon.is.presentacion;
 
 import android.app.Activity;
@@ -8,20 +19,27 @@ import android.os.Bundle;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Intents;
 
+/**
+ * Actividad de intro en la aplicacion
+ * 
+ * @author Cinnamon Team
+ * @version 1.0 24.11.2011
+ */
 public class Intro extends Activity {
 
+	/**
+	 * MediaPlayer para contenido multimedia
+	 */
 	private MediaPlayer introTheme;
 
-	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intro);
 		introTheme = MediaPlayer.create(Intro.this, R.raw.hearthbeat_sound);
 		introTheme.start();
 		Thread timer = new Thread() {
 			public void run() {
-				// TODO Auto-generated method stub
 				try {
 					sleep(3650);
 				} catch (InterruptedException e) {
@@ -37,7 +55,6 @@ public class Intro extends Activity {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		introTheme.release();
 		finish();

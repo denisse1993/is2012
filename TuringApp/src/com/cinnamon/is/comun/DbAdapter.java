@@ -1,3 +1,14 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
+
+/**
+ * Paquete para clases comunes y de utilidad
+ */
 package com.cinnamon.is.comun;
 
 import android.content.ContentValues;
@@ -10,65 +21,113 @@ import android.util.Log;
 
 /**
  * Este adaptador nos permite acceder a la base de datos y modificarla
+ * 
+ * @author Cinnamon Team
+ * @version 1.4 25.11.2011
  */
 public class DbAdapter {
 
-	// Nombre BD
+	/**
+	 * Nombre de la base de datos
+	 */
 	private static final String DATABASE_NAME = "data";
-	// Nombres TABLAS
+	/**
+	 * Nombre de las tablas de la BD
+	 */
 	private static final String DATABASE_TABLE_INFO = "info";
-	private static final String DATABASE_TABLE_MAPA = "mapa";
-	// Version database
+	/**
+	 * Version de la base de datos
+	 */
 	private static final int DATABASE_VERSION = 2;
 
-	// Campos tablas info
+	// Campos de la tabla info
+	/**
+	 * Guarda el nombre del jugador y actua como clave de la tabla
+	 */
 	public static final String INFO_KEY_PLAYER = "player";
+	/**
+	 * Guarda la puntuacion del jugador
+	 **/
 	public static final String INFO_KEY_SCORE = "score";
+
+	/**
+	 * Guarda la pagina del libro en la que se encuentra el jugador actualmente
+	 */
 	public static final String INFO_KEY_HOJA = "hoja";
 
 	/**
-	 * Codificacion mochila 1-papel 1,2-papel 2,3-papel 3,4-makina,5-papel 1 y
-	 * 2,6-papel 1 y 3, 7-papel 2 y 3,8-papel 1,2,3,9-papel 1,2,3 y makina
+	 * Representa los objetos que tiene el jugador en la mochila siguiendo los
+	 * siguientes criterios de codificacion <code><pre>
+	 * Valor 1 - papel 1
+	 * Valor 2 - papel 2
+	 * Valor 3 - papel 3
+	 * Valor 4 - maquina
+	 * Valor 5 - papel 1 y 2
+	 * Valor 6 - papel 1 y 3
+	 * Valor 7 - papel 2 y 3
+	 * Valor 8 - papel 1,2,3
+	 * Valor 9 - papel 1,2,3 y maquina
+	 * </pre></code>
 	 */
 	public static final String INFO_KEY_MOCHILA = "mochila";
 
-	// Campos tablas mapa
+	/**
+	 * Indica la posicion del jugador en el mapa, en funcion de la siguiente
+	 * codificacion: <code><pre>
+	 * Valor 0 - indica que jugador no ha sido visitado esa fase
+	 * Valor 1 - indica que el jugador ha visitado esa fase
+	 * Valor 2 - indica que el jugador se encuentra en esa fase
+	 * </pre></code> Si todas las fases se encuentran a 1 el jugador se
+	 * encontrara en la fase final
+	 */
 	public static final String MAPA_KEY_FASE1 = "fase1";
 	public static final String MAPA_KEY_FASE2 = "fase2";
 	public static final String MAPA_KEY_FASE3 = "fase3";
 	public static final String MAPA_KEY_FASE4 = "fase4";
 
-	// array con los campos de la tabla info
+	/**
+	 * Array con las variables de la tabla Info
+	 */
 	private static final String[] infoCampos = new String[] { INFO_KEY_PLAYER,
 			INFO_KEY_SCORE, INFO_KEY_HOJA, INFO_KEY_MOCHILA, MAPA_KEY_FASE1,
 			MAPA_KEY_FASE2, MAPA_KEY_FASE3, MAPA_KEY_FASE4 };
 
-	// array con los campos de la tabla mapa
-	// private static final String[] mapaCampos = new String[] {
-	// INFO_KEY_PLAYER,
-	// MAPA_KEY_FASE1, MAPA_KEY_FASE2, MAPA_KEY_FASE3, MAPA_KEY_FASE4 };
-	// TAG para el log
+	/**
+	 * Tag para identificar la base de datos en el log
+	 */
 	private static final String TAG = "DbAdapter";
 
-	// Clases para tratar la base de datos
+	/**
+	 * Clase de ayuda para la creacion y gestion de la base de datos
+	 */
 	private DbHelper mDbHelper;
+	/**
+	 * Base de datos
+	 */
 	private SQLiteDatabase mDb;
+	/**
+	 * Contexto de la base de datos
+	 */
 	private final Context mCtx;
 
 	// Strings para clarificar SQL info
+	/**
+	 * Conjunto de Strings para clarificar la creacion de la tabla info
+	 */
 	public static final String SQLplayer = INFO_KEY_PLAYER
 			+ " text primary key,";
 	public static final String SQLscore = INFO_KEY_SCORE + " integer,";
 	public static final String SQLhoja = INFO_KEY_HOJA + " integer,";
 	public static final String SQLmochila = INFO_KEY_MOCHILA + " integer,";
 
-	// Strings para clarificar SQL mapa
 	public static final String SQLfase1 = MAPA_KEY_FASE1 + " integer,";
 	public static final String SQLfase2 = MAPA_KEY_FASE2 + " integer,";
 	public static final String SQLfase3 = MAPA_KEY_FASE3 + " integer,";
 	public static final String SQLfase4 = MAPA_KEY_FASE4 + " integer);";
 
-	// Indices Campos tablas info
+	/**
+	 * Indice de las columnas de la tabla info
+	 */
 	public static final int INFO_IDCOL_PLAYER = 0;
 	public static final int INFO_IDCOL_SCORE = 1;
 	public static final int INFO_IDCOL_HOJA = 2;
@@ -89,13 +148,18 @@ public class DbAdapter {
 			+ SQLhoja
 			+ SQLmochila + SQLfase1 + SQLfase2 + SQLfase3 + SQLfase4;
 
-	/**
-	 * Sentencia SQL para crear la tabla mapa
-	 */
 	// private static final String TABLE_MAPA_CREATE = "create table "
 	// + DATABASE_TABLE_MAPA + "( " + SQLplayer + SQLfase1 + SQLfase2
 	// + SQLfase3 + SQLfase4;
-
+	// private static final String DATABASE_TABLE_MAPA = "mapa";
+	// array con los campos de la tabla mapa
+	// private static final String[] mapaCampos = new String[] {
+	// INFO_KEY_PLAYER,
+	// MAPA_KEY_FASE1, MAPA_KEY_FASE2, MAPA_KEY_FASE3, MAPA_KEY_FASE4 };
+	// TAG para el log
+	/**
+	 * Clase interna de utilidad para creacion y gestion de la base de datos
+	 */
 	private static class DbHelper extends SQLiteOpenHelper {
 
 		DbHelper(Context context) {
@@ -129,7 +193,7 @@ public class DbAdapter {
 
 	/**
 	 * Abre la base de datos. Si no puede abrirla, la crea. Si no se puede lanza
-	 * una excepci—n
+	 * una excepcion
 	 * 
 	 * @param onlyRead
 	 *            indica si se abre la BD en modo solo lectura
@@ -160,8 +224,6 @@ public class DbAdapter {
 	 *            nombre del jugador
 	 * @param score
 	 *            puntuacion del jugador
-	 * @param mapa
-	 *            posicion del jugador en el mapa
 	 * @param hoja
 	 *            hoja actual del libro del jugador
 	 * @param mochila

@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.minijuegos.ascensor;
 
 import android.content.Intent;
@@ -17,7 +24,7 @@ import com.cinnamon.is.game.Jugador;
 public class AscensorMJ extends Minijuego {
 
 	/**
-	 * Jugador de login
+	 * Jugador actual de la aplicacion
 	 */
 	private Jugador jugador;
 

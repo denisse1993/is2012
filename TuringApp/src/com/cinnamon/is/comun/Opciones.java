@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.comun;
 
 import android.content.Intent;
@@ -9,10 +16,23 @@ import android.preference.PreferenceActivity;
 import com.cinnamon.is.R;
 import com.cinnamon.is.game.Jugador;
 
+/**
+ * Actividad abtracta extiende de PreferenceActivity para representar las
+ * opciones del juego
+ * 
+ * @author Cinnamon Team
+ * @version 1.0 24.11.2011
+ */
 public class Opciones extends PreferenceActivity {
 
-	Jugador jugador;
-	Preference pIntent;
+	/**
+	 * Jugador actual del juego
+	 */
+	private Jugador jugador;
+	/**
+	 * Preference para la opcion de cambiar de usuario
+	 */
+	private Preference pIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
