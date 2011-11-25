@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.game;
 
 import android.app.Activity;
@@ -13,18 +20,33 @@ import android.widget.Button;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Intents;
 
+/**
+ * Actividad que representa el menu principal de la aplicacion
+ * 
+ * @author Cinnamon Team
+ * @version 1.2 24.11.2011
+ */
 public class MainMenu extends Activity implements OnClickListener {
 
+	// interfaz
 	private Button bNuevaPartida, bOpciones, bAyuda, bSalir;
 
+	/**
+	 * MediaPlayer para contenido multimedia
+	 */
 	private MediaPlayer menuTheme;
+	/**
+	 * Usamos para indicar si el sonido se reproduce o no
+	 */
+	private boolean sonido;
 
-	private boolean sonido;// si se activa el sonido o no
-
+	/**
+	 * Jugador actual en la aplicacion
+	 */
 	private Jugador jugador;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		jugador = (Jugador) getIntent().getSerializableExtra(
@@ -74,21 +96,11 @@ public class MainMenu extends Activity implements OnClickListener {
 	 * return layoutMain; }
 	 */
 
-	private void inicializar() {
-
-		menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
-		if (sonido)
-			menuTheme.start();
-
-		bNuevaPartida = (Button) findViewById(R.id.bNuevaPartida);
-		bOpciones = (Button) findViewById(R.id.bOpciones);
-		bAyuda = (Button) findViewById(R.id.bAyuda);
-		bSalir = (Button) findViewById(R.id.bSalir);
-
-		bNuevaPartida.setOnClickListener(this);
-		bOpciones.setOnClickListener(this);
-		bAyuda.setOnClickListener(this);
-		bSalir.setOnClickListener(this);
+	@Override
+	protected void onPause() {
+		super.onPause();
+		menuTheme.release();
+		finish();
 	}
 
 	@Override
@@ -104,28 +116,37 @@ public class MainMenu extends Activity implements OnClickListener {
 			iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iInGame);
 			break;
-
 		case R.id.bOpciones:
 			Intent iOpciones = new Intent(Intents.Action.OPCIONES);
 			iOpciones.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iOpciones);
 			break;
 		case R.id.bAyuda:
-
+			// TODO Ayuda pendiente
 			break;
 		case R.id.bSalir:
 			finish();
 			break;
 		}
-
-	}
 	
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		menuTheme.release();
-		finish();
-		
+	}
+
+	/**
+	 * Metodo de utilidad para inicializar la Actividad
+	 */
+	private void inicializar() {
+		menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
+		if (sonido)
+			menuTheme.start();
+
+		bNuevaPartida = (Button) findViewById(R.id.bNuevaPartida);
+		bOpciones = (Button) findViewById(R.id.bOpciones);
+		bAyuda = (Button) findViewById(R.id.bAyuda);
+		bSalir = (Button) findViewById(R.id.bSalir);
+
+		bNuevaPartida.setOnClickListener(this);
+		bOpciones.setOnClickListener(this);
+		bAyuda.setOnClickListener(this);
+		bSalir.setOnClickListener(this);
 	}
 }

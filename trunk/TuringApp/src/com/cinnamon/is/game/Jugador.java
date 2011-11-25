@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.game;
 
 import java.io.Serializable;
@@ -6,18 +13,30 @@ import java.io.Serializable;
  * Clase que representa a un jugador en el juego. implementa serializable para
  * poder ser pasada en un intent entre activities
  * 
- * @author JUser
- * 
+ * @author Cinnamon Team
+ * @version 1.2 25.11.2011
  */
 public class Jugador implements Serializable {
 
+	/**
+	 * Nombre del jugador
+	 */
 	private String nombre;
+	/**
+	 * Puntuacion del jugador
+	 */
 	private int score;
-	private int fase1;
-	private int fase2;
-	private int fase3;
-	private int fase4;
+	/**
+	 * Posicion del jugador segun la fase
+	 */
+	private int fase1, fase2, fase3, fase4;
+	/**
+	 * Pagina en la que se encuentra el jugador
+	 */
 	private int hoja;
+	/**
+	 * Mochila del jugador
+	 */
 	private int mochila;
 
 	/**
@@ -29,13 +48,17 @@ public class Jugador implements Serializable {
 	 * Genera un jugador por parametros
 	 * 
 	 * @param nombre
+	 *            del jugador
 	 * @param score
+	 *            del jugador
 	 * @param fase1
 	 * @param fase2
 	 * @param fase3
 	 * @param fase4
 	 * @param hoja
+	 *            actual del jugador
 	 * @param mochila
+	 *            del jugador
 	 */
 	public Jugador(String nombre, int score, int fase1, int fase2, int fase3,
 			int fase4, int hoja, int mochila) {
@@ -63,10 +86,7 @@ public class Jugador implements Serializable {
 		this.mochila = 0;
 	}
 
-	public Jugador() {
-
-	}
-
+	// getter & setter
 	public String getNombre() {
 		return nombre;
 	}
@@ -131,4 +151,9 @@ public class Jugador implements Serializable {
 		this.mochila = mochila;
 	}
 
+	@Override
+	public String toString() {
+		return nombre + " " + score + " " + fase1 + " " + fase2 + " " + fase3
+				+ " " + fase4 + " " + mochila;
+	}
 }

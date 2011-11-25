@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.game;
 
 import android.app.Activity;
@@ -15,31 +22,37 @@ import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Intents;
 
 /**
- * Pantalla para el login en la aplicacion Lee el nombre del jugador y comprueba
+ * Pantalla para el login en la aplicacion lee el nombre del jugador y comprueba
  * si existe en la base de datos, para crearlo o actualizar la informacion
  * 
- * @author JUser
+ * @author Cinnamon Team
+ * @version 1.1 24.11.2011
  */
 public class Login extends Activity implements OnClickListener {
 
-	// base de datos
+	/**
+	 * Adaptador para conectar con la BD
+	 */
 	private DbAdapter mDbHelper;
+	/**
+	 * Cursor para tratar las consultas en la BD
+	 */
 	private Cursor mCursor;
 
 	/**
-	 * Nombre del jugador
+	 * Nombre del jugador leido del EditText
 	 */
 	private String nombre;
 
 	/**
-	 * Jugador en si
+	 * Jugador de la aplicacion
 	 */
 	private Jugador jugador;
 
+	// Interfaz
 	private EditText etLogin;
 	private Button bLogin;
 	private TextView tvLogin;
-
 	private Button bArrancar;
 	private TextView tvbienvenida;
 
@@ -50,41 +63,26 @@ public class Login extends Activity implements OnClickListener {
 		inicializar();
 	}
 
-	private void inicializar() {
-		etLogin = (EditText) findViewById(R.id.etlogin);
-		tvLogin = (TextView) findViewById(R.id.tvLogin);
-		bLogin = (Button) findViewById(R.id.bLogin);
-
-		bArrancar = (Button) findViewById(R.id.bArrancar);
-		tvbienvenida = (TextView) findViewById(R.id.tVbienvenida);
-
-		tvbienvenida.setVisibility(View.INVISIBLE);
-		bArrancar.setVisibility(View.INVISIBLE);
-
-		bLogin.setOnClickListener(this);
-		bArrancar.setOnClickListener(this);
-		// abre base de datos
-		mDbHelper = new DbAdapter(this);
-		mDbHelper.open(false);
+	@Override
+	protected void onPause() {
+		super.onPause();
+		finish();
 	}
 
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
 		// metodo para que hacer cuando se pulsa el boton de atras
-		// ahora mismo no hace nada
+		// ahora mismo no hace nada, con lo que lo tenemos deshabilitado
 	}
 
 	@Override
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-
 		case R.id.bLogin:
 			nombre = etLogin.getText().toString();
-			if (!nombre.equals("")) {
+			if (!nombre.equals(""))
 				bienvenida(creaJugador());
-			}
 			break;
 		case R.id.bArrancar:
 			Intent openMainMenu = new Intent(Intents.Action.MAINMENU);
@@ -92,35 +90,57 @@ public class Login extends Activity implements OnClickListener {
 			startActivity(openMainMenu);
 			break;
 		}
-
 	}
 
 	/**
-	 * Metodo que se lanza cuando es un jugador que ya ha jugado
+	 * Metodo de utilidad para inicializar la actividad
+	 */
+	private void inicializar() {
+		etLogin = (EditText) findViewById(R.id.etlogin);
+		tvLogin = (TextView) findViewById(R.id.tvLogin);
+		bLogin = (Button) findViewById(R.id.bLogin);
+	
+		bArrancar = (Button) findViewById(R.id.bArrancar);
+		tvbienvenida = (TextView) findViewById(R.id.tVbienvenida);
+	
+		// escondemos hasta que se loguee
+		tvbienvenida.setVisibility(View.INVISIBLE);
+		bArrancar.setVisibility(View.INVISIBLE);
+	
+		bLogin.setOnClickListener(this);
+		bArrancar.setOnClickListener(this);
+		// abre base de datos
+		mDbHelper = new DbAdapter(this);
+		mDbHelper.open(false);
+	}
+
+	/**
+	 * Metodo para dar la bienvenida al nuevo (o no) jugador
 	 * 
 	 * @param esta
+	 *            si el jugador ya ha jugado al juego o no
 	 */
 	private void bienvenida(boolean esta) {
+		// cambiamos interfaz
 		bLogin.setVisibility(View.INVISIBLE);
 		tvLogin.setVisibility(View.INVISIBLE);
 		etLogin.setVisibility(View.INVISIBLE);
 		tvbienvenida.setVisibility(View.VISIBLE);
 		bArrancar.setVisibility(View.VISIBLE);
-		if (esta) {
 
+		if (esta)
 			tvbienvenida.setText("Hola " + nombre + "!\n Tu puntuación es "
 					+ jugador.getScore()
 					+ ".\nToca arrancar para ir al menu principal");
-		} else {
+		else
 			tvbienvenida
 					.setText("Hola "
 							+ nombre
 							+ "!\nEs la primera vez que juegas!\nToca arrancar para ir al menu principal:");
-		}
 	}
 
 	/**
-	 * Crea el jugador o recupera la info si existe
+	 * Crea el jugador o recupera su informacion si existe
 	 * 
 	 * @return true o false en funcion de si existia o no
 	 */
@@ -151,11 +171,5 @@ public class Login extends Activity implements OnClickListener {
 		mCursor.close();
 		mDbHelper.close();
 		return esta;
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		finish();
 	}
 }

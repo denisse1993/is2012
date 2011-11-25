@@ -1,13 +1,26 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.comun;
 
 /**
- * Actividad de utilidad para los distintos Intents
+ * Clase de utilidad para los distintos Intents
  * 
  * @author Cinnamon Team
- * 
+ * @version 1.4 25.11.2011
  */
 public final class Intents {
 
+	/**
+	 * Clase interna con los distintos ACTION de la aplicacion
+	 * 
+	 * @author Cinnamon Team
+	 * 
+	 */
 	public static final class Action {
 
 		public static final String INTRO = "com.cinnamon.is.presentacion.INTRO";
@@ -38,12 +51,30 @@ public final class Intents {
 		}
 	}
 
+	/**
+	 * Clase interna con los String genericos
+	 * 
+	 * @author Cinnamon Team
+	 * 
+	 */
 	public static final class Comun {
 
+		/**
+		 * String con la ruta base del proyecto
+		 */
 		public static final String BASE = "com.cinnamon.is.";
-		// para usar cuando se quiera lanzar desde ingame el scan directamente
+		/**
+		 * String con la ruta base de los minijuegos del proyecto
+		 */
+		public static final String BASE_MINIJUEGOS = "com.cinnamon.is.minijuegos.";
+		/**
+		 * String para usar cuando se quiera lanzar desde ingame el scan
+		 * directamente
+		 */
 		public static final String INGAME_SCAN = "ingame_scan";
-		// para usar cuando se quiera pasar el jugador entre actividades
+		/**
+		 * String para usar cuando se quiera pasar el jugador entre actividades
+		 */
 		public static final String JUGADOR = "jugador";
 
 		private Comun() {

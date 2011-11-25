@@ -1,3 +1,10 @@
+//
+// Universidad Complutense de Madrid
+// Ingenieria Informática
+//
+// PROYECTO: TuringApp
+// ASIGNATURA : Ingeniería del Software
+//
 package com.cinnamon.is.game;
 
 import android.app.Activity;
@@ -12,13 +19,21 @@ import android.view.View.OnClickListener;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Intents;
 
+/**
+ * Actividad que representa el mapa del juego
+ * 
+ * @author Cinnamon Team
+ * @version 1.2 24.11.2011
+ */
 public class Mapa extends Activity implements OnClickListener {
 
-	// Jugador creao en login
+	/**
+	 * Jugador actual en la aplicacion
+	 */
 	private Jugador jugador;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mapa);
 
@@ -38,15 +53,6 @@ public class Mapa extends Activity implements OnClickListener {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menumapa, menu);
 		return true;// debe devolver true para que el menu se muestre
-	}
-
-	@Override
-	public void onBackPressed() {
-		Intent iInGame = new Intent();
-		iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
-		iInGame.putExtra(Intents.Comun.INGAME_SCAN, false);
-		setResult(RESULT_OK, iInGame);
-		finish();
 	}
 
 	@Override
@@ -71,6 +77,15 @@ public class Mapa extends Activity implements OnClickListener {
 			break;
 		}
 		return false;// devuelve falso para proceso normal
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent iInGame = new Intent();
+		iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
+		iInGame.putExtra(Intents.Comun.INGAME_SCAN, false);
+		setResult(RESULT_OK, iInGame);
+		finish();
 	}
 
 	@Override
