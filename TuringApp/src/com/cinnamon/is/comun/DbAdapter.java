@@ -58,6 +58,7 @@ public class DbAdapter {
 	/**
 	 * Representa los objetos que tiene el jugador en la mochila siguiendo los
 	 * siguientes criterios de codificacion <code><pre>
+	 * Valor 0 - nada
 	 * Valor 1 - papel 1
 	 * Valor 2 - papel 2
 	 * Valor 3 - papel 3
@@ -74,7 +75,7 @@ public class DbAdapter {
 	/**
 	 * Indica la posicion del jugador en el mapa, en funcion de la siguiente
 	 * codificacion: <code><pre>
-	 * Valor 0 - indica que jugador no ha sido visitado esa fase
+	 * Valor 0 - indica que jugador no ha visitado esa fase
 	 * Valor 1 - indica que el jugador ha visitado esa fase
 	 * Valor 2 - indica que el jugador se encuentra en esa fase
 	 * </pre></code> Si todas las fases se encuentran a 1 el jugador se

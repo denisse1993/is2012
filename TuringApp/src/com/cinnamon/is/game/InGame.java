@@ -78,7 +78,6 @@ public class InGame extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame);
 		inicializar();
@@ -95,7 +94,6 @@ public class InGame extends Activity implements OnClickListener {
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		mDbHelper.close();
 	}
@@ -180,26 +178,7 @@ public class InGame extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("¿Quieres salir al menu principal?")
-				.setCancelable(false)
-				.setPositiveButton("Yes",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								InGame.this.finish();
-								Intent iMainMenu = new Intent(
-										Intents.Action.MAINMENU);
-								iMainMenu.putExtra(Intents.Comun.JUGADOR,
-										jugador);
-								startActivity(iMainMenu);
-							}
-						})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
+		lanzaExitDialog();
 	}
 
 	@Override
@@ -279,6 +258,15 @@ public class InGame extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * Metodo que lanza el menu principal
+	 */
+	private void lanzaMainMenu() {
+		Intent iMainMenu = new Intent(Intents.Action.MAINMENU);
+		iMainMenu.putExtra(Intents.Comun.JUGADOR, jugador);
+		startActivity(iMainMenu);
+	}
+
+	/**
 	 * Método que lanza el minijuego del "qrMinijuego", comprobando que el
 	 * codigoQR leido es correcto para lanzar la actividad asociada
 	 * 
@@ -297,6 +285,28 @@ public class InGame extends Activity implements OnClickListener {
 			}
 		}
 		// no se lanza el minijuego porque no se corresponde con uno que exista
+	}
+
+	/**
+	 * Metodo que lanza el dialog para escoger si quieres salir al menu
+	 * principal o no
+	 */
+	private void lanzaExitDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("¿Quieres salir al menu principal?")
+				.setCancelable(false)
+				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						InGame.this.finish();
+						lanzaMainMenu();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
 	}
 
 }
