@@ -166,9 +166,9 @@ public class Login extends Activity implements OnClickListener {
 					mCursor.getInt(DbAdapter.INFO_IDCOL_HOJA),
 					mCursor.getInt(DbAdapter.INFO_IDCOL_MOCHILA));
 			esta = true;
+			stopManagingCursor(mCursor);
+			mCursor.close();
 		}
-		stopManagingCursor(mCursor);
-		mCursor.close();
 		mDbHelper.close();
 		return esta;
 	}
