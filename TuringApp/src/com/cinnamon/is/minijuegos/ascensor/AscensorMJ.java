@@ -34,7 +34,11 @@ public class AscensorMJ extends Minijuego {
 		startTime();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ascensormj);
-		setNombre("AscensorMJ");
+		// Pone valores del minijuego
+		setNombre(Intents.Comun.minijuegos[1]);
+		setObjeto(1);
+		setFase(2);
+		setSuperado(false);
 
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
@@ -44,8 +48,18 @@ public class AscensorMJ extends Minijuego {
 	public void onBackPressed() {
 		// termina de contar el tiempo
 		finishTime();
-		jugador.setScore(jugador.getScore() + calcularPuntuacion());
+		int puntuacion = calcularPuntuacion();
+		superado=true;
+		if (superado) {
+			jugador.setScore(jugador.getScore() + puntuacion);
+			jugador.addObjeto(objeto);
+			jugador.superaFase(fase);
+		} else
+			jugador.actualFase(fase);
+		
 		Intent r = new Intent();
+		r.putExtra(Intents.Comun.superado, superado);
+		r.putExtra(Intents.Comun.objeto, objeto);
 		r.putExtra(Intents.Comun.JUGADOR, jugador);
 		setResult(RESULT_OK, r);
 		finish();

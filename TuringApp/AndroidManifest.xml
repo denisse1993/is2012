@@ -9,15 +9,16 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:label="@string/app_name"
             android:name=".presentacion.Intro"
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -87,6 +88,35 @@
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.comun.OPCIONES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- Activitys de los Minijuegos -->
+        <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.cuadrado.CuadradoMagicoMJIntro" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJINTRO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.cuadrado.CuadradoMagicoMJActivity" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.puzzle.PuzzleMJ" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.puzzle.PUZZLEMJ" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -104,10 +134,21 @@
             android:label="@string/app_name"
             android:name=".minijuegos.reinas.Reinas" >
             <intent-filter >
-               <action android:name="com.cinnamon.is.minijuegos.reinas.REINAS" />
+                <action android:name="com.cinnamon.is.minijuegos.reinas.REINAS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.end.EndMJ" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.end.ENDMJ" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- Activity del zXing -->
         <activity
             android:configChanges="orientation|keyboardHidden"

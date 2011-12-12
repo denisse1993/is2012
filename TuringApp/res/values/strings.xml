@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="hello">El Misterio de Turing</string>
     <string name="inicio">Toque la pantalla para continuar</string>
     <string name="app_name">Cinnamon Team</string>
@@ -14,4 +15,8 @@
     <string name="ComentarioMapa">Aqui va el mapa</string>
     <string name="BotonMenu">menu contextual</string>
     <string name="Reinas">8 reinas</string>
+    <string name="instrucciones">Bienvenido al juego del Cuadrado Mágico, para avanzar a la siguiente prueba tendrás que rellenar el cuadrado de 3x3 que aparecerá a continuación de forma que colocando los números de 0 a 9 en los cuadros, todas las filas, todas las columnas y las diagonales sumen lo mismo. Mucha suerte...</string>
+    <string name="recuerdo">RECUERDA QUE TODAS LAS FILAS, TODAS LAS COLUMNAS Y LAS DIAGONALES DEBEN SUMAR LO MISMO</string>
+    <string name="uso">SELECCIONA EL NÚMERO QUE QUIERES COLOCAR Y DESPUÉS LA CASILLA DONDE QUIERES COLOCARLO</string>
+
 </resources>
