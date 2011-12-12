@@ -39,7 +39,24 @@ public final class Intents {
 
 		public static final String OPCIONES = "com.cinnamon.is.comun.OPCIONES";
 
+		// actions para minijuegos
+		// TODO ASCENSOR
 		public static final String ASCENSORMJ = "com.cinnamon.is.minijuegos.ascensor.ASCENSORMJ";
+
+		// CUADRADO
+		public static final String CUADRADOMJINTRO = "com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJINTRO";
+
+		public static final String CUADRADOMJ = "com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJACTIVITY";
+
+		// TODO PUZZLE
+		public static final String PUZZLEMJ = "com.cinnamon.is.minijuegos.puzzle.PuzzleMJ";
+
+		// TODO REINAS
+		public static final String REINASMJ = "com.cinnamon.is.minijuegos.reinas.REINASMJ";
+
+		// TODO END
+		public static final String ENDMJ = "com.cinnamon.is.minijuegos.end.ENDMJ";
+
 		// prueba d juego
 		public static final String REINAS = "com.cinnamon.is.minijuegos.reinas.REINAS";
 
@@ -60,6 +77,13 @@ public final class Intents {
 	public static final class Comun {
 
 		/**
+		 * Array de String para guardar la ruta de los minijuegos, se usa para
+		 * comprobar que el minijuego que se va a lanzar es correcto
+		 */
+		public static final String[] minijuegos = {
+				"cuadrado.CUADRADOMAGICOMJINTRO", "ascensor.ASCENSORMJ",
+				"reinas.REINASMJ", "puzzle.PUZZLEMJ", "end.ENDMJ" };
+		/**
 		 * String con la ruta base del proyecto
 		 */
 		public static final String BASE = "com.cinnamon.is.";
@@ -76,6 +100,15 @@ public final class Intents {
 		 * String para usar cuando se quiera pasar el jugador entre actividades
 		 */
 		public static final String JUGADOR = "jugador";
+
+		/**
+		 * String para usar cuando se quiera pasar el boolean superado del mj al ingame
+		 */
+		public static final String superado = "superado";
+		/**
+		 * String para usar cuando se quiera pasar el objeto del mj al ingame
+		 */
+		public static final String objeto = "objeto";
 
 		private Comun() {
 		}

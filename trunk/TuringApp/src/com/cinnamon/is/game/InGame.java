@@ -30,6 +30,11 @@ import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Intents;
 
+//NOTAS
+//En cada minijuego se obtiene el jugador, y se modifica su puntuacion/inventario/mapa a nivel de clase,
+//volviendo a enviar el jugador en el setResult al ingame.
+//Esta modificacion se hace en base a los parametros del mj, el objeto k sea, la fase y la puntuacion 
+//k se haya obtenido y solo si el minijuego se ha completado
 /**
  * Actividad del juego principal, se mantiene en ejecución durante el desarrollo
  * del juego, llamando al resto de Actividades
@@ -48,13 +53,6 @@ public class InGame extends Activity implements OnClickListener {
 	 * String para guardar el raw del codigo QR leido
 	 */
 	private String qrLeido;
-
-	/**
-	 * Array de String para guardar la ruta de los minijuegos, se usa para
-	 * comprobar que el minijuego que se va a lanzar es correcto
-	 */
-	private String[] minijuegos = { "ascensor.ASCENSORMJ",
-			"cuadrado.CUADRADOMJ", "puzzle.PUZZLEMJ", "reinas.REINASMJ" };
 
 	/**
 	 * Constantes para controlar que actividad tratar en onActivityResult() en
@@ -144,6 +142,40 @@ public class InGame extends Activity implements OnClickListener {
 				jugador = (Jugador) data
 						.getSerializableExtra(Intents.Comun.JUGADOR);
 				updateJugador();
+				// Tratamiento resultado minijuego
+				boolean superado = data.getBooleanExtra(Intents.Comun.superado,
+						false);
+				int objeto = data.getIntExtra(Intents.Comun.objeto, 0);
+				// obtener imagen del objeto
+				String objStr="",faseStr= "";
+				switch (objeto) {
+				case 1:
+					objStr = "Papel 1";
+					faseStr="Ascensor";
+					break;
+				case 2:
+					objStr = "Papel 2";
+					faseStr="Reinas";
+					break;
+				case 3:
+					objStr = "Papel 3";
+					faseStr="Puzzle";
+					break;
+				case 4:
+					objStr = "Papel 4";
+					faseStr="Cuadrado";
+					break;
+				}
+
+				if (superado)
+					lanzarAvisoMJ("Minijuego " + faseStr
+							+ "completado.\nHas conseguido el objeto: "
+							+ objStr + "\nTu puntuacion ahora es: "
+							+ jugador.getScore());
+				else
+					lanzarAvisoMJ("Minijuego "
+							+ qrLeido
+							+ "no completado.\nTendrás que volver a scanear el QR para lanzarlo de nuevo!");
 				break;
 			}
 
@@ -222,7 +254,7 @@ public class InGame extends Activity implements OnClickListener {
 	 */
 	private void updateJugador() {
 		mDbHelper.updateRow("'" + jugador.getNombre() + "'",
-				jugador.getScore(), jugador.getHoja(), jugador.getMochila(),
+				jugador.getScore(), jugador.getHoja(), jugador.mochilaToInt(),
 				jugador.getFase1(), jugador.getFase2(), jugador.getFase3(),
 				jugador.getFase4());
 		// pone el textview la puntuacion del jugador
@@ -275,9 +307,9 @@ public class InGame extends Activity implements OnClickListener {
 	 */
 	private void lanzaMinijuego(String qrMiniJuego) {
 
-		for (int i = 0; i < minijuegos.length; i++) {
+		for (int i = 0; i < Intents.Comun.minijuegos.length; i++) {
 			// comprobacion de que existe el minijuego leido
-			if (minijuegos[i].equals(qrMiniJuego)) {
+			if (Intents.Comun.minijuegos[i].equals(qrMiniJuego)) {
 				Intent iMinijuego = new Intent(Intents.Comun.BASE_MINIJUEGOS
 						+ qrMiniJuego);
 				iMinijuego.putExtra(Intents.Comun.JUGADOR, jugador);
@@ -302,6 +334,20 @@ public class InGame extends Activity implements OnClickListener {
 					}
 				})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
+	}
+
+	/**
+	 * Metodo que lanza el Dialog para salida del minijuego
+	 */
+	private void lanzarAvisoMJ(String texto) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(texto).setNegativeButton("Cerrar",
+				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}

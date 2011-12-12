@@ -115,7 +115,7 @@ public class Opciones extends PreferenceActivity implements
 		jugador.setFase3(0);
 		jugador.setFase4(0);
 		mDbHelper.updateRow("'" + jugador.getNombre() + "'",
-				jugador.getScore(), jugador.getHoja(), jugador.getMochila(),
+				jugador.getScore(), jugador.getHoja(), jugador.mochilaToInt(),
 				jugador.getFase1(), jugador.getFase2(), jugador.getFase3(),
 				jugador.getFase4());
 	}

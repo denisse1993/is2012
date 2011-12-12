@@ -6,9 +6,9 @@
 // ASIGNATURA : Ingeniería del Software
 //
 
-/**
- * Paquete para clases comunes y de utilidad
- */
+
+// Paquete para clases comunes y de utilidad
+ 
 package com.cinnamon.is.comun;
 
 import android.content.ContentValues;
@@ -56,30 +56,63 @@ public class DbAdapter {
 	public static final String INFO_KEY_HOJA = "hoja";
 
 	/**
+	 * <p>
 	 * Representa los objetos que tiene el jugador en la mochila siguiendo los
-	 * siguientes criterios de codificacion <code><pre>
+	 * siguientes criterios de codificacion
+	 * </p>
+	 * <code><pre>
 	 * Valor 0 - nada
 	 * Valor 1 - papel 1
 	 * Valor 2 - papel 2
 	 * Valor 3 - papel 3
 	 * Valor 4 - maquina
-	 * Valor 5 - papel 1 y 2
-	 * Valor 6 - papel 1 y 3
-	 * Valor 7 - papel 2 y 3
-	 * Valor 8 - papel 1,2,3
-	 * Valor 9 - papel 1,2,3 y maquina
+	 * Valor 5 - papel 1,2
+	 * Valor 6 - papel 1,3
+	 * Valor 7 - papel 1, maquina
+	 * Valor 8 - papel 2,3
+	 * Valor 9 - papel 2, maquina
+	 * Valor 10 - papel 3, maquina
+	 * Valor 11 - papel 1,2,3
+	 * Valor 12 - papel 1,2, maquina
+	 * Valor 13 - papel 1,3, maquina
+	 * Valor 14 - papel 2,3, maquina
+	 * Valor 15 - papel 1,2,3, maquina
+	 * </pre></code>
+	 * <p>
+	 * Correspondecia objetos con minijuegos:
+	 * </p>
+	 * <code><pre>
+	 * Maquina - Cuadrado 
+	 * Papel 1 - Ascensor
+	 * Papel 2 - Reinas
+	 * Papel 3 - Puzzle
 	 * </pre></code>
 	 */
 	public static final String INFO_KEY_MOCHILA = "mochila";
 
 	/**
+	 * <p>
 	 * Indica la posicion del jugador en el mapa, en funcion de la siguiente
-	 * codificacion: <code><pre>
+	 * codificacion:
+	 * </p>
+	 * <code><pre>
 	 * Valor 0 - indica que jugador no ha visitado esa fase
 	 * Valor 1 - indica que el jugador ha visitado esa fase
 	 * Valor 2 - indica que el jugador se encuentra en esa fase
-	 * </pre></code> Si todas las fases se encuentran a 1 el jugador se
-	 * encontrara en la fase final
+	 * </pre></code>
+	 * <p>
+	 * Si todas las fases se encuentran a 1 el jugador se encontrara en la fase
+	 * final
+	 * </p>
+	 * <p>
+	 * Correspondecia fases con minijuegos:
+	 * </p>
+	 * <code><pre>
+	 * Fase1 - Cuadrado 
+	 * Fase2 - Ascensor
+	 * Fase3 - Reinas
+	 * Fase4 - Puzzle
+	 * </pre></code>
 	 */
 	public static final String MAPA_KEY_FASE1 = "fase1";
 	public static final String MAPA_KEY_FASE2 = "fase2";
