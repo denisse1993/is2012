@@ -13,6 +13,7 @@ package com.cinnamon.is.game;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinnamon.is.R;
@@ -40,7 +42,7 @@ import com.cinnamon.is.comun.Intents;
  * del juego, llamando al resto de Actividades
  * 
  * @author Cinnamon Team
- * @version 1.5 25.11.2011
+ * @version 1.6 13.12.2011
  */
 public class InGame extends Activity implements OnClickListener {
 
@@ -58,10 +60,15 @@ public class InGame extends Activity implements OnClickListener {
 	 * Constantes para controlar que actividad tratar en onActivityResult() en
 	 * función de la actividad lanzada.
 	 */
-	private static final int cMapa = 0;
-	private static final int cCamara = 1;
-	private static final int cMochila = 2;
-	private static final int cMinijuego = 3;
+	private static final int cMAPA = 0;
+	private static final int cCAMARA = 1;
+	private static final int cMOCHILA = 2;
+	private static final int cMINIJUEGO = 3;
+
+	/**
+	 * Contanstes para manjeas dialogos del ingame
+	 */
+	private static final int DIALOG_MINIJUEGOS_RESULT = 0;
 
 	/**
 	 * Jugador actual del juego
@@ -88,6 +95,7 @@ public class InGame extends Activity implements OnClickListener {
 
 		// establecer hoja de libro usar la variable hoja de jugador
 		// jugador.getHoja();
+
 	}
 
 	@Override
@@ -102,7 +110,7 @@ public class InGame extends Activity implements OnClickListener {
 		boolean scanDirecto, mochilaDirecto, mapaDirecto;
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
-			case cMapa:
+			case cMAPA:
 				scanDirecto = data.getBooleanExtra(Intents.Comun.INGAME_SCAN,
 						false);
 				mochilaDirecto = data.getBooleanExtra(Intents.Action.MOCHILA,
@@ -119,11 +127,11 @@ public class InGame extends Activity implements OnClickListener {
 				}
 				break;
 
-			case cCamara:
+			case cCAMARA:
 				qrLeido = data.getStringExtra("SCAN_RESULT");
 				lanzaMinijuego(qrLeido);
 				break;
-			case cMochila:
+			case cMOCHILA:
 				scanDirecto = data.getBooleanExtra(Intents.Comun.INGAME_SCAN,
 						false);
 				mapaDirecto = data.getBooleanExtra(Intents.Action.MAPA, false);
@@ -138,7 +146,7 @@ public class InGame extends Activity implements OnClickListener {
 					// hacer nada
 				}
 				break;
-			case cMinijuego:
+			case cMINIJUEGO:
 				jugador = (Jugador) data
 						.getSerializableExtra(Intents.Comun.JUGADOR);
 				updateJugador();
@@ -146,42 +154,85 @@ public class InGame extends Activity implements OnClickListener {
 				boolean superado = data.getBooleanExtra(Intents.Comun.superado,
 						false);
 				int objeto = data.getIntExtra(Intents.Comun.objeto, 0);
-				// obtener imagen del objeto
-				String objStr="",faseStr= "";
+
+				// obtener resultados del minijuego
+				String objStr = "",
+				faseStr = "",
+				textoDialog = "";
+				int idIvDialog = 0;
+				// en funcion del objeto actualizo las variables a pasar al
+				// dialog
 				switch (objeto) {
 				case 1:
 					objStr = "Papel 1";
-					faseStr="Ascensor";
+					idIvDialog = R.drawable.papel1;
+					faseStr = "Ascensor";
 					break;
 				case 2:
 					objStr = "Papel 2";
-					faseStr="Reinas";
+					idIvDialog = R.drawable.papel2;
+					faseStr = "Reinas";
 					break;
 				case 3:
 					objStr = "Papel 3";
-					faseStr="Puzzle";
+					idIvDialog = R.drawable.papel3;
+					faseStr = "Puzzle";
 					break;
 				case 4:
-					objStr = "Papel 4";
-					faseStr="Cuadrado";
+					objStr = "Enigma";
+					idIvDialog = R.drawable.enigma;
+					faseStr = "Cuadrado";
 					break;
 				}
 
-				if (superado)
-					lanzarAvisoMJ("Minijuego " + faseStr
-							+ "completado.\nHas conseguido el objeto: "
+				if (superado) {
+					textoDialog = "Minijuego " + faseStr
+							+ " completado\nHas conseguido el objeto: "
 							+ objStr + "\nTu puntuacion ahora es: "
-							+ jugador.getScore());
-				else
-					lanzarAvisoMJ("Minijuego "
+							+ jugador.getScore();
+				} else {
+					textoDialog = "Minijuego "
 							+ qrLeido
-							+ "no completado.\nTendrás que volver a scanear el QR para lanzarlo de nuevo!");
+							+ "no completado\nTendrás que volver a scanear el QR para lanzar de nuevo el minijuego!";
+				}
+				Bundle dialogBundle = new Bundle();
+				dialogBundle.putString("textoDialog", textoDialog);
+				dialogBundle.putInt("idIvDialog", idIvDialog);
+				// lanzarAvisoMJ(textoDialog);
+				showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
 				break;
 			}
 
 		} else if (resultCode == RESULT_CANCELED) {
 			// si no ha hecho nada
 		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle bundle) {
+		Dialog dialog = null;
+		switch (id) {
+
+		case DIALOG_MINIJUEGOS_RESULT:
+			// obtiene datos
+			String textoDialog = bundle.getString("textoDialog");
+			int idIvDialog = bundle.getInt("idIvDialog");
+			// crea dialog
+			dialog = new Dialog(this);
+			dialog.setContentView(R.layout.dialogimg);
+			dialog.setTitle("Resultado Minijuego");
+			// pone elementos
+			TextView tvDialog = (TextView) dialog.findViewById(R.id.tvDialog);
+			tvDialog.setText(textoDialog);
+			ImageView ivDialog = (ImageView) dialog.findViewById(R.id.ivDialog);
+			ivDialog.setImageResource(idIvDialog);
+			// ivDialog.setImageResource(R.drawable.bonoff);
+			Button bDialog = (Button) dialog.findViewById(R.id.bDialog);
+			bDialog.setOnClickListener(this);
+			break;
+		}
+
+		return dialog;
 	}
 
 	@Override
@@ -225,9 +276,10 @@ public class InGame extends Activity implements OnClickListener {
 		case R.id.bReinas:
 			Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
 			iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivityForResult(iReinas, cMinijuego);
+			startActivityForResult(iReinas, cMINIJUEGO);
 			break;
-		default:
+		case R.id.bDialog:
+			dismissDialog(DIALOG_MINIJUEGOS_RESULT);
 			break;
 		}
 	}
@@ -267,7 +319,7 @@ public class InGame extends Activity implements OnClickListener {
 	private void lanzaMochila() {
 		Intent iMochila = new Intent(Intents.Action.MOCHILA);
 		iMochila.putExtra(Intents.Comun.JUGADOR, jugador);
-		startActivityForResult(iMochila, cMochila);
+		startActivityForResult(iMochila, cMOCHILA);
 	}
 
 	/**
@@ -276,7 +328,7 @@ public class InGame extends Activity implements OnClickListener {
 	private void lanzaMapa() {
 		Intent iMapa = new Intent(Intents.Action.MAPA);
 		iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
-		startActivityForResult(iMapa, cMapa);
+		startActivityForResult(iMapa, cMAPA);
 	}
 
 	/**
@@ -286,7 +338,7 @@ public class InGame extends Activity implements OnClickListener {
 		Intent iScan = new Intent(Intents.Action.SCAN);
 		iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		iScan.putExtra(Intents.Comun.JUGADOR, jugador);
-		startActivityForResult(iScan, cCamara);
+		startActivityForResult(iScan, cCAMARA);
 	}
 
 	/**
@@ -313,7 +365,7 @@ public class InGame extends Activity implements OnClickListener {
 				Intent iMinijuego = new Intent(Intents.Comun.BASE_MINIJUEGOS
 						+ qrMiniJuego);
 				iMinijuego.putExtra(Intents.Comun.JUGADOR, jugador);
-				startActivityForResult(iMinijuego, cMinijuego);
+				startActivityForResult(iMinijuego, cMINIJUEGO);
 			}
 		}
 		// no se lanza el minijuego porque no se corresponde con uno que exista
@@ -341,6 +393,7 @@ public class InGame extends Activity implements OnClickListener {
 		builder.show();
 	}
 
+	// Metodo antiguo para lanzar el aviso de minijuego
 	/**
 	 * Metodo que lanza el Dialog para salida del minijuego
 	 */

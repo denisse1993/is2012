@@ -9,12 +9,14 @@ package com.cinnamon.is.game;
 
 import java.io.Serializable;
 
+import com.cinnamon.is.comun.DbAdapter;
+
 /**
  * Clase que representa a un jugador en el juego. implementa serializable para
  * poder ser pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.3 12.12.2011
+ * @version 1.4 13.12.2011
  */
 public class Jugador implements Serializable {
 
@@ -54,7 +56,7 @@ public class Jugador implements Serializable {
 	/**
 	 * ID para la serializacion
 	 */
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 4L;
 
 	/**
 	 * Genera un jugador por parametros
@@ -109,6 +111,7 @@ public class Jugador implements Serializable {
 		this.fase3 = fase3;
 		this.fase4 = fase4;
 		this.hoja = hoja;
+		this.mochila = new int[4];
 		intToMochila(mochila);
 	}
 
@@ -291,7 +294,7 @@ public class Jugador implements Serializable {
 	public void superaFase(int fase) {
 		modificaFase(fase, 1);
 	}
-	
+
 	/**
 	 * Metodo que pone la fase actual
 	 * 
@@ -299,7 +302,7 @@ public class Jugador implements Serializable {
 	 *            la fase actual
 	 */
 	public void actualFase(int fase) {
-		modificaFase(fase,2);
+		modificaFase(fase, 2);
 	}
 
 	/**
