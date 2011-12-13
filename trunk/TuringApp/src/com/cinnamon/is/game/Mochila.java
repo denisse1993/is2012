@@ -7,14 +7,25 @@
 //
 package com.cinnamon.is.game;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
+import android.view.SurfaceHolder.Callback;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Intents;
@@ -30,18 +41,28 @@ public class Mochila extends Activity implements OnClickListener {
 
 	/**
 	 * Jugador actual en la aplicacion
-	 */
+	 */ 
 	private Jugador jugador;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.mochila);
-
+		
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
-		// controla objetos escogidos en base a
-		// jugador.getMochila();
+		
+		ImageView papel1 = (ImageView)findViewById(R.id.ivPapel1);
+		ImageView papel2 = (ImageView)findViewById(R.id.ivPapel2);
+		ImageView papel3 = (ImageView)findViewById(R.id.ivPapel3);
+		ImageView enigma = (ImageView)findViewById(R.id.ivEnigma);
+		
+		int[] mochila = jugador.getMochila();
+		if (mochila[0]== 0)	papel1.setVisibility(View.INVISIBLE); else papel1.setVisibility(View.VISIBLE);
+		if (mochila[1]== 0) papel2.setVisibility(View.INVISIBLE); else papel2.setVisibility(View.VISIBLE);
+		if (mochila[2]== 0)	papel3.setVisibility(View.INVISIBLE); else papel3.setVisibility(View.VISIBLE);
+		if (mochila[3]== 0) enigma.setVisibility(View.INVISIBLE); else enigma.setVisibility(View.VISIBLE);		
 	}
 
 	@Override
@@ -88,7 +109,10 @@ public class Mochila extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+	
+	
 
 }
