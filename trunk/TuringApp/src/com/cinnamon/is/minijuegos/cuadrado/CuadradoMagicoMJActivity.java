@@ -1,9 +1,5 @@
 package com.cinnamon.is.minijuegos.cuadrado;
 
-import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Minijuego;
-
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +11,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Minijuego;
 
 public class CuadradoMagicoMJActivity extends Minijuego implements
 		OnTouchListener {

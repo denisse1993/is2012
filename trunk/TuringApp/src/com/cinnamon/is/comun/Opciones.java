@@ -17,7 +17,6 @@ import android.preference.PreferenceActivity;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.game.Jugador;
-import com.cinnamon.is.game.MainMenu;
 
 /**
  * Actividad abtracta extiende de PreferenceActivity para representar las
