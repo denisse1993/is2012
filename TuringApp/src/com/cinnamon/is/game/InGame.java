@@ -16,6 +16,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -26,7 +29,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
@@ -44,7 +49,7 @@ import com.cinnamon.is.comun.Intents;
  * @author Cinnamon Team
  * @version 1.6 13.12.2011
  */
-public class InGame extends Activity implements OnClickListener {
+public class InGame extends Activity implements OnClickListener, OnCompletionListener {
 
 	/**
 	 * DbAdapter para interaccionar con la base de datos
@@ -75,27 +80,89 @@ public class InGame extends Activity implements OnClickListener {
 	 */
 	private Jugador jugador;
 
-	private Button bOpciones;
-	private Button bReinas;
+	// private Button bOpciones;
+	// private Button bReinas;
+
+	private VideoView vd;
+	// private MediaController mc;
+
+	private Uri uriVideo;
 
 	// texview de prueba para comprobar que funciona lo de la puntuacion
-	private TextView tvScoreActual;
+	// private TextView tvScoreActual;
+
+	public int fase = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ingame);
+		setContentView(R.layout.videosurface);
 		inicializar();
 
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
+		
+		fase = getFase();
 
 		// pone el textview la puntuacion del jugador
-		tvScoreActual.setText(String.valueOf(jugador.getScore()));
+		// tvScoreActual.setText(String.valueOf(jugador.getScore()));
 
 		// establecer hoja de libro usar la variable hoja de jugador
 		// jugador.getHoja();
 
+	}
+
+	private void inicializarVideo() {
+
+		/*
+		 * mc = new MediaController(this); vd.setMediaController(mc);
+		 */
+		vd.setVideoURI(uriVideo);
+		vd.bringToFront();
+		vd.setVisibility(View.VISIBLE);
+		vd.start();
+
+	}
+
+	private int getFase() {
+		if ((jugador.getFase1() == 0) || (jugador.getFase1() == 0)
+				|| (jugador.getFase1() == 0) || (jugador.getFase1() == 0))
+			return 0;
+		if (jugador.getFase1() == 2)
+			return 1;
+		if (jugador.getFase2() == 2)
+			return 2;
+		if (jugador.getFase3() == 2)
+			return 3;
+		if (jugador.getFase4() == 2)
+			return 4;
+		else
+			return 5;
+
+	}
+
+	private Uri escogerVideo() {
+		switch (fase){
+		case 0 : return Uri.parse("android.resource://com.cinnamon.is/"
+				+ R.raw.open_book);
+				
+		case 1 : return Uri.parse("android.resource://com.cinnamon.is/"
+				+ R.raw.open_book);
+				
+		case 2 : return Uri.parse("android.resource://com.cinnamon.is/"
+				+ R.raw.open_book);
+				
+		case 3 : return Uri.parse("android.resource://com.cinnamon.is/"
+				+ R.raw.open_book);
+				
+		case 4 : return Uri.parse("android.resource://com.cinnamon.is/"
+				+ R.raw.open_book);
+				
+		case 5 : return Uri.parse("android.resource://com.cinnamon.is/"
+				+ R.raw.open_book);
+								
+		}
+		return null;
 	}
 
 	@Override
@@ -157,8 +224,9 @@ public class InGame extends Activity implements OnClickListener {
 
 				// obtener resultados del minijuego
 				String objStr = "",
-				faseStr = "",
-				textoDialog = "";
+					faseStr = "",
+					textoDialog = "",
+					title = "";
 				int idIvDialog = 0;
 				// en funcion del objeto actualizo las variables a pasar al
 				// dialog
@@ -190,7 +258,9 @@ public class InGame extends Activity implements OnClickListener {
 							+ " completado\nHas conseguido el objeto: "
 							+ objStr + "\nTu puntuacion ahora es: "
 							+ jugador.getScore();
+					title = "Resulatado Minijuego";
 				} else {
+					title = "Minijuego no superado";
 					textoDialog = "Minijuego "
 							+ qrLeido
 							+ "no completado\nTendrás que volver a scanear el QR para lanzar de nuevo el minijuego!";
@@ -198,8 +268,11 @@ public class InGame extends Activity implements OnClickListener {
 				Bundle dialogBundle = new Bundle();
 				dialogBundle.putString("textoDialog", textoDialog);
 				dialogBundle.putInt("idIvDialog", idIvDialog);
+				dialogBundle.putString("title", title);
 				// lanzarAvisoMJ(textoDialog);
 				showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
+				uriVideo = escogerVideo();
+				inicializarVideo();
 				break;
 			}
 
@@ -217,10 +290,11 @@ public class InGame extends Activity implements OnClickListener {
 			// obtiene datos
 			String textoDialog = bundle.getString("textoDialog");
 			int idIvDialog = bundle.getInt("idIvDialog");
+			String title = bundle.getString("title");
 			// crea dialog
 			dialog = new Dialog(this);
 			dialog.setContentView(R.layout.dialogimg);
-			dialog.setTitle("Resultado Minijuego");
+			dialog.setTitle(title);
 			// pone elementos
 			TextView tvDialog = (TextView) dialog.findViewById(R.id.tvDialog);
 			tvDialog.setText(textoDialog);
@@ -267,17 +341,15 @@ public class InGame extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.bOpciones:
-			// El boton bOpciones se comporta como el boton fisico MENU del
-			// dispositivo
-			this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL,
-					new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU));
-			break;
-		case R.id.bReinas:
-			Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
-			iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivityForResult(iReinas, cMINIJUEGO);
-			break;
+		/*
+		 * case R.id.bOpciones: // El boton bOpciones se comporta como el boton
+		 * fisico MENU del // dispositivo
+		 * this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL, new
+		 * KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU)); break; case
+		 * R.id.bReinas: Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
+		 * iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
+		 * startActivityForResult(iReinas, cMINIJUEGO); break;
+		 */
 		case R.id.bDialog:
 			dismissDialog(DIALOG_MINIJUEGOS_RESULT);
 			break;
@@ -288,17 +360,24 @@ public class InGame extends Activity implements OnClickListener {
 	 * Metodo auxiliar para inicializar la actividad
 	 */
 	private void inicializar() {
-		tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
-		bOpciones = (Button) findViewById(R.id.bOpciones);
-		bOpciones.setOnClickListener(this);
+		// tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
+
+		vd = (VideoView) findViewById(R.id.svVideo);
+		vd.setOnCompletionListener(this);
+		/*
+		 * bOpciones = (Button) findViewById(R.id.bOpciones);
+		 * bOpciones.setOnClickListener(this);
+		 */
 
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 
 		// prueba lanzar juego
-		bReinas = (Button) findViewById(R.id.bReinas);
-		bReinas.setOnClickListener(this);
+		/*
+		 * bReinas = (Button) findViewById(R.id.bReinas);
+		 * bReinas.setOnClickListener(this);
+		 */
 	}
 
 	/**
@@ -310,7 +389,7 @@ public class InGame extends Activity implements OnClickListener {
 				jugador.getFase1(), jugador.getFase2(), jugador.getFase3(),
 				jugador.getFase4());
 		// pone el textview la puntuacion del jugador
-		tvScoreActual.setText(String.valueOf(jugador.getScore()));
+		// tvScoreActual.setText(String.valueOf(jugador.getScore()));
 	}
 
 	/**
@@ -407,5 +486,53 @@ public class InGame extends Activity implements OnClickListener {
 				});
 		builder.show();
 	}
+
+	public void lanzarJerogrifico(String texto) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(texto).setNegativeButton("Cerrar",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
+	}
+
+	@Override
+	public void onCompletion(MediaPlayer mediaPlayer) {
+		
+		String texto="";
+		switch (fase) {
+		case 0:
+			texto = getString(R.string.Jerogrifico1);
+			lanzarJerogrifico(texto);
+			break;
+		case 1:
+			texto = getString(R.string.Jerogrifico2);
+			lanzarJerogrifico(texto);
+			break;
+		case 2:
+			texto = getString(R.string.Jerogrifico3);
+			lanzarJerogrifico(texto);
+			break;
+		case 3:
+			texto = getString(R.string.Jerogrifico4);
+			lanzarJerogrifico(texto);
+			break;
+		case 4:
+			String title ="Última fase",
+			textoDialog = "Ha superado todas las pruebas ya sólo le queda resolver el misterio";
+			//falta poner bien la imagen
+			int idIvDialog= R.drawable.papel3;
+			Bundle dialogBundle = new Bundle();
+			dialogBundle.putString("textoDialog", textoDialog);
+			dialogBundle.putInt("idIvDialog", idIvDialog);
+			dialogBundle.putString("title", title);
+			showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
+			break;
+		}
+
+	}
+	
 
 }
