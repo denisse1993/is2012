@@ -20,13 +20,11 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -81,16 +79,23 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	private Jugador jugador;
 
 	// private Button bOpciones;
-	// private Button bReinas;
-
+	 private Button bReinas;
+	 /**
+	  * VideoView para reproducir el video 
+	  */
 	private VideoView vd;
-	// private MediaController mc;
-
+	//private MediaController mc;
+	/**
+	 * URI con la dirección del Video
+	 */
 	private Uri uriVideo;
 
 	// texview de prueba para comprobar que funciona lo de la puntuacion
 	// private TextView tvScoreActual;
 
+	/**
+	 * Fase del juego en la que nos encontramos
+	 */
 	public int fase = 0;
 
 	@Override
@@ -103,27 +108,33 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 				Intents.Comun.JUGADOR);
 		
 		fase = getFase();
-
-		// pone el textview la puntuacion del jugador
-		// tvScoreActual.setText(String.valueOf(jugador.getScore()));
-
-		// establecer hoja de libro usar la variable hoja de jugador
-		// jugador.getHoja();
+		
+		uriVideo = escogerVideo();
+		inicializarVideo();
+		
 
 	}
 
+	/**
+	 * Inicializa el video con su correspondiente URI
+	 * le añadimos visibilidad y lo traemos al frente
+	 */
 	private void inicializarVideo() {
 
-		/*
-		 * mc = new MediaController(this); vd.setMediaController(mc);
-		 */
+		//La barra del play necesaria para depurar
+		/*mc = new MediaController(this);
+		vd.setMediaController(mc);*/
+		 
 		vd.setVideoURI(uriVideo);
 		vd.bringToFront();
 		vd.setVisibility(View.VISIBLE);
 		vd.start();
 
 	}
-
+	/**
+	 * Descodificamos la fase de jugador en la que nos encontramos
+	 * @return devolvemos la fase en la que nos encontramos (0..5)
+	 */
 	private int getFase() {
 		if ((jugador.getFase1() == 0) || (jugador.getFase1() == 0)
 				|| (jugador.getFase1() == 0) || (jugador.getFase1() == 0))
@@ -140,7 +151,13 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 			return 5;
 
 	}
+	
 
+	/**
+	 * Seleccionamos una dirección del video según la fase en la que
+	 * nos encontremos
+	 * @return URI con la dirección del video a reproducir
+	 */
 	private Uri escogerVideo() {
 		switch (fase){
 		case 0 : return Uri.parse("android.resource://com.cinnamon.is/"
@@ -171,7 +188,9 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 		mDbHelper.close();
 	}
 
-	// este metodo se ejecuta al volver de la aplicacion lanzada con forresult
+	/**
+	 * Se ejecuta al volver de la aplicacion lanzada con forresult
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		boolean scanDirecto, mochilaDirecto, mapaDirecto;
@@ -258,7 +277,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 							+ " completado\nHas conseguido el objeto: "
 							+ objStr + "\nTu puntuacion ahora es: "
 							+ jugador.getScore();
-					title = "Resulatado Minijuego";
+					title = "Resultado Minijuego";
 				} else {
 					title = "Minijuego no superado";
 					textoDialog = "Minijuego "
@@ -346,10 +365,11 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 		 * fisico MENU del // dispositivo
 		 * this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL, new
 		 * KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU)); break; case
-		 * R.id.bReinas: Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
-		 * iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
-		 * startActivityForResult(iReinas, cMINIJUEGO); break;
-		 */
+		 */ 
+		case R.id.bReinas: Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
+		  iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
+		  startActivityForResult(iReinas, cMINIJUEGO); break;
+		 
 		case R.id.bDialog:
 			dismissDialog(DIALOG_MINIJUEGOS_RESULT);
 			break;
@@ -358,6 +378,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 
 	/**
 	 * Metodo auxiliar para inicializar la actividad
+	 * de la base de datos y el VideoView
 	 */
 	private void inicializar() {
 		// tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
@@ -374,14 +395,14 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 		mDbHelper.open(false);
 
 		// prueba lanzar juego
-		/*
-		 * bReinas = (Button) findViewById(R.id.bReinas);
-		 * bReinas.setOnClickListener(this);
-		 */
+		
+		  bReinas = (Button) findViewById(R.id.bReinas);
+		  bReinas.setOnClickListener(this);
+		 
 	}
 
 	/**
-	 * Metodo que actualiza al jugador accediendo a la base de datos
+	 * Actualiza al jugador accediendo a la base de datos
 	 */
 	private void updateJugador() {
 		mDbHelper.updateRow("'" + jugador.getNombre() + "'",
@@ -393,7 +414,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	}
 
 	/**
-	 * Metodo que lanza la mochila
+	 * Lanza la mochila
 	 */
 	private void lanzaMochila() {
 		Intent iMochila = new Intent(Intents.Action.MOCHILA);
@@ -402,7 +423,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	}
 
 	/**
-	 * Metodo que lanza el mapa
+	 * Lanza el mapa
 	 */
 	private void lanzaMapa() {
 		Intent iMapa = new Intent(Intents.Action.MAPA);
@@ -411,7 +432,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	}
 
 	/**
-	 * Metodo que lanza el scaneo de codigos QR
+	 * Lanza el scaneo de codigos QR
 	 */
 	private void lanzaScan() {
 		Intent iScan = new Intent(Intents.Action.SCAN);
@@ -421,7 +442,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	}
 
 	/**
-	 * Metodo que lanza el menu principal
+	 * Lanza el menu principal
 	 */
 	private void lanzaMainMenu() {
 		Intent iMainMenu = new Intent(Intents.Action.MAINMENU);
@@ -430,7 +451,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	}
 
 	/**
-	 * Método que lanza el minijuego del "qrMinijuego", comprobando que el
+	 * Lanza el minijuego del "qrMinijuego", comprobando que el
 	 * codigoQR leido es correcto para lanzar la actividad asociada
 	 * 
 	 * @param qrMiniJuego
@@ -451,7 +472,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	}
 
 	/**
-	 * Metodo que lanza el dialog para escoger si quieres salir al menu
+	 * Lanza el dialog para escoger si quieres salir al menu
 	 * principal o no
 	 */
 	private void lanzaExitDialog() {
@@ -474,7 +495,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 
 	// Metodo antiguo para lanzar el aviso de minijuego
 	/**
-	 * Metodo que lanza el Dialog para salida del minijuego
+	 * Lanza el Dialog para salida del minijuego
 	 */
 	private void lanzarAvisoMJ(String texto) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -486,7 +507,10 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 				});
 		builder.show();
 	}
-
+	/**
+	 * Lanza un Dialog con un string dado
+	 * @param texto string que queremos que se visualize en el dialog
+	 */
 	public void lanzarJerogrifico(String texto) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
@@ -497,14 +521,17 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 				});
 		builder.show();
 	}
-
+	/**
+	 * Método heredado para saber que hacer al acabar el video
+	 * Lanza un dialog segun la fase de la que provengamos
+	 */
 	@Override
 	public void onCompletion(MediaPlayer mediaPlayer) {
 		
 		String texto="";
 		switch (fase) {
 		case 0:
-			texto = getString(R.string.Jerogrifico1);
+			texto = "waaaaaaaaaaaa";
 			lanzarJerogrifico(texto);
 			break;
 		case 1:
@@ -519,9 +546,12 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 			texto = getString(R.string.Jerogrifico4);
 			lanzarJerogrifico(texto);
 			break;
-		case 4:
+		case 4:texto = getString(R.string.Jerogrifico4);
+			lanzarJerogrifico(texto);
+			break;
+		case 5:
 			String title ="Última fase",
-			textoDialog = "Ha superado todas las pruebas ya sólo le queda resolver el misterio";
+			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio";
 			//falta poner bien la imagen
 			int idIvDialog= R.drawable.papel3;
 			Bundle dialogBundle = new Bundle();
