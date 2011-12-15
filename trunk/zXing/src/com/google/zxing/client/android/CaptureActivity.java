@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android;
 
+import com.cinnamon.is.game.Jugador;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
@@ -160,7 +161,7 @@ public final class CaptureActivity extends Activity implements
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		resultView = findViewById(R.id.result_view);
 		statusView = (TextView) findViewById(R.id.status_view);
-		statusView.setVisibility(View.INVISIBLE);
+		//statusView.setVisibility(View.INVISIBLE);
 		handler = null;
 		lastResult = null;
 		hasSurface = false;
@@ -168,7 +169,7 @@ public final class CaptureActivity extends Activity implements
 		historyManager.trimHistory();
 		inactivityTimer = new InactivityTimer(this);
 		beepManager = new BeepManager(this);
-
+		jugador = (Jugador) getIntent().getSerializableExtra("jugador");
 		showHelpOnFirstLaunch();
 	}
 
@@ -590,7 +591,7 @@ public final class CaptureActivity extends Activity implements
 			intent.putExtra(Intents.Scan.RESULT_FORMAT, rawResult
 					.getBarcodeFormat().toString());
 
-			jugador = (Jugador) getIntent().getSerializableExtra("jugador");
+			
 			intent.putExtra("jugador", jugador);
 
 			byte[] rawBytes = rawResult.getRawBytes();
