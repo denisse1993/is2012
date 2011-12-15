@@ -281,12 +281,13 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 				} else {
 					title = "Minijuego no superado";
 					textoDialog = "Minijuego "
-							+ qrLeido
-							+ "no completado\nTendrás que volver a scanear el QR para lanzar de nuevo el minijuego!";
+							+ faseStr
+							+ " no completado\nTendrás que volver a scanear el QR para lanzar de nuevo el minijuego!";
 				}
 				Bundle dialogBundle = new Bundle();
 				dialogBundle.putString("textoDialog", textoDialog);
 				dialogBundle.putInt("idIvDialog", idIvDialog);
+				dialogBundle.putBoolean(Intents.Comun.superado, superado);
 				dialogBundle.putString("title", title);
 				// lanzarAvisoMJ(textoDialog);
 				showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
@@ -309,6 +310,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 			// obtiene datos
 			String textoDialog = bundle.getString("textoDialog");
 			int idIvDialog = bundle.getInt("idIvDialog");
+			boolean superado = bundle.getBoolean(Intents.Comun.superado);
 			String title = bundle.getString("title");
 			// crea dialog
 			dialog = new Dialog(this);
@@ -319,6 +321,8 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 			tvDialog.setText(textoDialog);
 			ImageView ivDialog = (ImageView) dialog.findViewById(R.id.ivDialog);
 			ivDialog.setImageResource(idIvDialog);
+			if (!superado)
+				ivDialog.setVisibility(View.GONE);
 			// ivDialog.setImageResource(R.drawable.bonoff);
 			Button bDialog = (Button) dialog.findViewById(R.id.bDialog);
 			bDialog.setOnClickListener(this);
@@ -360,16 +364,23 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.bOpciones:
+			// El boton bOpciones se comporta como el boton fisico MENU del
+			// dispositivo
+			this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL,
+					new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU));
+			break;
+		case R.id.bReinas:
+			Intent iReinas = new Intent(Intents.Action.REINASMJ);
+			iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
+			startActivityForResult(iReinas, cMINIJUEGO);
+			break;
 		/*
 		 * case R.id.bOpciones: // El boton bOpciones se comporta como el boton
 		 * fisico MENU del // dispositivo
 		 * this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL, new
 		 * KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU)); break; case
 		 */ 
-		case R.id.bReinas: Intent iReinas = new Intent(Intents.Action.ASCENSORMJ);
-		  iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
-		  startActivityForResult(iReinas, cMINIJUEGO); break;
-		 
 		case R.id.bDialog:
 			dismissDialog(DIALOG_MINIJUEGOS_RESULT);
 			break;

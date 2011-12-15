@@ -51,14 +51,11 @@ public final class Intents {
 		// TODO PUZZLE
 		public static final String PUZZLEMJ = "com.cinnamon.is.minijuegos.puzzle.PuzzleMJ";
 
-		// TODO REINAS
+		// Para lanzar minijuego reinas
 		public static final String REINASMJ = "com.cinnamon.is.minijuegos.reinas.REINASMJ";
 
 		// TODO END
 		public static final String ENDMJ = "com.cinnamon.is.minijuegos.end.ENDMJ";
-
-		// prueba d juego
-		public static final String REINAS = "com.cinnamon.is.minijuegos.reinas.REINAS";
 
 		// este intent hay que poner lo de android asi por el tema de la
 		// libreria zXing
@@ -77,8 +74,17 @@ public final class Intents {
 	public static final class Comun {
 
 		/**
+		 * <p>
 		 * Array de String para guardar la ruta de los minijuegos, se usa para
 		 * comprobar que el minijuego que se va a lanzar es correcto
+		 * </p>
+		 * <code><pre>
+		 * Posicion 0 - Cuadrado 
+		 * Posicion 1 - Ascensor
+		 * Posicion 2 - Reinas
+		 * Posicion 3 - Puzzle
+		 * Posicion 4 - Final
+		 * </pre></code>
 		 */
 		public static final String[] minijuegos = {
 				"cuadrado.CUADRADOMAGICOMJINTRO", "ascensor.ASCENSORMJ",
@@ -102,7 +108,8 @@ public final class Intents {
 		public static final String JUGADOR = "jugador";
 
 		/**
-		 * String para usar cuando se quiera pasar el boolean superado del mj al ingame
+		 * String para usar cuando se quiera pasar el boolean superado del mj al
+		 * ingame
 		 */
 		public static final String superado = "superado";
 		/**
