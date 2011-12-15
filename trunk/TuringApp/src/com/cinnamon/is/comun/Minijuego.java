@@ -7,7 +7,13 @@
 //
 package com.cinnamon.is.comun;
 
+import com.cinnamon.is.game.InGame;
+import com.cinnamon.is.game.Jugador;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 
 /**
  * Actividad abtracta que representa un minijuego
@@ -16,6 +22,11 @@ import android.app.Activity;
  * @version 1.4 12.12.2011
  */
 public abstract class Minijuego extends Activity {
+
+	/**
+	 * Jugador actual de la aplicacion
+	 */
+	protected Jugador jugador;
 
 	/**
 	 * El nombre del minijuego
@@ -116,6 +127,49 @@ public abstract class Minijuego extends Activity {
 			return 0;
 	}
 
+	/**
+	 * Metodo que finaliza el minijuego con resultado superado o no
+	 */
+	protected void finalizar() {
+		finishTime();
+		int puntuacion = calcularPuntuacion();
+		
+		if (superado) {
+			jugador.setScore(jugador.getScore() + puntuacion);
+			jugador.addObjeto(objeto);
+			jugador.superaFase(fase);
+		} else
+			jugador.actualFase(fase);
+
+		Intent r = new Intent();
+		r.putExtra(Intents.Comun.superado, superado);
+		r.putExtra(Intents.Comun.objeto, objeto);
+		r.putExtra(Intents.Comun.JUGADOR, jugador);
+		setResult(RESULT_OK, r);
+		finish();
+	}
+
+	/**
+	 * Metodo que lanza el dialog para escoger si quieres salir del minijuego
+	 */
+	protected void lanzaExitDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(
+				"¿Quieres salir del minijuego sin completarlo?\n¡Deberás volver a escanear el QR para lanzarlo de nuevo!")
+				.setCancelable(false)
+				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finalizar();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
+	}
+
 	// getters & setters
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -142,10 +196,10 @@ public abstract class Minijuego extends Activity {
 	 * Actualiza el objeto del minijuego
 	 * </p>
 	 * <code><pre>
-	 * Valor 1 - papel 1
-	 * Valor 2 - papel 2
-	 * Valor 3 - papel 3
-	 * Valor 4 - maquina</pre></code></pre>
+	 * Valor 1 - papel 1 - Ascensor
+	 * Valor 2 - papel 2 - Reinas
+	 * Valor 3 - papel 3 - Puzzle
+	 * Valor 4 - maquina - Cuadrado</pre></code></pre>
 	 * 
 	 * @param objeto
 	 *            a poner

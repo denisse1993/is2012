@@ -49,7 +49,6 @@ public class Opciones extends PreferenceActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.opciones);
 		jugador = (Jugador) getIntent().getSerializableExtra(

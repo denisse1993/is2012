@@ -126,16 +126,14 @@
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.ascensor.ASCENSORMJ" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".minijuegos.reinas.Reinas" >
+            android:name=".minijuegos.reinas.ReinasMJ" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.reinas.REINAS" />
-
+                <action android:name="com.cinnamon.is.minijuegos.reinas.REINASMJ" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -144,7 +142,6 @@
             android:name=".minijuegos.end.EndMJ" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.end.ENDMJ" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
