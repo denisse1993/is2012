@@ -2,12 +2,6 @@ package com.cinnamon.is.minijuegos.reinas;
 
 import java.util.Iterator;
 
-import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Intents;
-import com.cinnamon.is.comun.Minijuego;
-import com.cinnamon.is.game.Jugador;
-
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +13,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Intents;
+import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.game.Jugador;
 
 public class ReinasMJ extends Minijuego implements OnTouchListener {
 
@@ -34,8 +33,10 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 	Reina rMuevo = null;
 	Bitmap reinaImage = null;
 	boolean escorrecto = false;
+	boolean fin = false;
 
 	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 
 		super.onCreate(savedInstanceState);
 		ourSurfaceView = new MyBringBackSurface(this);
@@ -46,13 +47,13 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		t = new Tablero();
 		setContentView(ourSurfaceView);
 
-		// Herencia Minijuego
+		// Pone valores del minijuego
 		startTime();
 		setNombre(Intents.Comun.minijuegos[2]);
-		setObjeto(1);
+		setObjeto(2);
 		setFase(3);
 		setSuperado(false);
-		// jugador
+
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 
@@ -60,25 +61,20 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 
 	@Override
 	protected void onPause() {
-
+		// TODO Auto-generated method stub
 		super.onPause();
 		ourSurfaceView.pause();
 	}
 
 	@Override
 	protected void onResume() {
-
+		// TODO Auto-generated method stub
 		super.onResume();
 		ourSurfaceView.resume();
 	}
 
-	@Override
-	public void onBackPressed() {
-		lanzaExitDialog();
-	}
-
 	public boolean onTouch(View v, MotionEvent event) {
-
+		// TODO Auto-generated method stub
 		//
 		/*
 		 * switch(event.getAction()){ case MotionEvent.ACTION_DOWN: x =
@@ -128,6 +124,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		// Button comprobar;
 
 		public MyBringBackSurface(Context context) {
+			// TODO Auto-generated constructor stub
 			super(context);
 			ourHolder = getHolder();
 
@@ -149,6 +146,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				try {
 					ourThread.join();
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
@@ -164,7 +162,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 
 		@Override
 		public void run() {
-
+			// TODO Auto-generated method stub
 			while (isRunning) {
 				if (!ourHolder.getSurface().isValid())
 					continue;
@@ -177,8 +175,12 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				canvas.drawBitmap(table, null, rectangulo, null);
 				Bitmap boton = BitmapFactory.decodeResource(getResources(),
 						R.drawable.boton);
-				Rect rect2 = new Rect(50, canvas.getWidth() + 50, 200,
-						canvas.getWidth() + 150);
+				int centraBoton = (canvas.getHeight() - canvas.getWidth()) / 2;
+				Rect rect2 = new Rect(20, canvas.getWidth() + centraBoton,
+						boton.getWidth() + 20, canvas.getWidth() + centraBoton
+								+ 20);
+				// Rect rect2=new
+				// Rect(50,canvas.getWidth()+50,200,canvas.getWidth()+150);
 				canvas.drawBitmap(boton, null, rect2, null);
 				if (escorrecto) {
 					Bitmap tick = BitmapFactory.decodeResource(getResources(),
@@ -202,10 +204,15 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				int c;
 				Reina r;
 				if ((x >= 50 && x <= 150)
+						&& (!fin)
 						&& (y >= canvas.getWidth() + 50 && y <= canvas
 								.getWidth() + 150) && t.getnumReinas() == 8) {
 
 					escorrecto = comprobar();
+					if (escorrecto) {
+						fin = true;
+					}
+
 					// prueba mia dejar las reinas si el jugador falla
 				} else {
 					if (muevo) {
@@ -252,13 +259,13 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 						// Bitmap test =
 						// BitmapFactory.decodeResource(getResources(),
 						// R.drawable.reina);
-						canvas.drawBitmap(r.bmp, c * celda + 8, f * celda + 10,
-								null);
+						canvas.drawBitmap(r.bmp, c * celda + 15,
+								f * celda + 10, null);
 
 					}
-				}// minijuego resuelto
-				else {
-					superado = true;
+				} else {
+					// minijuego completo
+					setSuperado(true);
 					finalizar();
 				}
 
@@ -302,7 +309,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		}
 
 		public boolean compruebaDiagonal(int f, int c) {
-
+			// TODO Auto-generated method stub
 			int i = f;
 			int j = c;
 			// diagonal izquierda superior

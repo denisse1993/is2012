@@ -127,13 +127,18 @@ public abstract class Minijuego extends Activity {
 			return 0;
 	}
 
+	@Override
+	public void onBackPressed() {
+		lanzaExitDialog();
+	}
+
 	/**
 	 * Metodo que finaliza el minijuego con resultado superado o no
 	 */
 	protected void finalizar() {
 		finishTime();
 		int puntuacion = calcularPuntuacion();
-		
+
 		if (superado) {
 			jugador.setScore(jugador.getScore() + puntuacion);
 			jugador.addObjeto(objeto);

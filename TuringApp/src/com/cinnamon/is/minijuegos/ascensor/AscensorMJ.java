@@ -37,10 +37,4 @@ public class AscensorMJ extends Minijuego {
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 	}
-
-	@Override
-	public void onBackPressed() {
-		// termina de contar el tiempo
-		finalizar();
-	}
 }
