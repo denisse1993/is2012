@@ -9,8 +9,6 @@ package com.cinnamon.is.game;
 
 import java.io.Serializable;
 
-import com.cinnamon.is.comun.DbAdapter;
-
 /**
  * Clase que representa a un jugador en el juego. implementa serializable para
  * poder ser pasada en un intent entre activities
