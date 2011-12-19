@@ -11,19 +11,20 @@
         android:id="@+id/llDialog2"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="20"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:layout_weight="20">
 
         <ImageView
             android:id="@+id/ivDialog"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent"
+            android:background="@drawable/papel1" />
 
         <TextView
             android:id="@+id/tvDialog"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text=""
+            android:text="prueba con tecxto alsrgopasfjapjpsafalklf\ncon abrras eotneyes"
             android:textColor="#FFF" />
     </LinearLayout>
 
@@ -31,15 +32,15 @@
         android:id="@+id/llDialog3"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:orientation="horizontal"
         android:layout_weight="80"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:gravity="center" >
 
         <Button
             android:id="@+id/bDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="center"
             android:text="ok" />
     </LinearLayout>
 
