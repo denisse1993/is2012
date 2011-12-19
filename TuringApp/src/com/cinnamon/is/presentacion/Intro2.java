@@ -54,9 +54,9 @@ public class Intro2 extends Activity implements OnClickListener {
 	private void inicializar() {
 		LinearLayout screen = (LinearLayout) findViewById(R.id.screen);
 		screen.setOnClickListener(this);
-		screen.setBackgroundResource(R.drawable.intro2);
-		AnimationDrawable a = (AnimationDrawable) screen.getBackground();
-		a.start();
+		//screen.setBackgroundResource(R.drawable.);
+		//AnimationDrawable a = (AnimationDrawable) screen.getBackground();
+		//a.start();
 	}
 
 }

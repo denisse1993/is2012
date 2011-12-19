@@ -20,11 +20,13 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -161,22 +163,22 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	private Uri escogerVideo() {
 		switch (fase){
 		case 0 : return Uri.parse("android.resource://com.cinnamon.is/"
-				+ R.raw.open_book);
+				+ R.raw.video_fase1);
 				
 		case 1 : return Uri.parse("android.resource://com.cinnamon.is/"
-				+ R.raw.open_book);
+				+ R.raw.video_fase1);
 				
 		case 2 : return Uri.parse("android.resource://com.cinnamon.is/"
-				+ R.raw.open_book);
+				+ R.raw.video_fase2);
 				
 		case 3 : return Uri.parse("android.resource://com.cinnamon.is/"
-				+ R.raw.open_book);
+				+ R.raw.video_fase3);
 				
 		case 4 : return Uri.parse("android.resource://com.cinnamon.is/"
-				+ R.raw.open_book);
+				+ R.raw.video_fase4);
 				
 		case 5 : return Uri.parse("android.resource://com.cinnamon.is/"
-				+ R.raw.open_book);
+				+ R.raw.video_fase4);
 								
 		}
 		return null;
@@ -291,12 +293,13 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 				dialogBundle.putString("title", title);
 				// lanzarAvisoMJ(textoDialog);
 				showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
-				uriVideo = escogerVideo();
-				inicializarVideo();
+				
 				break;
 			}
 
 		} else if (resultCode == RESULT_CANCELED) {
+			uriVideo = escogerVideo();
+			inicializarVideo();
 			// si no ha hecho nada
 		}
 	}

@@ -31,7 +31,7 @@
             android:text="Pulse para continuar"
             android:gravity="center"
             android:textSize="30dp"
-            android:textColor="@color/white"
+            android:textColor="@color/mostaza"
             />
     </LinearLayout>
 

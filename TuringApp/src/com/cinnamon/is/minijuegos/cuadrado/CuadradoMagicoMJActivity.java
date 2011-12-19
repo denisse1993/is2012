@@ -11,6 +11,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Minijuego;
@@ -205,6 +207,8 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 						- numero9.getHeight(), null);
 				c.drawBitmap(restart, inicio + (restart.getWidth() * 4), alto
 						- restart.getHeight(), null);
+				
+				
 
 				// Ejemplo de llenado de la cuadricula con respecto a las nuevas
 				// variables

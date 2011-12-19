@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llDialog"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:weightSum="100" >
+
+    <LinearLayout
+        android:id="@+id/llDialog2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="20"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/ivDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+
+        <TextView
+            android:id="@+id/tvDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:textColor="#FFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDialog3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="80"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="ok" />
+    </LinearLayout>
+
+</LinearLayout>
