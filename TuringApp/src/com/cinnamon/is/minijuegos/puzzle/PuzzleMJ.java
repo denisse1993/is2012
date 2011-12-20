@@ -76,22 +76,6 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 				Intents.Comun.JUGADOR);
 		
 		
-		/*TODO	Dialog		
-		//	String textoDialog = "Hola",
-		/*"Enhorabuena has desbloqueado el minijuego de las 8 reinas." +
-		"/nPara conseguir el siguiente objeto necesitaras completar el siguiente tablero" +
-		"en el que se colocan ocho reinas sin que se amenacen. Una reina amenaza a otra si" +
-		" se encuentren en su misma fila, columna o diagonal." +
-		"/nSuerte.",*/
-		/*title = "8 Reinas";
-		int idIvDialog = R.drawable.tablero8reinas;
-
-		Bundle dialogBundle = new Bundle();
-		dialogBundle.putString("textoDialog", textoDialog);
-		dialogBundle.putInt("idIvDialog", idIvDialog);
-		//	dialogBundle.putBoolean(Intents.Comun.superado, superado);
-		dialogBundle.putString("title", title);
-		showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);*/
 	}
 	
 	public void ponRandomSol(foto[][] tab){		
