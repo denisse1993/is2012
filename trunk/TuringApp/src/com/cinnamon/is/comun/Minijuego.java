@@ -7,13 +7,20 @@
 //
 package com.cinnamon.is.comun;
 
-import com.cinnamon.is.game.InGame;
+import com.cinnamon.is.R;
 import com.cinnamon.is.game.Jugador;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Actividad abtracta que representa un minijuego
@@ -21,7 +28,7 @@ import android.content.Intent;
  * @author Cinnamon Team
  * @version 1.4 12.12.2011
  */
-public abstract class Minijuego extends Activity {
+public abstract class Minijuego extends Activity implements OnClickListener{
 
 	/**
 	 * Jugador actual de la aplicacion
@@ -87,6 +94,8 @@ public abstract class Minijuego extends Activity {
 	 */
 	protected final static double tos = 0.000000001;
 	protected final static double tons = 1000000000;
+
+	protected static final int DIALOG_MINIJUEGOS_INIT = 0;
 
 	/**
 	 * Inicia el contador de tiempo del minijuego
@@ -234,4 +243,60 @@ public abstract class Minijuego extends Activity {
 	public void setFase(int fase) {
 		this.fase = fase;
 	}
+	
+	
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle bundle) {
+		Dialog dialog = null;
+		switch (id) {
+
+		case DIALOG_MINIJUEGOS_INIT:
+			// obtiene datos
+			String textoDialog = bundle.getString("textoDialog");
+			int idIvDialog = bundle.getInt("idIvDialog");
+			boolean superado = bundle.getBoolean(Intents.Comun.superado);
+			String title = bundle.getString("title");
+			// crea dialog
+			dialog = new Dialog(this);
+			dialog.setContentView(R.layout.dialogimg);
+			dialog.setTitle(title);
+			// pone elementos
+			TextView tvDialog = (TextView) dialog.findViewById(R.id.tvDialog);
+			tvDialog.setText(textoDialog);
+			ImageView ivDialog = (ImageView) dialog.findViewById(R.id.ivDialog);
+			ivDialog.setImageResource(idIvDialog);
+			if (!superado)
+				ivDialog.setVisibility(View.GONE);
+			// ivDialog.setImageResource(R.drawable.bonoff);
+			Button bDialog = (Button) dialog.findViewById(R.id.bDialog);
+			bDialog.setOnClickListener(this);
+			break;
+		}
+
+		return dialog;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.bDialog:
+			dismissDialog(DIALOG_MINIJUEGOS_INIT);
+			break;
+		}
+		
+	}
+	
+	public void lanzarAvisoMJ(String texto, String title) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(title);
+		builder.setMessage(texto).setNegativeButton("Cerrar",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
+	}
+	
+	
 }

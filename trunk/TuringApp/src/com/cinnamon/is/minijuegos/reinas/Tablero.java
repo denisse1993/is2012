@@ -10,64 +10,107 @@ public class Tablero {
 	private Iterator<Reina> itReinas;
 	private int numReinas;
 	private boolean llenado[][];
-	
-	public Tablero(){
-		setReinas= new HashSet<Reina>();
-		numReinas=0;
-		llenado=new boolean [8][8];
-		for(int i=0; i<8;i++){
-			for(int j=0; j<8;j++){
-				llenado[i][j]=false;
+
+	public Tablero() {
+		setReinas = new HashSet<Reina>();
+		numReinas = 0;
+		llenado = new boolean[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				llenado[i][j] = false;
 			}
 		}
 	}
-	
-	public int getnumReinas(){
+
+	public int getnumReinas() {
 		return this.numReinas;
 	}
-	
-	public void setnumReinas(int nR){
-		this.numReinas=nR;
+
+	public void setnumReinas(int nR) {
+		this.numReinas = nR;
 	}
-	
-	public boolean addReina(Reina r, int fila, int columna){
-		if(numReinas < 8 && !llenado[fila][columna]){
+
+	public boolean addReina(Reina r, int fila, int columna) {
+		if (numReinas < 8 && !llenado[fila][columna]) {
 			setReinas.add(r);
 			numReinas++;
-			llenado[fila][columna]=true;
-			return true;			
-		}else return false;
+			llenado[fila][columna] = true;
+			return true;
+		} else
+			return false;
 	}
-	
-	public Set<Reina> getSetReinas(){
+
+	public void cambiaFyC(Reina r, int f, int c) {
+		/*
+		 * Reina rAntigua=null; if(llenado[f][c]){ rAntigua=dameReina(f,c);
+		 * removeReina(rAntigua,f,c); llenado[f][c]=true; r.col=c; r.fila=f;
+		 * }else{ llenado[r.dameFila()][r.dameCol()]=false; llenado[f][c]=true;
+		 * r.col=c; r.fila=f; }
+		 */
+		Reina rAntigua = null;
+		Reina rNueva = null;
+		if (llenado[f][c]) {
+
+			itReinas = setReinas.iterator();
+			boolean enc = false;
+			while (itReinas.hasNext() && !enc) {
+				rAntigua = itReinas.next();
+				enc = (f == rAntigua.dameFila()) && (c == rAntigua.dameCol());
+			}
+			if (enc) {
+				setReinas.remove(rAntigua);
+				numReinas--;
+				llenado[f][c] = true;
+			}
+			llenado[r.dameFila()][r.dameCol()] = false;
+
+			itReinas = setReinas.iterator();
+			enc = false;
+			while (itReinas.hasNext() && !enc) {
+				rNueva = itReinas.next();
+				enc = (r == rNueva);
+			}
+			if (enc) {
+				rNueva.col = c;
+				rNueva.fila = f;
+			}
+
+		} else {
+			llenado[r.dameFila()][r.dameCol()] = false;
+			llenado[f][c] = true;
+			r.col = c;
+			r.fila = f;
+		}
+
+	}
+
+	public Set<Reina> getSetReinas() {
 		return this.setReinas;
-	} 
-	public boolean hayReina(int fila, int columna){
+	}
+
+	public boolean hayReina(int fila, int columna) {
 		return this.llenado[fila][columna];
 	}
 
 	public void removeReina(Reina r, int f, int c) {
-		if(numReinas > 0){
+		if (numReinas > 0) {
 			setReinas.remove(r);
-			llenado[f][c]=false;
+			llenado[f][c] = false;
 			numReinas--;
 		}
-		
+
 	}
 
 	public Reina dameReina(int f, int c) {
-		Reina r=null;
-		if(hayReina(f, c)){
-		    itReinas=setReinas.iterator();
-			boolean enc=false;
-			while(itReinas.hasNext() && !enc){
-				r=itReinas.next();
-				enc=(f==r.dameFila())&&(c==r.dameCol());
-			}	
+		Reina r = null;
+		if (hayReina(f, c)) {
+			itReinas = setReinas.iterator();
+			boolean enc = false;
+			while (itReinas.hasNext() && !enc) {
+				r = itReinas.next();
+				enc = (f == r.dameFila()) && (c == r.dameCol());
+			}
 		}
 		return r;
-	}
-	public boolean dameCelda(int f, int c) {
-		return this.llenado[f][c];
 	}
 }
