@@ -46,8 +46,6 @@ public final class Intents {
 		public static final String ASCENSORMJ = "com.cinnamon.is.minijuegos.ascensor.ASCENSORMJ";
 
 		// CUADRADO
-		public static final String CUADRADOMJINTRO = "com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJINTRO";
-
 		public static final String CUADRADOMJ = "com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJACTIVITY";
 
 		// TODO PUZZLE
@@ -91,7 +89,7 @@ public final class Intents {
 		 * </pre></code>
 		 */
 		public static final String[] minijuegos = {
-				"cuadrado.CUADRADOMAGICOMJINTRO", "ascensor.ASCENSORMJ",
+				"cuadrado.CUADRADOMAGICOMJ", "ascensor.ASCENSORMJ",
 				"reinas.REINASMJ", "puzzle.PUZZLEMJ", "end.ENDMJ" };
 		/**
 		 * String con la ruta base del proyecto

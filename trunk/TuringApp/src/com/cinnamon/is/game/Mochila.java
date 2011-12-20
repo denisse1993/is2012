@@ -74,11 +74,11 @@ public class Mochila extends Activity implements OnClickListener {
 			finish();
 			break;
 		case R.id.bMapa:
-			Intent iMapa = new Intent();
-			iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
-			iMapa.putExtra(Intents.Action.MAPA, true);
-			setResult(RESULT_OK, iMapa);
-			finish();
+//			Intent iMapa = new Intent();
+//			iMapa.putExtra(Intents.Comun.JUGADOR, jugador);
+//			iMapa.putExtra(Intents.Action.MAPA, true);
+//			setResult(RESULT_OK, iMapa);
+//			finish();
 			break;
 		case R.id.bVolver:
 			onBackPressed();

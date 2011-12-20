@@ -28,7 +28,7 @@ import android.widget.TextView;
  * @author Cinnamon Team
  * @version 1.4 12.12.2011
  */
-public abstract class Minijuego extends Activity implements OnClickListener{
+public abstract class Minijuego extends Activity implements OnClickListener {
 
 	/**
 	 * Jugador actual de la aplicacion
@@ -122,15 +122,15 @@ public abstract class Minijuego extends Activity implements OnClickListener{
 		int score = MAX_SCORE;
 		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
 		// se tarda en cada uno, o dejarlo para todos igual
-		if (elapsedS < 5)// 5segundos
+		if (elapsedS < 60)// 60segundos
 			return score;
-		else if (elapsedS >= 5 && elapsedS < 10)
+		else if (elapsedS >= 60 && elapsedS < 120)
 			return score - 200;
-		else if (elapsedS >= 10 && elapsedS < 20)
+		else if (elapsedS >= 120 && elapsedS < 240)
 			return score - 400;
-		else if (elapsedS >= 120 && elapsedS < 180)
+		else if (elapsedS >= 240 && elapsedS < 300)
 			return score - 600;
-		else if (elapsedS >= 180 && elapsedS < 240)
+		else if (elapsedS >= 300 && elapsedS < 360)
 			return score - 800;
 		else
 			return 0;
@@ -152,6 +152,7 @@ public abstract class Minijuego extends Activity implements OnClickListener{
 			jugador.setScore(jugador.getScore() + puntuacion);
 			jugador.addObjeto(objeto);
 			jugador.superaFase(fase);
+			jugador.actualFase(fase+1);
 		} else
 			jugador.actualFase(fase);
 
@@ -210,6 +211,7 @@ public abstract class Minijuego extends Activity implements OnClickListener{
 	 * Actualiza el objeto del minijuego
 	 * </p>
 	 * <code><pre>
+	 * Valor 0 - final - FINAL
 	 * Valor 1 - papel 1 - Ascensor
 	 * Valor 2 - papel 2 - Reinas
 	 * Valor 3 - papel 3 - Puzzle
@@ -243,8 +245,7 @@ public abstract class Minijuego extends Activity implements OnClickListener{
 	public void setFase(int fase) {
 		this.fase = fase;
 	}
-	
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id, Bundle bundle) {
 		Dialog dialog = null;
@@ -283,9 +284,9 @@ public abstract class Minijuego extends Activity implements OnClickListener{
 			dismissDialog(DIALOG_MINIJUEGOS_INIT);
 			break;
 		}
-		
+
 	}
-	
+
 	public void lanzarAvisoMJ(String texto, String title) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(title);
@@ -297,6 +298,5 @@ public abstract class Minijuego extends Activity implements OnClickListener{
 				});
 		builder.show();
 	}
-	
-	
+
 }

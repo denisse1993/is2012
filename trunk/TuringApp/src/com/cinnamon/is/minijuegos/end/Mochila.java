@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.widget.ArrayAdapter;
@@ -75,9 +76,12 @@ public class Mochila {
 			    	                        	
 			    	                        	if(combinar()){
 			    	                        		if (game.getFinalJuego()){
+			    	                        			//TODO FIN JUEGO
 			    	                        			Toast.makeText(game.getContext(), "Has conseguido reventar " +
 			    	                        					"la caja, te das cuenta que entre los pedazos " +
-			    	                        					"hay una placa ensangrentada. FIIIIIIIN!!", Toast.LENGTH_LONG).show();
+			    	                        					"hay una placa ensangrentada. FIIIIIIIN!!. Pulsa la pantalla para terminar el juego", Toast.LENGTH_LONG).show();
+			    	                        			
+			    	                        			
 			    	                        		}
 			    	                        		else{Toast.makeText(game.getContext(), "Has conseguido un nuevo objeto clave", Toast.LENGTH_LONG).show();}
 			    	                        	}else{

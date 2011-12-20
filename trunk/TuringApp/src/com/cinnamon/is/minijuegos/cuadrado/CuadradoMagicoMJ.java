@@ -26,7 +26,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.LinearLayout;
 
-public class CuadradoMagicoMJActivity extends Minijuego implements
+public class CuadradoMagicoMJ extends Minijuego implements
 		OnTouchListener {
 
 	// Aquí tiene que ir la única actividad que necesita la
@@ -164,6 +164,7 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 		//	dialogBundle.putBoolean(Intents.Comun.superado, superado);
 		dialogBundle.putString("title", title);
 		showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);*/
+		//lanzarAvisoMJ(textoDialog, title);
 	}
 
 	@Override
@@ -339,17 +340,18 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 		}
 	}
 	
-	//TODO
+	//TODO FIN MINIJUEGO
 	//Creo que aqui comprueban si esta bien y dibujan un tic...
 	public void dibujaTick() {
 		inicioc = (c.getWidth() - comprobar.getWidth() - error.getWidth() * 2) / 2;
 		if (comprobado) {
 			if (correcto) {
-				
+				superado=true;
+				finalizar();
 				// imagenSel=tick;
-				c.drawBitmap(tick,
-						inicioc + comprobar.getWidth() + tick.getWidth(),
-						c.getHeight() - espacioboton + espaciotitulo, null);
+				//c.drawBitmap(tick,
+					//	inicioc + comprobar.getWidth() + tick.getWidth(),
+						//c.getHeight() - espacioboton + espaciotitulo, null);
 			} else {
 				// imagenSel=error;
 				c.drawBitmap(error,
