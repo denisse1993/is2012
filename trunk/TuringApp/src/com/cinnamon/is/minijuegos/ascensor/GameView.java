@@ -16,7 +16,7 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
 
 public class GameView extends SurfaceView {
-	private GameLoop loop;
+	GameLoop loop;
 	private SurfaceHolder holder;
 	private ArrayList<Sprite> listaPlanta1 = new ArrayList<Sprite>();
 	private ArrayList<Sprite> listaPlanta2 = new ArrayList<Sprite>();
@@ -31,7 +31,7 @@ public class GameView extends SurfaceView {
 	private boolean planta2;
 	private boolean moving = false;
 	private boolean finJuego;
-	private boolean winner;
+	boolean winner;
 	private int ocupantes;
 	private int caminantes;
 	private MediaPlayer music;
@@ -283,6 +283,7 @@ public class GameView extends SurfaceView {
 
 	protected void onDraw(Canvas canvas) {
 		if (listaPlanta2.size() == 3) {
+			loop.setRunning(false);
 			winner = true;
 		}
 		if (finJuego == false && winner == false) {
