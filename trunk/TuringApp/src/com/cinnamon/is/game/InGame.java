@@ -297,7 +297,7 @@ public class InGame extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bDialog1:
-			Intent iDialog = new Intent(Intents.Action.ENDMJ);
+			Intent iDialog = new Intent(Intents.Action.PUZZLEMJ);
 			iDialog.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivityForResult(iDialog, cMINIJUEGO);
 			break;
@@ -536,41 +536,51 @@ public class InGame extends Activity implements OnClickListener,
 		int idIvDialog = 0;
 
 		switch (fase) {
-		case 0:
+		case 1:
 			title = "Introducción";
 			textoDialog = "Lea el código QR para poder continuar";
 			// falta poner bien la imagen
 			lanzarAvisoMJ(textoDialog, title);
 			break;
-		case 1:
+		case 0:
+			//Texto opcional si no funciona la imagen..
+			textoDialog = "Carta Poker + Jardin Japonés + Monja";
 			title = "Enigma 1";
 			// falta poner bien la imagen
-			idIvDialog = R.drawable.papel3;
+			//idIvDialog = R.drawable.jeroglifico1;
 			lanzarJerogrifico(textoDialog, idIvDialog, title);
 			break;
 		case 2:
+			textoDialog = "Moto Italiana + Embutido /n" +
+					"Cambiar primera letra de la moto por D";
 			title = "Enigma 2";
 			// falta poner bien la imagen
-			idIvDialog = R.drawable.papel3;
+			//idIvDialog = R.drawable.jeroglifico2;
 			lanzarJerogrifico(textoDialog, idIvDialog, title);
 			break;
 		case 3:
+			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse/n" +
+			"Omitir la primeras sílaba de cada palabra/n" +
+			"quedarse con las últimas";
 			title = "Enigma 3";
 			// falta poner bien la imagen
-			idIvDialog = R.drawable.papel3;
+			//idIvDialog = R.drawable.jeroglifico3;
 			lanzarJerogrifico(textoDialog, idIvDialog, title);
 			break;
 		case 4:
+			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua/n" +
+			"Cambiar el comienzo de N por L de la hortaliza/n" +
+			"quedarse con las últimas";
 			title = "Enigma 4";
 			// falta poner bien la imagen
-			idIvDialog = R.drawable.papel3;
+			//idIvDialog = R.drawable.jeroglifico4;
 			lanzarJerogrifico(textoDialog, idIvDialog, title);
 			break;
 		case 5:
 			title = "Última fase";
 			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio de la muerte de Turing";
 			// falta poner bien la imagen
-			idIvDialog = R.drawable.papel3;
+			idIvDialog = R.drawable.papel4;
 			lanzarJerogrifico(textoDialog, idIvDialog, title);
 			break;
 		}

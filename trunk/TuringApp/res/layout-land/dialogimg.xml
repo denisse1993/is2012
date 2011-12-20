@@ -16,11 +16,14 @@
 
         <ImageView
             android:id="@+id/ivDialog"
+            android:layout_gravity="center"
+            android:src="@drawable/jeroglifico1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent" />
 
         <TextView
             android:id="@+id/tvDialog"
+            android:text="Descifre el enigma para la siguiente localización del QR"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#FFF" />
