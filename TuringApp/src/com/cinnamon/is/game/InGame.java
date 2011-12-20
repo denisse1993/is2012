@@ -71,9 +71,7 @@ public class InGame extends Activity implements OnClickListener,
 	/**
 	 * Contanstes para manjeas dialogos del ingame
 	 */
-	private static final int DIALOG_MINIJUEGOS_RESULT = 0;
-
-	private static final int DIALOG_JEROGLIFICO = 0;
+	private static final int DIALOG_MINIJUEGO = 0;
 
 	private static final int DIALOG_MINIJUEGOS_FIN = 0;
 
@@ -223,7 +221,7 @@ public class InGame extends Activity implements OnClickListener,
 				dialogBundle.putBoolean(Intents.Comun.superado, superado);
 				dialogBundle.putString("title", title);
 				// lanzarAvisoMJ(textoDialog);
-				showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
+				showDialog(DIALOG_MINIJUEGO, dialogBundle);
 
 				break;
 			}
@@ -240,7 +238,7 @@ public class InGame extends Activity implements OnClickListener,
 		Dialog dialog = null;
 		switch (id) {
 
-		case DIALOG_MINIJUEGOS_RESULT:
+		case DIALOG_MINIJUEGO:
 			// obtiene datos
 			String textoDialog = bundle.getString("textoDialog");
 			int idIvDialog = bundle.getInt("idIvDialog");
@@ -304,7 +302,7 @@ public class InGame extends Activity implements OnClickListener,
 			startActivityForResult(iDialog, cMINIJUEGO);
 			break;
 		case R.id.bDialog:
-			dismissDialog(DIALOG_MINIJUEGOS_RESULT);
+			dismissDialog(DIALOG_MINIJUEGO);
 			// video
 			uriVideo = escogerVideo();
 			inicializarVideo();
@@ -527,7 +525,7 @@ public class InGame extends Activity implements OnClickListener,
 		dialogBundle.putString("textoDialog", textoDialog);
 		dialogBundle.putInt("idIvDialog", idIvDialog);
 		dialogBundle.putString("title", title);
-		showDialog(DIALOG_JEROGLIFICO, dialogBundle);
+		showDialog(DIALOG_MINIJUEGO, dialogBundle);
 	}
 
 	/**
