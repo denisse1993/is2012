@@ -147,18 +147,33 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
+		
+		/*TODO	Dialog		
+		//	String textoDialog = "Hola",
+		/*"Enhorabuena has desbloqueado el minijuego de las 8 reinas." +
+		"/nPara conseguir el siguiente objeto necesitaras completar el siguiente tablero" +
+		"en el que se colocan ocho reinas sin que se amenacen. Una reina amenaza a otra si" +
+		" se encuentren en su misma fila, columna o diagonal." +
+		"/nSuerte.",*/
+		/*title = "8 Reinas";
+		int idIvDialog = R.drawable.tablero8reinas;
+
+		Bundle dialogBundle = new Bundle();
+		dialogBundle.putString("textoDialog", textoDialog);
+		dialogBundle.putInt("idIvDialog", idIvDialog);
+		//	dialogBundle.putBoolean(Intents.Comun.superado, superado);
+		dialogBundle.putString("title", title);
+		showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);*/
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		v.pause();
 	}
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		v.resume();
 	}
@@ -171,25 +186,21 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 
 		public OurView(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
 			holder = getHolder();
 		}
 
 		public void resume() {
-			// TODO Auto-generated method stub
 			enEjecucion = true;
 			t = new Thread(this);
 			t.start();
 		}
 
 		public void pause() {
-			// TODO Auto-generated method stub
 			enEjecucion = false;
 			while (true) {
 				try {
 					t.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
@@ -198,7 +209,6 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 		}
 
 		public void run() {
-			// TODO Auto-generated method stub
 			while (enEjecucion == true) {
 				if (!holder.getSurface().isValid()) {
 					continue; // se sale del if y vuelve al principio
@@ -276,7 +286,6 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 				try {
 					t.sleep(50);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				holder.unlockCanvasAndPost(c); // lo desbloquea para mostrarlo
@@ -329,11 +338,14 @@ public class CuadradoMagicoMJActivity extends Minijuego implements
 				dibujaTick();
 		}
 	}
-
+	
+	//TODO
+	//Creo que aqui comprueban si esta bien y dibujan un tic...
 	public void dibujaTick() {
 		inicioc = (c.getWidth() - comprobar.getWidth() - error.getWidth() * 2) / 2;
 		if (comprobado) {
 			if (correcto) {
+				
 				// imagenSel=tick;
 				c.drawBitmap(tick,
 						inicioc + comprobar.getWidth() + tick.getWidth(),

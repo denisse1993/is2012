@@ -41,44 +41,6 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 	int cel2;
 	int celdaini,celdafin;
 	
-
-	@Override
-	/*protected Dialog onCreateDialog(int id, Bundle bundle) {
-		Dialog dialog = null;
-		switch (id) {
-
-		case DIALOG_MINIJUEGOS_RESULT:
-			// obtiene datos
-			String textoDialog = bundle.getString("textoDialog");
-			int idIvDialog = bundle.getInt("idIvDialog");
-			// crea dialog
-			dialog = new Dialog(this);
-			dialog.setContentView(R.layout.puzzleD);
-			dialog.setTitle("Resultado Minijuego");
-			// pone elementos
-			TextView tvDialog = (TextView) dialog.findViewById(R.id.tvDialog);
-			tvDialog.setText(textoDialog);
-			ImageView ivDialog = (ImageView) dialog.findViewById(R.id.ivDialog);
-			ivDialog.setImageResource(idIvDialog);
-			// ivDialog.setImageResource(R.drawable.bonoff);
-			Button bDialog = (Button) dialog.findViewById(R.id.bDialog);
-			bDialog.setOnClickListener((OnClickListener) this);
-			break;
-		}
-
-		return dialog;
-	}*/
-	/*
-	public PuzzleMJ() {
-		tabla = new foto[3][3];
-		int[] comprobar= new int[9];
-		for (int i=0; i<9; i++) comprobar[i]=-1;
-		ponRandom(tabla, 9, comprobar);
-		loadImagen();
-		x=y=0;
-		// TODO Auto-generated constructor stub
-		
-	}*/
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ourSurfaceView = new puzzleSurface(this);
@@ -97,17 +59,6 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 		
 		int[] comprobar= new int[9];
 		for (int i=0; i<9; i++) comprobar[i]=-1;
-		//ponRandom(tabla, 9, comprobar);
-		ponRandomSol(tabla);
-		//este comentario de debajo pone todas las piezas ordenadas sin el random
-		//no borrar, puede ser útil
-		/*int m=0;
-		for (int i=0;i<3;i++){
-			for (int j=0;j<3;j++){
-					tabla[i][j]=pic[m];
-						m++;
-				}
-		}*/
 		
 		
 		x=y=0; 
@@ -124,9 +75,9 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 		
-		//Dialog
 		
-	//	String textoDialog = "Hola",
+		/*TODO	Dialog		
+		//	String textoDialog = "Hola",
 		/*"Enhorabuena has desbloqueado el minijuego de las 8 reinas." +
 		"/nPara conseguir el siguiente objeto necesitaras completar el siguiente tablero" +
 		"en el que se colocan ocho reinas sin que se amenacen. Una reina amenaza a otra si" +
@@ -507,7 +458,8 @@ public class puzzleSurface extends SurfaceView implements Runnable{
 				aux++;
 				}
 			}
-		
+			//TODO
+			//Cambiado el boton check 
 			Bitmap boton = BitmapFactory.decodeResource(getResources(), R.drawable.boton_check_on);
 			//Rect rect2=new Rect(50,canvas.getWidth()+50,200,canvas.getWidth()+150);
 			Rect rect2 = new Rect(canvas.getWidth()/2-35, canvas.getHeight()*2/3 , 
@@ -517,6 +469,8 @@ public class puzzleSurface extends SurfaceView implements Runnable{
 			//if((x>=50 && x<=150) && (y>=canvas.getWidth()+50 && y<= canvas.getWidth()+150) ){
 			if((x>=anchoBoton && x<=anchoBoton*4) && (y>=canvas.getWidth()+anchoBoton/2 && y<= canvas.getWidth()+anchoBoton*3/2) ){	
 				if(comprueba()){
+				//TODO
+					//Lanzar Dialog
 				/*Bitmap tick = BitmapFactory.decodeResource(getResources(), R.drawable.tick);
 				//Rect rect3=new Rect(300,canvas.getWidth()+50,350,canvas.getWidth()+150);
 				Rect rect3=new Rect(anchoBoton*5,canvas.getWidth()+anchoBoton/2,anchoBoton*6,canvas.getWidth()+anchoBoton*3/2);
