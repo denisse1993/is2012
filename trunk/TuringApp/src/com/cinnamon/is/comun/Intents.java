@@ -36,6 +36,8 @@ public final class Intents {
 		public static final String MOCHILA = "com.cinnamon.is.game.MOCHILA";
 
 		public static final String LOGIN = "com.cinnamon.is.game.LOGIN";
+		
+		public static final String ENDGAME = "com.cinnamon.is.game.ENDGAME";
 
 		public static final String OPCIONES = "com.cinnamon.is.comun.OPCIONES";
 
@@ -56,6 +58,8 @@ public final class Intents {
 
 		// TODO END
 		public static final String ENDMJ = "com.cinnamon.is.minijuegos.end.ENDMJ";
+		
+		
 
 		// este intent hay que poner lo de android asi por el tema de la
 		// libreria zXing
