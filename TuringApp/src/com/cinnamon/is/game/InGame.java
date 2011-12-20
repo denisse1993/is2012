@@ -20,16 +20,13 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -49,7 +46,8 @@ import com.cinnamon.is.comun.Intents;
  * @author Cinnamon Team
  * @version 1.6 13.12.2011
  */
-public class InGame extends Activity implements OnClickListener, OnCompletionListener {
+public class InGame extends Activity implements OnClickListener,
+		OnCompletionListener {
 
 	/**
 	 * DbAdapter para interaccionar con la base de datos
@@ -75,6 +73,8 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	 */
 	private static final int DIALOG_MINIJUEGOS_RESULT = 0;
 
+	private static final int DIALOG_JEROGLIFICO = 0;
+
 	private static final int DIALOG_MINIJUEGOS_FIN = 0;
 
 	/**
@@ -82,20 +82,17 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	 */
 	private Jugador jugador;
 
-	// private Button bOpciones;
-	 private Button bReinas;
-	 /**
-	  * VideoView para reproducir el video 
-	  */
+	// private Button bDialog lanza el dialogo;
+	private Button bDialog;
+	/**
+	 * VideoView para reproducir el video
+	 */
 	private VideoView vd;
-	//private MediaController mc;
+	// private MediaController mc;
 	/**
 	 * URI con la dirección del Video
 	 */
 	private Uri uriVideo;
-
-	// texview de prueba para comprobar que funciona lo de la puntuacion
-	// private TextView tvScoreActual;
 
 	/**
 	 * Fase del juego en la que nos encontramos
@@ -179,9 +176,9 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 
 				// obtener resultados del minijuego
 				String objStr = "",
-					faseStr = "",
-					textoDialog = "",
-					title = "";
+				faseStr = "",
+				textoDialog = "",
+				title = "";
 				int idIvDialog = 0;
 				// en funcion del objeto actualizo las variables a pasar al
 				// dialog
@@ -227,7 +224,7 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 				dialogBundle.putString("title", title);
 				// lanzarAvisoMJ(textoDialog);
 				showDialog(DIALOG_MINIJUEGOS_RESULT, dialogBundle);
-				
+
 				break;
 			}
 
@@ -301,20 +298,14 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.bReinas:
-			Intent iReinas = new Intent(Intents.Action.REINASMJ);
-			iReinas.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivityForResult(iReinas, cMINIJUEGO);
+		case R.id.bDialog1:
+			Intent iDialog = new Intent(Intents.Action.REINASMJ);
+			iDialog.putExtra(Intents.Comun.JUGADOR, jugador);
+			startActivityForResult(iDialog, cMINIJUEGO);
 			break;
-		/*
-		 * case R.id.bOpciones: // El boton bOpciones se comporta como el boton
-		 * fisico MENU del // dispositivo
-		 * this.getWindow().openPanel(Window.FEATURE_OPTIONS_PANEL, new
-		 * KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU)); break; case
-		 */
 		case R.id.bDialog:
 			dismissDialog(DIALOG_MINIJUEGOS_RESULT);
-			//video
+			// video
 			uriVideo = escogerVideo();
 			inicializarVideo();
 			break;
@@ -375,19 +366,19 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 
 		case 1:
 			return Uri.parse("android.resource://com.cinnamon.is/"
-					+ R.raw.open_book);
+					+ R.raw.video_fase1);
 
 		case 2:
 			return Uri.parse("android.resource://com.cinnamon.is/"
-					+ R.raw.open_book);
+					+ R.raw.video_fase2);
 
 		case 3:
 			return Uri.parse("android.resource://com.cinnamon.is/"
-					+ R.raw.open_book);
+					+ R.raw.video_fase3);
 
 		case 4:
 			return Uri.parse("android.resource://com.cinnamon.is/"
-					+ R.raw.open_book);
+					+ R.raw.video_fase4);
 
 		case 5:
 			return Uri.parse("android.resource://com.cinnamon.is/"
@@ -402,14 +393,9 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	 * VideoView
 	 */
 	private void inicializar() {
-		// tvScoreActual = (TextView) findViewById(R.id.tVscoreActual);
 
 		vd = (VideoView) findViewById(R.id.svVideo);
 		vd.setOnCompletionListener(this);
-		/*
-		 * bOpciones = (Button) findViewById(R.id.bOpciones);
-		 * bOpciones.setOnClickListener(this);
-		 */
 
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
@@ -417,8 +403,8 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 
 		// prueba lanzar juego
 
-		bReinas = (Button) findViewById(R.id.bReinas);
-		bReinas.setOnClickListener(this);
+		bDialog = (Button) findViewById(R.id.bDialog1);
+		bDialog.setOnClickListener(this);
 
 	}
 
@@ -517,8 +503,9 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	/**
 	 * Lanza el Dialog para salida del minijuego
 	 */
-	private void lanzarAvisoMJ(String texto) {
+	private void lanzarAvisoMJ(String texto, String title) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
@@ -534,61 +521,70 @@ public class InGame extends Activity implements OnClickListener, OnCompletionLis
 	 * @param texto
 	 *            string que queremos que se visualize en el dialog
 	 */
-	public void lanzarJerogrifico(String texto) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(texto).setNegativeButton("Cerrar",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
+	public void lanzarJerogrifico(String textoDialog, int idIvDialog,
+			String title) {
+		Bundle dialogBundle = new Bundle();
+		dialogBundle.putString("textoDialog", textoDialog);
+		dialogBundle.putInt("idIvDialog", idIvDialog);
+		dialogBundle.putString("title", title);
+		showDialog(DIALOG_JEROGLIFICO, dialogBundle);
 	}
 
 	/**
-	 * Método heredado para saber que hacer al acabar el video Lanza un dialog
-	 * segun la fase de la que provengamos
+	 * lanza un Custom Dialg según la fase en la que nos encontramos
+	 */
+	public void lanzarDialog() {
+		String title = "", textoDialog = "Descifre el enigma para la siguiente localización del QR";
+		int idIvDialog = 0;
+
+		switch (fase) {
+		case 0:
+			title = "Introducción";
+			textoDialog = "Lea el código QR para poder continuar";
+			// falta poner bien la imagen
+			lanzarAvisoMJ(textoDialog, title);
+			break;
+		case 1:
+			title = "Enigma 1";
+			// falta poner bien la imagen
+			idIvDialog = R.drawable.papel3;
+			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			break;
+		case 2:
+			title = "Enigma 2";
+			// falta poner bien la imagen
+			idIvDialog = R.drawable.papel3;
+			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			break;
+		case 3:
+			title = "Enigma 3";
+			// falta poner bien la imagen
+			idIvDialog = R.drawable.papel3;
+			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			break;
+		case 4:
+			title = "Enigma 4";
+			// falta poner bien la imagen
+			idIvDialog = R.drawable.papel3;
+			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			break;
+		case 5:
+			title = "Última fase";
+			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio de la muerte de Turing";
+			// falta poner bien la imagen
+			idIvDialog = R.drawable.papel3;
+			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			break;
+		}
+	}
+
+	/**
+	 * Método heredado para saber que hacer al acabar el video.
 	 */
 	@Override
 	public void onCompletion(MediaPlayer mediaPlayer) {
-
-		if (getIntent().getSerializableExtra("SCAN_RESULT") == null) {
-			
-			String texto = "";
-			switch (fase) {
-			case 0:
-				texto = "waaaaaaaaaaaa";
-				lanzarJerogrifico(texto);
-				break;
-			case 1:
-				texto = getString(R.string.Jerogrifico2);
-				lanzarJerogrifico(texto);
-				break;
-			case 2:
-				texto = getString(R.string.Jerogrifico3);
-				lanzarJerogrifico(texto);
-				break;
-			case 3:
-				texto = getString(R.string.Jerogrifico4);
-				lanzarJerogrifico(texto);
-				break;
-			case 4:
-				texto = getString(R.string.Jerogrifico4);
-				lanzarJerogrifico(texto);
-				break;
-			case 5:
-				String title = "Última fase",
-				textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio";
-				// falta poner bien la imagen
-				int idIvDialog = R.drawable.papel3;
-				Bundle dialogBundle = new Bundle();
-				dialogBundle.putString("textoDialog", textoDialog);
-				dialogBundle.putInt("idIvDialog", idIvDialog);
-				dialogBundle.putString("title", title);
-				showDialog(DIALOG_MINIJUEGOS_FIN, dialogBundle);
-				break;
-			}
-		}
+		if (getIntent().getSerializableExtra("SCAN_RESULT") == null)
+			lanzarDialog();
 	}
 
 }

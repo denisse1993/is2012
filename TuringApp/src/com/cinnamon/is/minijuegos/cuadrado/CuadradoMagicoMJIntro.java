@@ -47,3 +47,5 @@ public class CuadradoMagicoMJIntro extends Activity {
 	}
 	
 }
+
+
