@@ -65,6 +65,8 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 		
+		
+		//TODO Dialogo inicial
 		//Lanza el Dialogo
 	//	String textoDialog = "Hola",
 				/*"Enhorabuena has desbloqueado el minijuego de las 8 reinas." +
@@ -86,21 +88,17 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		ourSurfaceView.pause();
 	}
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		ourSurfaceView.resume();
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		//
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_MOVE:
 			x = event.getX();
@@ -126,7 +124,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 	}
 
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
 		super.onBackPressed();
 	}
 
@@ -152,7 +149,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		boolean isRunning = false;
 
 		public OurSurface(Context context) {
-			// TODO Auto-generated constructor stub
 			super(context);
 			ourHolder = getHolder();
 
@@ -164,7 +160,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				try {
 					ourThread.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
@@ -180,7 +175,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
 			while (isRunning) {
 				if (!ourHolder.getSurface().isValid())
 					continue;
@@ -196,9 +190,13 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				int centraBoton = (canvas.getHeight() - canvas.getWidth()) / 2;
 				// Rect rect2=new
 				// Rect(20,canvas.getWidth()+centraBoton,boton.getWidth()+20,canvas.getWidth()+centraBoton+20);
+				
+				//TODO aqui he cambiado el boton
 				Rect rect2 = new Rect(canvas.getWidth()/2-35, canvas.getHeight()*2/3 , 
 						canvas.getWidth()/2+35,canvas.getHeight()*2/3 + 70);
 				canvas.drawBitmap(boton, null, rect2, null);
+				
+				//TODO aqui creo q comprueban si es correcto y lanzariamos el dialog 
 				if (escorrecto) {
 					Bitmap boton_correct = BitmapFactory.decodeResource(getResources(),
 							R.drawable.boton_verde);
@@ -252,9 +250,10 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 								.getWidth() + 150) && t.getnumReinas() == 8) {
 
 					escorrecto = comprobar();
+					//TODO aqui no se que coño hacen
 					if (escorrecto) {
-						lanzarAvisoMJ("Enhorabuena has conseguido superar el juego de las 8 Reinas"
-								, "Juego Superado");
+						/*lanzarAvisoMJ("Enhorabuena has conseguido superar el juego de las 8 Reinas"
+								, "Juego Superado");*/
 						fin = true;
 					}
 
@@ -315,7 +314,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		}
 
 		public boolean compruebaDiagonal(int f, int c) {
-			// TODO Auto-generated method stub
 			int i = f;
 			int j = c;
 			// diagonal izquierda superior
