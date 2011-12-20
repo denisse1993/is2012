@@ -66,6 +66,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				Intents.Comun.JUGADOR);
 		
 		
+		
 		//TODO Dialogo inicial
 		//Lanza el Dialogo
 	//	String textoDialog = "Hola",
@@ -123,9 +124,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		return true;
 	}
 
-	public void onBackPressed() {
-		super.onBackPressed();
-	}
 
 	int queColEs() {
 		int coorX;
@@ -254,6 +252,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 					if (escorrecto) {
 						/*lanzarAvisoMJ("Enhorabuena has conseguido superar el juego de las 8 Reinas"
 								, "Juego Superado");*/
+						isRunning = false;
 						fin = true;
 					}
 

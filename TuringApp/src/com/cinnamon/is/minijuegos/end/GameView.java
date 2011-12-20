@@ -44,7 +44,6 @@ public class GameView extends SurfaceView{
 			@Override
 			public void surfaceChanged(SurfaceHolder holder, int arg1, int arg2,
 					int arg3) {
-				// TODO Auto-generated method stub
 				Canvas c = holder.lockCanvas();
 				onDraw(c);
 				holder.unlockCanvasAndPost(c);

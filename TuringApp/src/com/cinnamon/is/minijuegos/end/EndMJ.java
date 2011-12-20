@@ -11,9 +11,5 @@ public class EndMJ extends Activity {
         setContentView(new GameView(this));
        
     }
-    @Override
-    public void onBackPressed() {
-    	finish();
-    return;
-    }
+
 }
