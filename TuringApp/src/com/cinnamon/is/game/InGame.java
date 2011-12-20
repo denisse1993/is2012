@@ -95,7 +95,7 @@ public class InGame extends Activity implements OnClickListener,
 	/**
 	 * Fase del juego en la que nos encontramos
 	 */
-	public int fase = 0;
+	// public int fase = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class InGame extends Activity implements OnClickListener,
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
 
-		fase = getFase();
+		// fase = getFase();
 
 		uriVideo = escogerVideo();
 		inicializarVideo();
@@ -279,7 +279,7 @@ public class InGame extends Activity implements OnClickListener,
 			lanzaScan();
 			break;
 		case R.id.bMapa:
-			lanzaMapa();
+			// lanzaMapa();
 			break;
 		case R.id.bMochila:
 			lanzaMochila();
@@ -297,7 +297,7 @@ public class InGame extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bDialog1:
-			Intent iDialog = new Intent(Intents.Action.ASCENSORMJ);
+			Intent iDialog = new Intent(Intents.Action.CUADRADOMJ);
 			iDialog.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivityForResult(iDialog, cMINIJUEGO);
 			break;
@@ -336,7 +336,7 @@ public class InGame extends Activity implements OnClickListener,
 	private int getFase() {
 		if ((jugador.getFase1() == 0) || (jugador.getFase1() == 0)
 				|| (jugador.getFase1() == 0) || (jugador.getFase1() == 0))
-			return 0;
+			return 1;// TODO forma cutre de k empieze en 1
 		if (jugador.getFase1() == 2)
 			return 1;
 		if (jugador.getFase2() == 2)
@@ -357,10 +357,7 @@ public class InGame extends Activity implements OnClickListener,
 	 * @return URI con la dirección del video a reproducir
 	 */
 	private Uri escogerVideo() {
-		switch (fase) {
-		case 0:
-			return Uri.parse("android.resource://com.cinnamon.is/"
-					+ R.raw.open_book);
+		switch (getFase()) {
 
 		case 1:
 			return Uri.parse("android.resource://com.cinnamon.is/"
@@ -378,9 +375,6 @@ public class InGame extends Activity implements OnClickListener,
 			return Uri.parse("android.resource://com.cinnamon.is/"
 					+ R.raw.video_fase4);
 
-		case 5:
-			return Uri.parse("android.resource://com.cinnamon.is/"
-					+ R.raw.open_book);
 
 		}
 		return null;
@@ -470,7 +464,11 @@ public class InGame extends Activity implements OnClickListener,
 				Intent iMinijuego = new Intent(Intents.Comun.BASE_MINIJUEGOS
 						+ qrMiniJuego);
 				iMinijuego.putExtra(Intents.Comun.JUGADOR, jugador);
-				startActivityForResult(iMinijuego, cMINIJUEGO);
+				if (qrMiniJuego == Intents.Comun.minijuegos[4]) {
+					finish();
+					startActivity(iMinijuego);
+				} else
+					startActivityForResult(iMinijuego, cMINIJUEGO);
 			}
 		}
 		// no se lanza el minijuego porque no se corresponde con uno que exista
@@ -535,53 +533,61 @@ public class InGame extends Activity implements OnClickListener,
 		String title = "", textoDialog = "Descifre el enigma para la siguiente localización del QR";
 		int idIvDialog = 0;
 
-		switch (fase) {
-		case 1:
+		switch (getFase()) {
+		case 0:
+			// en principio esto no se ejecuta nunca xd
 			title = "Introducción";
 			textoDialog = "Lea el código QR para poder continuar";
 			// falta poner bien la imagen
 			lanzarAvisoMJ(textoDialog, title);
 			break;
-		case 0:
-			//Texto opcional si no funciona la imagen..
+		case 1:
+			// Texto opcional si no funciona la imagen..
 			textoDialog = "Carta Poker + Jardin Japonés + Monja";
 			title = "Enigma 1";
 			// falta poner bien la imagen
-			//idIvDialog = R.drawable.jeroglifico1;
-			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			// idIvDialog = R.drawable.jeroglifico1;
+			// lanzarJerogrifico(textoDialog, idIvDialog, title);
+			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 2:
-			textoDialog = "Moto Italiana + Embutido /n" +
-					"Cambiar primera letra de la moto por D";
+			textoDialog = "Moto Italiana + Cho-rizo /n"
+					+ "Cambiar primera letra de la moto por D";
 			title = "Enigma 2";
 			// falta poner bien la imagen
-			//idIvDialog = R.drawable.jeroglifico2;
-			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			// idIvDialog = R.drawable.jeroglifico2;
+			// lanzarJerogrifico(textoDialog, idIvDialog, title);
+			lanzarAvisoMJ(textoDialog, title);
 			break;
+
 		case 3:
-			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse/n" +
-			"Omitir la primeras sílaba de cada palabra/n" +
-			"quedarse con las últimas";
+			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse/n"
+					+ "Omitir la primeras sílaba de cada palabra/n"
+					+ "quedarse con las últimas";
 			title = "Enigma 3";
 			// falta poner bien la imagen
-			//idIvDialog = R.drawable.jeroglifico3;
-			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			// idIvDialog = R.drawable.jeroglifico3;
+			// lanzarJerogrifico(textoDialog, idIvDialog, title);
+			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 4:
-			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua/n" +
-			"Cambiar el comienzo de N por L de la hortaliza/n" +
-			"quedarse con las últimas";
+			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua/n"
+					+ "Cambiar el comienzo de N por L de la hortaliza/n"
+					+ "quedarse con las últimas";
 			title = "Enigma 4";
 			// falta poner bien la imagen
-			//idIvDialog = R.drawable.jeroglifico4;
-			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			// idIvDialog = R.drawable.jeroglifico4;
+			// lanzarJerogrifico(textoDialog, idIvDialog, title);
+			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 5:
 			title = "Última fase";
-			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio de la muerte de Turing";
+			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio de la muerte de Turing"
+					+ "/nHemos conseguido descodificar el papel, ve a la cafetería para desvelar quién es el asesino";
 			// falta poner bien la imagen
-			idIvDialog = R.drawable.papel4;
-			lanzarJerogrifico(textoDialog, idIvDialog, title);
+			// idIvDialog = R.drawable.papel4;
+			// lanzarJerogrifico(textoDialog, idIvDialog, title);
+			lanzarAvisoMJ(textoDialog, title);
 			break;
 		}
 	}

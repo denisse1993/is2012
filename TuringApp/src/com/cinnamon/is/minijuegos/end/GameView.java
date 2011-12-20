@@ -3,19 +3,18 @@ package com.cinnamon.is.minijuegos.end;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cinnamon.is.R;
-
-
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
+
+import com.cinnamon.is.R;
 
 public class GameView extends SurfaceView{
 	private SurfaceHolder holder;
@@ -44,6 +43,7 @@ public class GameView extends SurfaceView{
 			@Override
 			public void surfaceChanged(SurfaceHolder holder, int arg1, int arg2,
 					int arg3) {
+				
 				Canvas c = holder.lockCanvas();
 				onDraw(c);
 				holder.unlockCanvasAndPost(c);
@@ -136,7 +136,7 @@ public class GameView extends SurfaceView{
 		return super.onTouchEvent(event);
 		
 	}
-	
+
 	private void initMe()
 	{
 	    handler = new Handler();

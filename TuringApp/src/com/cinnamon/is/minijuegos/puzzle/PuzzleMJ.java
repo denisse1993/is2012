@@ -1,6 +1,8 @@
 package com.cinnamon.is.minijuegos.puzzle;
 
- import java.util.ArrayList;
+
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +18,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Intents;
 import com.cinnamon.is.comun.Minijuego;
@@ -27,7 +30,7 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 	
 	private foto imagen;
 	private foto pic[] = new foto[9] ;
-	private  foto tabla [][];
+	private foto tabla [][];
 	private static int ancho;
 	private static int anchoBoton;
 	
@@ -41,6 +44,45 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 	int cel2;
 	int celdaini,celdafin;
 	
+	private static final int DIALOG_MINIJUEGOS_RESULT = 0;
+
+	@Override
+	/*protected Dialog onCreateDialog(int id, Bundle bundle) {
+		Dialog dialog = null;
+		switch (id) {
+
+		case DIALOG_MINIJUEGOS_RESULT:
+			// obtiene datos
+			String textoDialog = bundle.getString("textoDialog");
+			int idIvDialog = bundle.getInt("idIvDialog");
+			// crea dialog
+			dialog = new Dialog(this);
+			dialog.setContentView(R.layout.puzzleD);
+			dialog.setTitle("Resultado Minijuego");
+			// pone elementos
+			TextView tvDialog = (TextView) dialog.findViewById(R.id.tvDialog);
+			tvDialog.setText(textoDialog);
+			ImageView ivDialog = (ImageView) dialog.findViewById(R.id.ivDialog);
+			ivDialog.setImageResource(idIvDialog);
+			// ivDialog.setImageResource(R.drawable.bonoff);
+			Button bDialog = (Button) dialog.findViewById(R.id.bDialog);
+			bDialog.setOnClickListener((OnClickListener) this);
+			break;
+		}
+
+		return dialog;
+	}*/
+	/*
+	public PuzzleMJ() {
+		tabla = new foto[3][3];
+		int[] comprobar= new int[9];
+		for (int i=0; i<9; i++) comprobar[i]=-1;
+		ponRandom(tabla, 9, comprobar);
+		loadImagen();
+		x=y=0;
+		// TODO Auto-generated constructor stub
+		
+	}*/
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ourSurfaceView = new puzzleSurface(this);
@@ -59,11 +101,23 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 		
 		int[] comprobar= new int[9];
 		for (int i=0; i<9; i++) comprobar[i]=-1;
+		//ponRandom(tabla, 9, comprobar);
+		ponRandomSol(tabla);
+		//este comentario de debajo pone todas las piezas ordenadas sin el random
+		//no borrar, puede ser útil
+		/*int m=0;
+		for (int i=0;i<3;i++){
+			for (int j=0;j<3;j++){
+					tabla[i][j]=pic[m];
+						m++;
+				}
+		}*/
 		
 		
 		x=y=0; 
 			
 		setContentView(ourSurfaceView);
+		//setNombre("PUZZLEMJ");
 		
 		// Pone valores del minijuego
 		startTime();
@@ -74,7 +128,6 @@ public class PuzzleMJ extends Minijuego implements OnTouchListener{
 
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
-		
 		
 	}
 	
@@ -442,25 +495,22 @@ public class puzzleSurface extends SurfaceView implements Runnable{
 				aux++;
 				}
 			}
-			//TODO
-			//Cambiado el boton check 
-			Bitmap boton = BitmapFactory.decodeResource(getResources(), R.drawable.boton_check_on);
+		
+			Bitmap boton = BitmapFactory.decodeResource(getResources(), R.drawable.boton);
 			//Rect rect2=new Rect(50,canvas.getWidth()+50,200,canvas.getWidth()+150);
-			Rect rect2 = new Rect(canvas.getWidth()/2-35, canvas.getHeight()*2/3 , 
-					canvas.getWidth()/2+35,canvas.getHeight()*2/3 + 70);
+			Rect rect2=new Rect(anchoBoton,canvas.getWidth()+anchoBoton/2,anchoBoton*4,canvas.getWidth()+anchoBoton*3/2);
 			canvas.drawBitmap(boton, null, rect2, null);
 			//-----------------------------boton comprobar--------------------------------------------------
 			//if((x>=50 && x<=150) && (y>=canvas.getWidth()+50 && y<= canvas.getWidth()+150) ){
 			if((x>=anchoBoton && x<=anchoBoton*4) && (y>=canvas.getWidth()+anchoBoton/2 && y<= canvas.getWidth()+anchoBoton*3/2) ){	
-				if(comprueba()){
-				//TODO
-					//Lanzar Dialog
-				/*Bitmap tick = BitmapFactory.decodeResource(getResources(), R.drawable.tick);
+				if(true/*comprueba()*/){
+					
+				//Bitmap tick = BitmapFactory.decodeResource(getResources(), R.drawable.tick);
 				//Rect rect3=new Rect(300,canvas.getWidth()+50,350,canvas.getWidth()+150);
-				Rect rect3=new Rect(anchoBoton*5,canvas.getWidth()+anchoBoton/2,anchoBoton*6,canvas.getWidth()+anchoBoton*3/2);
-				canvas.drawBitmap(tick, null, rect3, null);*/
-					lanzarAvisoMJ("Enhorabuena has conseguido superar el juego del Puzzle Slide"
-							, "Juego Superado");
+				//Rect rect3=new Rect(anchoBoton*5,canvas.getWidth()+anchoBoton/2,anchoBoton*6,canvas.getWidth()+anchoBoton*3/2);
+				//canvas.drawBitmap(tick, null, rect3, null);
+					superado=true;
+					finalizar();
 				}else{
 				Bitmap error = BitmapFactory.decodeResource(getResources(), R.drawable.error);
 				//Rect rect4=new Rect(300,canvas.getWidth()+50,350,canvas.getWidth()+150);

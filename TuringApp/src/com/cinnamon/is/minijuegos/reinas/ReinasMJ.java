@@ -66,7 +66,6 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				Intents.Comun.JUGADOR);
 		
 		
-		
 		//TODO Dialogo inicial
 		//Lanza el Dialogo
 	//	String textoDialog = "Hola",
@@ -83,7 +82,8 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		dialogBundle.putInt("idIvDialog", idIvDialog);
 		//dialogBundle.putBoolean(Intents.Comun.superado, superado);
 		dialogBundle.putString("title", title);
-		showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);*/
+		showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);
+		//lanzarAvisoMJ(textoDialog, title);*/
 
 	}
 
@@ -124,6 +124,9 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 		return true;
 	}
 
+	public void onBackPressed() {
+		super.onBackPressed();
+	}
 
 	int queColEs() {
 		int coorX;
@@ -252,8 +255,9 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 					if (escorrecto) {
 						/*lanzarAvisoMJ("Enhorabuena has conseguido superar el juego de las 8 Reinas"
 								, "Juego Superado");*/
-						isRunning = false;
 						fin = true;
+						superado=true;
+						finalizar();
 					}
 
 					// prueba mia dejar las reinas si el jugador falla

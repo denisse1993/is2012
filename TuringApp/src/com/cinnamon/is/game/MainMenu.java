@@ -132,9 +132,9 @@ public class MainMenu extends Activity implements OnClickListener {
 			iOpciones.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivity(iOpciones);
 			break;
-		case R.id.bAyuda:
-			// TODO Ayuda pendiente
-			break;
+		// case R.id.bAyuda:
+		// TODO Ayuda pendiente
+		// break;
 		case R.id.bSalir:
 			finish();
 			break;
@@ -156,7 +156,7 @@ public class MainMenu extends Activity implements OnClickListener {
 
 		bNuevaPartida = (Button) findViewById(R.id.bNuevaPartida);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
-		bAyuda = (Button) findViewById(R.id.bAyuda);
+		// bAyuda = (Button) findViewById(R.id.bAyuda);
 		bSalir = (Button) findViewById(R.id.bSalir);
 
 		bNuevaPartida.setOnClickListener(this);
