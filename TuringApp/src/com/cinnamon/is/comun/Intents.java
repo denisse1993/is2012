@@ -51,7 +51,7 @@ public final class Intents {
 		public static final String CUADRADOMJ = "com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJACTIVITY";
 
 		// TODO PUZZLE
-		public static final String PUZZLEMJ = "com.cinnamon.is.minijuegos.puzzle.PuzzleMJ";
+		public static final String PUZZLEMJ = "com.cinnamon.is.minijuegos.puzzle.PUZZLEMJ";
 
 		// Para lanzar minijuego reinas
 		public static final String REINASMJ = "com.cinnamon.is.minijuegos.reinas.REINASMJ";

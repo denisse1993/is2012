@@ -297,7 +297,7 @@ public class InGame extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bDialog1:
-			Intent iDialog = new Intent(Intents.Action.PUZZLEMJ);
+			Intent iDialog = new Intent(Intents.Action.ASCENSORMJ);
 			iDialog.putExtra(Intents.Comun.JUGADOR, jugador);
 			startActivityForResult(iDialog, cMINIJUEGO);
 			break;
