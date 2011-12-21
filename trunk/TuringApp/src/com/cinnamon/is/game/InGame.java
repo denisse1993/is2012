@@ -297,9 +297,10 @@ public class InGame extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bDialog1:
-			Intent iDialog = new Intent(Intents.Action.CUADRADOMJ);
+			lanzarDialog();
+			/*Intent iDialog = new Intent(Intents.Action.CUADRADOMJ);
 			iDialog.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivityForResult(iDialog, cMINIJUEGO);
+			startActivityForResult(iDialog, cMINIJUEGO);*/
 			break;
 		case R.id.bDialog:
 			dismissDialog(DIALOG_MINIJUEGO);
@@ -374,6 +375,9 @@ public class InGame extends Activity implements OnClickListener,
 		case 4:
 			return Uri.parse("android.resource://com.cinnamon.is/"
 					+ R.raw.video_fase4);
+		case 5:
+			return Uri.parse("android.resource://com.cinnamon.is/"
+					+ R.raw.video_fase_final);
 
 
 		}
@@ -531,7 +535,7 @@ public class InGame extends Activity implements OnClickListener,
 	 */
 	public void lanzarDialog() {
 		String title = "", textoDialog = "Descifre el enigma para la siguiente localización del QR";
-		int idIvDialog = 0;
+		//int idIvDialog = 0;
 
 		switch (getFase()) {
 		case 0:
@@ -551,7 +555,7 @@ public class InGame extends Activity implements OnClickListener,
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 2:
-			textoDialog = "Moto Italiana + Cho-rizo /n"
+			textoDialog = "Moto Italiana + Embutido - Rizo /n"
 					+ "Cambiar primera letra de la moto por D";
 			title = "Enigma 2";
 			// falta poner bien la imagen
