@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mapafondo"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/estadoinicio"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/boton_check_off"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+     <LinearLayout
+         android:id="@+id/fases"
+         android:layout_width="match_parent"
+         android:layout_height="60dp"
+         android:layout_marginTop="93dp"
+         android:layout_marginLeft="15dp"
+         android:gravity="center"
+         android:orientation="horizontal" >
+
+         <LinearLayout
+             android:id="@+id/fase1"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/boton_check_on" >
+         </LinearLayout>
+
+         <LinearLayout
+             android:id="@+id/fase2"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/boton_check_on" >
+         </LinearLayout>
+          <LinearLayout
+             android:id="@+id/fase3"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/boton_check_on" >
+         </LinearLayout>
+          <LinearLayout
+             android:id="@+id/fase4"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/boton_check_on" >
+         </LinearLayout>
+        
+    </LinearLayout>
+
+     <LinearLayout
+         android:id="@+id/estadofin"
+         android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="120dp"
+         android:background="@drawable/boton_check_on"
+         android:gravity="center"
+         android:orientation="vertical" >
+     </LinearLayout>
+        
+</LinearLayout>
