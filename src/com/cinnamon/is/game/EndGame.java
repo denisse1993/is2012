@@ -1,13 +1,13 @@
 package com.cinnamon.is.game;
 
-import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Intents;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.TextView;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Intents;
 
 public class EndGame extends Activity {
 

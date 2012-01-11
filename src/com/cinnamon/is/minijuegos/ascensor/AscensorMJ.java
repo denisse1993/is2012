@@ -1,13 +1,13 @@
 package com.cinnamon.is.minijuegos.ascensor;
 
-import com.cinnamon.is.comun.Intents;
-import com.cinnamon.is.comun.Minijuego;
-import com.cinnamon.is.game.Jugador;
-
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.cinnamon.is.comun.Intents;
+import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.game.Jugador;
 
 /**
  * Actividad que representa el minijuego del Ascensor

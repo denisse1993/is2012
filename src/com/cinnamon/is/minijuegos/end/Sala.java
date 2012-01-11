@@ -3,15 +3,11 @@ package com.cinnamon.is.minijuegos.end;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cinnamon.is.R;
-
-
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.util.DisplayMetrics;
+
+import com.cinnamon.is.R;
 
 public class Sala {
 //cada habitacion tendra un bmp y una lista de objetos clave

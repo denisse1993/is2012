@@ -3,20 +3,13 @@ package com.cinnamon.is.minijuegos.end;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cinnamon.is.R;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.cinnamon.is.R;
 
 public class Mochila {
 	
