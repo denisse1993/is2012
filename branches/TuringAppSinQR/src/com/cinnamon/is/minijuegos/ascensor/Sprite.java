@@ -1,7 +1,6 @@
 package com.cinnamon.is.minijuegos.ascensor;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

@@ -12,19 +12,12 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.R.color;
 import com.cinnamon.is.comun.Intents;
 import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.game.Jugador;
-
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.widget.LinearLayout;
 
 public class CuadradoMagicoMJ extends Minijuego implements
 		OnTouchListener {

@@ -75,8 +75,6 @@ public class InGame extends Activity implements OnClickListener,
 	 */
 	private static final int DIALOG_MINIJUEGO = 0;
 
-	private static final int DIALOG_MINIJUEGOS_FIN = 0;
-
 	/**
 	 * Jugador actual del juego
 	 */
@@ -116,6 +114,11 @@ public class InGame extends Activity implements OnClickListener,
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		mDbHelper.close();
@@ -129,7 +132,12 @@ public class InGame extends Activity implements OnClickListener,
 		boolean scanDirecto, mochilaDirecto, mapaDirecto;
 		IntentResult scanResult = IntentIntegrator.parseActivityResult(
 				requestCode, resultCode, data);
-		if (scanResult != null) {
+		// entra aqui cuando no se escanea ninguna imagen
+		if (resultCode == RESULT_CANCELED) {
+			uriVideo = escogerVideo();
+			inicializarVideo();
+			// entra aqui cuando zxing ha escaneado un codigo
+		} else if (scanResult != null && scanResult.getContents() != null) {
 			qrLeido = scanResult.getContents();
 			lanzaMinijuego(qrLeido);
 		} else if (resultCode == RESULT_OK) {
@@ -151,7 +159,7 @@ public class InGame extends Activity implements OnClickListener,
 				}
 				break;
 
-			case cCAMARA:
+			case cCAMARA:// ahora esto no se usa
 				qrLeido = data.getStringExtra("SCAN_RESULT");
 				lanzaMinijuego(qrLeido);
 				break;
@@ -232,11 +240,6 @@ public class InGame extends Activity implements OnClickListener,
 
 				break;
 			}
-
-		} else if (resultCode == RESULT_CANCELED) {
-			uriVideo = escogerVideo();
-			inicializarVideo();
-			// si no ha hecho nada
 		}
 	}
 
@@ -312,7 +315,7 @@ public class InGame extends Activity implements OnClickListener,
 			 */
 			break;
 		case R.id.bDialog:
-			dismissDialog(DIALOG_MINIJUEGO);
+			removeDialog(DIALOG_MINIJUEGO);
 			// video
 			uriVideo = escogerVideo();
 			inicializarVideo();
@@ -451,7 +454,7 @@ public class InGame extends Activity implements OnClickListener,
 		// iScan.putExtra(Intents.Comun.JUGADOR, jugador);
 		// startActivityForResult(iScan, cCAMARA);
 		IntentIntegrator integrator = new IntentIntegrator(this);
-		integrator.initiateScan();
+		integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
 	}
 
 	/**
@@ -531,7 +534,7 @@ public class InGame extends Activity implements OnClickListener,
 	 * @param texto
 	 *            string que queremos que se visualize en el dialog
 	 */
-	public void lanzarJerogrifico(String textoDialog, int idIvDialog,
+	private void lanzarJerogrifico(String textoDialog, int idIvDialog,
 			String title) {
 		Bundle dialogBundle = new Bundle();
 		dialogBundle.putString("textoDialog", textoDialog);
@@ -543,7 +546,7 @@ public class InGame extends Activity implements OnClickListener,
 	/**
 	 * lanza un Custom Dialg según la fase en la que nos encontramos
 	 */
-	public void lanzarDialog() {
+	private void lanzarDialog() {
 		String title = "", textoDialog = "Descifre el enigma para la siguiente localización del QR";
 		// int idIvDialog = 0;
 
@@ -565,7 +568,7 @@ public class InGame extends Activity implements OnClickListener,
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 2:
-			textoDialog = "Moto Italiana + Embutido - Rizo /n"
+			textoDialog = "Moto Italiana + Embutido - Rizo \n"
 					+ "Cambiar primera letra de la moto por D";
 			title = "Enigma 2";
 			// falta poner bien la imagen
@@ -575,8 +578,8 @@ public class InGame extends Activity implements OnClickListener,
 			break;
 
 		case 3:
-			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse/n"
-					+ "Omitir la primeras sílaba de cada palabra/n"
+			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse\n"
+					+ "Omitir la primeras sílaba de cada palabra\n"
 					+ "quedarse con las últimas";
 			title = "Enigma 3";
 			// falta poner bien la imagen
@@ -585,8 +588,8 @@ public class InGame extends Activity implements OnClickListener,
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 4:
-			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua/n"
-					+ "Cambiar el comienzo de N por L de la hortaliza/n"
+			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua\n"
+					+ "Cambiar el comienzo de N por L de la hortaliza\n"
 					+ "quedarse con las últimas";
 			title = "Enigma 4";
 			// falta poner bien la imagen
@@ -597,7 +600,7 @@ public class InGame extends Activity implements OnClickListener,
 		case 5:
 			title = "Última fase";
 			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio de la muerte de Turing"
-					+ "/nHemos conseguido descodificar el papel, ve a la cafetería para desvelar quién es el asesino";
+					+ "\nHemos conseguido descodificar el papel, ve a la cafetería para desvelar quién es el asesino";
 			// falta poner bien la imagen
 			// idIvDialog = R.drawable.papel4;
 			// lanzarJerogrifico(textoDialog, idIvDialog, title);

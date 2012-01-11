@@ -7,9 +7,6 @@
 //
 package com.cinnamon.is.comun;
 
-import com.cinnamon.is.R;
-import com.cinnamon.is.game.Jugador;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,6 +18,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.game.Jugador;
 
 /**
  * Actividad abtracta que representa un minijuego
@@ -138,7 +138,8 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		lanzaExitDialog();
+		// Deshabilitado poder abandonar el minijuego
+		// lanzaExitDialog();
 	}
 
 	/**
@@ -152,7 +153,7 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 			jugador.setScore(jugador.getScore() + puntuacion);
 			jugador.addObjeto(objeto);
 			jugador.superaFase(fase);
-			jugador.actualFase(fase+1);
+			jugador.actualFase(fase + 1);
 		} else
 			jugador.actualFase(fase);
 
@@ -174,7 +175,7 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 				.setCancelable(false)
 				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						finalizar();
+						Minijuego.this.finish();
 					}
 				})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
