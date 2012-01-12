@@ -453,8 +453,10 @@ public class InGame extends Activity implements OnClickListener,
 		// iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		// iScan.putExtra(Intents.Comun.JUGADOR, jugador);
 		// startActivityForResult(iScan, cCAMARA);
+		vd.suspend();
 		IntentIntegrator integrator = new IntentIntegrator(this);
 		integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
+		
 	}
 
 	/**
