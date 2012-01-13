@@ -73,8 +73,6 @@ public class InGame extends Activity implements OnClickListener,
 	 */
 	private static final int DIALOG_MINIJUEGO = 0;
 
-	private static final int DIALOG_MINIJUEGOS_FIN = 0;
-
 	/**
 	 * Jugador actual del juego
 	 */
@@ -112,7 +110,13 @@ public class InGame extends Activity implements OnClickListener,
 		inicializarVideo();
 
 	}
-
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mDbHelper.open(false);
+	}
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -303,12 +307,21 @@ public class InGame extends Activity implements OnClickListener,
 			startActivityForResult(iDialog, cMINIJUEGO);*/
 			break;
 		case R.id.bDialog:
-			dismissDialog(DIALOG_MINIJUEGO);
+			removeDialog(DIALOG_MINIJUEGO);
 			// video
 			uriVideo = escogerVideo();
 			inicializarVideo();
 			break;
 		}
+	}
+
+	/**
+	 * Método heredado para saber que hacer al acabar el video.
+	 */
+	@Override
+	public void onCompletion(MediaPlayer mediaPlayer) {
+		if (getIntent().getSerializableExtra("SCAN_RESULT") == null)
+			lanzarDialog();
 	}
 
 	/**
@@ -438,6 +451,7 @@ public class InGame extends Activity implements OnClickListener,
 	 * Lanza el scaneo de codigos QR
 	 */
 	private void lanzaScan() {
+		vd.suspend();
 		Intent iScan = new Intent(Intents.Action.SCAN);
 		iScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		iScan.putExtra(Intents.Comun.JUGADOR, jugador);
@@ -521,7 +535,7 @@ public class InGame extends Activity implements OnClickListener,
 	 * @param texto
 	 *            string que queremos que se visualize en el dialog
 	 */
-	public void lanzarJerogrifico(String textoDialog, int idIvDialog,
+	private void lanzarJerogrifico(String textoDialog, int idIvDialog,
 			String title) {
 		Bundle dialogBundle = new Bundle();
 		dialogBundle.putString("textoDialog", textoDialog);
@@ -533,7 +547,7 @@ public class InGame extends Activity implements OnClickListener,
 	/**
 	 * lanza un Custom Dialg según la fase en la que nos encontramos
 	 */
-	public void lanzarDialog() {
+	private void lanzarDialog() {
 		String title = "", textoDialog = "Descifre el enigma para la siguiente localización del QR";
 		//int idIvDialog = 0;
 
@@ -555,7 +569,7 @@ public class InGame extends Activity implements OnClickListener,
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 2:
-			textoDialog = "Moto Italiana + Embutido - Rizo /n"
+			textoDialog = "Moto Italiana + Embutido - Rizo \n"
 					+ "Cambiar primera letra de la moto por D";
 			title = "Enigma 2";
 			// falta poner bien la imagen
@@ -565,8 +579,8 @@ public class InGame extends Activity implements OnClickListener,
 			break;
 
 		case 3:
-			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse/n"
-					+ "Omitir la primeras sílaba de cada palabra/n"
+			textoDialog = "Mensaje + Sujeción del pelo + Sirve para sentarse\n"
+					+ "Omitir la primeras sílaba de cada palabra\n"
 					+ "quedarse con las últimas";
 			title = "Enigma 3";
 			// falta poner bien la imagen
@@ -575,8 +589,8 @@ public class InGame extends Activity implements OnClickListener,
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		case 4:
-			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua/n"
-					+ "Cambiar el comienzo de N por L de la hortaliza/n"
+			textoDialog = "Hortaliza con N+  + Archienemigo del gato + Corriente de agua\n"
+					+ "Cambiar el comienzo de N por L de la hortaliza\n"
 					+ "quedarse con las últimas";
 			title = "Enigma 4";
 			// falta poner bien la imagen
@@ -587,22 +601,13 @@ public class InGame extends Activity implements OnClickListener,
 		case 5:
 			title = "Última fase";
 			textoDialog = "Ha superado todas las pruebas ya sólo queda resolver el misterio de la muerte de Turing"
-					+ "/nHemos conseguido descodificar el papel, ve a la cafetería para desvelar quién es el asesino";
+					+ "\nHemos conseguido descodificar el papel, ve a la cafetería para desvelar quién es el asesino";
 			// falta poner bien la imagen
 			// idIvDialog = R.drawable.papel4;
 			// lanzarJerogrifico(textoDialog, idIvDialog, title);
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		}
-	}
-
-	/**
-	 * Método heredado para saber que hacer al acabar el video.
-	 */
-	@Override
-	public void onCompletion(MediaPlayer mediaPlayer) {
-		if (getIntent().getSerializableExtra("SCAN_RESULT") == null)
-			lanzarDialog();
 	}
 
 }

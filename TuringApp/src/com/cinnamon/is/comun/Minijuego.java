@@ -138,7 +138,7 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		lanzaExitDialog();
+		//lanzaExitDialog();
 	}
 
 	/**

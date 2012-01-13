@@ -161,7 +161,7 @@ public class MainMenu extends Activity implements OnClickListener {
 
 		bNuevaPartida.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
-		bAyuda.setOnClickListener(this);
+		//bAyuda.setOnClickListener(this);
 		bSalir.setOnClickListener(this);
 	}
 
