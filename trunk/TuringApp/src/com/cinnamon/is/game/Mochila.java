@@ -92,7 +92,7 @@ public class Mochila extends Activity implements OnClickListener {
 		Intent iInGame = new Intent();
 		iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
 		iInGame.putExtra(Intents.Comun.INGAME_SCAN, false);
-		setResult(RESULT_OK, iInGame);
+		setResult(RESULT_CANCELED, iInGame);
 		finish();
 	}
 

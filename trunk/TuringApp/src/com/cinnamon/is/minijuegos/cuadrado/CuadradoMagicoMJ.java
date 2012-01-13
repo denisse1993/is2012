@@ -435,7 +435,7 @@ public class CuadradoMagicoMJ extends Minijuego implements
 			if (valido(imagenSel)) {
 				tabla[col - 1][fila - 1] = dameValor(imagenSel);
 				if (pepe != 0 && (pepe != -1))
-					usados[pepe] = true;
+					usados[pepe] = false;
 
 			}
 		}
