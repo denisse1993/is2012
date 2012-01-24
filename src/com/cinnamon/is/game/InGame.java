@@ -324,6 +324,15 @@ public class InGame extends Activity implements OnClickListener,
 	}
 
 	/**
+	 * Método heredado para saber que hacer al acabar el video.
+	 */
+	@Override
+	public void onCompletion(MediaPlayer mediaPlayer) {
+		if (getIntent().getSerializableExtra("SCAN_RESULT") == null)
+			lanzarDialog();
+	}
+
+	/**
 	 * Inicializa el video con su correspondiente URI le añadimos visibilidad y
 	 * lo traemos al frente
 	 */
@@ -609,15 +618,6 @@ public class InGame extends Activity implements OnClickListener,
 			lanzarAvisoMJ(textoDialog, title);
 			break;
 		}
-	}
-
-	/**
-	 * Método heredado para saber que hacer al acabar el video.
-	 */
-	@Override
-	public void onCompletion(MediaPlayer mediaPlayer) {
-		if (getIntent().getSerializableExtra("SCAN_RESULT") == null)
-			lanzarDialog();
 	}
 
 }
