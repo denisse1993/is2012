@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-   <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -18,7 +18,6 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="8" />
 
-    
     <application
         android:debuggable="true"
         android:icon="@drawable/icon"
@@ -107,7 +106,8 @@
         <!-- Activitys de los Minijuegos -->
         <activity
             android:label="@string/app_name"
-            android:name=".minijuegos.cuadrado.CuadradoMagicoMJ" >
+            android:name=".minijuegos.cuadrado.CuadradoMagicoMJ"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.cuadrado.CUADRADOMAGICOMJ" />
 
@@ -116,7 +116,8 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".minijuegos.puzzle.PuzzleMJ" >
+            android:name=".minijuegos.puzzle.PuzzleMJ"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.puzzle.PUZZLEMJ" />
 
@@ -135,7 +136,8 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".minijuegos.reinas.ReinasMJ" >
+            android:name=".minijuegos.reinas.ReinasMJ"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.reinas.REINASMJ" />
 
@@ -144,7 +146,8 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".minijuegos.end.EndMJ" >
+            android:name=".minijuegos.end.EndMJ"
+            android:screenOrientation="landscape" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.end.ENDMJ" />
 
@@ -153,7 +156,8 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".game.EndGame" >
+            android:name=".game.EndGame"
+            android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.cinnamon.is.game.ENDGAME" />
 
