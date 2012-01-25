@@ -197,18 +197,23 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 						canvas.getWidth()/2+35,canvas.getHeight()*2/3 + 70);
 				canvas.drawBitmap(boton, null, rect2, null);
 				
-				//TODO aqui creo q comprueban si es correcto y lanzariamos el dialog 
+				Bitmap boton_correct = BitmapFactory.decodeResource(
+						getResources(), R.drawable.boton_verde);
+				Bitmap boton_on = BitmapFactory.decodeResource(
+						getResources(), R.drawable.boton_check_on);
 				if (escorrecto) {
-					Bitmap boton_correct = BitmapFactory.decodeResource(getResources(),
-							R.drawable.boton_verde);
-					canvas.drawBitmap(boton_correct, null, rect2, null);
-					//lanzar dialogo
+					
+					// canvas.drawBitmap(boton_correct, null, rect2, null);
+					canvas.drawBitmap(boton_correct,
+							canvas.getWidth() / 2-25 ,
+							canvas.getHeight() * 2 / 3, null);
+					// lanzar dialogo
 				} else {
-					Bitmap boton_on = BitmapFactory.decodeResource(getResources(),
-							R.drawable.boton_check_on);
-					canvas.drawBitmap(boton_on, null, rect2, null);
+					
+					// canvas.drawBitmap(boton_on, null, rect2, null);
+					canvas.drawBitmap(boton_on, canvas.getWidth() / 2-25 ,
+							canvas.getHeight() * 2 / 3, null);
 				}
-				//
 
 				reinaImage = BitmapFactory.decodeResource(getResources(),
 						R.drawable.reina);
@@ -245,16 +250,18 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 					muevo = false;
 				}
 
-				if ((x >= 50 && x <= 150)
+				if ((x >= canvas.getWidth() / 2-25 && x <= canvas.getWidth() / 2+50)
 						&& (!fin)
-						&& (y >= canvas.getWidth() + 50 && y <= canvas
-								.getWidth() + 150) && t.getnumReinas() == 8) {
+						&& (y >= canvas.getHeight() * 2 / 3 && y <= canvas
+								.getHeight() * 2 / 3 + 50)
+						&& t.getnumReinas() == 8) {
 
 					escorrecto = comprobar();
-					//TODO aqui no se que coño hacen
+					// TODO aqui no se que coño hacen
 					if (escorrecto) {
-						/*lanzarAvisoMJ("Enhorabuena has conseguido superar el juego de las 8 Reinas"
-								, "Juego Superado");*/
+						canvas.drawBitmap(boton_correct,
+								canvas.getWidth() / 2-25,
+								canvas.getHeight() * 2 / 3, null);
 						fin = true;
 						superado=true;
 						finalizar();
