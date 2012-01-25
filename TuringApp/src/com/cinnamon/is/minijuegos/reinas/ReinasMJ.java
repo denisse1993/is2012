@@ -37,7 +37,7 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 	boolean fin = false;
 	boolean down;
 	boolean muevoFin = false;
-	
+
 	private static final int DIALOG_MINIJUEGOS_RESULT = 0;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +64,29 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 
 		jugador = (Jugador) getIntent().getSerializableExtra(
 				Intents.Comun.JUGADOR);
-		
-		
-		//TODO Dialogo inicial
-		//Lanza el Dialogo
-	//	String textoDialog = "Hola",
-				/*"Enhorabuena has desbloqueado el minijuego de las 8 reinas." +
-				"/nPara conseguir el siguiente objeto necesitaras completar el siguiente tablero" +
-				"en el que se colocan ocho reinas sin que se amenacen. Una reina amenaza a otra si" +
-				" se encuentren en su misma fila, columna o diagonal." +
-				"/nSuerte.",*/
-		/*		title = "8 Reinas";
-		int idIvDialog = R.drawable.tablero8reinas;
-		
-		Bundle dialogBundle = new Bundle();
-		dialogBundle.putString("textoDialog", textoDialog);
-		dialogBundle.putInt("idIvDialog", idIvDialog);
-		//dialogBundle.putBoolean(Intents.Comun.superado, superado);
-		dialogBundle.putString("title", title);
-		showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);
-		//lanzarAvisoMJ(textoDialog, title);*/
+
+		// TODO Dialogo inicial
+		// Lanza el Dialogo
+		// String textoDialog = "Hola",
+		/*
+		 * "Enhorabuena has desbloqueado el minijuego de las 8 reinas." +
+		 * "/nPara conseguir el siguiente objeto necesitaras completar el siguiente tablero"
+		 * +
+		 * "en el que se colocan ocho reinas sin que se amenacen. Una reina amenaza a otra si"
+		 * + " se encuentren en su misma fila, columna o diagonal." +
+		 * "/nSuerte.",
+		 */
+		/*
+		 * title = "8 Reinas"; int idIvDialog = R.drawable.tablero8reinas;
+		 * 
+		 * Bundle dialogBundle = new Bundle();
+		 * dialogBundle.putString("textoDialog", textoDialog);
+		 * dialogBundle.putInt("idIvDialog", idIvDialog);
+		 * //dialogBundle.putBoolean(Intents.Comun.superado, superado);
+		 * dialogBundle.putString("title", title);
+		 * showDialog(DIALOG_MINIJUEGOS_INIT,dialogBundle);
+		 * //lanzarAvisoMJ(textoDialog, title);
+		 */
 
 	}
 
@@ -191,22 +194,33 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 				int centraBoton = (canvas.getHeight() - canvas.getWidth()) / 2;
 				// Rect rect2=new
 				// Rect(20,canvas.getWidth()+centraBoton,boton.getWidth()+20,canvas.getWidth()+centraBoton+20);
-				
-				//TODO aqui he cambiado el boton
-				Rect rect2 = new Rect(canvas.getWidth()/2-35, canvas.getHeight()*2/3 , 
-						canvas.getWidth()/2+35,canvas.getHeight()*2/3 + 70);
-				canvas.drawBitmap(boton, null, rect2, null);
-				
-				//TODO aqui creo q comprueban si es correcto y lanzariamos el dialog 
+
+				// TODO aqui he cambiado el boton
+//				Rect rect2 = new Rect(canvas.getWidth() / 2 - 25,
+//						canvas.getHeight() * 2 / 3, canvas.getWidth() / 2 + 35,
+//						canvas.getHeight() * 2 / 3 + 70);
+				// canvas.drawBitmap(boton, null, rect2, null);
+				canvas.drawBitmap(boton, canvas.getWidth() / 2-25 ,
+						canvas.getHeight() * 2 / 3, null);
+
+				// TODO aqui creo q comprueban si es correcto y lanzariamos el
+				// dialog
+				Bitmap boton_correct = BitmapFactory.decodeResource(
+						getResources(), R.drawable.boton_verde);
+				Bitmap boton_on = BitmapFactory.decodeResource(
+						getResources(), R.drawable.boton_check_on);
 				if (escorrecto) {
-					Bitmap boton_correct = BitmapFactory.decodeResource(getResources(),
-							R.drawable.boton_verde);
-					canvas.drawBitmap(boton_correct, null, rect2, null);
-					//lanzar dialogo
+					
+					// canvas.drawBitmap(boton_correct, null, rect2, null);
+					canvas.drawBitmap(boton_correct,
+							canvas.getWidth() / 2-25 ,
+							canvas.getHeight() * 2 / 3, null);
+					// lanzar dialogo
 				} else {
-					Bitmap boton_on = BitmapFactory.decodeResource(getResources(),
-							R.drawable.boton_check_on);
-					canvas.drawBitmap(boton_on, null, rect2, null);
+					
+					// canvas.drawBitmap(boton_on, null, rect2, null);
+					canvas.drawBitmap(boton_on, canvas.getWidth() / 2-25 ,
+							canvas.getHeight() * 2 / 3, null);
 				}
 				//
 
@@ -245,18 +259,29 @@ public class ReinasMJ extends Minijuego implements OnTouchListener {
 					muevo = false;
 				}
 
-				if ((x >= 50 && x <= 150)
+				// if ((x >= 50 && x <= 150)
+				// && (!fin)
+				// && (y >= canvas.getWidth() + 50 && y <= canvas
+				// .getWidth() + 150) && t.getnumReinas() == 8) {
+				if ((x >= canvas.getWidth() / 2-25 && x <= canvas.getWidth() / 2+50)
 						&& (!fin)
-						&& (y >= canvas.getWidth() + 50 && y <= canvas
-								.getWidth() + 150) && t.getnumReinas() == 8) {
+						&& (y >= canvas.getHeight() * 2 / 3 && y <= canvas
+								.getHeight() * 2 / 3 + 50)
+						&& t.getnumReinas() == 8) {
 
 					escorrecto = comprobar();
-					//TODO aqui no se que coño hacen
+					// TODO aqui no se que coño hacen
 					if (escorrecto) {
-						/*lanzarAvisoMJ("Enhorabuena has conseguido superar el juego de las 8 Reinas"
-								, "Juego Superado");*/
+						canvas.drawBitmap(boton_correct,
+								canvas.getWidth() / 2-25,
+								canvas.getHeight() * 2 / 3, null);
+						/*
+						 * lanzarAvisoMJ(
+						 * "Enhorabuena has conseguido superar el juego de las 8 Reinas"
+						 * , "Juego Superado");
+						 */
 						fin = true;
-						superado=true;
+						superado = true;
 						finalizar();
 					}
 
