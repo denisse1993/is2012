@@ -16,18 +16,16 @@
 
 package com.google.zxing.client.android;
 
-import com.cinnamon.is.game.Jugador;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Result;
-import com.google.zxing.ResultMetadataType;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.client.android.camera.CameraManager;
-import com.google.zxing.client.android.history.HistoryManager;
-import com.google.zxing.client.android.result.ResultButtonListener;
-import com.google.zxing.client.android.result.ResultHandler;
-import com.google.zxing.client.android.result.ResultHandlerFactory;
-import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
-import com.google.zxing.client.android.share.ShareActivity;
+//import com.cinnamon.is.game.Jugador;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -51,7 +49,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -62,15 +59,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.Set;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Result;
+import com.google.zxing.ResultMetadataType;
+import com.google.zxing.ResultPoint;
+import com.google.zxing.client.android.camera.CameraManager;
+import com.google.zxing.client.android.history.HistoryManager;
+import com.google.zxing.client.android.result.ResultButtonListener;
+import com.google.zxing.client.android.result.ResultHandler;
+import com.google.zxing.client.android.result.ResultHandlerFactory;
+import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
@@ -82,7 +80,7 @@ import java.util.Set;
  */
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
-private Jugador jugador;
+  //private Jugador jugador;
 	
   private static final String TAG = CaptureActivity.class.getSimpleName();
 
@@ -162,7 +160,7 @@ private Jugador jugador;
     inactivityTimer = new InactivityTimer(this);
     beepManager = new BeepManager(this);
 
-    jugador = (Jugador) getIntent().getSerializableExtra("jugador");
+   // jugador = (Jugador) getIntent().getSerializableExtra("jugador");
    // showHelpOnFirstLaunch();
   }
 
@@ -589,7 +587,7 @@ private Jugador jugador;
       intent.putExtra(Intents.Scan.RESULT_FORMAT, rawResult.getBarcodeFormat().toString());
      
       
-      intent.putExtra("jugador", jugador);
+      //intent.putExtra("jugador", jugador);
       
       
       

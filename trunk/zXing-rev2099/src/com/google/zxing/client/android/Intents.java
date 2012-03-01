@@ -32,7 +32,8 @@ public final class Intents {
      * the results.
      */
     //public static final String ACTION = "com.google.zxing.client.android.SCAN";
-    public static final String ACTION = "com.cinnamon.is.android.SCAN";
+    //public static final String ACTION = "com.android.prueba.SCAN";
+	  public static final String ACTION ="com.cinnamon.is.SCAN";
     /**
      * By default, sending this will decode all barcodes that we understand. However it
      * may be useful to limit scanning to certain formats. Use
@@ -155,7 +156,8 @@ public final class Intents {
      * Send this intent to encode a piece of data as a QR code and display it full screen, so
      * that another person can scan the barcode from your screen.
      */
-    public static final String ACTION = "com.google.zxing.client.android.ENCODE";
+    //public static final String ACTION = "com.google.zxing.client.android.ENCODE";
+	  public static final String ACTION = "com.cinnamon.is.ENCODE";
 
     /**
      * The data to encode. Use {@link android.content.Intent#putExtra(String, String)} or
