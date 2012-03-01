@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Parámetros Aplicación" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="cbSonido"
+            android:summary="Activar o desactivar sonido"
+            android:title="Sonido" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Utilidades" >
+
+        <Preference
+            android:key="loginChange"
+            android:summary="Vuelve al login para cambiar de usuario"
+            android:title="Cambiar de usuario" >
+        </Preference>
+
+        <Preference
+            android:key="resetGame"
+            android:summary="Resetea todas las estadisticas del juego (empieza de nuevo)"
+            android:title="Resetear juego" >
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>
