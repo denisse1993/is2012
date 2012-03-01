@@ -30,8 +30,8 @@
   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
-  <uses-sdk android:minSdkVersion="7"
-            android:targetSdkVersion="7"/>
+  <uses-sdk android:minSdkVersion="8"
+            android:targetSdkVersion="8"/>
 
   <uses-feature android:name="android.hardware.camera"/>
   <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
@@ -59,7 +59,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
       <intent-filter>
-        <action android:name="com.cinnamon.is.android.SCAN"/>
+        <action android:name="com.cinnamon.is.SCAN"/>
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
       <!-- Allow web apps to launch Barcode Scanner by linking to http://zxing.appspot.com/scan. -->
@@ -99,7 +99,7 @@
               android:label="@string/share_name"
               android:stateNotNeeded="true">
       <intent-filter>
-        <action android:name="com.google.zxing.client.android.ENCODE"/>
+        <action android:name="com.cinnamon.is.ENCODE"/>
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
       <!-- This allows us to handle the Share button in Contacts. -->
