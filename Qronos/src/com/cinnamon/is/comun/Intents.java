@@ -39,7 +39,7 @@ public final class Intents {
 		// libreria zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
 		
-		public static final String ENCODE = "com.google.zxing.client.android.ENCODE";
+		public static final String ENCODE = "com.cinnamon.is.ENCODE";
 
 		private Action() {
 		}
