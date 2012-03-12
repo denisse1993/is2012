@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Intents;
+import com.cinnamon.is.comun.Props;
 
 /**
  * Actividad de la segunda intro en la aplicacion
@@ -43,7 +43,7 @@ public class Intro2 extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		if (arg0.getId() == R.id.screen) {
-			Intent openLogin = new Intent(Intents.Action.LOGIN);
+			Intent openLogin = new Intent(Props.Action.LOGIN);
 			startActivity(openLogin);
 		}
 	}

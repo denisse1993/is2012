@@ -141,8 +141,8 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 			jugador.actualFase(fase);
 
 		Intent r = new Intent();
-		r.putExtra(Intents.Comun.superado, superado);
-		r.putExtra(Intents.Comun.JUGADOR, jugador);
+		r.putExtra(Props.Comun.superado, superado);
+		r.putExtra(Props.Comun.J, jugador);
 		setResult(RESULT_OK, r);
 		finish();
 	}

@@ -52,7 +52,7 @@ public class Opciones extends PreferenceActivity implements
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.opciones);
 		jugador = (Jugador) getIntent().getSerializableExtra(
-				Intents.Comun.JUGADOR);
+				Props.Comun.J);
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
@@ -67,8 +67,8 @@ public class Opciones extends PreferenceActivity implements
 	public void onBackPressed() {
 		finish();
 		mDbHelper.close();
-		Intent iMainMenu = new Intent(Intents.Action.MAINMENU);
-		iMainMenu.putExtra(Intents.Comun.JUGADOR, jugador);
+		Intent iMainMenu = new Intent(Props.Action.MAINMENU);
+		iMainMenu.putExtra(Props.Comun.J, jugador);
 		startActivity(iMainMenu);
 	}
 
@@ -78,7 +78,7 @@ public class Opciones extends PreferenceActivity implements
 		if (key.equals(pLogin.getKey())) {
 			finish();
 			mDbHelper.close();
-			Intent openLogin = new Intent(Intents.Action.LOGIN);
+			Intent openLogin = new Intent(Props.Action.LOGIN);
 			startActivity(openLogin);
 		} else if (key.equals(pReset.getKey())) {
 			resetJugador();
