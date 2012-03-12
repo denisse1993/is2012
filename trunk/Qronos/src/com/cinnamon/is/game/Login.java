@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
-import com.cinnamon.is.comun.Intents;
+import com.cinnamon.is.comun.Props;
 
 /**
  * Pantalla para el login en la aplicacion lee el nombre del jugador y comprueba
@@ -84,8 +84,8 @@ public class Login extends Activity implements OnClickListener {
 			bienvenida(false);
 			break;
 		case R.id.bArrancar:
-			Intent openMainMenu = new Intent(Intents.Action.MAINMENU);
-			openMainMenu.putExtra(Intents.Comun.JUGADOR, jugador);
+			Intent openMainMenu = new Intent(Props.Action.MAINMENU);
+			openMainMenu.putExtra(Props.Comun.J, jugador);
 			startActivity(openMainMenu);
 			break;
 		}

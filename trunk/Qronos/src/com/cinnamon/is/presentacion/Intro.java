@@ -14,7 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Intents;
+import com.cinnamon.is.comun.Props;
 
 /**
  * Actividad de intro en la aplicacion
@@ -42,7 +42,7 @@ public class Intro extends Activity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} finally {
-					Intent openIntro2 = new Intent(Intents.Action.INTRO2);
+					Intent openIntro2 = new Intent(Props.Action.INTRO2);
 					startActivity(openIntro2);
 				}
 			}

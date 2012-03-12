@@ -28,7 +28,7 @@ public final class Dialogs {
 	/**
 	 * Lanza el Dialog con un texto y un titulo
 	 */
-	public static void lanzarOneButton(String texto, String title, Context c) {
+	public static void lanzarOneButton(String title, String texto, Context c) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
 		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
@@ -40,12 +40,13 @@ public final class Dialogs {
 		builder.show();
 	}
 	/**
-	 * Lanza el dialog para escoger si quieres cerrar la actividad actual o no
+	 * Lanza el dialog para escoger si quieres hacer algo o no
 	 */
-	public static boolean lanzaExit(Context c) {
-		
+	public static boolean lanzaConfirmacion(String title,String texto, Context c) {
+	
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
-		builder.setMessage("¿Quieres salir?")
+		builder.setTitle(title);
+		builder.setMessage(texto)
 				.setCancelable(false)
 				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {

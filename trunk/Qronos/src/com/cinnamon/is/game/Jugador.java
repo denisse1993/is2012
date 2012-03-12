@@ -9,6 +9,8 @@ package com.cinnamon.is.game;
 
 import java.io.Serializable;
 
+import com.cinnamon.is.comun.Props;
+
 /**
  * Clase que representa a un jugador en el juego. implementa serializable para
  * poder ser pasada en un intent entre activities
@@ -38,7 +40,7 @@ public class Jugador implements Serializable {
 	 */
 	private static final long serialVersionUID = 4L;
 
-	private static final int MAX_MJ = 5;
+
 
 	/**
 	 * Genera un jugador por parametros
@@ -68,7 +70,7 @@ public class Jugador implements Serializable {
 	 */
 	public Jugador(String nombre) {
 		this.nombre = nombre;
-		this.score = new int[MAX_MJ];
+		this.score = new int[Props.Comun.MAX_MJ];
 		this.faseActual = 0;
 	}
 

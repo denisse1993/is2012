@@ -19,7 +19,7 @@ import android.widget.Button;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
-import com.cinnamon.is.comun.Intents;
+import com.cinnamon.is.comun.Props;
 
 /**
  * Actividad que representa el menu principal de la aplicacion
@@ -30,7 +30,7 @@ import com.cinnamon.is.comun.Intents;
 public class MainMenu extends Activity implements OnClickListener {
 
 	// interfaz
-	private Button bNuevaPartida, bOpciones, bAyuda, bSalir;
+	private Button bArcade, bOpciones, bAyuda, bSalir;
 
 	/**
 	 * MediaPlayer para contenido multimedia
@@ -56,7 +56,7 @@ public class MainMenu extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		jugador = (Jugador) getIntent().getSerializableExtra(
-				Intents.Comun.JUGADOR);
+				Props.Comun.J);
 		SharedPreferences getData = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		sonido = getData.getBoolean("cbSonido", true);
@@ -74,19 +74,19 @@ public class MainMenu extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.bNuevaPartida:
+		case R.id.bArcade:
 			menuTheme.release();
 			MediaPlayer openingTheme = MediaPlayer.create(MainMenu.this,
 					R.raw.opening);
 			if (sonido)
 				openingTheme.start();
-
-			lanzaInGame();
+		
 			break;
 		case R.id.bOpciones:
-			Intent iOpciones = new Intent(Intents.Action.OPCIONES);
-			iOpciones.putExtra(Intents.Comun.JUGADOR, jugador);
-			startActivity(iOpciones);
+			lanzaInGame();
+//			Intent iOpciones = new Intent(Props.Action.OPCIONES);
+//			iOpciones.putExtra(Props.Comun.J, jugador);
+//			startActivity(iOpciones);
 			break;
 		// case R.id.bAyuda:
 		// TODO Ayuda pendiente
@@ -110,12 +110,12 @@ public class MainMenu extends Activity implements OnClickListener {
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 
-		bNuevaPartida = (Button) findViewById(R.id.bNuevaPartida);
+		bArcade = (Button) findViewById(R.id.bArcade);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
 		// bAyuda = (Button) findViewById(R.id.bAyuda);
 		bSalir = (Button) findViewById(R.id.bSalir);
 
-		bNuevaPartida.setOnClickListener(this);
+		bArcade.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
 		// bAyuda.setOnClickListener(this);
 		bSalir.setOnClickListener(this);
@@ -125,8 +125,8 @@ public class MainMenu extends Activity implements OnClickListener {
 	 * Metodo que lanza el ingame con la informacion de jugador
 	 */
 	private void lanzaInGame() {
-		Intent iInGame = new Intent(Intents.Action.INGAME);
-		iInGame.putExtra(Intents.Comun.JUGADOR, jugador);
+		Intent iInGame = new Intent(Props.Action.INGAME);
+		iInGame.putExtra(Props.Comun.J, jugador);
 		startActivity(iInGame);
 	}
 

@@ -2,13 +2,15 @@
 // Universidad Complutense de Madrid
 // Ingenieria Informática
 //
-// PROYECTO: TuringApp
+// PROYECTO: QRonos
 // ASIGNATURA : Ingeniería del Software
 //
 
 // Paquete para clases comunes y de utilidad
 
 package com.cinnamon.is.comun;
+
+import com.cinnamon.is.comun.Props.Enum.Tabla;
 
 import android.content.ContentValues;
 import android.content.Context;
