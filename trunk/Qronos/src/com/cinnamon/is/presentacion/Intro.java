@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
 /**
@@ -42,8 +43,7 @@ public class Intro extends Activity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} finally {
-					Intent openIntro2 = new Intent(Props.Action.INTRO2);
-					startActivity(openIntro2);
+					Launch.lanzaActivity(Intro.this, Props.Action.INTRO2);
 				}
 			}
 		};

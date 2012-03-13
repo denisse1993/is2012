@@ -7,15 +7,15 @@
 //
 package com.cinnamon.is.comun;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.android.Contents;
-
 import android.app.Activity;
 import android.content.Intent;
+
+import com.google.zxing.BarcodeFormat;
 
 public final class UtilQR {
 
 	public static final int REQUEST_CODE = 0x0000c0de;
+	
 	private final Activity activity;
 
 	public UtilQR(Activity activity) {
@@ -26,7 +26,7 @@ public final class UtilQR {
 	 * Lanza el lectorQR
 	 */
 	public void lanzarQR() {
-		Intent intentScan = new Intent(Intents.Action.SCAN);
+		Intent intentScan = new Intent(Props.Action.SCAN);
 		intentScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -57,7 +57,7 @@ public final class UtilQR {
 	 */
 	public void generarQR(String text) {
 		Intent intent = new Intent();
-		intent.setAction(Intents.Action.ENCODE);
+		intent.setAction(Props.Action.ENCODE);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 	    intent.putExtra("ENCODE_FORMAT", BarcodeFormat.QR_CODE.toString());
 		intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
