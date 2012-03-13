@@ -22,11 +22,11 @@ import com.cinnamon.is.comun.UtilQR;
 
 public class InGame extends Activity implements OnClickListener {
 
-	Button scan,bqr;
+	Button scan, bqr;
 
 	TextView result;
 
-	 EditText etqr;
+	EditText etqr;
 	ImageView qr;
 
 	private UtilQR q;
@@ -37,7 +37,7 @@ public class InGame extends Activity implements OnClickListener {
 		setContentView(R.layout.zxing);
 		scan = (Button) findViewById(R.id.bScan);
 		bqr = (Button) findViewById(R.id.bqr);
-		etqr=(EditText) findViewById(R.id.etqr);
+		etqr = (EditText) findViewById(R.id.etqr);
 		result = (TextView) findViewById(R.id.tvQR);
 		qr = (ImageView) findViewById(R.id.ivQR);
 		scan.setOnClickListener(this);
@@ -62,7 +62,7 @@ public class InGame extends Activity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		q.getQR(requestCode, resultCode, data);
-		if (requestCode == q.REQUEST_CODE) {
+		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				String contents = data.getStringExtra("SCAN_RESULT");
 				String format = data.getStringExtra("SCAN_RESULT_FORMAT");

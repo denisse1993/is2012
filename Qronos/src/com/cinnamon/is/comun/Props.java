@@ -33,16 +33,20 @@ public final class Props {
 
 		public static final String INGAME = "com.cinnamon.is.game.INGAME";
 
+		public static final String ARCADE = "com.cinnamon.is.game.ARCADE";
+
+		public static final String AVENTURA ="com.cinnamon.is.game.AVENTURA";
+		
 		public static final String LOGIN = "com.cinnamon.is.game.LOGIN";
 
 		public static final String OPCIONES = "com.cinnamon.is.comun.OPCIONES";
 
-		// este intent hay que poner lo de android asi por el tema de la
-		// libreria zXing
+		//intents de zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
 
 		public static final String ENCODE = "com.cinnamon.is.ENCODE";
 
+		// MINIJUEGOS
 		public static final String MJ1 = "com.cinnamon.is.MJ1";
 		public static final String MJ2 = "com.cinnamon.is.MJ2";
 		public static final String MJ3 = "com.cinnamon.is.MJ3";
@@ -63,12 +67,12 @@ public final class Props {
 	 */
 	public static final class Comun {
 
-		public static final int cmj1=1;
-		public static final int cmj2=2;
-		public static final int cmj3=3;
-		public static final int cmj4=4;
-		public static final int cmj5=5;
-		public static final int cmj6=6;
+		public static final int cmj1 = 1;
+		public static final int cmj2 = 2;
+		public static final int cmj3 = 3;
+		public static final int cmj4 = 4;
+		public static final int cmj5 = 5;
+		public static final int cmj6 = 6;
 		/**
 		 * Minijuegos maximos
 		 */
@@ -122,7 +126,7 @@ public final class Props {
 		/**
 		 * Array con explicaciones de los minijuegos
 		 */
-		public static final String[] expmjs = { "Mata to lo ke puedas" };
+		public static final String[] expmjs = { "Mata to lo ke puedas","","","","","" };
 		/**
 		 * <p>
 		 * Array de String para guardar la ruta de los minijuegos, se usa para
@@ -131,7 +135,7 @@ public final class Props {
 		 * <code><pre>
 		 * </pre></code>
 		 */
-		public static final String[] minijuegos = {"MJ1"};
+		public static final String[] minijuegos = { "MJ1" };
 		/**
 		 * String con la ruta base del proyecto
 		 */
@@ -161,7 +165,6 @@ public final class Props {
 	 * @author Cinnamon Team
 	 * 
 	 */
-
 	public static final class Enum {
 
 		public enum Tabla {
@@ -185,5 +188,4 @@ public final class Props {
 			},
 		}
 	}
-
 }

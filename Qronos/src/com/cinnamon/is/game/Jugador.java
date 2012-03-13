@@ -2,7 +2,7 @@
 // Universidad Complutense de Madrid
 // Ingenieria Informática
 //
-// PROYECTO: TuringApp
+// PROYECTO: QRonos
 // ASIGNATURA : Ingeniería del Software
 //
 package com.cinnamon.is.game;
@@ -38,9 +38,7 @@ public class Jugador implements Serializable {
 	/**
 	 * ID para la serializacion
 	 */
-	private static final long serialVersionUID = 4L;
-
-
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Genera un jugador por parametros
@@ -59,6 +57,18 @@ public class Jugador implements Serializable {
 	}
 
 	/**
+	 * Genera un jugador por parametros
+	 * 
+	 * @param nombre
+	 *            del jugador
+	 * @param score
+	 *            del jugador
+	 */
+	public Jugador(String nombre, int[] score) {
+		this(nombre, score, 0);
+	}
+
+	/**
 	 * Genera un Jugador por parametros
 	 * 
 	 * @param nombre
@@ -69,9 +79,7 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 */
 	public Jugador(String nombre) {
-		this.nombre = nombre;
-		this.score = new int[Props.Comun.MAX_MJ];
-		this.faseActual = 0;
+		this(nombre, new int[Props.Comun.MAX_MJ], 0);
 	}
 
 	/**
@@ -159,6 +167,11 @@ public class Jugador implements Serializable {
 
 	@Override
 	public String toString() {
-		return nombre + " " + score + " " + " " + faseActual;
+		StringBuffer sb = new StringBuffer("[");
+		for (int i = 0; i < score.length; i++)
+			sb.append(score[i] + ",");
+		sb.setLength(sb.length() - 1);
+		sb.append("]");
+		return nombre + " " + sb.toString() + " " + faseActual;
 	}
 }

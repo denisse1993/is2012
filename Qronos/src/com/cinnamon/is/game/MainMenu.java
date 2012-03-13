@@ -19,6 +19,7 @@ import android.widget.Button;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
 /**
@@ -30,7 +31,7 @@ import com.cinnamon.is.comun.Props;
 public class MainMenu extends Activity implements OnClickListener {
 
 	// interfaz
-	private Button bArcade, bOpciones, bAyuda, bSalir;
+	private Button bArcade, bOpciones, bAventura, bSalir;
 
 	/**
 	 * MediaPlayer para contenido multimedia
@@ -51,28 +52,29 @@ public class MainMenu extends Activity implements OnClickListener {
 	 */
 	private DbAdapter mDbHelper;
 
+	private Launch l;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		jugador = (Jugador) getIntent().getSerializableExtra(
-				Props.Comun.J);
+		jugador = (Jugador) getIntent().getSerializableExtra(Props.Comun.J);
 		SharedPreferences getData = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		sonido = getData.getBoolean("cbSonido", true);
+		l = new Launch(this);
 		inicializar();
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
+	private void onClose() {
 		menuTheme.release();
 		mDbHelper.close();
-		finish();
 	}
 
 	@Override
 	public void onClick(View v) {
+		Bundle b = new Bundle();
+		b.putSerializable(Props.Comun.J, jugador);
 		switch (v.getId()) {
 		case R.id.bArcade:
 			menuTheme.release();
@@ -80,22 +82,22 @@ public class MainMenu extends Activity implements OnClickListener {
 					R.raw.opening);
 			if (sonido)
 				openingTheme.start();
-		
+			l.lanzaActivity(Props.Action.ARCADE, b);
+			break;
+		case R.id.bAventura:
+			l.lanzaActivity(Props.Action.AVENTURA, b);
 			break;
 		case R.id.bOpciones:
-			lanzaInGame();
-//			Intent iOpciones = new Intent(Props.Action.OPCIONES);
-//			iOpciones.putExtra(Props.Comun.J, jugador);
-//			startActivity(iOpciones);
+			l.lanzaActivity(Props.Action.INGAME, b);
+			// Intent iOpciones = new Intent(Props.Action.OPCIONES);
+			// iOpciones.putExtra(Props.Comun.J, jugador);
+			// startActivity(iOpciones);
 			break;
-		// case R.id.bAyuda:
-		// TODO Ayuda pendiente
-		// break;
 		case R.id.bSalir:
 			finish();
 			break;
 		}
-
+		onClose();
 	}
 
 	/**
@@ -112,22 +114,13 @@ public class MainMenu extends Activity implements OnClickListener {
 
 		bArcade = (Button) findViewById(R.id.bArcade);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
-		// bAyuda = (Button) findViewById(R.id.bAyuda);
+		bAventura = (Button) findViewById(R.id.bAventura);
 		bSalir = (Button) findViewById(R.id.bSalir);
 
 		bArcade.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
-		// bAyuda.setOnClickListener(this);
+		bAventura.setOnClickListener(this);
 		bSalir.setOnClickListener(this);
-	}
-
-	/**
-	 * Metodo que lanza el ingame con la informacion de jugador
-	 */
-	private void lanzaInGame() {
-		Intent iInGame = new Intent(Props.Action.INGAME);
-		iInGame.putExtra(Props.Comun.J, jugador);
-		startActivity(iInGame);
 	}
 
 }

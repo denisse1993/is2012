@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
 /**
@@ -43,8 +44,7 @@ public class Intro2 extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		if (arg0.getId() == R.id.screen) {
-			Intent openLogin = new Intent(Props.Action.LOGIN);
-			startActivity(openLogin);
+			Launch.lanzaActivity(this, Props.Action.LOGIN);
 		}
 	}
 
@@ -54,9 +54,9 @@ public class Intro2 extends Activity implements OnClickListener {
 	private void inicializar() {
 		LinearLayout screen = (LinearLayout) findViewById(R.id.screen);
 		screen.setOnClickListener(this);
-		//screen.setBackgroundResource(R.drawable.);
-		//AnimationDrawable a = (AnimationDrawable) screen.getBackground();
-		//a.start();
+		// screen.setBackgroundResource(R.drawable.);
+		// AnimationDrawable a = (AnimationDrawable) screen.getBackground();
+		// a.start();
 	}
 
 }

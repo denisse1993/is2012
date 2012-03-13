@@ -47,12 +47,12 @@ public class DbAdapter {
 	 * Nombre de la base de datos
 	 */
 	private static final String DATABASE_NAME = "data";
-	
+
 	/**
 	 * Version de la base de datos
 	 */
-	private static final int DATABASE_VERSION = 1;
-	
+	private static final int DATABASE_VERSION = 2;
+
 	/**
 	 * Nombre de las tablas de la BD
 	 */
@@ -81,6 +81,18 @@ public class DbAdapter {
 	 * Guarda la puntuacion del jugador para el minijuego 3
 	 **/
 	public static final String PARCADE_KEY_SCORE3 = "score3";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 4
+	 **/
+	public static final String PARCADE_KEY_SCORE4 = "score4";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 5
+	 **/
+	public static final String PARCADE_KEY_SCORE5 = "score5";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 6
+	 **/
+	public static final String PARCADE_KEY_SCORE6 = "score6";
 
 	//
 	// Campos de la tabla pquest
@@ -153,7 +165,8 @@ public class DbAdapter {
 	 */
 	private static final String[] parcadeCampos = new String[] {
 			PARCADE_KEY_PLAYER, PARCADE_KEY_SCORE1, PARCADE_KEY_SCORE2,
-			PARCADE_KEY_SCORE3 };
+			PARCADE_KEY_SCORE3, PARCADE_KEY_SCORE4, PARCADE_KEY_SCORE5,
+			PARCADE_KEY_SCORE6 };
 
 	/**
 	 * Array con las variables de la tabla pquest
@@ -183,8 +196,11 @@ public class DbAdapter {
 			+ " text primary key,";
 	public static final String SQLscore1 = PARCADE_KEY_SCORE1 + " integer,";
 	public static final String SQLscore2 = PARCADE_KEY_SCORE2 + " integer,";
-	public static final String SQLscore3 = PARCADE_KEY_SCORE3 + " integer";
-	public static final String SQLscore3coma = PARCADE_KEY_SCORE3 + " integer,";
+	public static final String SQLscore3 = PARCADE_KEY_SCORE3 + " integer,";
+	public static final String SQLscore4 = PARCADE_KEY_SCORE4 + " integer,";
+	public static final String SQLscore5 = PARCADE_KEY_SCORE5 + " integer,";
+	public static final String SQLscore6 = PARCADE_KEY_SCORE6 + " integer";
+	public static final String SQLscore6coma = PARCADE_KEY_SCORE6 + " integer,";
 	public static final String SQLactual = PQUEST_KEY_ACTUAL + " integer";
 	// tabla quest
 	public static final String SQLname = QUEST_KEY_NAME + " text primary key,";
@@ -202,6 +218,9 @@ public class DbAdapter {
 	public static final int PARCADE_IDCOL_SCORE1 = 1;
 	public static final int PARCADE_IDCOL_SCORE2 = 2;
 	public static final int PARCADE_IDCOL_SCORE3 = 3;
+	public static final int PARCADE_IDCOL_SCORE4 = 4;
+	public static final int PARCADE_IDCOL_SCORE5 = 5;
+	public static final int PARCADE_IDCOL_SCORE6 = 6;
 	/**
 	 * Indice de las columnas de la tabla pquest
 	 */
@@ -230,7 +249,7 @@ public class DbAdapter {
 			+ SQLplayer
 			+ SQLscore1
 			+ SQLscore2
-			+ SQLscore3 + ")";
+			+ SQLscore3 + SQLscore4 + SQLscore5 + SQLscore6 + ")";
 
 	private static final String TABLE_PQUEST_CREATE = "create table if not exists "
 			+ TABLE_PQUEST
@@ -238,7 +257,7 @@ public class DbAdapter {
 			+ SQLplayer
 			+ SQLscore1
 			+ SQLscore2
-			+ SQLscore3coma + SQLactual + ")";
+			+ SQLscore3 + SQLactual + ")";
 
 	private static final String TABLE_QUEST_CREATE = "create table if not exists "
 			+ TABLE_QUEST
@@ -329,6 +348,9 @@ public class DbAdapter {
 		initialValues.put(PARCADE_KEY_SCORE1, score[0]);
 		initialValues.put(PARCADE_KEY_SCORE2, score[1]);
 		initialValues.put(PARCADE_KEY_SCORE3, score[2]);
+		initialValues.put(PARCADE_KEY_SCORE4, score[3]);
+		initialValues.put(PARCADE_KEY_SCORE5, score[4]);
+		initialValues.put(PARCADE_KEY_SCORE6, score[5]);
 
 		return mDb.insert(TABLE_PARCADE, null, initialValues);
 	}
@@ -399,17 +421,16 @@ public class DbAdapter {
 		boolean del = false;
 		switch (indiceTabla) {
 		case parcade:
-			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "="
-					+ rowId, null) > 0;
+			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "=" + rowId,
+					null) > 0;
 			break;
 
 		case pquest:
-			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "="
-					+ rowId, null) > 0;
+			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "=" + rowId,
+					null) > 0;
 			break;
 		case quest:
-			del = mDb.delete(TABLE_QUEST,
-					QUEST_KEY_NAME + "=" + rowId, null) > 0;
+			del = mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "=" + rowId, null) > 0;
 			break;
 		}
 		return del;
@@ -433,18 +454,18 @@ public class DbAdapter {
 			switch (indiceTabla) {
 			case parcade:
 
-				mCursor = mDb.query(TABLE_PARCADE, parcadeCampos,
-						null, null, null, null, null);
+				mCursor = mDb.query(TABLE_PARCADE, parcadeCampos, null, null,
+						null, null, null);
 				break;
 			case pquest:
 
-				mCursor = mDb.query(TABLE_PQUEST, pquestCampos, null,
-						null, null, null, null);
+				mCursor = mDb.query(TABLE_PQUEST, pquestCampos, null, null,
+						null, null, null);
 				break;
 			case quest:
 
-				mCursor = mDb.query(TABLE_QUEST, questCampos, null,
-						null, null, null, null);
+				mCursor = mDb.query(TABLE_QUEST, questCampos, null, null, null,
+						null, null);
 				break;
 			}
 		} catch (SQLException e) {
@@ -471,22 +492,20 @@ public class DbAdapter {
 		try {
 			switch (indiceTabla) {
 			case parcade:
-				mCursor = mDb.query(true, TABLE_PARCADE,
-						parcadeCampos, PARCADE_KEY_PLAYER + "=" + rowId, null,
-						null, null, null, null);
+				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
+						PARCADE_KEY_PLAYER + "=" + rowId, null, null, null,
+						null, null);
 				if (mCursor != null) {
 					mCursor.moveToFirst();
 				}
 				break;
 			case pquest:
-				mDb.query(true, TABLE_PQUEST, pquestCampos,
-						PARCADE_KEY_PLAYER + "=" + rowId, null, null, null,
-						null, null);
+				mDb.query(true, TABLE_PQUEST, pquestCampos, PARCADE_KEY_PLAYER
+						+ "=" + rowId, null, null, null, null, null);
 				break;
 			case quest:
-				mDb.query(true, TABLE_QUEST, questCampos,
-						QUEST_KEY_NAME + "=" + rowId, null, null, null, null,
-						null);
+				mDb.query(true, TABLE_QUEST, questCampos, QUEST_KEY_NAME + "="
+						+ rowId, null, null, null, null, null);
 				break;
 
 			}
@@ -518,9 +537,9 @@ public class DbAdapter {
 
 			switch (indiceTabla) {
 			case parcade:
-				mCursor = mDb.query(true, TABLE_PARCADE,
-						parcadeCampos, PARCADE_KEY_PLAYER + "=" + rowId, null,
-						null, null, null, null);
+				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
+						PARCADE_KEY_PLAYER + "=" + rowId, null, null, null,
+						null, null);
 				break;
 
 			case pquest:
@@ -539,16 +558,16 @@ public class DbAdapter {
 			// si no se encuentra la columna
 			existe = false;
 		}
-		if (mCursor != null)
+		if (mCursor != null) {
 			if (mCursor.getCount() <= 0) {
 				existe = false;
 			} else {
 				existe = true;
 			}
-		else {
+			mCursor.close();
+		} else {
 			existe = false;
 		}
-		mCursor.close();
 		return existe;
 
 	}
@@ -573,9 +592,15 @@ public class DbAdapter {
 			args.put(PARCADE_KEY_SCORE2, score[1]);
 		if (score[2] != -1)
 			args.put(PARCADE_KEY_SCORE3, score[2]);
+		if (score[3] != -1)
+			args.put(PARCADE_KEY_SCORE4, score[3]);
+		if (score[4] != -1)
+			args.put(PARCADE_KEY_SCORE5, score[4]);
+		if (score[5] != -1)
+			args.put(PARCADE_KEY_SCORE6, score[5]);
 
-		return mDb.update(TABLE_PARCADE, args, PARCADE_KEY_PLAYER
-				+ "=" + rowId, null) > 0;
+		return mDb.update(TABLE_PARCADE, args,
+				PARCADE_KEY_PLAYER + "=" + rowId, null) > 0;
 	}
 
 	/**
@@ -603,8 +628,8 @@ public class DbAdapter {
 		if (actual != -1)
 			args.put(PQUEST_KEY_ACTUAL, actual);
 
-		return mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "="
-				+ rowId, null) > 0;
+		return mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "=" + rowId,
+				null) > 0;
 	}
 
 	/**
@@ -638,7 +663,7 @@ public class DbAdapter {
 		if (pistas[2] != null)
 			args.put(QUEST_KEY_PISTA3, pistas[2]);
 
-		return mDb.update(TABLE_QUEST, args, QUEST_KEY_NAME + "="
-				+ rowId, null) > 0;
+		return mDb
+				.update(TABLE_QUEST, args, QUEST_KEY_NAME + "=" + rowId, null) > 0;
 	}
 }

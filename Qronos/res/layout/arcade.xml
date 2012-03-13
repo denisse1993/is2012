@@ -19,7 +19,7 @@
             android:layout_weight="1" >
 
             <TextView
-                android:id="@+id/hello"
+                android:id="@+id/tVhello"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -49,18 +49,21 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageButton
                 android:id="@+id/iBmj1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.95"
                 android:src="@drawable/icon_information" />
 
             <ImageView
                 android:id="@+id/iVsc1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
 
@@ -68,18 +71,21 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageButton
                 android:id="@+id/iBmj2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.95"
                 android:src="@drawable/icon_information" />
 
             <ImageView
                 android:id="@+id/iVsc2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
 
@@ -87,18 +93,21 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageButton
                 android:id="@+id/iBmj3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.95"
                 android:src="@drawable/icon_information" />
 
             <ImageView
                 android:id="@+id/iVsc3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
     </LinearLayout>
@@ -115,18 +124,21 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageButton
                 android:id="@+id/iBmj4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.95"
                 android:src="@drawable/icon_information" />
 
             <ImageView
                 android:id="@+id/iVsc4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
 
@@ -134,18 +146,21 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageButton
                 android:id="@+id/iBmj5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.95"
                 android:src="@drawable/icon_information" />
 
             <ImageView
                 android:id="@+id/iVsc5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
 
@@ -153,18 +168,21 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageButton
                 android:id="@+id/iBmj6"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.95"
                 android:src="@drawable/icon_information" />
 
             <ImageView
                 android:id="@+id/iVsc6"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
     </LinearLayout>
@@ -186,7 +204,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:maxHeight="25dp"
                 android:maxWidth="25dp"
                 android:src="@drawable/icon_information" />

@@ -16,10 +16,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
-import com.cinnamon.is.comun.Dialogs;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
 /**
@@ -34,6 +35,7 @@ public class Arcade extends Activity implements OnClickListener {
 	private ImageButton iBinfo, iBupSc, iBseeSc;
 	private ImageButton[] iBmj;
 	private ImageView[] iVsc;
+	private TextView tVhello;
 	// private ImageButton iBmj1,iBmj2,iBmj3,iBmj4,iBmj5,iBmj6;
 	// private ImageView iBsc1,iBsc2,iBsc3,iBsc4,iBsc5,iBsc6;
 
@@ -52,14 +54,18 @@ public class Arcade extends Activity implements OnClickListener {
 	 */
 	private Jugador jugador;
 
+	private Launch l;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.arcade);
-		jugador = (Jugador) getIntent().getSerializableExtra(Props.Comun.J);
+		Bundle b = getIntent().getExtras();
+		jugador = (Jugador) b.getSerializable(Props.Comun.J);
 		// SharedPreferences getData = PreferenceManager
 		// .getDefaultSharedPreferences(getBaseContext());
 		// sonido = getData.getBoolean("cbSonido", true);
+		l = new Launch(this);
 		inicializar();
 	}
 
@@ -72,14 +78,15 @@ public class Arcade extends Activity implements OnClickListener {
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 
-		// ib genericos
+		// genericos
 		iBinfo = (ImageButton) findViewById(R.id.iBinfo);
 		iBupSc = (ImageButton) findViewById(R.id.iBupSc);
 		iBseeSc = (ImageButton) findViewById(R.id.iBseeSc);
+		tVhello = (TextView) findViewById(R.id.tVhello);
 
 		// creo arrays para minijuegos
 		iBmj = new ImageButton[Props.Comun.MAX_MJ];
-		iVsc = new ImageButton[Props.Comun.MAX_MJ];
+		iVsc = new ImageView[Props.Comun.MAX_MJ];
 
 		// inicializo arrays
 		for (int i = 0; i < Props.Comun.MAX_MJ; i++) {
@@ -99,34 +106,55 @@ public class Arcade extends Activity implements OnClickListener {
 		iBinfo.setOnClickListener(this);
 		iBupSc.setOnClickListener(this);
 		iBseeSc.setOnClickListener(this);
+		tVhello.setText(tVhello.getText()+" " + jugador.getNombre()+ "!");
 	}
 
 	@Override
 	public void onClick(View v) {
-		Intent iMinijuego = new Intent();
-		iMinijuego.putExtra(Props.Comun.J, jugador);
 		boolean si = false;
 		switch (v.getId()) {
+		case R.id.iBseeSc:
+			
+			break;
+		case R.id.iBupSc:
+			
+			break;
 		case R.id.iBmj1:
-			si = Dialogs.lanzaConfirmacion("Confirmacion para lanzar "
+			si = Launch.lanzaConfirmacion("Confirmacion para lanzar "
 					+ Props.Comun.minijuegos[0], Props.Comun.expmjs[0], this);
-			if (si) {
-				iMinijuego.setAction(Props.Action.MJ1);
-				startActivityForResult(iMinijuego,
-						Props.Comun.cmj1);
-			}
+			if (si)
+				l.lanzaActivity(Props.Action.MJ1, Props.Comun.cmj1);
 			break;
 		case R.id.iBmj2:
-			si = Dialogs.lanzaConfirmacion("Confirmacion para lanzar "
+			si = Launch.lanzaConfirmacion("Confirmacion para lanzar "
 					+ Props.Comun.minijuegos[1], Props.Comun.expmjs[1], this);
-			if (si) {
-				iMinijuego.setAction(Props.Action.MJ2);
-				startActivityForResult(iMinijuego,
-						Props.Comun.cmj2);
-			}
+			if (si)
+				l.lanzaActivity(Props.Action.MJ2, Props.Comun.cmj2);
 			break;
-		case R.id.bSalir:
-			finish();
+
+		case R.id.iBmj3:
+			si = Launch.lanzaConfirmacion("Confirmacion para lanzar "
+					+ Props.Comun.minijuegos[2], Props.Comun.expmjs[2], this);
+			if (si)
+				l.lanzaActivity(Props.Action.MJ3, Props.Comun.cmj3);
+			break;
+		case R.id.iBmj4:
+			si = Launch.lanzaConfirmacion("Confirmacion para lanzar "
+					+ Props.Comun.minijuegos[3], Props.Comun.expmjs[3], this);
+			if (si)
+				l.lanzaActivity(Props.Action.MJ4, Props.Comun.cmj4);
+			break;
+		case R.id.iBmj5:
+			si = Launch.lanzaConfirmacion("Confirmacion para lanzar "
+					+ Props.Comun.minijuegos[4], Props.Comun.expmjs[4], this);
+			if (si)
+				l.lanzaActivity(Props.Action.MJ5, Props.Comun.cmj6);
+			break;
+		case R.id.iBmj6:
+			si = Launch.lanzaConfirmacion("Confirmacion para lanzar "
+					+ Props.Comun.minijuegos[5], Props.Comun.expmjs[5], this);
+			if (si)
+				l.lanzaActivity(Props.Action.MJ6, Props.Comun.cmj6);
 			break;
 		}
 	}
@@ -137,8 +165,15 @@ public class Arcade extends Activity implements OnClickListener {
 			switch (requestCode) {
 			case Props.Comun.cmj1:
 				break;
-
 			case Props.Comun.cmj2:
+				break;
+			case Props.Comun.cmj3:
+				break;
+			case Props.Comun.cmj4:
+				break;
+			case Props.Comun.cmj5:
+				break;
+			case Props.Comun.cmj6:
 				break;
 			}
 		}

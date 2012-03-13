@@ -19,7 +19,10 @@ import android.widget.TextView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
+import com.cinnamon.is.comun.Props.Enum.Tabla;
+import com.cinnamon.is.presentacion.Intro;
 
 /**
  * Pantalla para el login en la aplicacion lee el nombre del jugador y comprueba
@@ -81,12 +84,13 @@ public class Login extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.bLogin:
 			nombre = etLogin.getText().toString();
-			bienvenida(false);
+			if (!nombre.equals(""))
+				bienvenida(creaJugador());
 			break;
 		case R.id.bArrancar:
-			Intent openMainMenu = new Intent(Props.Action.MAINMENU);
-			openMainMenu.putExtra(Props.Comun.J, jugador);
-			startActivity(openMainMenu);
+			Bundle b = new Bundle();
+			b.putSerializable(Props.Comun.J, jugador);
+			Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
 			break;
 		}
 	}
@@ -98,19 +102,19 @@ public class Login extends Activity implements OnClickListener {
 		etLogin = (EditText) findViewById(R.id.etlogin);
 		tvLogin = (TextView) findViewById(R.id.tvLogin);
 		bLogin = (Button) findViewById(R.id.bLogin);
-	
+
 		bArrancar = (Button) findViewById(R.id.bArrancar);
 		tvbienvenida = (TextView) findViewById(R.id.tVbienvenida);
-	
+
 		// escondemos hasta que se loguee
 		tvbienvenida.setVisibility(View.INVISIBLE);
 		bArrancar.setVisibility(View.INVISIBLE);
-	
+
 		bLogin.setOnClickListener(this);
 		bArrancar.setOnClickListener(this);
-		// abre base de datos
-//		mDbHelper = new DbAdapter(this);
-//		mDbHelper.open(false);
+		//abre base de datos
+		mDbHelper = new DbAdapter(this);
+		mDbHelper.open(false);
 	}
 
 	/**
@@ -129,12 +133,48 @@ public class Login extends Activity implements OnClickListener {
 
 		if (esta)
 			tvbienvenida.setText("Hola " + nombre + "!\n Tu puntuación es "
-					+ jugador.getScore()
+					+ jugador.getScoreTotal()
 					+ ".\nToca arrancar para ir al menu principal");
 		else
 			tvbienvenida
 					.setText("Hola "
 							+ nombre
 							+ "!\nEs la primera vez que juegas!\nToca arrancar para ir al menu principal:");
+	}
+
+	/**
+	 * Crea el jugador o recupera su informacion si existe
+	 * 
+	 * @return true o false en funcion de si existia o no
+	 */
+	private boolean creaJugador() {
+		// leer de la BD si existe nombre
+		// (se le añaden las comillas por sintaxis de SQL)
+		boolean esta;
+		if (!mDbHelper.existsRow("'" + nombre + "'", Tabla.parcade)) {
+			// crear nuevo jugador
+			mDbHelper.createRowParcade(nombre, new int[] { 0, 0, 0, 0, 0, 0 });
+			jugador = new Jugador(nombre);
+			esta = false;
+		} else {
+			// recupera info
+			mCursor = mDbHelper.fetchRow("'" + nombre + "'", Tabla.parcade);
+			startManagingCursor(mCursor);
+			jugador = new Jugador(nombre, new int[] {
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE1),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE2),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE3),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE4),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE5),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE6) });
+			// mCursor.getInt(DbAdapter.MAPA_IDCOL_FASE4),
+			// mCursor.getInt(DbAdapter.INFO_IDCOL_HOJA),
+			// mCursor.getInt(DbAdapter.INFO_IDCOL_MOCHILA));
+			esta = true;
+			stopManagingCursor(mCursor);
+			mCursor.close();
+		}
+		mDbHelper.close();
+		return esta;
 	}
 }
