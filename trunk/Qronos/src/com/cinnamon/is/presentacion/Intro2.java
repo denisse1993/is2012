@@ -35,16 +35,10 @@ public class Intro2 extends Activity implements OnClickListener {
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
-		// introTheme.release(); //poner la musica ya del juego
-		finish();
-	}
-
-	@Override
 	public void onClick(View arg0) {
 		if (arg0.getId() == R.id.screen) {
 			Launch.lanzaActivity(this, Props.Action.LOGIN);
+			finish();
 		}
 	}
 

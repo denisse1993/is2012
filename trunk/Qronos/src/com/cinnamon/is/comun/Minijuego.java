@@ -8,26 +8,27 @@
 package com.cinnamon.is.comun;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.view.View.OnClickListener;
-
-import com.cinnamon.is.game.Jugador;
+import android.os.Bundle;
+import android.view.SurfaceView;
 
 /**
  * Actividad abtracta que representa un minijuego
  * 
  * @author Cinnamon Team
- * @version 1.4 12.12.2011
+ * @version 1.5 14.03.2012
  */
-public abstract class Minijuego extends Activity implements OnClickListener {
+public abstract class Minijuego extends Activity implements
+		DialogInterface.OnClickListener {
 
 	/**
-	 * Jugador actual de la aplicacion
+	 * GameView del MJ
 	 */
-	protected Jugador jugador;
-
+	protected SurfaceView game;
+	/**
+	 * GameLoop del MJ
+	 */
+	protected Thread run;
 	/**
 	 * El nombre del minijuego
 	 */
@@ -46,28 +47,23 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 	/**
 	 * Maximo tiempo de juego en segundos (5minutos)
 	 */
-	// podria funcionar ejecutandose el finishTime() cada x evento y que si es
-	// mayor que este tiempo apareciera el boton de rendirse o un cuadro de
-	// dialogo o algo asi
 	protected final long MAX_TIME = 300;
 
 	/**
-	 * Variables para controlar en tiempo
+	 * Variables para controlar el tiempo
 	 */
 	protected long start, elapsed;
 
 	/**
-	 * Variable que
+	 * Variable que indica la fase del minijuego
 	 */
-	private int fase;
+	protected int fase;
 
 	/**
 	 * Variables para pasar de nanosegundos a segundos y viceversa
 	 */
 	protected final static double tos = 0.000000001;
 	protected final static double tons = 1000000000;
-
-	protected static final int DIALOG_MINIJUEGOS_INIT = 0;
 
 	/**
 	 * Inicia el contador de tiempo del minijuego
@@ -109,11 +105,6 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onBackPressed() {
-		// lanzaExitDialog();
-	}
-
-	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
@@ -125,60 +116,48 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 		super.onResume();
 	}
 
-	public void guardarTemp() {
-	};
-
 	/**
-	 * Metodo que finaliza el minijuego con resultado superado o no
+	 * Metodo que finaliza el minijuego
 	 */
-	protected void finalizar() {
+	protected void finalizar(boolean s) {
+		//TODO los que hereden probablemente tengan que implementar esto
 		finishTime();
 		int puntuacion = calcularPuntuacion();
-
-		if (superado) {
-			jugador.setScore(puntuacion, fase);
-		} else
-			jugador.actualFase(fase);
-
-		Intent r = new Intent();
-		r.putExtra(Props.Comun.superado, superado);
-		r.putExtra(Props.Comun.J, jugador);
-		setResult(RESULT_OK, r);
-		finish();
+		superado = s;
+		Bundle b = new Bundle();
+		b.putInt(Props.Comun.SCORE, puntuacion);
+		b.putBoolean(Props.Comun.SUPERADO, superado);
+		Launch.returnActivity(this, b, RESULT_OK);
 	}
 
 	/**
 	 * Metodo que lanza el dialog para escoger si quieres salir del minijuego
 	 */
 	protected void lanzaExitDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(
-				"¿Quieres salir del minijuego sin completarlo?\n¡Deberás volver a escanear el QR para lanzarlo de nuevo!")
-				.setCancelable(false)
-				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						finalizar();
-					}
-				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
+		//TODO Debe pararse el minijuego de alguna  manera antes de lanzar el dialog
+		Launch.lanzaConfirmacion("Salir del minijuego",
+				"¿Quieres salir del minijuego sin completarlo?", this);
 	}
 
-	public void lanzarAvisoMJ(String texto, String title) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(title);
-		builder.setMessage(texto).setNegativeButton("Cerrar",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
+	@Override
+	public void onClick(DialogInterface dialog, int boton) {
+		switch (boton) {
+		case -1:
+			dialog.cancel();
+			finalizar(false);
+		case -2:
+			dialog.cancel();
+			break;
+		}
 	}
+
+	@Override
+	public void onBackPressed() {
+		lanzaExitDialog();
+	}
+
+	public void guardarTemp() {
+	};
 
 	// getters & setters
 	public void setNombre(String nombre) {
@@ -201,11 +180,12 @@ public abstract class Minijuego extends Activity implements OnClickListener {
 		return fase;
 	}
 
-	/**
-	 * La fase que representa el minijuego <code><pre>
-	 */
 	public void setFase(int fase) {
 		this.fase = fase;
+	}
+
+	public void setSV(SurfaceView sv) {
+		this.game = sv;
 	}
 
 }

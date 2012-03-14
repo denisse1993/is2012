@@ -35,24 +35,26 @@ public final class Props {
 
 		public static final String ARCADE = "com.cinnamon.is.game.ARCADE";
 
-		public static final String AVENTURA ="com.cinnamon.is.game.AVENTURA";
-		
+		public static final String AVENTURA = "com.cinnamon.is.game.AVENTURA";
+
 		public static final String LOGIN = "com.cinnamon.is.game.LOGIN";
 
 		public static final String OPCIONES = "com.cinnamon.is.comun.OPCIONES";
 
-		//intents de zXing
+		// intents de zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
 
 		public static final String ENCODE = "com.cinnamon.is.ENCODE";
 
 		// MINIJUEGOS
-		public static final String MJ1 = "com.cinnamon.is.MJ1";
-		public static final String MJ2 = "com.cinnamon.is.MJ2";
-		public static final String MJ3 = "com.cinnamon.is.MJ3";
-		public static final String MJ4 = "com.cinnamon.is.MJ4";
-		public static final String MJ5 = "com.cinnamon.is.MJ5";
-		public static final String MJ6 = "com.cinnamon.is.MJ6";
+		// mj1
+		public static final String MJ1 = "com.cinnamon.is.minijuegos.MJ1";
+		public static final String MJ1st = "com.cinnamon.is.minijuegos.MJ1.Start";
+		public static final String MJ2 = "com.cinnamon.is.minijuegos.MJ2";
+		public static final String MJ3 = "com.cinnamon.is.minijuegos.MJ3";
+		public static final String MJ4 = "com.cinnamon.is.minijuegos.MJ4";
+		public static final String MJ5 = "com.cinnamon.is.minijuegos.MJ5";
+		public static final String MJ6 = "com.cinnamon.is.minijuegos.MJ6";
 		public static final String MJ[] = { MJ1, MJ2, MJ3, MJ4, MJ5, MJ6 };
 
 		private Action() {
@@ -126,7 +128,8 @@ public final class Props {
 		/**
 		 * Array con explicaciones de los minijuegos
 		 */
-		public static final String[] expmjs = { "Mata to lo ke puedas","","","","","" };
+		public static final String[] expmjs = { "Mata tos lo ke puedas", "",
+				"", "", "", "" };
 		/**
 		 * <p>
 		 * Array de String para guardar la ruta de los minijuegos, se usa para
@@ -135,7 +138,8 @@ public final class Props {
 		 * <code><pre>
 		 * </pre></code>
 		 */
-		public static final String[] minijuegos = { "MJ1" };
+		public static final String[] minijuegos = { "Marcianos", "", "", "",
+				"", "" };
 		/**
 		 * String con la ruta base del proyecto
 		 */
@@ -144,16 +148,23 @@ public final class Props {
 		 * String con la ruta base de los minijuegos del proyecto
 		 */
 		public static final String BASE_MINIJUEGOS = "com.cinnamon.is.minijuegos.";
+
 		/**
 		 * String para usar cuando se quiera pasar el jugador entre actividades
 		 */
-		public static final String J = "j";
+		public static final String JUGADOR = "j";
+
+		/**
+		 * String para usar cuando se quiera pasar el puntuacion entre
+		 * actividades
+		 */
+		public static final String SCORE = "S";
 
 		/**
 		 * String para usar cuando se quiera pasar el boolean superado del mj al
 		 * ingame
 		 */
-		public static final String superado = "superado";
+		public static final String SUPERADO = "s";
 
 		private Comun() {
 		}

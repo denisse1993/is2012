@@ -89,7 +89,7 @@ public class Login extends Activity implements OnClickListener {
 			break;
 		case R.id.bArrancar:
 			Bundle b = new Bundle();
-			b.putSerializable(Props.Comun.J, jugador);
+			b.putSerializable(Props.Comun.JUGADOR, jugador);
 			Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
 			break;
 		}
