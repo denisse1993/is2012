@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -25,7 +26,7 @@ public final class Launch {
 	/**
 	 * Indica si se quiere salir de la actividad que llame a lanzaExit o no
 	 */
-	public static boolean exit;
+	public static boolean yes;
 
 	/**
 	 * Actividad padre
@@ -160,17 +161,32 @@ public final class Launch {
 	}
 
 	/**
+	 * Devuelve una actividad desde static con parametros para el intent
+	 * 
+	 * @param a
+	 *            la actividad que lo lanza
+	 * @param b
+	 *            el bundle con la info extra
+	 * @param rq
+	 *            el codigo de retorno RESULT_OK or RESULT_CANCELED
+	 */
+	public static void returnActivity(Activity a, Bundle b, int rq) {
+		a.setResult(rq, new Intent().putExtras(b));
+		a.finish();
+	}
+
+	/**
 	 * Lanza el Dialog con un texto y un titulo
 	 * 
 	 * @param title
 	 *            el titulo del dialog
 	 * @param texto
 	 *            el texto del dialog
-	 * @param c
-	 *            el contexto desde donde se lanza
+	 * @param a
+	 *            la actividad de lanzamiento
 	 */
-	public static void lanzaOneButton(String title, String texto, Context c) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(c);
+	public static void lanzaOneButton(String title, String texto, Activity a) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
 				new DialogInterface.OnClickListener() {
@@ -182,34 +198,37 @@ public final class Launch {
 	}
 
 	/**
-	 * Lanza el dialog para escoger si quieres hacer algo o no
+	 * <p>
+	 * Lanza el dialog para escoger si quieres hacer algo o no. La actividad a
+	 * debe implementar DialogInterface.OnClickListener, el boton si es
+	 * representado con un -1 y el no con un -2
+	 * </p>
 	 * 
 	 * @param title
 	 *            titulo del dialog
 	 * @param texto
 	 *            texto del dialog
-	 * @param c
-	 *            contexto de lanzamiento
-	 * @return true o false en funcion de si se acepta o no la peticion
+	 * @param a
+	 *            la actividad de lanzamiento
 	 */
-	public static boolean lanzaConfirmacion(String title, String texto,
-			Context c) {
+	public static void lanzaConfirmacion(String title, String texto, Activity a) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(c);
+		/*
+		 * AlertDialog.Builder builder = new AlertDialog.Builder(a); //
+		 * builder.setTitle(title); //
+		 * builder.setMessage(texto).setCancelable(false) //
+		 * .setPositiveButton("Sí", new DialogInterface.OnClickListener() { //
+		 * public void onClick(DialogInterface dialog, int id) { // yes = true;
+		 * // dialog.cancel(); // } // }) // .setNegativeButton("No", new
+		 * DialogInterface.OnClickListener() { // public void
+		 * onClick(DialogInterface dialog, int id) { // yes = false; //
+		 * dialog.cancel(); // } // }); // builder.show(); return yes;
+		 */
+		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
 		builder.setMessage(texto).setCancelable(false)
-				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						exit = true;
-					}
-				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						exit = false;
-						dialog.cancel();
-					}
-				});
+				.setPositiveButton("Sí", (OnClickListener) a)
+				.setNegativeButton("No", (OnClickListener) a);
 		builder.show();
-		return exit;
 	}
 }

@@ -48,17 +48,15 @@ public class MainMenu extends Activity implements OnClickListener {
 	private Jugador jugador;
 
 	/**
-	 * DbAdapter para interaccionar con la base de datos
+	 * Lanzador auxiliar
 	 */
-	private DbAdapter mDbHelper;
-
 	private Launch l;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		jugador = (Jugador) getIntent().getSerializableExtra(Props.Comun.J);
+		jugador = (Jugador) getIntent().getSerializableExtra(Props.Comun.JUGADOR);
 		SharedPreferences getData = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		sonido = getData.getBoolean("cbSonido", true);
@@ -68,13 +66,12 @@ public class MainMenu extends Activity implements OnClickListener {
 
 	private void onClose() {
 		menuTheme.release();
-		mDbHelper.close();
 	}
 
 	@Override
 	public void onClick(View v) {
 		Bundle b = new Bundle();
-		b.putSerializable(Props.Comun.J, jugador);
+		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		switch (v.getId()) {
 		case R.id.bArcade:
 			menuTheme.release();
@@ -107,10 +104,6 @@ public class MainMenu extends Activity implements OnClickListener {
 		menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
 		if (sonido)
 			menuTheme.start();
-
-		// abre base de datos
-		mDbHelper = new DbAdapter(this);
-		mDbHelper.open(false);
 
 		bArcade = (Button) findViewById(R.id.bArcade);
 		bOpciones = (Button) findViewById(R.id.bOpciones);
