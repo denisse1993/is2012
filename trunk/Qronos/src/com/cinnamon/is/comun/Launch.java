@@ -9,24 +9,21 @@ package com.cinnamon.is.comun;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * Clase de utilidad para lanzamientos
+ * <p>
+ * Clase de utilidad para lanzamientos de actividades y dialogs. Se puede usar
+ * tanto con metodos estaticos como creando un objeto Launch.
+ * </p>
  * 
  * @author Cinnamon Team
- * @version 1.0 13.03.2012
+ * @version 1.1 15.03.2012
  */
 public final class Launch {
-
-	/**
-	 * Indica si se quiere salir de la actividad que llame a lanzaExit o no
-	 */
-	public static boolean yes;
 
 	/**
 	 * Actividad padre
@@ -185,7 +182,7 @@ public final class Launch {
 	 * @param a
 	 *            la actividad de lanzamiento
 	 */
-	public static void lanzaOneButton(String title, String texto, Activity a) {
+	public static void lanzaAviso(String title, String texto, Activity a) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
@@ -195,6 +192,26 @@ public final class Launch {
 					}
 				});
 		builder.show();
+	}
+
+	/**
+	 * Lanza el Dialog con un texto y un titulo
+	 * 
+	 * @param texto
+	 *            el texto del dialog
+	 * @param a
+	 *            la actividad de lanzamiento
+	 * @return 
+	 */
+	public static AlertDialog lanzaAviso(String texto, Activity a) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+		builder.setMessage(texto).setNegativeButton("Cerrar",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		return builder.show();
 	}
 
 	/**
@@ -210,8 +227,9 @@ public final class Launch {
 	 *            texto del dialog
 	 * @param a
 	 *            la actividad de lanzamiento
+	 * @return 
 	 */
-	public static void lanzaConfirmacion(String title, String texto, Activity a) {
+	public static AlertDialog lanzaConfirmacion(String title, String texto, Activity a) {
 
 		/*
 		 * AlertDialog.Builder builder = new AlertDialog.Builder(a); //
@@ -229,6 +247,26 @@ public final class Launch {
 		builder.setMessage(texto).setCancelable(false)
 				.setPositiveButton("Sí", (OnClickListener) a)
 				.setNegativeButton("No", (OnClickListener) a);
-		builder.show();
+		return builder.show();
+	}
+
+	/**
+	 * <p>
+	 * Lanza el dialog para opciones, eligiendo entre continuar,reiniciar y
+	 * salir
+	 * </p>
+	 * 
+	 * @param a
+	 *            la actividad de lanzamiento
+	 */
+	public static AlertDialog lanzaOpciones(Activity a) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+		builder.setItems(
+				new CharSequence[] { "Continuar", "Reiniciar", "Salir" },
+				(OnClickListener) a);
+		builder.setTitle("Elige opcion");
+		builder.setCancelable(false);
+		return builder.show();
 	}
 }

@@ -9,6 +9,7 @@
 package com.cinnamon.is.game;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -118,7 +119,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		mDbHelper.open(false);
 
 		// genericos
-		iBinfo = (ImageButton) findViewById(R.id.iBinfo);
+		iBinfo = (ImageButton) findViewById(R.id.iBinfoArcade);
 		iBupSc = (ImageButton) findViewById(R.id.iBupSc);
 		iBseeSc = (ImageButton) findViewById(R.id.iBseeSc);
 		tVhello = (TextView) findViewById(R.id.tVhello);
@@ -131,14 +132,14 @@ public class Arcade extends Activity implements View.OnClickListener,
 		for (int i = 0; i < Props.Comun.MAX_MJ; i++) {
 			iBmj[i] = (ImageButton) findViewById(Props.Comun.iDiBmj[i]);
 			iVsc[i] = (ImageView) findViewById(Props.Comun.iDiVsC[i]);
-			
+
 			// pone imagen a imagebutton
-			iBmj[i].setImageResource(R.drawable.icon_information);
-			// TODO CORRECTO iBmj[i].setImageResource(Props.Comun.iDiVmj[i]);
+			// iBmj[i].setImageResource(R.drawable.icon_information);
+			iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
 
 			// TODO CORRECTO
 			// iVsc[i].setImageResource(Props.Comun.getStar(jugador.getScore(i)));
-			iVsc[i].setImageResource(R.drawable.icon_information);
+			// iVsc[i].setImageResource(R.drawable.icon_information);
 
 			iBmj[i].setOnClickListener(this);
 		}
@@ -150,66 +151,101 @@ public class Arcade extends Activity implements View.OnClickListener,
 
 	@Override
 	public void onClick(DialogInterface dialog, int boton) {
-		switch (boton) {
-		case -1:
-			dialog.cancel();
-			switch (vClicked) {
-			case R.id.iBmj1:
-				l.lanzaActivity(Props.Action.MJ1, Props.Comun.cmj1);
+		if (aDactual == dialog) {
+			aDactual = null;
+			switch (boton) {
+			case 0:
+				tVhello.setText("pulsado continuar");
 				break;
-			case R.id.iBmj2:
-				l.lanzaActivity(Props.Action.MJ2, Props.Comun.cmj2);
+			case 1:
+				tVhello.setText("pulsado reiniciar");
 				break;
-			case R.id.iBmj3:
-				l.lanzaActivity(Props.Action.MJ3, Props.Comun.cmj3);
-				break;
-			case R.id.iBmj4:
-				l.lanzaActivity(Props.Action.MJ4, Props.Comun.cmj4);
-				break;
-			case R.id.iBmj5:
-				l.lanzaActivity(Props.Action.MJ5, Props.Comun.cmj6);
-				break;
-			case R.id.iBmj6:
-				l.lanzaActivity(Props.Action.MJ6, Props.Comun.cmj6);
+			case 2:
+				tVhello.setText("pulsado salir");
 				break;
 			}
-		case -2:
-			dialog.cancel();
-			break;
-		}
+		} else
+			switch (boton) {
+			case -1:
+				dialog.cancel();
+				switch (vClicked) {
+				case R.id.iBmj1:
+					l.lanzaActivity(Props.Action.MJ1, Props.Comun.cmj1);
+					break;
+				case R.id.iBmj2:
+					l.lanzaActivity(Props.Action.MJ2, Props.Comun.cmj2);
+					break;
+				case R.id.iBmj3:
+					l.lanzaActivity(Props.Action.MJ3, Props.Comun.cmj3);
+					break;
+				case R.id.iBmj4:
+					l.lanzaActivity(Props.Action.MJ4, Props.Comun.cmj4);
+					break;
+				case R.id.iBmj5:
+					l.lanzaActivity(Props.Action.MJ5, Props.Comun.cmj6);
+					break;
+				case R.id.iBmj6:
+					l.lanzaActivity(Props.Action.MJ6, Props.Comun.cmj6);
+					break;
+				case R.id.iBupSc:
+					subirScores();
+					break;
+				}
+			case -2:
+				dialog.cancel();
+				break;
+			}
 	}
+
+	/**
+	 * Metodo para subir puntuaciones al servidor
+	 */
+	private void subirScores() {
+		// TODO Por hacer
+	}
+
+	AlertDialog aDactual;
 
 	@Override
 	public void onClick(View v) {
 		switch (vClicked = v.getId()) {
-		case R.id.iBseeSc:
+		case R.id.iBinfoArcade:
+			 Launch.lanzaAviso("Información de arcade",
+			 Props.Strings.iArcade, this);
+			//TODO lanzaOpciones prueba aDactual = Launch.lanzaOpciones(this);
 			break;
+		case R.id.iBseeSc:
+			Bundle b = new Bundle();
+			b.putSerializable(Props.Comun.JUGADOR, jugador);
+			l.lanzaActivity(Props.Action.RANKING, b);
 		case R.id.iBupSc:
+			Launch.lanzaConfirmacion("Confirmacion para subir puntuaciones de "
+					+ jugador.getNombre(), Props.Strings.upSc, this);
 			break;
 		case R.id.iBmj1:
 			Launch.lanzaConfirmacion("Confirmacion para lanzar "
-					+ Props.Comun.minijuegos[0], Props.Comun.expmjs[0]
+					+ Props.Strings.mjNames[0], Props.Strings.mjExps[0]
 					+ "\n Score: " + jugador.getScore(0), this);
 			break;
 		case R.id.iBmj2:
 			Launch.lanzaConfirmacion("Confirmacion para lanzar "
-					+ Props.Comun.minijuegos[1], Props.Comun.expmjs[1], this);
+					+ Props.Strings.mjNames[1], Props.Strings.mjExps[1], this);
 			break;
 		case R.id.iBmj3:
 			Launch.lanzaConfirmacion("Confirmacion para lanzar "
-					+ Props.Comun.minijuegos[2], Props.Comun.expmjs[2], this);
+					+ Props.Strings.mjNames[2], Props.Strings.mjExps[2], this);
 			break;
 		case R.id.iBmj4:
 			Launch.lanzaConfirmacion("Confirmacion para lanzar "
-					+ Props.Comun.minijuegos[3], Props.Comun.expmjs[3], this);
+					+ Props.Strings.mjNames[3], Props.Strings.mjExps[3], this);
 			break;
 		case R.id.iBmj5:
 			Launch.lanzaConfirmacion("Confirmacion para lanzar "
-					+ Props.Comun.minijuegos[4], Props.Comun.expmjs[4], this);
+					+ Props.Strings.mjNames[4], Props.Strings.mjExps[4], this);
 			break;
 		case R.id.iBmj6:
 			Launch.lanzaConfirmacion("Confirmacion para lanzar "
-					+ Props.Comun.minijuegos[5], Props.Comun.expmjs[5], this);
+					+ Props.Strings.mjNames[5], Props.Strings.mjExps[5], this);
 			break;
 		}
 	}
