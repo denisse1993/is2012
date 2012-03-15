@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/reloj1"
+    android:orientation="vertical" >
+	
+     <LinearLayout
+         android:id="@+id/cabecera"
+         android:layout_width="match_parent"
+         android:layout_height="70dp"
+         android:layout_marginTop="5dp"
+         android:orientation="horizontal" >
+
+         <ImageButton
+             android:id="@+id/opciones"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
+             android:layout_marginLeft="5dp"
+             android:background="@drawable/icon_settings"
+             android:gravity="left"
+             android:orientation="vertical" >
+         </ImageButton>
+
+         <ImageButton
+             android:id="@+id/informacion"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
+             android:layout_marginLeft="250dp"
+             android:background="@drawable/icon_information"
+             android:gravity="right"
+             android:orientation="vertical" />
+     </LinearLayout>
+
+     <ImageButton
+         android:id="@+id/camara"
+         android:layout_width="60dp"
+         android:layout_height="60dp"
+         android:layout_marginTop="355dp"
+         android:layout_marginLeft="135dp"
+         android:background="@drawable/ic_menu_camara"
+         android:gravity="center"
+         android:orientation="vertical" />
+
+</LinearLayout>
