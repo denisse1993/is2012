@@ -7,8 +7,6 @@
 //
 package com.cinnamon.is.comun;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -82,23 +80,9 @@ public class Opciones extends PreferenceActivity implements
 			startActivity(openLogin);
 		} else if (key.equals(pReset.getKey())) {
 			resetJugador();
-			lanzarAvisoReseteo();
+			Launch.lanzaAviso("Juego Reseteado", this);
 		}
 		return true;
-	}
-
-	/**
-	 * Metodo que lanza el Dialog para avisar que la puntuacion se ha reseteado
-	 */
-	private void lanzarAvisoReseteo() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Juego Reseteado").setNegativeButton("Cerrar",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
 	}
 
 	/**

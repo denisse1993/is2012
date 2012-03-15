@@ -61,17 +61,10 @@ public class InGame extends Activity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		q.getQR(requestCode, resultCode, data);
+		String contents=q.getQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				String contents = data.getStringExtra("SCAN_RESULT");
 				String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-				// esto no rula
-				// byte[] arrayB =
-				// intent.getByteArrayExtra("SCAN_RESULT_BYTES");
-				// Bitmap bm = BitmapFactory.decodeByteArray(arrayB, 0,
-				// arrayB.length);
-				// qr.setImageBitmap(bm);
 				result.setText(contents);
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell

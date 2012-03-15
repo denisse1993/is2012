@@ -132,9 +132,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- Activity del zXing para Encode -->
+        <!-- Activity del zXing para Encode android:label="@string/share_name"-->
         <activity
-            android:label="@string/share_name"
+            
             android:name="com.google.zxing.client.android.encode.EncodeActivity"
             android:stateNotNeeded="true" >
             <intent-filter>

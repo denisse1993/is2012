@@ -37,10 +37,12 @@ public final class Props {
 
 		public static final String AVENTURA = "com.cinnamon.is.game.AVENTURA";
 
+		public static final String RANKING = "com.cinnamon.is.game.RANKING";
+
 		public static final String LOGIN = "com.cinnamon.is.game.LOGIN";
 
 		public static final String OPCIONES = "com.cinnamon.is.comun.OPCIONES";
-
+		
 		// intents de zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
 
@@ -89,7 +91,9 @@ public final class Props {
 		/**
 		 * Array de ids drawables para ImageViews de minijuegos en arcade
 		 */
-		public static final int[] iDiVmj = {};
+		public static final int[] iDiVmj = { R.drawable.ibmj1,
+				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj0,
+				R.drawable.ibmj0, R.drawable.ibmj0 };
 
 		/**
 		 * Array de ids drawables para ImageViews de estrellas en arcade
@@ -126,11 +130,6 @@ public final class Props {
 		}
 
 		/**
-		 * Array con explicaciones de los minijuegos
-		 */
-		public static final String[] expmjs = { "Mata tos lo ke puedas", "",
-				"", "", "", "" };
-		/**
 		 * <p>
 		 * Array de String para guardar la ruta de los minijuegos, se usa para
 		 * comprobar que el minijuego que se va a lanzar es correcto
@@ -138,8 +137,7 @@ public final class Props {
 		 * <code><pre>
 		 * </pre></code>
 		 */
-		public static final String[] minijuegos = { "Marcianos", "", "", "",
-				"", "" };
+		public static final String[] mjRuta = { "MJ1", "", "", "", "", "" };
 		/**
 		 * String con la ruta base del proyecto
 		 */
@@ -171,6 +169,39 @@ public final class Props {
 	}
 
 	/**
+	 * Clase interna con los strings genericos
+	 * 
+	 * @author Cinnamon Team
+	 * 
+	 */
+	public static final class Strings {
+
+		/**
+		 * Array con nombres de los minijuegos
+		 */
+		public static final String[] mjNames = { "Marcianos", "Topos", "QR",
+				"", "", "" };
+		/**
+		 * Array con explicaciones de los minijuegos
+		 */
+		public static final String[] mjExps = {
+				"Elimina a todos los marcianos que puedas antes de morir",
+				"Elimina cuantos topos puedas", "", "", "", "" };
+
+		/**
+		 * Info de subida al servidor
+		 */
+		public static final String upSc = "¿Deseas subir tus puntuaciones al servidor online?";
+		/**
+		 * Informacion de actividades
+		 */
+		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor\nToca el icono de estadisticas para ver las estadisticas";
+
+		private Strings() {
+		}
+	}
+
+	/**
 	 * Clase interna con los enum genericos
 	 * 
 	 * @author Cinnamon Team
@@ -197,6 +228,9 @@ public final class Props {
 					return "quest";
 				}
 			},
+		}
+
+		private Enum() {
 		}
 	}
 }

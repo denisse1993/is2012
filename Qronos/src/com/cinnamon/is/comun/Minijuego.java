@@ -104,37 +104,58 @@ public abstract class Minijuego extends Activity implements
 			return 0;
 	}
 
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
-
 	/**
-	 * Metodo que finaliza el minijuego
+	 * <p>
+	 * Metodo que finaliza el minijuego, la puntuacion se obtiene mediante el
+	 * metodo calcularPuntuacion(). Por defecto hace el calculo de puntuacion en
+	 * base al tiempo que se ha tardado en completar el minijuego.
+	 * </p>
+	 * <p>
+	 * Debe calcular la puntuacion obtenida, obtener si se ha superado o no,
+	 * empaquetando esta informacion en un bundle y enviandolo de vuelva a la
+	 * actividad que lanzo el minijuego mediante el metodo setResult() de
+	 * Activity.
+	 * </p>
+	 * <p>
+	 * Se hace uso de la clase de utilidad Launch para terminar la actividad y
+	 * devolver el resultado.
+	 * </p>
+	 * 
+	 * @see #setResult(int, android.content.Intent)
+	 * @see Launch#returnActivity(Activity, Bundle, int)
+	 * @see Props.Comun
+	 * @param s
+	 *            si se ha superado completamente o no
 	 */
 	protected void finalizar(boolean s) {
-		//TODO los que hereden probablemente tengan que implementar esto
+		// Para tiempo
 		finishTime();
+		// Establece valores de puntuacion y superado
 		int puntuacion = calcularPuntuacion();
 		superado = s;
+		// Creo el bundle con la info usando strings genericos de clase Props.Comun
 		Bundle b = new Bundle();
 		b.putInt(Props.Comun.SCORE, puntuacion);
 		b.putBoolean(Props.Comun.SUPERADO, superado);
+		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
+	}
+
+	/**
+	 * Metodo que reinicia el minijuego, a implementar en subclases
+	 */
+	protected void reiniciar() {
+		// Deberá llamarse cuando se pulse el boton de reiniciar del dialog
+		// opciones del minijuego
 	}
 
 	/**
 	 * Metodo que lanza el dialog para escoger si quieres salir del minijuego
 	 */
-	protected void lanzaExitDialog() {
-		//TODO Debe pararse el minijuego de alguna  manera antes de lanzar el dialog
+	protected void lanzaOpcionesDialog() {
+		// TODO Ahora mismo solo da la opcion de salir del minijuego, que se
+		// trata en el Onclick de abajo, esta opcion aparece al pulsar el boton
+		// atras del movil
 		Launch.lanzaConfirmacion("Salir del minijuego",
 				"¿Quieres salir del minijuego sin completarlo?", this);
 	}
@@ -153,11 +174,8 @@ public abstract class Minijuego extends Activity implements
 
 	@Override
 	public void onBackPressed() {
-		lanzaExitDialog();
+		lanzaOpcionesDialog();
 	}
-
-	public void guardarTemp() {
-	};
 
 	// getters & setters
 	public void setNombre(String nombre) {

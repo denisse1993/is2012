@@ -20,8 +20,8 @@
 
         <Preference
             android:key="resetGame"
-            android:summary="Resetea todas las estadisticas del juego (empieza de nuevo)"
-            android:title="Resetear juego" >
+            android:summary="Resetea todas las estadisticas del arcade (empieza de nuevo)"
+            android:title="Resetear arcade" >
         </Preference>
     </PreferenceCategory>
 
