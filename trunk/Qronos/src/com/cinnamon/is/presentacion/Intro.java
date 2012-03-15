@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Dialogos;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
@@ -34,7 +35,7 @@ public class Intro extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intro);
-		introTheme = MediaPlayer.create(Intro.this, R.raw.hearthbeat_sound);
+		/*introTheme = MediaPlayer.create(Intro.this, R.raw.hearthbeat_sound);
 		introTheme.start();
 		Thread timer = new Thread() {
 			public void run() {
@@ -47,7 +48,9 @@ public class Intro extends Activity {
 				}
 			}
 		};
-		timer.start();
+		timer.start();*/
+		Dialogos dialog = new Dialogos (this, "Hola", false, R.style.CenterDialog);
+		dialog.show();
 	}
 
 	@Override
