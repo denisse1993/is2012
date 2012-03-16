@@ -56,7 +56,8 @@ public class MainMenu extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		jugador = (Jugador) getIntent().getSerializableExtra(Props.Comun.JUGADOR);
+		Bundle b = getIntent().getExtras();
+		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		SharedPreferences getData = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		sonido = getData.getBoolean("cbSonido", true);
@@ -92,6 +93,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			break;
 		case R.id.bSalir:
 			finish();
+			l.lanzaActivity(Props.Action.OPCIONES, b);
 			break;
 		}
 		onClose();

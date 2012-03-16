@@ -128,6 +128,33 @@ public class Jugador implements Serializable {
 		}
 	}
 
+	/**
+	 * Obtiene la puntuacion total del jugador
+	 * 
+	 * @return la puntuacion total del jugador
+	 */
+	public int getScoreTotal() {
+		int suma = 0;
+		for (Integer i : score)
+			suma += i;
+		return suma;
+	}
+	/**
+	 * Resetea jugador
+	 */
+	public void reset() {
+		for (int i = 0; i < score.length; i++)
+			score[i]=0;
+	}
+	
+	public int getScore(int i) {
+		return score[i];
+	}
+
+	public void setScore(int score, int i) {
+		this.score[i] = score;
+	}
+
 	// getter & setter
 	public String getNombre() {
 		return nombre;
@@ -143,26 +170,6 @@ public class Jugador implements Serializable {
 
 	public void setScore(int[] score) {
 		this.score = score;
-	}
-
-	/**
-	 * Obtiene la puntuacion total del jugador
-	 * 
-	 * @return la puntuacion total del jugador
-	 */
-	public int getScoreTotal() {
-		int suma = 0;
-		for (Integer i : score)
-			suma += i;
-		return suma;
-	}
-
-	public int getScore(int i) {
-		return score[i];
-	}
-
-	public void setScore(int score, int i) {
-		this.score[i] = score;
 	}
 
 	@Override

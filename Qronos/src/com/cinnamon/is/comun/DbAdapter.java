@@ -421,16 +421,16 @@ public class DbAdapter {
 		boolean del = false;
 		switch (indiceTabla) {
 		case parcade:
-			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "=" + rowId,
+			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "="  + "'"+rowId+"'",
 					null) > 0;
 			break;
 
 		case pquest:
-			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "=" + rowId,
+			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "="  + "'"+rowId+"'",
 					null) > 0;
 			break;
 		case quest:
-			del = mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "=" + rowId, null) > 0;
+			del = mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "="  + "'"+rowId+"'", null) > 0;
 			break;
 		}
 		return del;
@@ -493,19 +493,16 @@ public class DbAdapter {
 			switch (indiceTabla) {
 			case parcade:
 				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
-						PARCADE_KEY_PLAYER + "=" + rowId, null, null, null,
-						null, null);
-				if (mCursor != null) {
-					mCursor.moveToFirst();
-				}
+						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
+						null, null, null, null);
 				break;
 			case pquest:
 				mDb.query(true, TABLE_PQUEST, pquestCampos, PARCADE_KEY_PLAYER
-						+ "=" + rowId, null, null, null, null, null);
+						+ "=" + "'" + rowId + "'", null, null, null, null, null);
 				break;
 			case quest:
 				mDb.query(true, TABLE_QUEST, questCampos, QUEST_KEY_NAME + "="
-						+ rowId, null, null, null, null, null);
+						+ "'" + rowId + "'", null, null, null, null, null);
 				break;
 
 			}
@@ -531,33 +528,34 @@ public class DbAdapter {
 	 *             si no se ha podido encontrar la fila
 	 */
 	public boolean existsRow(String rowId, Tabla indiceTabla) {
+		Cursor mCursor = fetchRow(rowId, indiceTabla);
 		boolean existe = false;
-		Cursor mCursor = null;
-		try {
-
-			switch (indiceTabla) {
-			case parcade:
-				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
-						PARCADE_KEY_PLAYER + "=" + rowId, null, null, null,
-						null, null);
-				break;
-
-			case pquest:
-				mCursor = mDb.query(true, TABLE_PQUEST, pquestCampos,
-						PARCADE_KEY_PLAYER + "=" + rowId, null, null, null,
-						null, null);
-				break;
-			case quest:
-				mCursor = mDb.query(true, TABLE_QUEST, questCampos,
-						QUEST_KEY_NAME + "=" + rowId, null, null, null, null,
-						null);
-				break;
-			}
-
-		} catch (SQLException e) {
-			// si no se encuentra la columna
-			existe = false;
-		}
+//		Cursor mCursor = null;
+//		try {
+//
+//			switch (indiceTabla) {
+//			case parcade:
+//				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
+//						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
+//						null, null, null, null);
+//				break;
+//
+//			case pquest:
+//				mCursor = mDb.query(true, TABLE_PQUEST, pquestCampos,
+//						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
+//						null, null, null, null);
+//				break;
+//			case quest:
+//				mCursor = mDb.query(true, TABLE_QUEST, questCampos,
+//						QUEST_KEY_NAME + "=" + "'" + rowId + "'", null, null,
+//						null, null, null);
+//				break;
+//			}
+//
+//		} catch (SQLException e) {
+//			// si no se encuentra la columna
+//			existe = false;
+//		}
 		if (mCursor != null) {
 			if (mCursor.getCount() <= 0) {
 				existe = false;
@@ -599,8 +597,8 @@ public class DbAdapter {
 		if (score[5] != -1)
 			args.put(PARCADE_KEY_SCORE6, score[5]);
 
-		return mDb.update(TABLE_PARCADE, args,
-				PARCADE_KEY_PLAYER + "=" + rowId, null) > 0;
+		return mDb.update(TABLE_PARCADE, args, PARCADE_KEY_PLAYER + "=" + "'"
+				+ rowId + "'", null) > 0;
 	}
 
 	/**
@@ -628,8 +626,8 @@ public class DbAdapter {
 		if (actual != -1)
 			args.put(PQUEST_KEY_ACTUAL, actual);
 
-		return mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "=" + rowId,
-				null) > 0;
+		return mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "=" + "'"
+				+ rowId + "'", null) > 0;
 	}
 
 	/**
@@ -663,7 +661,7 @@ public class DbAdapter {
 		if (pistas[2] != null)
 			args.put(QUEST_KEY_PISTA3, pistas[2]);
 
-		return mDb
-				.update(TABLE_QUEST, args, QUEST_KEY_NAME + "=" + rowId, null) > 0;
+		return mDb.update(TABLE_QUEST, args, QUEST_KEY_NAME + "=" + "'" + rowId
+				+ "'", null) > 0;
 	}
 }
