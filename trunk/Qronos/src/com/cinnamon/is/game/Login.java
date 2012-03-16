@@ -151,14 +151,14 @@ public class Login extends Activity implements OnClickListener {
 		// leer de la BD si existe nombre
 		// (se le añaden las comillas por sintaxis de SQL)
 		boolean esta;
-		if (!mDbHelper.existsRow("'" + nombre + "'", Tabla.parcade)) {
+		if (!mDbHelper.existsRow(nombre, Tabla.parcade)) {
 			// crear nuevo jugador
 			mDbHelper.createRowParcade(nombre, new int[] { 0, 0, 0, 0, 0, 0 });
 			jugador = new Jugador(nombre);
 			esta = false;
 		} else {
 			// recupera info
-			mCursor = mDbHelper.fetchRow("'" + nombre + "'", Tabla.parcade);
+			mCursor = mDbHelper.fetchRow(nombre, Tabla.parcade);
 			startManagingCursor(mCursor);
 			jugador = new Jugador(nombre, new int[] {
 					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE1),

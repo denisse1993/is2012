@@ -21,7 +21,7 @@ import com.cinnamon.is.game.Jugador;
  * opciones del juego
  * 
  * @author Cinnamon Team
- * @version 1.0 24.11.2011
+ * @version 1.1 16.03.2012
  */
 public class Opciones extends PreferenceActivity implements
 		OnPreferenceClickListener {
@@ -49,8 +49,8 @@ public class Opciones extends PreferenceActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.opciones);
-		jugador = (Jugador) getIntent().getSerializableExtra(
-				Props.Comun.JUGADOR);
+		Bundle b = getIntent().getExtras();
+		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
@@ -63,21 +63,20 @@ public class Opciones extends PreferenceActivity implements
 
 	@Override
 	public void onBackPressed() {
-		finish();
 		mDbHelper.close();
-		Intent iMainMenu = new Intent(Props.Action.MAINMENU);
-		iMainMenu.putExtra(Props.Comun.JUGADOR, jugador);
-		startActivity(iMainMenu);
+		Bundle b = new Bundle();
+		b.putSerializable(Props.Comun.JUGADOR, jugador);
+		finish();
+		Launch.lanzaActivity(this, Props.Action.MAINMENU,b);
 	}
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		String key = preference.getKey();
 		if (key.equals(pLogin.getKey())) {
-			finish();
 			mDbHelper.close();
-			Intent openLogin = new Intent(Props.Action.LOGIN);
-			startActivity(openLogin);
+			finish();
+			Launch.lanzaActivity(this, Props.Action.LOGIN);
 		} else if (key.equals(pReset.getKey())) {
 			resetJugador();
 			Launch.lanzaAviso("Juego Reseteado", this);
@@ -89,5 +88,7 @@ public class Opciones extends PreferenceActivity implements
 	 * Metodo que resetea al jugador accediendo a la base de datos
 	 */
 	private void resetJugador() {
+		jugador.reset();
+		mDbHelper.updateRowParcade(jugador.getNombre(), jugador.getScore());
 	}
 }

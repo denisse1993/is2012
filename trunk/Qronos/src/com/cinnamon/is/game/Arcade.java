@@ -27,7 +27,7 @@ import com.cinnamon.is.comun.Props;
  * Pantalla principal del arcade de la aplicacion
  * 
  * @author Cinnamon Team
- * @version 0.3 12.03.2012
+ * @version 0.4 16.03.2012
  */
 public class Arcade extends Activity implements View.OnClickListener,
 		DialogInterface.OnClickListener {

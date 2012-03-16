@@ -133,7 +133,8 @@ public abstract class Minijuego extends Activity implements
 		// Establece valores de puntuacion y superado
 		int puntuacion = calcularPuntuacion();
 		superado = s;
-		// Creo el bundle con la info usando strings genericos de clase Props.Comun
+		// Creo el bundle con la info usando strings genericos de clase
+		// Props.Comun
 		Bundle b = new Bundle();
 		b.putInt(Props.Comun.SCORE, puntuacion);
 		b.putBoolean(Props.Comun.SUPERADO, superado);
@@ -150,24 +151,30 @@ public abstract class Minijuego extends Activity implements
 	}
 
 	/**
-	 * Metodo que lanza el dialog para escoger si quieres salir del minijuego
+	 * Metodo que lanza el dialog de opciones
 	 */
 	protected void lanzaOpcionesDialog() {
 		// TODO Ahora mismo solo da la opcion de salir del minijuego, que se
 		// trata en el Onclick de abajo, esta opcion aparece al pulsar el boton
 		// atras del movil
-		Launch.lanzaConfirmacion("Salir del minijuego",
-				"¿Quieres salir del minijuego sin completarlo?", this);
+		// Launch.lanzaConfirmacion("Salir del minijuego",
+		// "¿Quieres salir del minijuego sin completarlo?", this);
+		Launch.lanzaOpciones(this);
 	}
 
 	@Override
 	public void onClick(DialogInterface dialog, int boton) {
 		switch (boton) {
-		case -1:
+		case 0:
+			dialog.cancel();
+			break;
+		case 1:
+			dialog.cancel();
+			reiniciar();
+			break;
+		case 2:
 			dialog.cancel();
 			finalizar(false);
-		case -2:
-			dialog.cancel();
 			break;
 		}
 	}
