@@ -55,7 +55,7 @@ public final class Props {
 		public static final String MJ2 = "com.cinnamon.is.minijuegos.MJ2";
 		public static final String MJ3 = "com.cinnamon.is.minijuegos.MJ3";
 		public static final String MJ4 = "com.cinnamon.is.minijuegos.MJ4";
-		public static final String MJ4st = "com.cinnamon.is.minijuegos.MJ1.Start";
+		//public static final String MJ4st = "com.cinnamon.is.minijuegos.MJ1.Start";
 		public static final String MJ5 = "com.cinnamon.is.minijuegos.MJ5";
 		public static final String MJ6 = "com.cinnamon.is.minijuegos.MJ6";
 		public static final String MJ[] = { MJ1, MJ2, MJ3, MJ4, MJ5, MJ6 };
