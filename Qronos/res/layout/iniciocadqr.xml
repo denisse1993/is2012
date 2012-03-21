@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:screenOrientation="portrait"
+     >
+
+
+     <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_height="wrap_content"
+        android:text="Lee los códigos QR en el orden correcto, recuerda que si te equivocas debes empezar de nuevo."
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <Button
+        android:id="@+id/leer"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="LEER" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

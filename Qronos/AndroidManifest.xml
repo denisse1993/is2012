@@ -5,6 +5,7 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -112,6 +113,42 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+            
+            
+     
+          <!--  MJ4 -->   
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj4.CadenaQRActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ4" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj4.Game"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ4.Game" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          
+           <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj4.Win"
+            android:screenOrientation="portrait" > 
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ4.Win" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <!-- Activity del zXing para CaptureActivity -->
         <activity
             android:clearTaskOnLaunch="true"
