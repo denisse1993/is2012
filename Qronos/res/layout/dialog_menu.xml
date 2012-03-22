@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayoutMain"
-    android:layout_width="200dp"
+    android:id="@+id/LinearLayoutMainMenu"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     android:orientation="vertical">
 
@@ -23,7 +23,7 @@
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textColorHighlight="@color/mostaza"
-            android:text="@string/bReset"
+            android:text="@string/bRestart"
             android:textAppearance="@android:style/TextAppearance.WindowTitle" />
 
         <Button
@@ -34,7 +34,7 @@
             android:textColorHighlight="@color/mostaza"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="@string/bSalir"
+            android:text="@string/salir"
             android:textAppearance="@android:style/TextAppearance.WindowTitle" />
 
 
