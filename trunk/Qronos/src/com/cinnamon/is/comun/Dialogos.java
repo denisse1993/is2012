@@ -39,7 +39,7 @@ public class Dialogos extends Dialog implements
 		bReiniciar = (Button) findViewById(R.id.ButtonRestartMenu);
 		bRenaudar = (Button) findViewById(R.id.ButtonResumeMenu);
 		bSalir = (Button) findViewById(R.id.ButtonExitMenu);
-		LinearLayout fondo = (LinearLayout) findViewById(R.id.LinearLayoutMain);
+		//LinearLayout fondo = (LinearLayout) findViewById(R.id.LinearLayoutMain);
 
 		if (!tipo) {
 			ViewGroup vg = (ViewGroup) (bReiniciar.getParent());
@@ -48,7 +48,7 @@ public class Dialogos extends Dialog implements
 			bReiniciar.setOnClickListener(this);
 
 		this.setTitle(title);
-		fondo.getBackground().setAlpha(45);
+		//fondo.getBackground().setAlpha(45);
 		bReiniciar.getBackground().setAlpha(45);
 		bRenaudar.getBackground().setAlpha(45);
 		bSalir.getBackground().setAlpha(45);
