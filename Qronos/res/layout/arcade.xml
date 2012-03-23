@@ -4,7 +4,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:padding="4dp"
-    android:weightSum="10" >
+    android:weightSum="10"
+    android:id="@+id/llarcade" >
 
     <!-- BARRA SUPERIOR -->
 
@@ -13,6 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal" >
+
+        <!-- PARTE IZQ -->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -27,6 +30,7 @@
                 android:layout_alignParentLeft="true"
                 android:text="@+string/helloArcade" />
         </LinearLayout>
+        <!-- PARTE DER -->
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -38,13 +42,12 @@
                 android:id="@+id/iBinfoArcade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:maxHeight="25dp"
-                android:maxWidth="25dp"
+               android:minWidth="50dp" 
                 android:src="@drawable/icon_information" />
         </LinearLayout>
     </LinearLayout>
     <!-- PRIMERA MJ -->
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -52,7 +55,9 @@
         android:layout_weight="4"
         android:orientation="horizontal"
         android:weightSum="3" >
-		<!-- MJ1 -->
+
+        <!-- MJ1 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -74,7 +79,8 @@
                 android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
-		<!-- MJ2 -->
+        <!-- MJ2 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -96,7 +102,8 @@
                 android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
-		<!-- MJ3 -->
+        <!-- MJ3 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -120,13 +127,16 @@
         </LinearLayout>
     </LinearLayout>
     <!-- SEGUNDA MJ -->
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="horizontal"
         android:weightSum="3" >
-		<!-- MJ4 -->
+
+        <!-- MJ4 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -148,7 +158,8 @@
                 android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
-		<!-- MJ5 -->
+        <!-- MJ5 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -170,7 +181,8 @@
                 android:layout_weight="0.05"
                 android:src="@drawable/icon_information" />
         </LinearLayout>
-		<!-- MJ6 -->
+        <!-- MJ6 -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -199,22 +211,54 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="right|bottom"
+        android:gravity="bottom"
         android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/iBupSc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/flecha" />
+        <!-- PARTE IZQ -->
 
-        <ImageButton
-            android:id="@+id/iBseeSc"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxHeight="25dp"
-            android:maxWidth="25dp"
-            android:src="@drawable/icon_information" />
+            android:gravity="left|bottom"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/iBleft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/flechaizq" />
+
+            <ImageButton
+                android:id="@+id/iBright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/flechader" />
+        </LinearLayout>
+        <!-- PARTE DER -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|bottom"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/iBupSc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/flechaup" />
+
+            <ImageButton
+                android:id="@+id/iBseeSc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/stats" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
