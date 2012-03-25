@@ -112,7 +112,7 @@ public class Login extends Activity implements OnClickListener {
 
 		bLogin.setOnClickListener(this);
 		bArrancar.setOnClickListener(this);
-		//abre base de datos
+		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 	}
@@ -153,7 +153,8 @@ public class Login extends Activity implements OnClickListener {
 		boolean esta;
 		if (!mDbHelper.existsRow(nombre, Tabla.parcade)) {
 			// crear nuevo jugador
-			mDbHelper.createRowParcade(nombre, new int[] { 0, 0, 0, 0, 0, 0 });
+			mDbHelper.createRowParcade(nombre, new int[] { 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0 });
 			jugador = new Jugador(nombre);
 			esta = false;
 		} else {
@@ -166,10 +167,13 @@ public class Login extends Activity implements OnClickListener {
 					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE3),
 					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE4),
 					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE5),
-					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE6) });
-			// mCursor.getInt(DbAdapter.MAPA_IDCOL_FASE4),
-			// mCursor.getInt(DbAdapter.INFO_IDCOL_HOJA),
-			// mCursor.getInt(DbAdapter.INFO_IDCOL_MOCHILA));
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE6),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE7),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE8),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE9),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE10),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE11),
+					mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE12) });
 			esta = true;
 			stopManagingCursor(mCursor);
 			mCursor.close();

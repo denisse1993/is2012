@@ -128,7 +128,8 @@ public final class Props {
 		/**
 		 * Array de ids drawables para ImageViews de estrellas en arcade
 		 */
-		public static final int[] iDiVstar = {};
+		public static final int[] iDiVstar = { R.drawable.starcero,
+				R.drawable.staruna, R.drawable.stardos, R.drawable.startres,R.drawable.starnull};
 
 		/**
 		 * Array de ids para ImageViews de scores de mj en arcade
@@ -152,8 +153,10 @@ public final class Props {
 		 */
 		public static int getStar(int sc) {
 			if (sc > STAR3)
-				return iDiVstar[2];
+				return iDiVstar[3];
 			else if (sc > STAR2)
+				return iDiVstar[2];
+			else if (sc > STAR1)
 				return iDiVstar[1];
 			else
 				return iDiVstar[0];
