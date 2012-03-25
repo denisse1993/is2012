@@ -35,7 +35,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		DialogInterface.OnClickListener {
 
 	// interfaz
-	private LinearLayout arcade;
+	private LinearLayout llarcade;
 	private ImageButton iBinfo, iBupSc, iBseeSc, iBleft, iBright;
 	private ImageButton[] iBmj;
 	private ImageView[] iVsc;
@@ -102,7 +102,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		mDbHelper.open(false);
+		if (!mDbHelper.isOpen())
+			mDbHelper.open(false);
 	}
 
 	@Override
@@ -153,7 +154,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		mDbHelper.open(false);
 
 		// genericos
-		arcade = (LinearLayout) findViewById(R.id.llarcade);
+		llarcade = (LinearLayout) findViewById(R.id.llarcade);
 		iBinfo = (ImageButton) findViewById(R.id.iBinfoArcade);
 		iBupSc = (ImageButton) findViewById(R.id.iBupSc);
 		iBseeSc = (ImageButton) findViewById(R.id.iBseeSc);
@@ -183,10 +184,14 @@ public class Arcade extends Activity implements View.OnClickListener,
 
 			// imagenes de mj
 			iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
-			if (bHabilitado(Props.Comun.iDiVmj[i]))
+			if (bHabilitado(Props.Comun.iDiVmj[i])) {
 				iBmj[i].setOnClickListener(this);
+				iVsc[i].setImageResource(Props.Comun.getStar(jugador
+						.getScore(i)));
+			} else
+				iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
 			// TODO a la espera de estrellas
-			// iVsc[i].setImageResource(Props.Comun.getStar(jugador.getScore(i)));
+
 		}
 		// habilito flechas
 		iBleft.setEnabled(false);
@@ -210,10 +215,14 @@ public class Arcade extends Activity implements View.OnClickListener,
 				// imagenes de mj
 				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
 				// iVsc[i].setImageResource(Props.Comun.getStar(jugador.getScore(i)));
-				if (bHabilitado(Props.Comun.iDiVmj[i]))
+				if (bHabilitado(Props.Comun.iDiVmj[i])) {
 					iBmj[i].setOnClickListener(this);
-				else
+					iVsc[i].setImageResource(Props.Comun.getStar(jugador
+							.getScore(i)));
+				} else {
 					iBmj[i].setOnClickListener(null);
+					iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
+				}
 			}
 			// habilito transicion derecha
 			iBleft.setEnabled(false);
@@ -225,11 +234,14 @@ public class Arcade extends Activity implements View.OnClickListener,
 			for (int j = 0, i = Props.Comun.MAX_MJ_P; i < Props.Comun.MAX_MJ_P * 2; i++) {
 				// imagenes de mj
 				iBmj[j].setBackgroundResource(Props.Comun.iDiVmj[i]);
-				if (bHabilitado(Props.Comun.iDiVmj[i]))
+				if (bHabilitado(Props.Comun.iDiVmj[i])) {
 					iBmj[j].setOnClickListener(this);
-				else
+					iVsc[j].setImageResource(Props.Comun.getStar(jugador
+							.getScore(i)));
+				} else {
 					iBmj[j].setOnClickListener(null);
-				// iVsc[i].setImageResource(Props.Comun.getStar(jugador.getScore(i)));
+					iVsc[j].setImageResource(Props.Comun.iDiVstar[4]);
+				}
 				if (j < 6)
 					j++;
 			}
@@ -421,8 +433,12 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// layout arcade, y no siempre
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_MOVE:
-			float x1,x2,dif,lim = arcade.getWidth() / 4;;
-			
+			float x1,
+			x2,
+			dif,
+			lim = llarcade.getWidth() / 4;
+			;
+
 			x1 = event.getHistoricalX(0);
 			x2 = event.getX();
 			dif = x1 - x2;

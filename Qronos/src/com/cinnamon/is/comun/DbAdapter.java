@@ -24,7 +24,7 @@ import android.util.Log;
  * Este adaptador nos permite acceder a la base de datos y modificarla
  * 
  * @author Cinnamon Team
- * @version 1.4 25.11.2011
+ * @version 1.3 25.03.2012
  */
 public class DbAdapter {
 
@@ -44,6 +44,11 @@ public class DbAdapter {
 	private final Context mCtx;
 
 	/**
+	 * Controla si la bd se ha abierto ya o no
+	 */
+	private boolean open;
+
+	/**
 	 * Nombre de la base de datos
 	 */
 	private static final String DATABASE_NAME = "data";
@@ -51,7 +56,7 @@ public class DbAdapter {
 	/**
 	 * Version de la base de datos
 	 */
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	/**
 	 * Nombre de las tablas de la BD
@@ -71,12 +76,10 @@ public class DbAdapter {
 	 * Guarda la puntuacion del jugador para el minijuego 1
 	 **/
 	public static final String PARCADE_KEY_SCORE1 = "score1";
-
 	/**
 	 * Guarda la puntuacion del jugador para el minijuego 2
 	 **/
 	public static final String PARCADE_KEY_SCORE2 = "score2";
-
 	/**
 	 * Guarda la puntuacion del jugador para el minijuego 3
 	 **/
@@ -93,6 +96,30 @@ public class DbAdapter {
 	 * Guarda la puntuacion del jugador para el minijuego 6
 	 **/
 	public static final String PARCADE_KEY_SCORE6 = "score6";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 7
+	 **/
+	public static final String PARCADE_KEY_SCORE7 = "score7";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 8
+	 **/
+	public static final String PARCADE_KEY_SCORE8 = "score8";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 9
+	 **/
+	public static final String PARCADE_KEY_SCORE9 = "score9";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 10
+	 **/
+	public static final String PARCADE_KEY_SCORE10 = "score10";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 11
+	 **/
+	public static final String PARCADE_KEY_SCORE11 = "score11";
+	/**
+	 * Guarda la puntuacion del jugador para el minijuego 12
+	 **/
+	public static final String PARCADE_KEY_SCORE12 = "score12";
 
 	//
 	// Campos de la tabla pquest
@@ -166,7 +193,9 @@ public class DbAdapter {
 	private static final String[] parcadeCampos = new String[] {
 			PARCADE_KEY_PLAYER, PARCADE_KEY_SCORE1, PARCADE_KEY_SCORE2,
 			PARCADE_KEY_SCORE3, PARCADE_KEY_SCORE4, PARCADE_KEY_SCORE5,
-			PARCADE_KEY_SCORE6 };
+			PARCADE_KEY_SCORE6, PARCADE_KEY_SCORE7, PARCADE_KEY_SCORE8,
+			PARCADE_KEY_SCORE9, PARCADE_KEY_SCORE10, PARCADE_KEY_SCORE11,
+			PARCADE_KEY_SCORE12 };
 
 	/**
 	 * Array con las variables de la tabla pquest
@@ -199,8 +228,13 @@ public class DbAdapter {
 	public static final String SQLscore3 = PARCADE_KEY_SCORE3 + " integer,";
 	public static final String SQLscore4 = PARCADE_KEY_SCORE4 + " integer,";
 	public static final String SQLscore5 = PARCADE_KEY_SCORE5 + " integer,";
-	public static final String SQLscore6 = PARCADE_KEY_SCORE6 + " integer";
-	public static final String SQLscore6coma = PARCADE_KEY_SCORE6 + " integer,";
+	public static final String SQLscore6 = PARCADE_KEY_SCORE6 + " integer,";
+	public static final String SQLscore7 = PARCADE_KEY_SCORE7 + " integer,";
+	public static final String SQLscore8 = PARCADE_KEY_SCORE8 + " integer,";
+	public static final String SQLscore9 = PARCADE_KEY_SCORE9 + " integer,";
+	public static final String SQLscore10 = PARCADE_KEY_SCORE10 + " integer,";
+	public static final String SQLscore11 = PARCADE_KEY_SCORE11 + " integer,";
+	public static final String SQLscore12 = PARCADE_KEY_SCORE12 + " integer";
 	public static final String SQLactual = PQUEST_KEY_ACTUAL + " integer";
 	// tabla quest
 	public static final String SQLname = QUEST_KEY_NAME + " text primary key,";
@@ -221,6 +255,12 @@ public class DbAdapter {
 	public static final int PARCADE_IDCOL_SCORE4 = 4;
 	public static final int PARCADE_IDCOL_SCORE5 = 5;
 	public static final int PARCADE_IDCOL_SCORE6 = 6;
+	public static final int PARCADE_IDCOL_SCORE7 = 7;
+	public static final int PARCADE_IDCOL_SCORE8 = 8;
+	public static final int PARCADE_IDCOL_SCORE9 = 9;
+	public static final int PARCADE_IDCOL_SCORE10 = 10;
+	public static final int PARCADE_IDCOL_SCORE11 = 11;
+	public static final int PARCADE_IDCOL_SCORE12 = 12;
 	/**
 	 * Indice de las columnas de la tabla pquest
 	 */
@@ -249,7 +289,17 @@ public class DbAdapter {
 			+ SQLplayer
 			+ SQLscore1
 			+ SQLscore2
-			+ SQLscore3 + SQLscore4 + SQLscore5 + SQLscore6 + ")";
+			+ SQLscore3
+			+ SQLscore4
+			+ SQLscore5
+			+ SQLscore6
+			+ SQLscore7
+			+ SQLscore8
+			+ SQLscore9
+			+ SQLscore10
+			+ SQLscore11
+			+ SQLscore12
+			+ ")";
 
 	private static final String TABLE_PQUEST_CREATE = "create table if not exists "
 			+ TABLE_PQUEST
@@ -324,7 +374,13 @@ public class DbAdapter {
 		// parametro onlyRead
 		mDb = onlyRead ? mDbHelper.getReadableDatabase() : mDbHelper
 				.getWritableDatabase();
+		open = true;
 		return this;
+	}
+
+	public boolean isOpen() {
+		return open;
+
 	}
 
 	public void close() {
@@ -351,6 +407,12 @@ public class DbAdapter {
 		initialValues.put(PARCADE_KEY_SCORE4, score[3]);
 		initialValues.put(PARCADE_KEY_SCORE5, score[4]);
 		initialValues.put(PARCADE_KEY_SCORE6, score[5]);
+		initialValues.put(PARCADE_KEY_SCORE7, score[6]);
+		initialValues.put(PARCADE_KEY_SCORE8, score[7]);
+		initialValues.put(PARCADE_KEY_SCORE9, score[8]);
+		initialValues.put(PARCADE_KEY_SCORE10, score[9]);
+		initialValues.put(PARCADE_KEY_SCORE11, score[10]);
+		initialValues.put(PARCADE_KEY_SCORE12, score[11]);
 
 		return mDb.insert(TABLE_PARCADE, null, initialValues);
 	}
@@ -421,16 +483,17 @@ public class DbAdapter {
 		boolean del = false;
 		switch (indiceTabla) {
 		case parcade:
-			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "="  + "'"+rowId+"'",
-					null) > 0;
+			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "=" + "'"
+					+ rowId + "'", null) > 0;
 			break;
 
 		case pquest:
-			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "="  + "'"+rowId+"'",
-					null) > 0;
+			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "=" + "'"
+					+ rowId + "'", null) > 0;
 			break;
 		case quest:
-			del = mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "="  + "'"+rowId+"'", null) > 0;
+			del = mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "=" + "'" + rowId
+					+ "'", null) > 0;
 			break;
 		}
 		return del;
@@ -530,32 +593,7 @@ public class DbAdapter {
 	public boolean existsRow(String rowId, Tabla indiceTabla) {
 		Cursor mCursor = fetchRow(rowId, indiceTabla);
 		boolean existe = false;
-//		Cursor mCursor = null;
-//		try {
-//
-//			switch (indiceTabla) {
-//			case parcade:
-//				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
-//						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
-//						null, null, null, null);
-//				break;
-//
-//			case pquest:
-//				mCursor = mDb.query(true, TABLE_PQUEST, pquestCampos,
-//						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
-//						null, null, null, null);
-//				break;
-//			case quest:
-//				mCursor = mDb.query(true, TABLE_QUEST, questCampos,
-//						QUEST_KEY_NAME + "=" + "'" + rowId + "'", null, null,
-//						null, null, null);
-//				break;
-//			}
-//
-//		} catch (SQLException e) {
-//			// si no se encuentra la columna
-//			existe = false;
-//		}
+
 		if (mCursor != null) {
 			if (mCursor.getCount() <= 0) {
 				existe = false;
@@ -596,6 +634,18 @@ public class DbAdapter {
 			args.put(PARCADE_KEY_SCORE5, score[4]);
 		if (score[5] != -1)
 			args.put(PARCADE_KEY_SCORE6, score[5]);
+		if (score[6] != -1)
+			args.put(PARCADE_KEY_SCORE7, score[6]);
+		if (score[7] != -1)
+			args.put(PARCADE_KEY_SCORE8, score[7]);
+		if (score[8] != -1)
+			args.put(PARCADE_KEY_SCORE9, score[8]);
+		if (score[9] != -1)
+			args.put(PARCADE_KEY_SCORE10, score[9]);
+		if (score[10] != -1)
+			args.put(PARCADE_KEY_SCORE11, score[10]);
+		if (score[11] != -1)
+			args.put(PARCADE_KEY_SCORE12, score[11]);
 
 		return mDb.update(TABLE_PARCADE, args, PARCADE_KEY_PLAYER + "=" + "'"
 				+ rowId + "'", null) > 0;

@@ -77,7 +77,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/starcero" />
         </LinearLayout>
         <!-- MJ2 -->
 
@@ -100,7 +100,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/starcero" />
         </LinearLayout>
         <!-- MJ3 -->
 
@@ -123,7 +123,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/starcero" />
         </LinearLayout>
     </LinearLayout>
     <!-- SEGUNDA MJ -->
@@ -156,7 +156,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/starnull" />
         </LinearLayout>
         <!-- MJ5 -->
 
@@ -179,7 +179,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/starnull" />
         </LinearLayout>
         <!-- MJ6 -->
 
@@ -202,7 +202,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/starnull" />
         </LinearLayout>
     </LinearLayout>
     <!-- BARRA INFERIOR -->
