@@ -1,7 +1,8 @@
 package com.cinnamon.is.minijuegos.mj4;
 
 import com.cinnamon.is.R;
-
+import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Props;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -27,7 +28,7 @@ public class Game extends Activity {
 	//para saber hasta donde lleva leídos en orden (0-5)
 	private int cuentaValida;
 	private boolean ordenCorrecto=false;
-	
+
 	
 
 	/**
@@ -49,7 +50,7 @@ public class Game extends Activity {
 				try{
 					//QR.lanzarQR();
 					//lanza el scan del Barcode Scanner
-					Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+					Intent intent = new Intent(Props.Action.SCAN);
 			        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 			        startActivityForResult(intent, 0);
 					}catch (ActivityNotFoundException e) {
@@ -153,10 +154,17 @@ public class Game extends Activity {
    	         	 		finishTime(); // para calcular el tiempo total
    	         	 		elapsed=(long) (elapsed*tos);
    	         	 		// texto.setText(""+elapsed);
-   	         	 		Intent openWin=new Intent("com.cinnamon.cadenaqr.WIN");
-   	         	 		openWin.putExtra("tiempo", elapsed);
-   	         	 		startActivity(openWin);
+   	         	 		
+   	         	 		Bundle b=new Bundle();
+   	         	 		b.putLong("tiempo", elapsed);
+   	         	 		Launch lanzador=new Launch(this);
+   	         	 		lanzador.lanzaActivity(Props.Action.MJ4W, b, Props.Comun.cmj4);
+   	         	 		//finalizar(true);
+   	         	 		//Intent openWin=new Intent("com.cinnamon.cadenaqr.WIN");
+   	         	 		//openWin.putExtra("tiempo", elapsed);
+   	         	 		//startActivity(openWin);
    	         	 		finish();
+   	         	 		
 	 	        	}
 	 	        
 	 	       }
@@ -184,4 +192,6 @@ public class Game extends Activity {
 		protected void finishTime() {
 			elapsed = System.nanoTime() - start;
 		}
+		
+		
 }

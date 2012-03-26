@@ -3,10 +3,10 @@ package com.cinnamon.is.minijuegos.mj4;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Props;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -34,7 +34,7 @@ public class CadenaQRActivity extends Activity {
 					 startTime();
 					 Bundle b=new Bundle();
 					 b.putLong("inicio", start);
-					 lanzador.lanzaActivity("com.cinnamon.is.minijuegos.MJ4.Game", b);
+					 lanzador.lanzaActivity(Props.Action.MJ4G, b, Props.Comun.cmj4);
 					 //Intent openGame=new Intent("com.cinnamon.is.minijuegos.MJ4.Game");
 					 //openGame.putExtra("inicio", start);
 					 //startActivity(openGame);
@@ -52,5 +52,6 @@ public class CadenaQRActivity extends Activity {
 	 protected void startTime() {
 			start = System.nanoTime();
 		}
+	 
 
 }
