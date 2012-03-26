@@ -2,6 +2,8 @@ package com.cinnamon.is.minijuegos.mj4;
 
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -22,6 +24,7 @@ public class CadenaQRActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.instcadqr);
+        final Launch lanzador=new Launch(this);
         Comenzar=(Button) findViewById(R.id.Comenzar);
         Comenzar.setOnClickListener(new OnClickListener() {
 
@@ -29,9 +32,12 @@ public class CadenaQRActivity extends Activity {
 				try{
 					//iniciamos el tiempo y se lo pasamos al otro intent
 					 startTime();
-					 Intent openGame=new Intent("com.cinnamon.is.minijuegos.MJ4.Game");
-					 openGame.putExtra("inicio", start);
-					 startActivity(openGame);
+					 Bundle b=new Bundle();
+					 b.putLong("inicio", start);
+					 lanzador.lanzaActivity("com.cinnamon.is.minijuegos.MJ4.Game", b);
+					 //Intent openGame=new Intent("com.cinnamon.is.minijuegos.MJ4.Game");
+					 //openGame.putExtra("inicio", start);
+					 //startActivity(openGame);
 					}catch (ActivityNotFoundException e) {
 						e.printStackTrace();
 					}
