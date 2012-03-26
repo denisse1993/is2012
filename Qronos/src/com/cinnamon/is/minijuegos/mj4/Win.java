@@ -1,10 +1,12 @@
 package com.cinnamon.is.minijuegos.mj4;
 
 import com.cinnamon.is.R;
-
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Win extends Activity {
@@ -13,6 +15,7 @@ public class Win extends Activity {
 	private long tiempo;
 	private TextView texto;
 	private int puntuacion;
+	private Button volver;
 	
 
 	@Override
@@ -30,10 +33,21 @@ public class Win extends Activity {
 		puntuacion=calcularPuntuacion();
 		
 		texto.setText("Has encontrado el código en "+tiempo+" segundos, tu puntuación es "+puntuacion+" puntos.");
-		 
+		
+		final Bundle b=new Bundle();
+		b.putInt("score", puntuacion);
+		
+		volver=(Button) findViewById(R.id.volver);
+		volver.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
-	
+
+
 	protected int calcularPuntuacion() {
 		int score = MAX_SCORE;
 		// tiempos de prueba para probar la aplicacion, habría que mirar cuando

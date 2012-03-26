@@ -123,7 +123,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj4:
 				int score2 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score2, Props.Comun.cmj1 - 1);
+				jugador.setScore(score2, Props.Comun.cmj4 - 1);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				break;
@@ -372,7 +372,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			if (grupoMJ == 0)
 				Launch.lanzaConfirmacion("Confirmacion para lanzar "
 						+ Props.Strings.mjNames[0], Props.Strings.mjExps[0]
-						+ "\n Score: " + jugador.getScore(0), this);
+						+ "\nScore: " + jugador.getScore(0), this);
 			else if (grupoMJ == 1)
 				Launch.lanzaConfirmacion("Confirmacion para lanzar "
 						+ Props.Strings.mjNames[6], Props.Strings.mjExps[6],
@@ -401,8 +401,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 		case R.id.iBmj4:
 			if (grupoMJ == 0)
 				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[3], Props.Strings.mjExps[3],
-						this);
+						+ Props.Strings.mjNames[3], Props.Strings.mjExps[3]
+						+ "\nScore: " + jugador.getScore(0), this);
 			else if (grupoMJ == 1)
 				Launch.lanzaConfirmacion("Confirmacion para lanzar "
 						+ Props.Strings.mjNames[9], Props.Strings.mjExps[9],
