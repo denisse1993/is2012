@@ -2,8 +2,8 @@ package com.cinnamon.is.minijuegos.mj4;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Game extends Activity {
+public class Game extends Minijuego {
 
 	private Button btnQR;
 	private TextView texto;
@@ -24,6 +24,9 @@ public class Game extends Activity {
 	private long start;
 	protected final static double tos = 0.000000001;
 	protected final static double tons = 1000000000;
+	
+	private int puntuacion;
+	private int tiempo;
 	
 	//para saber hasta donde lleva leídos en orden (0-5)
 	private int cuentaValida;
@@ -153,10 +156,15 @@ public class Game extends Activity {
 	 	        		start = datos.getLong("inicio");
    	         	 		finishTime(); // para calcular el tiempo total
    	         	 		elapsed=(long) (elapsed*tos);
-   	         	 		// texto.setText(""+elapsed);
+
+   	         	 		tiempo=(int) elapsed;
+   	         	 		puntuacion=calcularPuntuacion();
    	         	 		
    	         	 		Bundle b=new Bundle();
    	         	 		b.putLong("tiempo", elapsed);
+   	         	 		b.putInt(Props.Comun.SCORE, puntuacion);
+   	         	 		
+   	         	 		
    	         	 		Launch lanzador=new Launch(this);
    	         	 		lanzador.lanzaActivity(Props.Action.MJ4W, b, Props.Comun.cmj4);
    	         	 		//finalizar(true);
@@ -164,16 +172,18 @@ public class Game extends Activity {
    	         	 		//openWin.putExtra("tiempo", elapsed);
    	         	 		//startActivity(openWin);
    	         	 		finish();
+   	         	 		//finishActivityFromChild( null, Props.Comun.cmj4);
    	         	 		
 	 	        	}
 	 	        
-	 	       }
+	 	      
 	 
 	 	      } else if (resultCode == RESULT_CANCELED) {
 	 	         // Handle cancel
 	 	    	 //Si se cancela la lectura se llega aquí
 	 	    	texto.setText("Lee de nuevo el código QR");
 	 	      }
+	 	   	}
 	 	   }
 
 	   
@@ -187,11 +197,25 @@ public class Game extends Activity {
 			return -1;
 		}
 
-
-
 		protected void finishTime() {
 			elapsed = System.nanoTime() - start;
 		}
 		
-		
+		protected int calcularPuntuacion() {
+			int score = MAX_SCORE;
+			// tiempos de prueba para probar la aplicacion, habría que mirar cuando
+			// se tarda en cada uno, o dejarlo para todos igual
+			if (tiempo < 30)// 30segundos
+				return score;
+			else if (tiempo >= 30 && tiempo < 45)
+				return score - 200;
+			else if (tiempo >= 45 && tiempo < 60)
+				return score - 400;
+			else if (tiempo >= 60 && tiempo < 75)
+				return score - 600;
+			else if (tiempo >= 90 && tiempo < 105)
+				return score - 800;
+			else
+				return 0;
+		}
 }

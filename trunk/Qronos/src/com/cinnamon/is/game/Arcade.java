@@ -402,7 +402,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			if (grupoMJ == 0)
 				Launch.lanzaConfirmacion("Confirmacion para lanzar "
 						+ Props.Strings.mjNames[3], Props.Strings.mjExps[3]
-						+ "\nScore: " + jugador.getScore(0), this);
+						+ "\nScore: " + jugador.getScore(3), this);
 			else if (grupoMJ == 1)
 				Launch.lanzaConfirmacion("Confirmacion para lanzar "
 						+ Props.Strings.mjNames[9], Props.Strings.mjExps[9],

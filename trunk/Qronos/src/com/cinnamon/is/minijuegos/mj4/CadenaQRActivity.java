@@ -3,9 +3,9 @@ package com.cinnamon.is.minijuegos.mj4;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 
-public class CadenaQRActivity extends Activity {
+public class CadenaQRActivity extends Minijuego {
     private Button Comenzar;
     private long start;
 

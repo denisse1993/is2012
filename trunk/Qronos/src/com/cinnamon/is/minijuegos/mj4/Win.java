@@ -1,7 +1,10 @@
 package com.cinnamon.is.minijuegos.mj4;
 
 import com.cinnamon.is.R;
-import android.app.Activity;
+import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.comun.Props;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -9,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Win extends Activity {
+public class Win extends Minijuego {
 
 	private static final int MAX_SCORE = 1000;
 	private long tiempo;
@@ -29,19 +32,16 @@ public class Win extends Activity {
        
         Bundle datos = this.getIntent().getExtras();
 		tiempo = datos.getLong("tiempo");
-		
-		puntuacion=calcularPuntuacion();
+		puntuacion=datos.getInt(Props.Comun.SCORE);
+		//puntuacion=calcularPuntuacion();
 		
 		texto.setText("Has encontrado el código en "+tiempo+" segundos, tu puntuación es "+puntuacion+" puntos.");
-		
-		final Bundle b=new Bundle();
-		b.putInt("score", puntuacion);
 		
 		volver=(Button) findViewById(R.id.volver);
 		volver.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				finish();
+				finalizar(true);
 			}
 		});
 	}
@@ -64,6 +64,24 @@ public class Win extends Activity {
 			return score - 800;
 		else
 			return 0;
+	}
+	
+	protected void finalizar(boolean s) {
+		// Para tiempo
+		//finishTime();
+		// Establece valores de puntuacion y superado
+		//int puntuacion = calcularPuntuacion();
+		superado = s;
+		// Creo el bundle con la info usando strings genericos de clase
+		// Props.Comun
+		Bundle b = new Bundle();
+		b.putInt(Props.Comun.SCORE, puntuacion);
+		b.putBoolean(Props.Comun.SUPERADO, superado);
+		// Devuelvo resultado a actividad padre
+		//setResult(RESULT_OK, getIntent().putExtras(b));
+		//finish();
+		//finishActivity(Props.Comun.cmj4);
+		Launch.returnActivity(this, b, RESULT_OK);
 	}
 	
 }
