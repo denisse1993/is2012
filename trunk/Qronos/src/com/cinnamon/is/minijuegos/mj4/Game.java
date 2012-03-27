@@ -171,7 +171,10 @@ public class Game extends Minijuego {
    	         	 		//Intent openWin=new Intent("com.cinnamon.cadenaqr.WIN");
    	         	 		//openWin.putExtra("tiempo", elapsed);
    	         	 		//startActivity(openWin);
-   	         	 		finish();
+   	         	 		
+   	         	 		//finish();//esto es lo que estaba
+   	         	 		//aqui probamos a ver que pasa
+   	         	 		Launch.returnActivity(this, b, RESULT_OK);
    	         	 		//finishActivityFromChild( null, Props.Comun.cmj4);
    	         	 		
 	 	        	}

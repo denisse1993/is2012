@@ -7,6 +7,7 @@ import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
 
 import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +18,7 @@ import android.widget.Button;
 public class CadenaQRActivity extends Minijuego {
     private Button Comenzar;
     private long start;
+  
 
 	/** Called when the activity is first created. */
     @Override
@@ -46,9 +48,24 @@ public class CadenaQRActivity extends Minijuego {
     }	
 	protected void onPause() {
 		super.onPause();
-		finish();
+		//finish();//esto es lo que estaba
+		//Bundle b = new Bundle();
+		//Launch.returnActivity(this, b, RESULT_OK);
 	}
 	
+	//prueba
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			Bundle b = data.getExtras();
+			if (requestCode==Props.Comun.cmj4) {
+				Bundle bundle=new Bundle();
+				bundle.getInt(Props.Comun.SCORE);
+				Launch.returnActivity(this, b, RESULT_OK);
+			}
+		}
+	}
+	
+
 	 protected void startTime() {
 			start = System.nanoTime();
 		}
