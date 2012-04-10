@@ -99,7 +99,7 @@ public class Login extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		conex= new Conexion(this.getApplicationContext());
+		conex= new Conexion(this);
 		inicializar();
 	}
 

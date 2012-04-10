@@ -21,10 +21,12 @@ import org.apache.http.util.EntityUtils;
 
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -33,14 +35,14 @@ public class Conexion {
 	/**
 	 * Guarda el contexto de la actividad que le llama
 	 */
-	public Context context;
+	public Activity activity;
 	
 	/**
 	 * Constructor
 	 * @param _context
 	 */
-	public Conexion(Context _context){
-		this.context= _context;
+	public Conexion(Activity _activity){
+		this.activity= _activity;
 	}
 	
 	/**
@@ -65,7 +67,7 @@ public class Conexion {
 			if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
     		{
     			String str = EntityUtils.toString(rp.getEntity());
-    			Toast.makeText(context.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    			Toast.makeText(activity.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     		}
 			return true;
 		} catch (UnsupportedEncodingException e) {
@@ -95,7 +97,7 @@ public class Conexion {
 			if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
     		{
     			String str = EntityUtils.toString(rp.getEntity());
-    			Toast.makeText(context.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    			Toast.makeText(activity.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     		}
 			return true;
 		} catch (UnsupportedEncodingException e) {
@@ -123,9 +125,12 @@ public class Conexion {
 			if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
     		{
     			String str = EntityUtils.toString(rp.getEntity());
-    			Intent i = new Intent("android.intent.action.RANKING");
-    			i.putExtra("JSON Valor", str);
-    			context.startActivity(i);
+    			Bundle b = new Bundle();
+    			b.putString("JSON Valor", str);
+    			Launch l = new Launch(activity);
+    			l.lanzaActivity(Props.Action.RANKING, b);
+    			
+    		//	context.startActivity(i);
     			
     		}
 			return true;
@@ -181,7 +186,7 @@ public class Conexion {
 			if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
     		{
     			String str = EntityUtils.toString(rp.getEntity());
-    			Toast.makeText(context.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    			Toast.makeText(activity.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     			return true;
     		}
 			
@@ -200,7 +205,7 @@ public class Conexion {
      */
     public boolean uploadImage(int imagen) throws ClientProtocolException, IOException{
     	ByteArrayOutputStream bao = new ByteArrayOutputStream();
-    	Bitmap uploadIMG = BitmapFactory.decodeResource(context.getResources(),imagen);;
+    	Bitmap uploadIMG = BitmapFactory.decodeResource(activity.getResources(),imagen);;
     	uploadIMG.compress(Bitmap.CompressFormat.JPEG, 90, bao);
     	String name = "launcher";
     	byte [] ba = bao.toByteArray();
@@ -216,7 +221,7 @@ public class Conexion {
 			if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
     		{
     			String str = EntityUtils.toString(rp.getEntity());
-    			Toast.makeText(context.getApplicationContext(), str, Toast.LENGTH_LONG).show();
+    			Toast.makeText(activity.getApplicationContext(), str, Toast.LENGTH_LONG).show();
     			return true;
     		}
 			
