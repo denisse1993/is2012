@@ -146,7 +146,7 @@ public class Conexion {
      * @return
      * @throws NoSuchAlgorithmException
      */
-    public String toMD5(String clear) throws NoSuchAlgorithmException  {
+    public static String toMD5(String clear) throws NoSuchAlgorithmException  {
     	MessageDigest md = MessageDigest.getInstance("MD5");
     	byte[] b = md.digest(clear.getBytes());
 

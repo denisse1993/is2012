@@ -16,7 +16,7 @@ import com.cinnamon.is.comun.Props;
  * poder ser pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.0 18.02.2012
+ * @version 1.1 10.04.2012
  */
 public class Jugador implements Serializable {
 
@@ -24,6 +24,11 @@ public class Jugador implements Serializable {
 	 * Nombre del jugador
 	 */
 	private String nombre;
+
+	/**
+	 * Pass del jugador
+	 */
+	private String pass;
 
 	/**
 	 * Puntuacion del jugador en los distintos minijuegos
@@ -45,13 +50,16 @@ public class Jugador implements Serializable {
 	 * 
 	 * @param nombre
 	 *            del jugador
+	 * @param pass
+	 *            del jugador
 	 * @param score
 	 *            del jugador
 	 * @param faseActual
 	 *            del jugador
 	 */
-	public Jugador(String nombre, int[] score, int faseActual) {
+	public Jugador(String nombre, String pass, int[] score, int faseActual) {
 		this.nombre = nombre;
+		this.pass = pass;
 		this.score = score;
 		this.faseActual = faseActual;
 	}
@@ -61,11 +69,13 @@ public class Jugador implements Serializable {
 	 * 
 	 * @param nombre
 	 *            del jugador
+	 * @param pass
+	 *            del jugador
 	 * @param score
 	 *            del jugador
 	 */
-	public Jugador(String nombre, int[] score) {
-		this(nombre, score, 0);
+	public Jugador(String nombre, String pass, int[] score) {
+		this(nombre, pass, score, 0);
 	}
 
 	/**
@@ -73,13 +83,11 @@ public class Jugador implements Serializable {
 	 * 
 	 * @param nombre
 	 *            del jugador
-	 * @param score
-	 *            del jugador
-	 * @param fase
+	 * @param pass
 	 *            del jugador
 	 */
-	public Jugador(String nombre) {
-		this(nombre, new int[Props.Comun.MAX_MJ], 0);
+	public Jugador(String nombre, String pass) {
+		this(nombre, pass, new int[Props.Comun.MAX_MJ], 0);
 	}
 
 	/**
@@ -139,14 +147,15 @@ public class Jugador implements Serializable {
 			suma += i;
 		return suma;
 	}
+
 	/**
 	 * Resetea jugador
 	 */
 	public void reset() {
 		for (int i = 0; i < score.length; i++)
-			score[i]=0;
+			score[i] = 0;
 	}
-	
+
 	public int getScore(int i) {
 		return score[i];
 	}
@@ -162,6 +171,14 @@ public class Jugador implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public String getPass() {
+		return pass;
 	}
 
 	public int[] getScore() {
