@@ -96,6 +96,9 @@ public final class Props {
 		public static final int cmj11 = 11;
 		public static final int cmj12 = 12;
 
+		
+		public static final int CMJ[] = { cmj1, cmj2, cmj3, cmj4, cmj5, cmj6 ,cmj7,
+			cmj8 ,cmj9, cmj10, cmj11, cmj12};
 		/**
 		 * Minijuegos maximos
 		 */
@@ -163,6 +166,13 @@ public final class Props {
 			else
 				return iDiVstar[0];
 		}
+		
+		/**
+		 * Obtiene el banner de cada mj 
+		 * antes de lanzarlo
+		 */
+		public static final int[] bannerMJ = {  R.drawable.bmj1, R.drawable.bmj2,
+			R.drawable.bmj3, R.drawable.bmj4 ,R.drawable.bmj5 ,R.drawable.bmj6};
 
 		/**
 		 * <p>

@@ -66,7 +66,7 @@ public class Win extends Minijuego {
 			return 0;
 	}
 	
-	protected void finalizar(boolean s) {
+	public void finalizar(boolean s) {
 		// Para tiempo
 		//finishTime();
 		// Establece valores de puntuacion y superado

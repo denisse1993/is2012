@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Minijuego;
 
 
 /**
@@ -25,6 +27,9 @@ public class MenuDialog extends Dialogos {
 	Button bRenaudar;
 	Button bReiniciar;
 	Button bSalir;
+	
+	
+	Minijuego mj;
 
 	/**
 	 * Constructora
@@ -38,9 +43,9 @@ public class MenuDialog extends Dialogos {
 	 * @param _theme
 	 *            Tema elegido para el dialog
 	 */
-	public MenuDialog(Context _context, String _title, int _modo, int _theme) {
+	public MenuDialog(Context _context,String _title, int _modo, int _theme, Minijuego _mj) {
 		super(_context, _title, _modo, _theme);
-		this.title = _title;
+		this.mj = _mj;
 	}
 
 	/**
@@ -69,6 +74,8 @@ public class MenuDialog extends Dialogos {
 		} else
 			bReiniciar.setOnClickListener(this);
 
+		bRenaudar.setOnClickListener(this);
+		bSalir.setOnClickListener(this);
 		this.setTitle(title);
 		fondo.getBackground().setAlpha(45);
 		bReiniciar.getBackground().setAlpha(45);
@@ -82,8 +89,18 @@ public class MenuDialog extends Dialogos {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ButtonResumeMenu:
+			this.dismiss();
+			break;
 		case R.id.ButtonRestartMenu:
+			this.dismiss();
+			mj.reiniciar();
+			break;
 		case R.id.ButtonExitMenu:
+			this.dismiss();
+			mj.finalizar(false);
+			break;
 		}
 	}
+	
+
 }

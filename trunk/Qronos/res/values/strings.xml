@@ -16,6 +16,6 @@
     <string name="bRenaudar">Renaudar</string>
     <string name="bRestart">Reiniciar</string>
     <string name="bSalir">Salir</string>
-    <string name="bStart">Si</string>
-    <string name="bCancel">No</string>
+    <string name="bStart">Empezar</string>
+    <string name="bCancel">Atras</string>
 </resources>

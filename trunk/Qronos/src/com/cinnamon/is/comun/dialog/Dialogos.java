@@ -1,5 +1,7 @@
 package com.cinnamon.is.comun.dialog;
 
+import com.cinnamon.is.comun.Launch;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -24,6 +26,7 @@ public abstract class Dialogos extends Dialog implements
 	 */
 	String title;
 
+	
 	/**
 	 * Constantes que asignan el tipo de dialogo Aventura o Arcade
 	 */

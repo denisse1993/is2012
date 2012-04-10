@@ -7,8 +7,14 @@
 //
 package com.cinnamon.is.comun;
 
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.dialog.AyudaDialog;
+import com.cinnamon.is.comun.dialog.Dialogos;
+import com.cinnamon.is.comun.dialog.MenuDialog;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -249,6 +255,19 @@ public final class Launch {
 				.setNegativeButton("No", (OnClickListener) a);
 		return builder.show();
 	}
+	/**
+	 * 
+	 * @param context Contexto de la actividad
+	 * @param nMJ Nœmero de Minijuego
+	 */
+	public static void lanzaConfirmacion(Context context,int nMJ, Launch launch, int modo){
+		AyudaDialog dialogo = new AyudaDialog(context, Props.Strings.mjNames[nMJ],
+											modo,R.style.CenterDialog,
+											nMJ,Props.Action.MJ[nMJ], Props.Strings.mjExps[nMJ],
+											Props.Comun.bannerMJ[nMJ], launch);
+		dialogo.show();
+	
+	}
 
 	/**
 	 * <p>
@@ -268,5 +287,10 @@ public final class Launch {
 		builder.setTitle("Elige opcion");
 		builder.setCancelable(false);
 		return builder.show();
+	}
+	
+	public static void lanzaOpciones(Context context,String title, int modo, Minijuego mj ){
+		MenuDialog dialogo = new MenuDialog(context,title,modo, R.style.CenterDialog,mj);
+		dialogo.show();
 	}
 }
