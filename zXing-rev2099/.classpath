@@ -5,6 +5,5 @@
 	<classpathentry kind="lib" path="D:/PROGRAMACION/ANDROID/libs/zXing/zXing-Android-rev2099/core.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="src" path="/TuringApp"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
