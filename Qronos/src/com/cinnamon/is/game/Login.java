@@ -7,17 +7,44 @@
 //
 package com.cinnamon.is.game;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
@@ -53,16 +80,26 @@ public class Login extends Activity implements OnClickListener {
 	private Jugador jugador;
 
 	// Interfaz
-	private EditText etLogin;
+	private EditText etUsername;
+	private EditText etPassword;
 	private Button bLogin;
+	private Button bRegister;
+	private Button bArcade;
 	private TextView tvLogin;
 	private Button bArrancar;
 	private TextView tvbienvenida;
+	private SharedPreferences prefs;
+	private CheckBox cbRemember;
+	Bitmap uploadIMG; 
+	
+	//Connexion 
+	Conexion conex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		conex= new Conexion(this.getApplicationContext());
 		inicializar();
 	}
 
@@ -83,10 +120,25 @@ public class Login extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.bLogin:
-			nombre = etLogin.getText().toString();
-			if (!nombre.equals(""))
-				bienvenida(creaJugador());
-			break;
+		{
+				initLogin();			
+			//	bienvenida(creaJugador());
+				break;
+		}
+		case R.id.bRegister:
+		{
+			 try {
+             		String passMD5 = conex.toMD5(etPassword.getText().toString());
+					conex.register(etUsername.getText().toString(), passMD5);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 break;
+		}	
 		case R.id.bArrancar:
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.JUGADOR, jugador);
@@ -99,9 +151,17 @@ public class Login extends Activity implements OnClickListener {
 	 * Metodo de utilidad para inicializar la actividad
 	 */
 	private void inicializar() {
-		etLogin = (EditText) findViewById(R.id.etlogin);
-		tvLogin = (TextView) findViewById(R.id.tvLogin);
+		etUsername = (EditText) findViewById(R.id.etUsername);
+		etPassword = (EditText)this.findViewById(R.id.etPassword);
+		//tvLogin = (TextView) findViewById(R.id.tvLogin);
 		bLogin = (Button) findViewById(R.id.bLogin);
+		bRegister= (Button) findViewById(R.id.bRegister);
+		
+	    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	    
+	    cbRemember=(CheckBox)this.findViewById(R.id.cbRememberLogin);
+	    
+	    uploadIMG = BitmapFactory.decodeResource(getResources(),R.drawable.bmj1);
 
 		bArrancar = (Button) findViewById(R.id.bArrancar);
 		tvbienvenida = (TextView) findViewById(R.id.tVbienvenida);
@@ -110,11 +170,36 @@ public class Login extends Activity implements OnClickListener {
 		tvbienvenida.setVisibility(View.INVISIBLE);
 		bArrancar.setVisibility(View.INVISIBLE);
 
+		//Asignamos Listener a los botones
 		bLogin.setOnClickListener(this);
 		bArrancar.setOnClickListener(this);
+		bRegister.setOnClickListener(this);
+		
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
+		
+		//Intenta subir una imagen al servidor (Prueba)
+		/*try {
+				conex.uploadImage(R.drawable.mj1);
+		} catch (ClientProtocolException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}*/
+		
+		//Devuelve las preferencias del jugador
+		String userPref = prefs.getString("Username","0" );
+		String passPref = prefs.getString("Password", "0");
+		String checkPref = prefs.getString("checked", "no");
+		
+		if (checkPref.equals("yes")){
+			etUsername.setText(userPref);
+		    etPassword.setText(passPref);
+		    cbRemember.setChecked(true);
+		}
+		
+		
 	}
 
 	/**
@@ -127,7 +212,7 @@ public class Login extends Activity implements OnClickListener {
 		// cambiamos interfaz
 		bLogin.setVisibility(View.INVISIBLE);
 		tvLogin.setVisibility(View.INVISIBLE);
-		etLogin.setVisibility(View.INVISIBLE);
+		//etLogin.setVisibility(View.INVISIBLE);
 		tvbienvenida.setVisibility(View.VISIBLE);
 		bArrancar.setVisibility(View.VISIBLE);
 
@@ -181,4 +266,44 @@ public class Login extends Activity implements OnClickListener {
 		mDbHelper.close();
 		return esta;
 	}
+	
+	/**
+	 * Inicializa el login
+	 */
+	private void initLogin(){
+		String name1="";
+ 	   	String pass1="";
+ 	   	String Str_check2 = prefs.getString("checked", "no");
+ 	   	
+ 	   	//Si estan predefinidas las carga
+ 	   	if(Str_check2.equals("yes")){
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("username", name1);
+            editor.putString("password", pass1);
+            editor.commit();
+        }
+ 	   	
+        name1 = etUsername.getText().toString();
+        
+        if (name1.equals("") || etPassword.toString().equals("")){
+     	   Toast.makeText(getApplicationContext(), "Alguno de los campos est‡n vac’os", Toast.LENGTH_LONG).show();
+        } 
+        else{
+        	try {
+        		String passMD5 = conex.toMD5(etPassword.getText().toString());
+				conex.login(etUsername.getText().toString(), passMD5);
+				}
+        	catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }         
+     }
+	
+	
+	
 }
+

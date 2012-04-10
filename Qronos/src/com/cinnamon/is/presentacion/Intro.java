@@ -14,7 +14,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Dialogos;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 

@@ -7,6 +7,8 @@
 //
 package com.cinnamon.is.comun;
 
+import com.cinnamon.is.comun.dialog.Dialogos;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -39,6 +41,10 @@ public abstract class Minijuego extends Activity implements
 	 */
 	protected boolean superado;
 
+	/**
+	 * Modo de juego (Arcade o Aventura)
+	 */
+	protected int modo = Dialogos.DIALOG_ARCADE;
 	/**
 	 * Maxima puntuacion
 	 */
@@ -127,7 +133,7 @@ public abstract class Minijuego extends Activity implements
 	 * @param s
 	 *            si se ha superado completamente o no
 	 */
-	protected void finalizar(boolean s) {
+	public void finalizar(boolean s) {
 		// Para tiempo
 		finishTime();
 		// Establece valores de puntuacion y superado
@@ -145,7 +151,7 @@ public abstract class Minijuego extends Activity implements
 	/**
 	 * Metodo que reinicia el minijuego, a implementar en subclases
 	 */
-	protected void reiniciar() {
+	public void reiniciar() {
 		// Deberá llamarse cuando se pulse el boton de reiniciar del dialog
 		// opciones del minijuego
 	}
@@ -159,7 +165,7 @@ public abstract class Minijuego extends Activity implements
 		// atras del movil
 		// Launch.lanzaConfirmacion("Salir del minijuego",
 		// "¿Quieres salir del minijuego sin completarlo?", this);
-		Launch.lanzaOpciones(this);
+		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
+import com.cinnamon.is.comun.dialog.Dialogos;
 
 /**
  * Pantalla principal del arcade de la aplicacion
@@ -295,7 +296,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				tVhello.setText("pulsado salir");
 				break;
 			}
-		} else
+		}/* else
 			switch (boton) {
 			case -1:
 				dialog.cancel();
@@ -343,7 +344,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case -2:
 				dialog.cancel();
 				break;
-			}
+			}*/
 	}
 
 	@Override
@@ -372,63 +373,39 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// Botones de mjs
 		case R.id.iBmj1:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[0], Props.Strings.mjExps[0]
-						+ "\nScore: " + jugador.getScore(0), this);
+				Launch.lanzaConfirmacion(this, 0,l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[6], Props.Strings.mjExps[6],
-						this);
+				Launch.lanzaConfirmacion(this, 6,l,Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj2:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[1], Props.Strings.mjExps[1],
-						this);
+				Launch.lanzaConfirmacion(this, 1,l,Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[7], Props.Strings.mjExps[7],
-						this);
+				Launch.lanzaConfirmacion(this, 7,l,Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj3:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[2], Props.Strings.mjExps[2],
-						this);
+				Launch.lanzaConfirmacion(this, 2,l,Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[8], Props.Strings.mjExps[8],
-						this);
+				Launch.lanzaConfirmacion(this, 8,l,Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj4:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[3], Props.Strings.mjExps[3]
-						+ "\nScore: " + jugador.getScore(3), this);
+				Launch.lanzaConfirmacion(this, 3,l,Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[9], Props.Strings.mjExps[9],
-						this);
+				Launch.lanzaConfirmacion(this, 9,l,Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj5:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[1], Props.Strings.mjExps[4],
-						this);
+				Launch.lanzaConfirmacion(this, 4,l,Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[10], Props.Strings.mjExps[10],
-						this);
+				Launch.lanzaConfirmacion(this, 10,l,Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj6:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[5], Props.Strings.mjExps[5],
-						this);
+				Launch.lanzaConfirmacion(this, 5,l,Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion("Confirmacion para lanzar "
-						+ Props.Strings.mjNames[11], Props.Strings.mjExps[12],
-						this);
+				Launch.lanzaConfirmacion(this, 11,l,Dialogos.DIALOG_ARCADE);
 			break;
 		}
 	}
