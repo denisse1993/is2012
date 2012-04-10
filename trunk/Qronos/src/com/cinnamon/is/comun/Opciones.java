@@ -89,6 +89,6 @@ public class Opciones extends PreferenceActivity implements
 	 */
 	private void resetJugador() {
 		jugador.reset();
-		mDbHelper.updateRowParcade(jugador.getNombre(), jugador.getScore());
+		mDbHelper.updateRowParcade(jugador.getNombre(),jugador.getPass(), jugador.getScore());
 	}
 }

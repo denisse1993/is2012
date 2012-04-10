@@ -56,7 +56,7 @@ public class DbAdapter {
 	/**
 	 * Version de la base de datos
 	 */
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 
 	/**
 	 * Nombre de las tablas de la BD
@@ -72,6 +72,10 @@ public class DbAdapter {
 	 * Guarda el nombre del jugador y actua como clave de la tabla
 	 */
 	public static final String PARCADE_KEY_PLAYER = "player";
+	/**
+	 * Guarda la pass del jugador
+	 */
+	public static final String PARCADE_KEY_PASS = "pass";
 	/**
 	 * Guarda la puntuacion del jugador para el minijuego 1
 	 **/
@@ -158,6 +162,11 @@ public class DbAdapter {
 	public static final String QUEST_KEY_NAME = "name";
 
 	/**
+	 * Guarda la pass de la aventura
+	 **/
+	public static final String QUEST_KEY_PASS = "pass";
+
+	/**
 	 * Guarda el minijuego 1
 	 **/
 	public static final String QUEST_KEY_MJ1 = "mj1";
@@ -191,11 +200,11 @@ public class DbAdapter {
 	 * Array con las variables de la tabla parcade
 	 */
 	private static final String[] parcadeCampos = new String[] {
-			PARCADE_KEY_PLAYER, PARCADE_KEY_SCORE1, PARCADE_KEY_SCORE2,
-			PARCADE_KEY_SCORE3, PARCADE_KEY_SCORE4, PARCADE_KEY_SCORE5,
-			PARCADE_KEY_SCORE6, PARCADE_KEY_SCORE7, PARCADE_KEY_SCORE8,
-			PARCADE_KEY_SCORE9, PARCADE_KEY_SCORE10, PARCADE_KEY_SCORE11,
-			PARCADE_KEY_SCORE12 };
+			PARCADE_KEY_PLAYER, PARCADE_KEY_PASS, PARCADE_KEY_SCORE1,
+			PARCADE_KEY_SCORE2, PARCADE_KEY_SCORE3, PARCADE_KEY_SCORE4,
+			PARCADE_KEY_SCORE5, PARCADE_KEY_SCORE6, PARCADE_KEY_SCORE7,
+			PARCADE_KEY_SCORE8, PARCADE_KEY_SCORE9, PARCADE_KEY_SCORE10,
+			PARCADE_KEY_SCORE11, PARCADE_KEY_SCORE12 };
 
 	/**
 	 * Array con las variables de la tabla pquest
@@ -208,8 +217,8 @@ public class DbAdapter {
 	 * Array con las variables de la tabla quest
 	 */
 	private static final String[] questCampos = new String[] { QUEST_KEY_NAME,
-			QUEST_KEY_MJ1, QUEST_KEY_MJ2, QUEST_KEY_MJ3, QUEST_KEY_PISTA1,
-			QUEST_KEY_PISTA2, QUEST_KEY_PISTA3 };
+			QUEST_KEY_PASS, QUEST_KEY_MJ1, QUEST_KEY_MJ2, QUEST_KEY_MJ3,
+			QUEST_KEY_PISTA1, QUEST_KEY_PISTA2, QUEST_KEY_PISTA3 };
 
 	/**
 	 * Tag para identificar la base de datos en el log
@@ -223,6 +232,7 @@ public class DbAdapter {
 	// tabla parcade-pquest
 	public static final String SQLplayer = PARCADE_KEY_PLAYER
 			+ " text primary key,";
+	public static final String SQLpass = PARCADE_KEY_PASS + " text,";
 	public static final String SQLscore1 = PARCADE_KEY_SCORE1 + " integer,";
 	public static final String SQLscore2 = PARCADE_KEY_SCORE2 + " integer,";
 	public static final String SQLscore3 = PARCADE_KEY_SCORE3 + " integer,";
@@ -238,6 +248,7 @@ public class DbAdapter {
 	public static final String SQLactual = PQUEST_KEY_ACTUAL + " integer";
 	// tabla quest
 	public static final String SQLname = QUEST_KEY_NAME + " text primary key,";
+
 	public static final String SQLmj1 = QUEST_KEY_MJ1 + " text,";
 	public static final String SQLmj2 = QUEST_KEY_MJ2 + " text,";
 	public static final String SQLmj3 = QUEST_KEY_MJ3 + " text,";
@@ -249,18 +260,19 @@ public class DbAdapter {
 	 * Indice de las columnas de la tabla parcade
 	 */
 	public static final int PARCADE_IDCOL_PLAYER = 0;
-	public static final int PARCADE_IDCOL_SCORE1 = 1;
-	public static final int PARCADE_IDCOL_SCORE2 = 2;
-	public static final int PARCADE_IDCOL_SCORE3 = 3;
-	public static final int PARCADE_IDCOL_SCORE4 = 4;
-	public static final int PARCADE_IDCOL_SCORE5 = 5;
-	public static final int PARCADE_IDCOL_SCORE6 = 6;
-	public static final int PARCADE_IDCOL_SCORE7 = 7;
-	public static final int PARCADE_IDCOL_SCORE8 = 8;
-	public static final int PARCADE_IDCOL_SCORE9 = 9;
-	public static final int PARCADE_IDCOL_SCORE10 = 10;
-	public static final int PARCADE_IDCOL_SCORE11 = 11;
-	public static final int PARCADE_IDCOL_SCORE12 = 12;
+	public static final int PARCADE_IDCOL_PASS = 1;
+	public static final int PARCADE_IDCOL_SCORE1 = 2;
+	public static final int PARCADE_IDCOL_SCORE2 = 3;
+	public static final int PARCADE_IDCOL_SCORE3 = 4;
+	public static final int PARCADE_IDCOL_SCORE4 = 5;
+	public static final int PARCADE_IDCOL_SCORE5 = 6;
+	public static final int PARCADE_IDCOL_SCORE6 = 7;
+	public static final int PARCADE_IDCOL_SCORE7 = 8;
+	public static final int PARCADE_IDCOL_SCORE8 = 9;
+	public static final int PARCADE_IDCOL_SCORE9 = 10;
+	public static final int PARCADE_IDCOL_SCORE10 = 11;
+	public static final int PARCADE_IDCOL_SCORE11 = 12;
+	public static final int PARCADE_IDCOL_SCORE12 = 13;
 	/**
 	 * Indice de las columnas de la tabla pquest
 	 */
@@ -273,12 +285,13 @@ public class DbAdapter {
 	 * Indice de las columnas de la tabla quest
 	 */
 	public static final int QUEST_IDCOL_NAME = 0;
-	public static final int QUEST_IDCOL_MJ1 = 1;
-	public static final int QUEST_IDCOL_MJ2 = 2;
-	public static final int QUEST_IDCOL_MJ3 = 3;
-	public static final int QUEST_IDCOL_PISTA1 = 4;
-	public static final int QUEST_IDCOL_PISTA2 = 5;
-	public static final int QUEST_IDCOL_PISTA3 = 6;
+	public static final int QUEST_IDCOL_PASS = 1;
+	public static final int QUEST_IDCOL_MJ1 = 2;
+	public static final int QUEST_IDCOL_MJ2 = 3;
+	public static final int QUEST_IDCOL_MJ3 = 4;
+	public static final int QUEST_IDCOL_PISTA1 = 5;
+	public static final int QUEST_IDCOL_PISTA2 = 6;
+	public static final int QUEST_IDCOL_PISTA3 = 7;
 
 	/**
 	 * Sentencia SQL para crear la tabla info (con fases mapas)
@@ -287,6 +300,7 @@ public class DbAdapter {
 			+ TABLE_PARCADE
 			+ "( "
 			+ SQLplayer
+			+ SQLpass
 			+ SQLscore1
 			+ SQLscore2
 			+ SQLscore3
@@ -298,8 +312,7 @@ public class DbAdapter {
 			+ SQLscore9
 			+ SQLscore10
 			+ SQLscore11
-			+ SQLscore12
-			+ ")";
+			+ SQLscore12 + ")";
 
 	private static final String TABLE_PQUEST_CREATE = "create table if not exists "
 			+ TABLE_PQUEST
@@ -313,6 +326,7 @@ public class DbAdapter {
 			+ TABLE_QUEST
 			+ "( "
 			+ SQLname
+			+ SQLpass
 			+ SQLmj1
 			+ SQLmj2
 			+ SQLmj3
@@ -378,11 +392,19 @@ public class DbAdapter {
 		return this;
 	}
 
+	/**
+	 * Comprueba si la BD esta abierta
+	 * 
+	 * @return si esta abierta o no
+	 */
 	public boolean isOpen() {
 		return open;
 
 	}
 
+	/**
+	 * Cierra la base de datos
+	 */
 	public void close() {
 		mDbHelper.close();
 	}
@@ -394,13 +416,16 @@ public class DbAdapter {
 	 * 
 	 * @param player
 	 *            nombre del jugador
+	 * @param pass
+	 *            password del jugador
 	 * @param score
 	 *            puntuacion del jugador
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRowParcade(String player, int[] score) {
+	public long createRowParcade(String player, String pass, int[] score) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(PARCADE_KEY_PLAYER, player);
+		initialValues.put(PARCADE_KEY_PASS, pass);
 		initialValues.put(PARCADE_KEY_SCORE1, score[0]);
 		initialValues.put(PARCADE_KEY_SCORE2, score[1]);
 		initialValues.put(PARCADE_KEY_SCORE3, score[2]);
@@ -448,15 +473,19 @@ public class DbAdapter {
 	 * 
 	 * @param name
 	 *            nombre de la aventura
+	 * @param pass
+	 *            password de la aventura
 	 * @param minijuegos
 	 *            minijuegos de la aventura
 	 * @param pistas
 	 *            las pista asociadas a los mj
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRowQuest(String name, String[] minijuegos, String[] pista) {
+	public long createRowQuest(String name, String pass, String[] minijuegos,
+			String[] pista) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(QUEST_KEY_NAME, name);
+		initialValues.put(QUEST_KEY_PASS, pass);
 		initialValues.put(QUEST_KEY_MJ1, minijuegos[0]);
 		initialValues.put(QUEST_KEY_MJ2, minijuegos[1]);
 		initialValues.put(QUEST_KEY_MJ3, minijuegos[2]);
@@ -547,10 +576,8 @@ public class DbAdapter {
 	 * @param indiceTabla
 	 *            tabla a tratar
 	 * @return Cursor posicionado en la fila que queremos
-	 * @throws SQLException
-	 *             si no se ha podido encontrar la fila
 	 */
-	public Cursor fetchRow(String rowId, Tabla indiceTabla) throws SQLException {
+	public Cursor fetchRow(String rowId, Tabla indiceTabla) {
 		Cursor mCursor = null;
 		try {
 			switch (indiceTabla) {
@@ -605,7 +632,35 @@ public class DbAdapter {
 			existe = false;
 		}
 		return existe;
+	}
 
+	/**
+	 * Comprueba si la contraseña es valida
+	 * 
+	 * @param nombre
+	 *            id de la fila
+	 * @param pass
+	 *            a comprobar en MD5
+	 * @return si la pass es correcta o no y si ademas existe la fila
+	 */
+	public boolean passOk(String nombre, String pass) {
+		Cursor mCursor = fetchRow(nombre, Tabla.parcade);
+		boolean passOk = false;
+
+		if (mCursor != null) {
+			if (mCursor.getCount() <= 0) {
+				passOk = false;
+			} else {
+				if (pass.equals(mCursor.getString(PARCADE_IDCOL_PASS)))
+					passOk = true;
+				else
+					passOk = false;
+			}
+			mCursor.close();
+		} else {
+			passOk = false;
+		}
+		return passOk;
 	}
 
 	/**
@@ -614,14 +669,18 @@ public class DbAdapter {
 	 * 
 	 * @param rowId
 	 *            id de la fila a actualizar
+	 * @param pass
+	 *            nueva password
 	 * @param score
 	 *            array de la puntuacion del jugador actualizado, toda pos que
-	 *            no se quiera actualizar debe estar a -1
+	 *            no se quiera actualizar debe estar a -1 o null
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowParcade(String rowId, int[] score) {
+	public boolean updateRowParcade(String rowId, String pass, int[] score) {
 		ContentValues args = new ContentValues();
+		if (pass != null)
+			args.put(PARCADE_KEY_PASS, pass);
 		if (score[0] != -1)
 			args.put(PARCADE_KEY_SCORE1, score[0]);
 		if (score[1] != -1)
@@ -686,6 +745,8 @@ public class DbAdapter {
 	 * 
 	 * @param rowId
 	 *            id de la fila a actualizar
+	 * @param pass
+	 *            nueva pass
 	 * @param minijuegos
 	 *            array de los minijuegos de la aventura, si es null no debe
 	 *            actualizarse
@@ -695,9 +756,11 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowQuest(String rowId, String[] minijuegos,
-			String[] pistas) {
+	public boolean updateRowQuest(String rowId, String pass,
+			String[] minijuegos, String[] pistas) {
 		ContentValues args = new ContentValues();
+		if (pass != null)
+			args.put(QUEST_KEY_PASS, pass);
 		if (minijuegos[0] != null)
 			args.put(QUEST_KEY_MJ1, minijuegos[0]);
 		if (minijuegos[1] != null)

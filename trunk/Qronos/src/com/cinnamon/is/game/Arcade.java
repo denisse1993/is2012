@@ -115,7 +115,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj1:
 				int score = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score, Props.Comun.cmj1 - 1);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
+				mDbHelper.updateRowParcade(jugador.getNombre(), null,
 						jugador.getScore());
 				break;
 			case Props.Comun.cmj2:
@@ -125,10 +125,11 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj4:
 				int score2 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score2, Props.Comun.cmj4 - 1);
-				//esto da problemas
-				mDbHelper.updateRowParcade(jugador.getNombre(),
+				// esto da problemas
+				mDbHelper.updateRowParcade(jugador.getNombre(),null,
 						jugador.getScore());
-				//creo que habría que recargar esta actividad para que actualizara los datos
+				// creo que habría que recargar esta actividad para que
+				// actualizara los datos
 				break;
 			case Props.Comun.cmj5:
 				break;
@@ -296,55 +297,29 @@ public class Arcade extends Activity implements View.OnClickListener,
 				tVhello.setText("pulsado salir");
 				break;
 			}
-		}/* else
-			switch (boton) {
-			case -1:
-				dialog.cancel();
-				switch (vClicked) {
-				case R.id.iBmj1:
-					if (grupoMJ == 0)
-						l.lanzaActivity(Props.Action.MJ1, Props.Comun.cmj1);
-					else if (grupoMJ == 1)
-						l.lanzaActivity(Props.Action.MJ7, Props.Comun.cmj7);
-					break;
-				case R.id.iBmj2:
-					if (grupoMJ == 0)
-						l.lanzaActivity(Props.Action.MJ2, Props.Comun.cmj2);
-					else if (grupoMJ == 1)
-						l.lanzaActivity(Props.Action.MJ8, Props.Comun.cmj8);
-					break;
-				case R.id.iBmj3:
-					if (grupoMJ == 0)
-						l.lanzaActivity(Props.Action.MJ3, Props.Comun.cmj3);
-					else if (grupoMJ == 1)
-						l.lanzaActivity(Props.Action.MJ9, Props.Comun.cmj9);
-					break;
-				case R.id.iBmj4:
-					if (grupoMJ == 0)
-						l.lanzaActivity(Props.Action.MJ4, Props.Comun.cmj4);
-					else if (grupoMJ == 1)
-						l.lanzaActivity(Props.Action.MJ10, Props.Comun.cmj10);
-					break;
-				case R.id.iBmj5:
-					if (grupoMJ == 0)
-						l.lanzaActivity(Props.Action.MJ5, Props.Comun.cmj6);
-					else if (grupoMJ == 1)
-						l.lanzaActivity(Props.Action.MJ11, Props.Comun.cmj11);
-					break;
-				case R.id.iBmj6:
-					if (grupoMJ == 0)
-						l.lanzaActivity(Props.Action.MJ6, Props.Comun.cmj6);
-					else if (grupoMJ == 1)
-						l.lanzaActivity(Props.Action.MJ12, Props.Comun.cmj12);
-					break;
-				case R.id.iBupSc:
-					subirScores();
-					break;
-				}
-			case -2:
-				dialog.cancel();
-				break;
-			}*/
+		}/*
+		 * else switch (boton) { case -1: dialog.cancel(); switch (vClicked) {
+		 * case R.id.iBmj1: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ1,
+		 * Props.Comun.cmj1); else if (grupoMJ == 1)
+		 * l.lanzaActivity(Props.Action.MJ7, Props.Comun.cmj7); break; case
+		 * R.id.iBmj2: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ2,
+		 * Props.Comun.cmj2); else if (grupoMJ == 1)
+		 * l.lanzaActivity(Props.Action.MJ8, Props.Comun.cmj8); break; case
+		 * R.id.iBmj3: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ3,
+		 * Props.Comun.cmj3); else if (grupoMJ == 1)
+		 * l.lanzaActivity(Props.Action.MJ9, Props.Comun.cmj9); break; case
+		 * R.id.iBmj4: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ4,
+		 * Props.Comun.cmj4); else if (grupoMJ == 1)
+		 * l.lanzaActivity(Props.Action.MJ10, Props.Comun.cmj10); break; case
+		 * R.id.iBmj5: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ5,
+		 * Props.Comun.cmj6); else if (grupoMJ == 1)
+		 * l.lanzaActivity(Props.Action.MJ11, Props.Comun.cmj11); break; case
+		 * R.id.iBmj6: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ6,
+		 * Props.Comun.cmj6); else if (grupoMJ == 1)
+		 * l.lanzaActivity(Props.Action.MJ12, Props.Comun.cmj12); break; case
+		 * R.id.iBupSc: subirScores(); break; } case -2: dialog.cancel(); break;
+		 * }
+		 */
 	}
 
 	@Override
@@ -373,39 +348,39 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// Botones de mjs
 		case R.id.iBmj1:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion(this, 0,l, Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 0, l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion(this, 6,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 6, l, Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj2:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion(this, 1,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 1, l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion(this, 7,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 7, l, Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj3:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion(this, 2,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 2, l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion(this, 8,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 8, l, Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj4:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion(this, 3,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 3, l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion(this, 9,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 9, l, Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj5:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion(this, 4,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 4, l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion(this, 10,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 10, l, Dialogos.DIALOG_ARCADE);
 			break;
 		case R.id.iBmj6:
 			if (grupoMJ == 0)
-				Launch.lanzaConfirmacion(this, 5,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 5, l, Dialogos.DIALOG_ARCADE);
 			else if (grupoMJ == 1)
-				Launch.lanzaConfirmacion(this, 11,l,Dialogos.DIALOG_ARCADE);
+				Launch.lanzaConfirmacion(this, 11, l, Dialogos.DIALOG_ARCADE);
 			break;
 		}
 	}

@@ -59,7 +59,7 @@ public final class UtilQR {
 		Intent intent = new Intent();
 		intent.setAction(Props.Action.ENCODE);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-	    intent.putExtra("ENCODE_FORMAT", BarcodeFormat.QR_CODE.toString());
+		// intent.putExtra("ENCODE_FORMAT", BarcodeFormat.QR_CODE.toString());
 		intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
 		intent.putExtra("ENCODE_DATA", text);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
