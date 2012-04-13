@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -233,5 +234,41 @@ public class Conexion {
     	
 
     }
-
+    public Bitmap decodificaBase64 (String encodedImage)
+    {
+    	
+    	byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+    	Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    	return decodedByte;
+    }
+    
+    public boolean updateArcade(int[] arraySc, String nick) throws ClientProtocolException, IOException{
+    	//Vuelca toda la info de BD local en la BD web
+    	HttpClient hc = new DefaultHttpClient();
+    	//HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+    	HttpPost post = new HttpPost("http://cinnamon.webatu.com/updateArcade.php"); //server
+    	List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+    	int i = 0;
+    	
+    	while (i<12){
+    		String actual = Integer.toString(arraySc[i]);
+    		pairs.add(new BasicNameValuePair("mj"+i,actual));
+    	}
+    	pairs.add(new BasicNameValuePair("user", nick));
+    	//pairs.add(new BasicNameValuePair("puntuacion", score));
+    	try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+    		{
+    			String str = EntityUtils.toString(rp.getEntity());
+    			Toast.makeText(activity.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    			return true;
+    		}
+			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	return false;
+    }
 }

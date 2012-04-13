@@ -8,6 +8,10 @@
 
 package com.cinnamon.is.game;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
@@ -77,6 +82,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Lanzador auxiliar
 	 */
 	private Launch l;
+	private Conexion con;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -266,8 +272,19 @@ public class Arcade extends Activity implements View.OnClickListener,
 	/**
 	 * Metodo para subir puntuaciones al servidor
 	 */
+	@SuppressWarnings("unused")
 	private void subirScores() {
 		// TODO Por hacer
+		int[] arraySc = jugador.getScore();
+		try {
+			con.updateArcade(arraySc, jugador.getNombre());
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -282,7 +299,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		return R.drawable.ibmj0 == iDimg ? false : true;
 	}
 
-	@Override
+	
 	public void onClick(DialogInterface dialog, int boton) {
 		if (aDactual == dialog) {
 			aDactual = null;
@@ -322,7 +339,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		 */
 	}
 
-	@Override
+	
 	public void onClick(View v) {
 		switch (vClicked = v.getId()) {
 		// Botones
