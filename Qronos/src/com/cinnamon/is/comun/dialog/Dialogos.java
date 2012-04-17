@@ -1,7 +1,5 @@
 package com.cinnamon.is.comun.dialog;
 
-import com.cinnamon.is.comun.Launch;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;

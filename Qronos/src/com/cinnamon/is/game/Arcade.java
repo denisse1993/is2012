@@ -35,7 +35,7 @@ import com.cinnamon.is.comun.dialog.Dialogos;
  * Pantalla principal del arcade de la aplicacion
  * 
  * @author Cinnamon Team
- * @version 0.5 23.03.2012
+ * @version 0.6 16.04.2012
  */
 public class Arcade extends Activity implements View.OnClickListener,
 		DialogInterface.OnClickListener {
@@ -82,7 +82,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Lanzador auxiliar
 	 */
 	private Launch l;
-	private Conexion con;
+	private Conexion conexion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,21 +93,20 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// SharedPreferences getData = PreferenceManager
 		// .getDefaultSharedPreferences(getBaseContext());
 		// sonido = getData.getBoolean("cbSonido", true);
-		l = new Launch(this);
 		grupoMJ = 0;
+		conexion = new Conexion(this);
+		l = new Launch(this);
 		inicializar();
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		mDbHelper.close();
 	}
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		if (!mDbHelper.isOpen())
 			mDbHelper.open(false);
@@ -121,7 +120,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj1:
 				int score = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score, Props.Comun.cmj1 - 1);
-				mDbHelper.updateRowParcade(jugador.getNombre(), null,
+				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				break;
 			case Props.Comun.cmj2:
@@ -139,7 +138,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				int score2 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score2, Props.Comun.cmj4 - 1);
 				// esto da problemas
-				mDbHelper.updateRowParcade(jugador.getNombre(),null,
+				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				// creo que habría que recargar esta actividad para que
 				// actualizara los datos
@@ -148,7 +147,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				int score3 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score3, Props.Comun.cmj5 - 1);
 				// esto da problemas
-				mDbHelper.updateRowParcade(jugador.getNombre(),null,
+				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				// creo que habría que recargar esta actividad para que
 				// actualizara los datos
@@ -212,13 +211,12 @@ public class Arcade extends Activity implements View.OnClickListener,
 
 			// imagenes de mj
 			iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
-			if (bHabilitado(Props.Comun.iDiVmj[i])) {
+			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
 				iBmj[i].setOnClickListener(this);
 				iVsc[i].setImageResource(Props.Comun.getStar(jugador
 						.getScore(i)));
 			} else
 				iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
-			// TODO a la espera de estrellas
 
 		}
 		// habilito flechas
@@ -243,7 +241,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				// imagenes de mj
 				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
 				// iVsc[i].setImageResource(Props.Comun.getStar(jugador.getScore(i)));
-				if (bHabilitado(Props.Comun.iDiVmj[i])) {
+				if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
 					iBmj[i].setOnClickListener(this);
 					iVsc[i].setImageResource(Props.Comun.getStar(jugador
 							.getScore(i)));
@@ -262,7 +260,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			for (int j = 0, i = Props.Comun.MAX_MJ_P; i < Props.Comun.MAX_MJ_P * 2; i++) {
 				// imagenes de mj
 				iBmj[j].setBackgroundResource(Props.Comun.iDiVmj[i]);
-				if (bHabilitado(Props.Comun.iDiVmj[i])) {
+				if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
 					iBmj[j].setOnClickListener(this);
 					iVsc[j].setImageResource(Props.Comun.getStar(jugador
 							.getScore(i)));
@@ -286,34 +284,17 @@ public class Arcade extends Activity implements View.OnClickListener,
 	/**
 	 * Metodo para subir puntuaciones al servidor
 	 */
-	@SuppressWarnings("unused")
 	private void subirScores() {
-		// TODO Por hacer
 		int[] arraySc = jugador.getScore();
 		try {
-			con.updateArcade(arraySc, jugador.getNombre());
+			conexion.updateArcade(arraySc, jugador.getNombre());
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Comprueba si la imagen de minijuego es la vacia, en tal caso el boton no
-	 * esta habilitado
-	 * 
-	 * @param iDimg
-	 *            el id de la imagen que tiene ese mj
-	 * @return true si esta habilitado false en caso contrario
-	 */
-	private boolean bHabilitado(int iDimg) {
-		return R.drawable.ibmj0 == iDimg ? false : true;
-	}
-
-	
 	public void onClick(DialogInterface dialog, int boton) {
 		if (aDactual == dialog) {
 			aDactual = null;
@@ -328,7 +309,21 @@ public class Arcade extends Activity implements View.OnClickListener,
 				tVhello.setText("pulsado salir");
 				break;
 			}
-		}/*
+		} else
+			switch (boton) {
+			case -1:// yes
+				dialog.cancel();
+				switch (vClicked) {
+				case R.id.iBupSc:
+					subirScores();
+					break;
+				}
+			case -2:// no
+				dialog.cancel();
+				break;
+			}
+
+		/*
 		 * else switch (boton) { case -1: dialog.cancel(); switch (vClicked) {
 		 * case R.id.iBmj1: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ1,
 		 * Props.Comun.cmj1); else if (grupoMJ == 1)
@@ -353,7 +348,6 @@ public class Arcade extends Activity implements View.OnClickListener,
 		 */
 	}
 
-	
 	public void onClick(View v) {
 		switch (vClicked = v.getId()) {
 		// Botones
@@ -370,7 +364,16 @@ public class Arcade extends Activity implements View.OnClickListener,
 			break;
 		case R.id.iBseeSc:
 			Bundle b = new Bundle();
-			b.putSerializable(Props.Comun.JUGADOR, jugador);
+			if (Props.Comun.ONLINE) {
+				try {
+					String json = conexion.dameOnlineArcade();
+					b.putSerializable(Props.Comun.JSON, json);
+				} catch (IOException e) {
+					l.lanzaToast(Props.Comun.ERROR_INET);
+				}
+			} else {
+				b.putSerializable(Props.Comun.JUGADOR, jugador);
+			}
 			l.lanzaActivity(Props.Action.RANKING, b);
 		case R.id.iBupSc:
 			Launch.lanzaConfirmacion("Confirmacion para subir puntuaciones de "

@@ -7,12 +7,12 @@
 //
 package com.cinnamon.is.comun;
 
-import com.cinnamon.is.comun.dialog.Dialogos;
-
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.SurfaceView;
+
+import com.cinnamon.is.comun.dialog.Dialogos;
 
 /**
  * Actividad abtracta que representa un minijuego

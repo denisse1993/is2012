@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llselecmj"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:weightSum="10" >
+
+    <!-- BARRA SUPERIOR -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <!-- PARTE IZQ -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tVhello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@+string/helloSelecMJ" />
+        </LinearLayout>
+        <!-- PARTE DER -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/iBinfoSelecMJ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/icon_information" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- PRIMERA MJ -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <!-- MJ1 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageButton
+                android:id="@+id/iBmj1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:background="@drawable/ibmj1" />
+
+            <ImageView
+                android:id="@+id/iVsc1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:src="@drawable/starnull" />
+        </LinearLayout>
+        <!-- MJ2 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageButton
+                android:id="@+id/iBmj2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:background="@drawable/ibmj2" />
+
+            <ImageView
+                android:id="@+id/iVsc2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:src="@drawable/starnull" />
+        </LinearLayout>
+        <!-- MJ3 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageButton
+                android:id="@+id/iBmj3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:background="@drawable/ibmj3" />
+
+            <ImageView
+                android:id="@+id/iVsc3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:src="@drawable/starnull" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- SEGUNDA MJ -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <!-- MJ4 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageButton
+                android:id="@+id/iBmj4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:background="@drawable/ibmj0" />
+
+            <ImageView
+                android:id="@+id/iVsc4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:src="@drawable/starnull" />
+        </LinearLayout>
+        <!-- MJ5 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageButton
+                android:id="@+id/iBmj5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:background="@drawable/ibmj0" />
+
+            <ImageView
+                android:id="@+id/iVsc5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:src="@drawable/starnull" />
+        </LinearLayout>
+        <!-- MJ6 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageButton
+                android:id="@+id/iBmj6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:background="@drawable/ibmj0" />
+
+            <ImageView
+                android:id="@+id/iVsc6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:src="@drawable/starnull" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- BARRA INFERIOR -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <!-- PARTE IZQ -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|bottom"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/iBleft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/flechaizq" />
+
+            <ImageButton
+                android:id="@+id/iBright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:src="@drawable/flechader" />
+        </LinearLayout>
+        <!-- PARTE DER -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|bottom"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/bDoneSelecMJ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hecho!" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

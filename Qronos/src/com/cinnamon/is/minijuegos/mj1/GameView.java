@@ -3,11 +3,6 @@ package com.cinnamon.is.minijuegos.mj1;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.cinnamon.is.R;
-
-import android.R.color;
-import android.R.integer;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,11 +10,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
+
+import com.cinnamon.is.R;
 
 public class GameView extends SurfaceView {
 	 GameLoop loop;

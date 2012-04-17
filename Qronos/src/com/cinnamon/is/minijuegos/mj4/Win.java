@@ -1,16 +1,16 @@
 package com.cinnamon.is.minijuegos.mj4;
 
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class Win extends Minijuego {
 

@@ -7,7 +7,6 @@
 //
 package com.cinnamon.is.comun;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -78,8 +77,8 @@ public class Opciones extends PreferenceActivity implements
 			finish();
 			Launch.lanzaActivity(this, Props.Action.LOGIN);
 		} else if (key.equals(pReset.getKey())) {
-			resetJugador();
-			Launch.lanzaAviso("Juego Reseteado", this);
+			resetJugadorArcade();
+			Launch.lanzaAviso("Arcade Reseteado!", this);
 		}
 		return true;
 	}
@@ -87,8 +86,9 @@ public class Opciones extends PreferenceActivity implements
 	/**
 	 * Metodo que resetea al jugador accediendo a la base de datos
 	 */
-	private void resetJugador() {
-		jugador.reset();
-		mDbHelper.updateRowParcade(jugador.getNombre(),jugador.getPass(), jugador.getScore());
+	private void resetJugadorArcade() {
+		jugador.resetArcade();
+		mDbHelper.updateRowParcade(jugador.getNombre(), jugador.getScore());
+		
 	}
 }

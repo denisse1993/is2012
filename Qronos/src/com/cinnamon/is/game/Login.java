@@ -7,41 +7,21 @@
 //
 package com.cinnamon.is.game;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cinnamon.is.R;
@@ -50,7 +30,6 @@ import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.Props.Enum.Tabla;
-import com.cinnamon.is.presentacion.Intro;
 
 /**
  * Pantalla para el login en la aplicacion lee el nombre del jugador y comprueba
@@ -93,7 +72,6 @@ public class Login extends Activity implements OnClickListener {
 	private EditText etPassword;
 	private Button bLogin;
 	private Button bRegister;
-
 	private SharedPreferences prefs;
 	private CheckBox cbRemember;
 	Bitmap uploadIMG;
@@ -102,62 +80,17 @@ public class Login extends Activity implements OnClickListener {
 	// private TextView tvbienvenida;
 	// private TextView tvLogin;
 
-	// Connexion
-	Conexion conex;
+	// Utiles
+	private Conexion conexion;
+	private Launch l;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		conex= new Conexion(this);
+		conexion = new Conexion(this);
+		l = new Launch(this);
 		inicializar();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mDbHelper.close();
-		finish();
-	}
-
-	@Override
-	public void onBackPressed() {
-		// metodo para que hacer cuando se pulsa el boton de atras
-		// ahora mismo no hace nada, con lo que lo tenemos deshabilitado
-	}
-
-	@Override
-	public void onClick(View v) {
-		boolean online, local;
-		if (preparaLogin()) {
-			switch (v.getId()) {
-			case R.id.bLogin:
-				try {
-					online = conex.login(nombre, passMD5);
-				} catch (ClientProtocolException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				local = loginLocal();
-				if (local) // &&online para k tmb tenga online obligatorio
-					lanzaMenuPrincipal();
-				break;
-			case R.id.bRegister:
-				try {
-					online = conex.register(nombre, passMD5);
-				} catch (ClientProtocolException e1) {
-					e1.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				local = creaJugadorLocal();
-				lanzaMenuPrincipal();
-			}
-		} else
-			Toast.makeText(getApplicationContext(),
-					"Alguno de los campos est‡n vac’os", Toast.LENGTH_LONG)
-					.show();
 	}
 
 	/**
@@ -180,7 +113,7 @@ public class Login extends Activity implements OnClickListener {
 		bRegister = (Button) findViewById(R.id.bRegister);
 		cbRemember = (CheckBox) this.findViewById(R.id.cbRememberLogin);
 		uploadIMG = BitmapFactory.decodeResource(getResources(),
-				R.drawable.bmj1);
+				R.drawable.ibmj0);
 
 		// obtiene preferencias
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -203,20 +136,80 @@ public class Login extends Activity implements OnClickListener {
 		// Devuelve las preferencias del jugador
 		nombre = prefs.getString("user", "");
 		pass = prefs.getString("pass", "");
+		passMD5 = "";
 		try {
-			passMD5 = Conexion.toMD5(pass);
+			if (!pass.equals(""))
+				passMD5 = Conexion.toMD5(pass);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String checkPref = prefs.getString("checked", "yes");
 
-		if (checkPref.equals("yes")) {
-			etUsername.setText(nombre);
-			etPassword.setText(passMD5);// pone pass md5
+		// Pondra "" y false si no se ha guardado el prefs
+		etUsername.setText(nombre);
+		etPassword.setText(passMD5);// pone pass md5
+		if (prefs.getString("checked", "no").equals("yes"))
 			cbRemember.setChecked(true);
-		}
+		else
+			cbRemember.setChecked(false);
 
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mDbHelper.close();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!mDbHelper.isOpen())
+			mDbHelper.open(false);
+	}
+
+	@Override
+	public void onBackPressed() {
+		mDbHelper.close();
+		finish();
+	}
+
+	@Override
+	public void onClick(View v) {
+		boolean online, local;
+		if (preparaLogin()) {
+			switch (v.getId()) {
+			case R.id.bLogin:
+				try {
+					online = conexion.login(nombre, passMD5);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					l.lanzaToast(Props.Comun.ERROR_INET);
+					Props.Comun.ONLINE = false;
+				}
+				local = loginLocal();
+				if (local) // &&online para k tmb tenga online obligatorio
+					lanzaMenuPrincipal();
+				else
+					l.lanzaToast(Props.Comun.USER_PASS_MAL);
+				break;
+			case R.id.bRegister:
+				try {
+					online = conexion.register(nombre, passMD5);
+				} catch (IOException e) {
+					e.printStackTrace();
+					l.lanzaToast(Props.Comun.ERROR_INET);
+					Props.Comun.ONLINE = false;
+				}
+				local = creaJugadorLocal();
+				if (local)
+					l.lanzaToast(Props.Comun.USER_YA_EXISTE);
+				else {
+					l.lanzaToast(Props.Comun.USER_CREADO);
+					lanzaMenuPrincipal();
+				}
+			}
+		} else
+			l.lanzaToast(Props.Comun.CAMPOS_VACIOS);
 	}
 
 	/**
@@ -225,10 +218,10 @@ public class Login extends Activity implements OnClickListener {
 	 * @return si el login se ha rellenado correctamente o no
 	 */
 	private boolean preparaLogin() {
-		boolean mal = false;
+		boolean bien = true;
 		nombre = etUsername.getText().toString();
 		String str = etPassword.getText().toString();
-		if (!str.equals(passMD5))
+		if (!str.equals(passMD5))// si la pass no esta en md5
 			pass = etPassword.getText().toString();
 		try {
 			passMD5 = Conexion.toMD5(pass);
@@ -236,19 +229,21 @@ public class Login extends Activity implements OnClickListener {
 			e1.printStackTrace();
 		}
 		if (nombre.equals("") || pass.equals("")) {
-			mal = true;
+			bien = false;
 		} else {
-			// Si estan predefinidas las carga
-			if (prefs.getString("checked", "yes").equals("yes")) {
-				SharedPreferences.Editor editor = prefs.edit();
+			// Si esta activo las guarda
+			SharedPreferences.Editor editor = prefs.edit();
+			if (cbRemember.isChecked()) {
 				editor.putString("user", nombre);
 				editor.putString("pass", pass);
 				editor.putString("checked", "yes");
 				editor.commit();
+			} else {
+				editor.clear();
+				editor.commit();
 			}
-			mal = true;
 		}
-		return mal;
+		return bien;
 	}
 
 	/**
@@ -259,30 +254,14 @@ public class Login extends Activity implements OnClickListener {
 	private boolean loginLocal() {
 		// leer de la BD si existe nombre
 		boolean esta = false;
-		if (mDbHelper.existsRow(nombre, Tabla.parcade))
+		// existe el registro
+		if (mDbHelper.existsRow(nombre, Tabla.users))
 			try {
-				if (mDbHelper.passOk(nombre, Conexion.toMD5(pass))) {
-					// recupera info
-					mCursor = mDbHelper.fetchRow(nombre, Tabla.parcade);
-					startManagingCursor(mCursor);
-					jugador = new Jugador(
-							nombre,
-							mCursor.getString(DbAdapter.PARCADE_IDCOL_PASS),
-							new int[] {
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE1),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE2),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE3),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE4),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE5),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE6),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE7),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE8),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE9),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE10),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE11),
-									mCursor.getInt(DbAdapter.PARCADE_IDCOL_SCORE12) });
-					stopManagingCursor(mCursor);
-					mCursor.close();
+				// la password concuerda
+				String passMD5 = Conexion.toMD5(pass);
+				if (mDbHelper.passOk(nombre, passMD5)) {
+					// crea jugador por defecto
+					jugador = new Jugador(nombre, pass);
 					esta = true;
 				}
 			} catch (NoSuchAlgorithmException e) {
@@ -299,11 +278,10 @@ public class Login extends Activity implements OnClickListener {
 	private boolean creaJugadorLocal() {
 		// leer de la BD si existe nombre
 		boolean esta = true;
-		if (!mDbHelper.existsRow(nombre, Tabla.parcade)) {
+		if (!mDbHelper.existsRow(nombre, Tabla.users)) {
 			// crear nuevo jugador
-			mDbHelper.createRowParcade(nombre, passMD5, new int[] { 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0 });
-			jugador = new Jugador(nombre, passMD5);
+			mDbHelper.createRowUsers(nombre, passMD5);
+			jugador = new Jugador(nombre, pass);
 			esta = false;
 		}
 		return esta;
@@ -316,6 +294,7 @@ public class Login extends Activity implements OnClickListener {
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
+		finish();
 	}
 
 }

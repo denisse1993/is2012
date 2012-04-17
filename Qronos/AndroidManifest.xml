@@ -4,16 +4,15 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-    
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -67,7 +66,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:label="@string/app_name"
             android:name=".game.Arcade"
             android:screenOrientation="portrait" >
@@ -97,7 +96,37 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--  Minijuegos -->
+        <activity
+            android:label="@string/app_name"
+            android:name=".game.SelecMJ"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.game.SELECMJ" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".game.SelecPista"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.game.SELECPISTA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".game.Ranking" 
+            android:screenOrientation="landscape" >
+            
+            <intent-filter >
+                <action android:name="com.cinnamon.is.game.RANKING" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+  <!--  Minijuegos -->
         <!--  MJ1 -->
          <activity
             android:label="@string/app_name"
@@ -212,7 +241,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>       
-               
         <!-- Activity del zXing para CaptureActivity -->
         <activity
             android:clearTaskOnLaunch="true"
@@ -233,29 +261,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:label="@string/app_name"
-            android:name=".Ranking" >
-            <intent-filter >
-                <action android:name="com.cinnamon.is.game.RANKING" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <!-- Activity del zXing para Encode android:label="@string/share_name"-->
+        <!-- Activity del zXing para Encode android:label="@string/share_name" -->
         <activity
-            
             android:name="com.google.zxing.client.android.encode.EncodeActivity"
             android:stateNotNeeded="true" >
-            <intent-filter>
+            <intent-filter >
                 <action android:name="com.cinnamon.is.ENCODE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity
-            
-            >
+        </activity>
     </application>
 
 </manifest>
