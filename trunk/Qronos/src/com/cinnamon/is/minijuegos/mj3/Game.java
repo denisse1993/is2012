@@ -41,7 +41,7 @@ public class Game extends Minijuego{
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.zigzagqr); //pone el layout del Game de zigzagqr
+        setContentView(R.layout.zigzagqr);
         
 
         texto=(TextView) findViewById(R.id.textView);

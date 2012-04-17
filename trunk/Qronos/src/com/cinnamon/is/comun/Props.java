@@ -228,7 +228,7 @@ public final class Props {
 		/**
 		 * Array con nombres de los minijuegos
 		 */
-		public static final String[] mjNames = { "Marcianos", "Topos", "QR",
+		public static final String[] mjNames = { "Marcianos", "Topos", "ZigZagQR",
 				"CadenaQR", "EncuentraQR", "Name6", "Name7", "Name8", "Name9",
 				"Name10", "Name11", "Name12" };
 		/**

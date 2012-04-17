@@ -1,6 +1,8 @@
 package com.cinnamon.is.minijuegos.mj3;
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.comun.Props;
 
 import android.os.Bundle;
 import android.view.View;
@@ -60,6 +62,24 @@ public class Win extends Minijuego {
 			return score - 800;
 		else
 			return 0;
+	}
+	
+	public void finalizar(boolean s) {
+		// Para tiempo
+		//finishTime();
+		// Establece valores de puntuacion y superado
+		//int puntuacion = calcularPuntuacion();
+		superado = s;
+		// Creo el bundle con la info usando strings genericos de clase
+		// Props.Comun
+		Bundle b = new Bundle();
+		b.putInt(Props.Comun.SCORE, puntuacion);
+		b.putBoolean(Props.Comun.SUPERADO, superado);
+		// Devuelvo resultado a actividad padre
+		//setResult(RESULT_OK, getIntent().putExtras(b));
+		//finish();
+		//finishActivity(Props.Comun.cmj4);
+		Launch.returnActivity(this, b, RESULT_OK);
 	}
 	
 }

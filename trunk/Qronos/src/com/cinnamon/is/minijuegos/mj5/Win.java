@@ -37,14 +37,16 @@ public class Win extends Minijuego {
 		
 		texto.setText("Has encontrado el código en "+tiempo+" segundos, tu puntuación es "+puntuacion+" puntos.");
 		 
-
 		volver=(Button) findViewById(R.id.volver);
 		volver.setOnClickListener(new OnClickListener() {
-
+			
+			@Override
 			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				finalizar(true);
 			}
 		});
+		
 	}
 
 	
