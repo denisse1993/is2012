@@ -117,7 +117,37 @@
         </activity>
         
             
-            
+           <!--  MJ3 -->   
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj3.ZigZagQRActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ3" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj3.Game"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ3.Game" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          
+           <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj3.Win"
+            android:screenOrientation="portrait" > 
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ3.Win" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>  
      
           <!--  MJ4 -->   
           <activity

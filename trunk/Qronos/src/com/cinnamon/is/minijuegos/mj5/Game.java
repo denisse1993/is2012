@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -70,12 +71,16 @@ public class Game extends Minijuego {
 	 	         //Si la lectura se realiza correctamente se llega aquií
 	 	         //Si el código no es el código objetivo, seguir intentandolo
 	 	         if(!contents.equals("objetivo")){
-	 	        	 texto.setText("¡MAL!\nEse no es el código que tienes que encontrar\n¡SIGUE BUSCANDO!"); 
+	 	        	 texto.setText("¡MAL!\nEse no es el código que tienes que encontrar\n¡SIGUE BUSCANDO!");
+	 	        	Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+     			    vibr.vibrate(500);
 	 	         }
 	 	         //Si el código es el código objetivo detener el tiempo y lanzar otra actividad para 
 	 	         //decirle al usuario que ha acabado el juego y mostrarle su puntuación
 	 	         if(contents.equals("objetivo")){
 	 	        	try{
+	 	        		Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+	        			vibr.vibrate(300);
 	 	        		//para recoger el dato inicio que pasabamos al intent
 	 	        		 Bundle datos = this.getIntent().getExtras();
 	 	        		 start = datos.getLong("inicio");

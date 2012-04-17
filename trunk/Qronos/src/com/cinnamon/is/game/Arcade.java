@@ -127,6 +127,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj2:
 				break;
 			case Props.Comun.cmj3:
+				int score4 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score4, Props.Comun.cmj3 - 1);
+				// esto da problemas
+			//	mDbHelper.updateRowParcade(jugador.getNombre(),null,
+			//			jugador.getScore());
+				// creo que habría que recargar esta actividad para que
+				// actualizara los datos
 				break;
 			case Props.Comun.cmj4:
 				int score2 = b.getInt(Props.Comun.SCORE);
