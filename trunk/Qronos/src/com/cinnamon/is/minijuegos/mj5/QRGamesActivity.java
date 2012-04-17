@@ -23,7 +23,7 @@ public class QRGamesActivity extends Minijuego {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.inicioencqr);
+        setContentView(R.layout.encqr);
         final Launch lanzador=new Launch(this);
         Comenzar=(Button) findViewById(R.id.Comenzar);
         Comenzar.setOnClickListener(new OnClickListener() {
@@ -46,7 +46,7 @@ public class QRGamesActivity extends Minijuego {
     }	
 	protected void onPause() {
 		super.onPause();
-		finish();
+		//finish();
 	}
 	
 	 protected void startTime() {
