@@ -1,8 +1,8 @@
 package com.cinnamon.is.minijuegos.mj1;
 
-import com.cinnamon.is.R;
-
 import android.graphics.Canvas;
+
+import com.cinnamon.is.R;
 
 public class GameLoop extends Thread {
 	static final long FPS = 10;

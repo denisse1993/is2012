@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 
 

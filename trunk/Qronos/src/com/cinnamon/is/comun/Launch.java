@@ -7,11 +7,6 @@
 //
 package com.cinnamon.is.comun;
 
-import com.cinnamon.is.R;
-import com.cinnamon.is.comun.dialog.AyudaDialog;
-import com.cinnamon.is.comun.dialog.Dialogos;
-import com.cinnamon.is.comun.dialog.MenuDialog;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +14,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.dialog.AyudaDialog;
+import com.cinnamon.is.comun.dialog.MenuDialog;
 
 /**
  * <p>
@@ -53,8 +53,7 @@ public final class Launch {
 	 *            la actividad a lanzar
 	 */
 	public void lanzaActivity(String ACTION) {
-		Intent i = new Intent(ACTION);
-		a.startActivity(i);
+		Launch.lanzaActivity(a, ACTION);
 	}
 
 	/**
@@ -66,9 +65,7 @@ public final class Launch {
 	 *            el bundle con la info extra
 	 */
 	public void lanzaActivity(String ACTION, Bundle b) {
-		Intent i = new Intent(ACTION);
-		i.putExtras(b);
-		a.startActivity(i);
+		Launch.lanzaActivity(a, ACTION, b);
 	}
 
 	/**
@@ -81,8 +78,7 @@ public final class Launch {
 	 *            el codigo de lanzamiento
 	 */
 	public void lanzaActivity(String ACTION, int rq) {
-		Intent i = new Intent(ACTION);
-		a.startActivityForResult(i, rq);
+		Launch.lanzaActivity(a, ACTION, rq);
 	}
 
 	/**
@@ -96,9 +92,34 @@ public final class Launch {
 	 *            el codigo de lanzamiento
 	 */
 	public void lanzaActivity(String ACTION, Bundle b, int rq) {
-		Intent i = new Intent(ACTION);
-		i.putExtras(b);
-		a.startActivityForResult(i, rq);
+		Launch.lanzaActivity(a, ACTION, b, rq);
+	}
+
+	/**
+	 * 
+	 * Lanza un toast con el texto indicado
+	 * 
+	 * @param a
+	 *            la actividad de lanzamiento
+	 * @param msg
+	 *            el mensaje
+	 */
+	public void lanzaToast(String msg) {
+		lanzaToast(a, msg);
+	}
+
+	/**
+	 * 
+	 * Lanza un toast con el texto indicado
+	 * 
+	 * @param a
+	 *            la actividad de lanzamiento
+	 * @param msg
+	 *            el mensaje
+	 */
+	public static void lanzaToast(Activity a, String msg) {
+		Toast.makeText(a.getApplicationContext(), msg, Toast.LENGTH_LONG)
+				.show();
 	}
 
 	/**
@@ -207,7 +228,7 @@ public final class Launch {
 	 *            el texto del dialog
 	 * @param a
 	 *            la actividad de lanzamiento
-	 * @return 
+	 * @return
 	 */
 	public static AlertDialog lanzaAviso(String texto, Activity a) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
@@ -233,9 +254,10 @@ public final class Launch {
 	 *            texto del dialog
 	 * @param a
 	 *            la actividad de lanzamiento
-	 * @return 
+	 * @return
 	 */
-	public static AlertDialog lanzaConfirmacion(String title, String texto, Activity a) {
+	public static AlertDialog lanzaConfirmacion(String title, String texto,
+			Activity a) {
 
 		/*
 		 * AlertDialog.Builder builder = new AlertDialog.Builder(a); //
@@ -255,18 +277,22 @@ public final class Launch {
 				.setNegativeButton("No", (OnClickListener) a);
 		return builder.show();
 	}
+
 	/**
 	 * 
-	 * @param context Contexto de la actividad
-	 * @param nMJ Nœmero de Minijuego
+	 * @param context
+	 *            Contexto de la actividad
+	 * @param nMJ
+	 *            Nœmero de Minijuego
 	 */
-	public static void lanzaConfirmacion(Context context,int nMJ, Launch launch, int modo){
-		AyudaDialog dialogo = new AyudaDialog(context, Props.Strings.mjNames[nMJ],
-											modo,R.style.CenterDialog,
-											nMJ,Props.Action.MJ[nMJ], Props.Strings.mjExps[nMJ],
-											Props.Comun.bannerMJ[nMJ], launch);
+	public static void lanzaConfirmacion(Context context, int nMJ,
+			Launch launch, int modo) {
+		AyudaDialog dialogo = new AyudaDialog(context,
+				Props.Strings.mjNames[nMJ], modo, R.style.CenterDialog, nMJ,
+				Props.Action.MJ[nMJ], Props.Strings.mjExps[nMJ],
+				Props.Comun.iDiVmj[nMJ], launch);
 		dialogo.show();
-	
+
 	}
 
 	/**
@@ -288,9 +314,17 @@ public final class Launch {
 		builder.setCancelable(false);
 		return builder.show();
 	}
-	
-	public static void lanzaOpciones(Context context,String title, int modo, Minijuego mj ){
-		MenuDialog dialogo = new MenuDialog(context,title,modo, R.style.CenterDialog,mj);
+
+	/**
+	 * @param context
+	 * @param title
+	 * @param modo
+	 * @param mj
+	 */
+	public static void lanzaOpciones(Context context, String title, int modo,
+			Minijuego mj) {
+		MenuDialog dialogo = new MenuDialog(context, title, modo,
+				R.style.CenterDialog, mj);
 		dialogo.show();
 	}
 }

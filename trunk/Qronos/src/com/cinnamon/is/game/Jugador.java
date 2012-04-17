@@ -16,7 +16,7 @@ import com.cinnamon.is.comun.Props;
  * poder ser pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.1 10.04.2012
+ * @version 1.2 16.04.2012
  */
 public class Jugador implements Serializable {
 
@@ -31,9 +31,14 @@ public class Jugador implements Serializable {
 	private String pass;
 
 	/**
-	 * Puntuacion del jugador en los distintos minijuegos
+	 * Puntuacion del jugador en los distintos minijuegos de arcade
 	 */
 	private int[] score;
+
+	/**
+	 * Puntuacion del jugador en los distintos minijuegos de la aventura
+	 */
+	private int[] scoreQuest;
 
 	/**
 	 * Fase en la que se encuentra el jugador
@@ -43,7 +48,7 @@ public class Jugador implements Serializable {
 	/**
 	 * ID para la serializacion
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Genera un jugador por parametros
@@ -54,13 +59,17 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 * @param score
 	 *            del jugador
+	 * @param scoreQuest
+	 *            del jugador
 	 * @param faseActual
 	 *            del jugador
 	 */
-	public Jugador(String nombre, String pass, int[] score, int faseActual) {
+	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest,
+			int faseActual) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.score = score;
+		this.scoreQuest = scoreQuest;
 		this.faseActual = faseActual;
 	}
 
@@ -73,9 +82,12 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 * @param score
 	 *            del jugador
+	 * @param scoreQuest
+	 *            del jugador
+	 * 
 	 */
-	public Jugador(String nombre, String pass, int[] score) {
-		this(nombre, pass, score, 0);
+	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest) {
+		this(nombre, pass, score, scoreQuest, 0);
 	}
 
 	/**
@@ -87,7 +99,8 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 */
 	public Jugador(String nombre, String pass) {
-		this(nombre, pass, new int[Props.Comun.MAX_MJ], 0);
+		this(nombre, pass, new int[Props.Comun.MAX_MJ],
+				new int[Props.Comun.MAX_MJ], 0);
 	}
 
 	/**
@@ -137,9 +150,9 @@ public class Jugador implements Serializable {
 	}
 
 	/**
-	 * Obtiene la puntuacion total del jugador
+	 * Obtiene la puntuacion total del jugador en arcade
 	 * 
-	 * @return la puntuacion total del jugador
+	 * @return la puntuacion total del jugador en arcade
 	 */
 	public int getScoreTotal() {
 		int suma = 0;
@@ -149,11 +162,41 @@ public class Jugador implements Serializable {
 	}
 
 	/**
+	 * Obtiene la puntuacion total del jugador en la aventura
+	 * 
+	 * @return la puntuacion total del jugador en la aventura
+	 */
+	public int getScoreQuestTotal() {
+		int suma = 0;
+		for (Integer i : scoreQuest)
+			suma += i;
+		return suma;
+	}
+
+	/**
 	 * Resetea jugador
 	 */
 	public void reset() {
 		for (int i = 0; i < score.length; i++)
+			score[i] = scoreQuest[i] = 0;
+		faseActual = 0;
+	}
+
+	/**
+	 * Resetea jugador en arcade
+	 */
+	public void resetArcade() {
+		for (int i = 0; i < score.length; i++)
 			score[i] = 0;
+	}
+
+	/**
+	 * Resetea jugador en aventura
+	 */
+	public void resetQuest() {
+		for (int i = 0; i < score.length; i++)
+			scoreQuest[i] = 0;
+		faseActual = 0;
 	}
 
 	public int getScore(int i) {
@@ -162,6 +205,14 @@ public class Jugador implements Serializable {
 
 	public void setScore(int score, int i) {
 		this.score[i] = score;
+	}
+
+	public int getScoreQuest(int i) {
+		return scoreQuest[i];
+	}
+
+	public void setScoreQuest(int score, int i) {
+		this.scoreQuest[i] = score;
 	}
 
 	// getter & setter
@@ -188,14 +239,28 @@ public class Jugador implements Serializable {
 	public void setScore(int[] score) {
 		this.score = score;
 	}
+	
+	public int[] getScoreQuest() {
+		return scoreQuest;
+	}
+
+	public void setScoreQuest(int[] scoreQuest) {
+		this.scoreQuest = scoreQuest;
+	}
 
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("[");
-		for (int i = 0; i < score.length; i++)
+		StringBuffer sbQ = new StringBuffer("[");
+		for (int i = 0; i < score.length; i++) {
 			sb.append(score[i] + ",");
+			sbQ.append(scoreQuest[i] + ",");
+		}
 		sb.setLength(sb.length() - 1);
 		sb.append("]");
-		return nombre + " " + sb.toString() + " " + faseActual;
+		sbQ.setLength(sb.length() - 1);
+		sbQ.append("]");
+		return nombre +" "+ faseActual + "\nScore Arcade: " + sb.toString()
+				+ "\nScore Quest: " + sbQ.toString();
 	}
 }

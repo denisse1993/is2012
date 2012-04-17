@@ -42,7 +42,10 @@ public final class Props {
 		public static final String LOGIN = "com.cinnamon.is.game.LOGIN";
 
 		public static final String OPCIONES = "com.cinnamon.is.comun.OPCIONES";
-		
+
+		public static final String SELECMJ = "com.cinnamon.is.game.SELECMJ";
+
+		public static final String SELECPISTA = "com.cinnamon.is.game.SELECPISTA";
 
 		// intents de zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
@@ -54,7 +57,7 @@ public final class Props {
 		public static final String MJ1 = "com.cinnamon.is.minijuegos.MJ1";
 		public static final String MJ1st = "com.cinnamon.is.minijuegos.MJ1.Start";
 		public static final String MJ2 = "com.cinnamon.is.minijuegos.MJ2";
-		public static final String MJ3 = "com.cinnamon.is.minijuegos.MJ3";
+		public static final String MJ3 = "com.cinnamon.is.minijuegos.MJ3.Game";
 		public static final String MJ3G = "com.cinnamon.is.minijuegos.MJ3.Game";
 		public static final String MJ3W = "com.cinnamon.is.minijuegos.MJ3.Win";
 		public static final String MJ4 = "com.cinnamon.is.minijuegos.MJ4";
@@ -99,9 +102,13 @@ public final class Props {
 		public static final int cmj11 = 11;
 		public static final int cmj12 = 12;
 
-		
-		public static final int CMJ[] = { cmj1, cmj2, cmj3, cmj4, cmj5, cmj6 ,cmj7,
-			cmj8 ,cmj9, cmj10, cmj11, cmj12};
+		public static final int CMJ[] = { cmj1, cmj2, cmj3, cmj4, cmj5, cmj6,
+				cmj7, cmj8, cmj9, cmj10, cmj11, cmj12 };
+
+		/**
+		 * Controla si esta habilitado el modo online, por defecto on
+		 */
+		public static boolean ONLINE = true;
 		/**
 		 * Minijuegos maximos
 		 */
@@ -118,14 +125,19 @@ public final class Props {
 		public static final int MAX_P = 2;
 
 		/**
-		 * Array de ids para ImageButtons de minijuegos en arcade
+		 * Array de ids para ImageButtons de minijuegos
 		 */
 		public static final int[] iDiBmj = { R.id.iBmj1, R.id.iBmj2,
 				R.id.iBmj3, R.id.iBmj4, R.id.iBmj5, R.id.iBmj6 };
 
 		/**
-		 * Array de ids drawables para ImageViews de minijuegos en arcade,
-		 * tamaño 12
+		 * Array de ids para EditText de minijuegos
+		 */
+		public static final int[] iDeTmj = { R.id.eTpista1, R.id.eTpista2,
+				R.id.eTpista3, R.id.eTpista4, R.id.eTpista5, R.id.eTpista6 };
+
+		/**
+		 * Array de ids drawables para ImageViews de minijuegos. Tamaño 12
 		 */
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
 				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj3,
@@ -137,7 +149,14 @@ public final class Props {
 		 * Array de ids drawables para ImageViews de estrellas en arcade
 		 */
 		public static final int[] iDiVstar = { R.drawable.starcero,
-				R.drawable.staruna, R.drawable.stardos, R.drawable.startres,R.drawable.starnull};
+				R.drawable.staruna, R.drawable.stardos, R.drawable.startres,
+				R.drawable.starnull };
+
+		/**
+		 * TODO Array de ids drawables para ImageViews de selecMJ
+		 */
+		public static final int[] iDiVselec = { R.drawable.starnull,
+				R.drawable.starnull, R.drawable.starnull };
 
 		/**
 		 * Array de ids para ImageViews de scores de mj en arcade
@@ -169,13 +188,18 @@ public final class Props {
 			else
 				return iDiVstar[0];
 		}
-		
+
 		/**
-		 * Obtiene el banner de cada mj 
-		 * antes de lanzarlo
+		 * Comprueba si la imagen de minijuego es la vacia, en tal caso el boton
+		 * no esta habilitado
+		 * 
+		 * @param iDimg
+		 *            el id de la imagen que tiene ese mj
+		 * @return true si esta habilitado false en caso contrario
 		 */
-		public static final int[] bannerMJ = {  R.drawable.bmj1, R.drawable.bmj2,
-			R.drawable.bmj3, R.drawable.bmj4 ,R.drawable.bmj5 ,R.drawable.bmj6};
+		public static boolean bHabilitado(int iDimg) {
+			return R.drawable.ibmj0 == iDimg ? false : true;
+		}
 
 		/**
 		 * <p>
@@ -202,6 +226,11 @@ public final class Props {
 		public static final String JUGADOR = "j";
 
 		/**
+		 * String para usar cuando se quiera pasar la aventura entre actividades
+		 */
+		public static final String AVENTURA = "a";
+
+		/**
 		 * String para usar cuando se quiera pasar el puntuacion entre
 		 * actividades
 		 */
@@ -212,6 +241,21 @@ public final class Props {
 		 * ingame
 		 */
 		public static final String SUPERADO = "s";
+
+		/**
+		 * Para pasar elementos json
+		 */
+		public static final String JSON = "json";
+
+		/**
+		 * Para uso en avisos
+		 */
+		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
+		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta";
+		public static String USER_YA_EXISTE = "Usuario ya existente! Elige otro nombre.";
+		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
+		public static String USER_CREADO = "Usuario creado. Lanzando Menu";
+		public static String PASS_ERROR = "Password incorrecta";
 
 		private Comun() {
 		}
@@ -246,10 +290,13 @@ public final class Props {
 		 * Info de subida al servidor
 		 */
 		public static final String upSc = "¿Deseas subir tus puntuaciones al servidor online?";
+
 		/**
 		 * Informacion de actividades
 		 */
-		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor\nToca el icono de estadisticas para ver las estadisticas";
+		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor\nToca el icono de estadisticas para ver las estadisticas\nToca los iconos de las flechas para cambiar la lista de mj";
+		public static final String iSelecMJ = "Toca en la imagen para agregar el mj asociado a la lista de MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
+		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
 
 		private Strings() {
 		}
@@ -264,6 +311,12 @@ public final class Props {
 	public static final class Enum {
 
 		public enum Tabla {
+			users {
+				@Override
+				public String toString() {
+					return "users";
+				}
+			},
 			parcade {
 				@Override
 				public String toString() {

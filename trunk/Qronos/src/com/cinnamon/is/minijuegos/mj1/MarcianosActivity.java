@@ -1,7 +1,6 @@
 package com.cinnamon.is.minijuegos.mj1;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinnamon.is.R;

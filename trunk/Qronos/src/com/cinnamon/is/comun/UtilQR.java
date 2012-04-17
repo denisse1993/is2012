@@ -10,8 +10,6 @@ package com.cinnamon.is.comun;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.google.zxing.BarcodeFormat;
-
 public final class UtilQR {
 
 	public static final int REQUEST_CODE = 0x0000c0de;

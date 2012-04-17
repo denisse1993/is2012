@@ -10,6 +10,9 @@
     <string name="camara">Camara</string>
     <!-- Arcade Pantalla -->
     <string name="helloArcade">Hola</string>
+    <!-- SelecMJ Pantalla -->
+    <string name="helloSelecMJ">Selecciona MJs</string>
+    <string name="helloSelecPISTA">Selecciona Pista para cada MJ</string>
 	<!--  MJ1 -->
 	<string name="Presentation">Aqui va una presentacion del juego wapa wapa con su musiquita tipica de minijuego de marcianitos</string>
     <string name="killthemall">KILL THEM ALL</string>
