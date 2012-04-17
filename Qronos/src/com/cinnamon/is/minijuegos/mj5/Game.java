@@ -1,7 +1,9 @@
 package com.cinnamon.is.minijuegos.mj5;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.comun.Props;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -20,6 +22,8 @@ public class Game extends Minijuego {
 	//private UtilQR QR;
 	private long elapsed;
 	private long start;
+	private int tiempo;
+	private int puntuacion;
 	protected final static double tos = 0.000000001;
 	protected final static double tons = 1000000000;
 
@@ -31,7 +35,7 @@ public class Game extends Minijuego {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.encqr);
+        setContentView(R.layout.inicioencqr);
         Activity.getInstanceCount();
 
         texto=(TextView) findViewById(R.id.textView);
@@ -78,10 +82,19 @@ public class Game extends Minijuego {
 	 	        		 finishTime(); 
 	 	        		 elapsed=(long) (elapsed*tos);
 	 	        		// texto.setText(""+elapsed);
-	 	        		 Intent openWin=new Intent("com.cinnamon.qrgames.WIN");
-	 	        		 openWin.putExtra("tiempo", elapsed);
-						 startActivity(openWin);
-						 finish();
+	 	        		tiempo=(int) elapsed;
+   	         	 		puntuacion=calcularPuntuacion();
+   	         	 		
+   	         	 		Bundle b=new Bundle();
+   	         	 		b.putLong("tiempo", elapsed);
+   	         	 		b.putInt(Props.Comun.SCORE, puntuacion);
+   	         	 		
+   	         	 		
+   	         	 		Launch lanzador=new Launch(this);
+   	         	 		lanzador.lanzaActivity(Props.Action.MJ5W, b, Props.Comun.cmj5);
+   	         	 		
+   	         	 		Launch.returnActivity(this, b, RESULT_OK);
+   	         	 		
 						}catch (ActivityNotFoundException e) {
 							e.printStackTrace();
 						}
@@ -99,6 +112,24 @@ public class Game extends Minijuego {
 	   
 		protected void finishTime() {
 			elapsed = System.nanoTime() - start;
+		}
+		
+		protected int calcularPuntuacion() {
+			int score = MAX_SCORE;
+			// tiempos de prueba para probar la aplicacion, habría que mirar cuando
+			// se tarda en cada uno, o dejarlo para todos igual
+			if (tiempo < 20)// 60segundos
+				return score;
+			else if (tiempo >= 20 && tiempo < 30)
+				return score - 200;
+			else if (tiempo >= 30 && tiempo < 40)
+				return score - 400;
+			else if (tiempo >= 40 && tiempo < 50)
+				return score - 600;
+			else if (tiempo >= 50 && tiempo < 60)
+				return score - 800;
+			else
+				return 0;
 		}
 	}
 
