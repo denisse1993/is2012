@@ -22,7 +22,8 @@ public class ZigZagQRActivity extends Minijuego {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.iniciozigzagqr);//Rellenar con el layout inicial llamarle instzigzagqr
+        setContentView(R.layout.iniciozigzagqr);
+        final Launch lanzador=new Launch(this);
         Comenzar=(Button) findViewById(R.id.Comenzar);
         Comenzar.setOnClickListener(new OnClickListener() {
 
@@ -30,9 +31,12 @@ public class ZigZagQRActivity extends Minijuego {
 				try{
 					//iniciamos el tiempo y se lo pasamos al otro intent
 					 startTime();
-					 Intent openGame=new Intent("com.cinnamon.zigzagqr.GAME"); //cambiar esto 
-					 openGame.putExtra("inicio", start );//por el lanzador nuevo de CadenaQRActivity
-					 startActivity(openGame);
+					 Bundle b=new Bundle();
+					 b.putLong("inicio", start);
+					 lanzador.lanzaActivity(Props.Action.MJ3G, b, Props.Comun.cmj3);
+					 //Intent openGame=new Intent("com.cinnamon.zigzagqr.GAME"); //cambiar esto 
+					 //openGame.putExtra("inicio", start );//por el lanzador nuevo de CadenaQRActivity
+					 //startActivity(openGame);
 					}catch (ActivityNotFoundException e) {
 						e.printStackTrace();
 					}
