@@ -20,8 +20,7 @@ import com.cinnamon.is.comun.dialog.Dialogos;
  * @author Cinnamon Team
  * @version 1.5 14.03.2012
  */
-public abstract class Minijuego extends Activity implements
-		DialogInterface.OnClickListener {
+public abstract class Minijuego extends Activity {
 
 	/**
 	 * GameView del MJ
@@ -157,33 +156,41 @@ public abstract class Minijuego extends Activity implements
 	}
 
 	/**
+	 * Metodo que para el minijuego, a implementar en subclases
+	 */
+	public void parar() {
+		// Para minijuegos que tengan la necesidad de pararse previo lanzamiento
+		// del menu de opciones
+	}
+
+	/**
 	 * Metodo que lanza el dialog de opciones
 	 */
 	protected void lanzaOpcionesDialog() {
-		// TODO Ahora mismo solo da la opcion de salir del minijuego, que se
-		// trata en el Onclick de abajo, esta opcion aparece al pulsar el boton
-		// atras del movil
+		// TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
+		// para el mj y luego lanza las opciones
 		// Launch.lanzaConfirmacion("Salir del minijuego",
 		// "¿Quieres salir del minijuego sin completarlo?", this);
+		parar();
 		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
 	}
 
-	@Override
-	public void onClick(DialogInterface dialog, int boton) {
-		switch (boton) {
-		case 0:
-			dialog.cancel();
-			break;
-		case 1:
-			dialog.cancel();
-			reiniciar();
-			break;
-		case 2:
-			dialog.cancel();
-			finalizar(false);
-			break;
-		}
-	}
+	// @Override
+	// public void onClick(DialogInterface dialog, int boton) {
+	// switch (boton) {
+	// case 0:
+	// dialog.cancel();
+	// break;
+	// case 1:
+	// dialog.cancel();
+	// reiniciar();
+	// break;
+	// case 2:
+	// dialog.cancel();
+	// finalizar(false);
+	// break;
+	// }
+	// }
 
 	@Override
 	public void onBackPressed() {
