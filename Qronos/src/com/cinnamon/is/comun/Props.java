@@ -61,6 +61,8 @@ public final class Props {
 		// public static final String MJ4st =
 		// "com.cinnamon.is.minijuegos.MJ1.Start";
 		public static final String MJ5 = "com.cinnamon.is.minijuegos.MJ5";
+		public static final String MJ5G = "com.cinnamon.is.minijuegos.MJ5.Game";
+		public static final String MJ5W = "com.cinnamon.is.minijuegos.MJ5.Win";
 		public static final String MJ6 = "com.cinnamon.is.minijuegos.MJ6";
 		public static final String MJ7 = "com.cinnamon.is.minijuegos.MJ7";
 		public static final String MJ8 = "com.cinnamon.is.minijuegos.MJ8";
@@ -127,7 +129,7 @@ public final class Props {
 		 */
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
 				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj3,
-				R.drawable.ibmj0, R.drawable.ibmj0, R.drawable.ibmj3,
+				R.drawable.ibmj3, R.drawable.ibmj0, R.drawable.ibmj3,
 				R.drawable.ibmj1, R.drawable.ibmj0, R.drawable.ibmj0,
 				R.drawable.ibmj0, R.drawable.ibmj0 };
 
@@ -227,7 +229,7 @@ public final class Props {
 		 * Array con nombres de los minijuegos
 		 */
 		public static final String[] mjNames = { "Marcianos", "Topos", "QR",
-				"CadenaQR", "Name5", "Name6", "Name7", "Name8", "Name9",
+				"CadenaQR", "EncuentraQR", "Name6", "Name7", "Name8", "Name9",
 				"Name10", "Name11", "Name12" };
 		/**
 		 * Array con explicaciones de los minijuegos
@@ -235,7 +237,8 @@ public final class Props {
 		public static final String[] mjExps = {
 				"Elimina a todos los marcianos que puedas antes de morir",
 				"Elimina cuantos topos puedas", "Exp3",
-				"Lee 5 QR en cadena lo más rápido que puedas", "Exp5", "Exp6",
+				"Lee 5 QR en cadena lo más rápido que puedas", 
+				"Encuentra el código QR lo más rápido que puedas", "Exp6",
 				"Exp7", "Exp8", "Exp9", "Exp10", "Exp11", "Exp12" };
 
 		/**
