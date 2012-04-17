@@ -151,6 +151,38 @@
             </intent-filter>
         </activity>
         
+        <!--  MJ5 -->   
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj5.QRGamesActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ5" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj5.Game"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ5.Game" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          
+           <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj5.Win"
+            android:screenOrientation="portrait" > 
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ5.Win" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>       
+               
         <!-- Activity del zXing para CaptureActivity -->
         <activity
             android:clearTaskOnLaunch="true"

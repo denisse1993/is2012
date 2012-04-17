@@ -53,7 +53,9 @@ public class Game extends Minijuego {
 				try{
 					//QR.lanzarQR();
 					//lanza el scan del Barcode Scanner
-					Intent intent = new Intent(Props.Action.SCAN);
+					//Intent intent = new Intent(Props.Action.SCAN);
+					//esto no funciona con el nuevo ZXing(117)
+					Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 			        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 			        startActivityForResult(intent, 0);
 					}catch (ActivityNotFoundException e) {
