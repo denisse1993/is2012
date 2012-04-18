@@ -11,14 +11,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import android.util.Pair;
+import com.cinnamon.is.comun.T;
 
 /**
  * Clase que representa a una aventura implementa serializable para poder ser
  * pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.0 16.04.2012
+ * @version 1.1 18.04.2012
  */
 public class Aventura implements Serializable {
 
@@ -40,7 +40,7 @@ public class Aventura implements Serializable {
 	/**
 	 * Guarda la clave de minijuego y la pista asociada
 	 */
-	private ArrayList<Pair<Integer, String>> minijuegos;
+	private ArrayList<T> minijuegos;
 
 	/**
 	 * Crea una aventura con parametros
@@ -52,9 +52,7 @@ public class Aventura implements Serializable {
 	 * @param minijuegos
 	 *            lista minijuegos
 	 */
-	public Aventura(String nombre, String pass,
-			ArrayList<Pair<Integer, String>> minijuegos) {
-
+	public Aventura(String nombre, String pass, ArrayList<T> minijuegos) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
@@ -69,7 +67,7 @@ public class Aventura implements Serializable {
 	 *            de la aventura
 	 */
 	public Aventura(String nombre, String pass) {
-		this(nombre, pass, new ArrayList<Pair<Integer, String>>());
+		this(nombre, pass, new ArrayList<T>());
 	}
 
 	/**
@@ -80,39 +78,49 @@ public class Aventura implements Serializable {
 	 * @param pista
 	 *            la pista asociada
 	 */
-	public void addMJ(int mj, String pista) {
-		minijuegos.add(new Pair<Integer, String>(mj, pista));
-	}
-
-	/**
-	 * Introduce un minijuego en la aventura
-	 * 
-	 * @param mj
-	 *            la pos del minijuego en el array
-	 * @param pista
-	 *            la pista asociada
-	 */
-	public void modMJ(int mj, String pista) {
-		int saveCodeMJ=minijuegos.get(mj).first;
-		delMJ(saveCodeMJ,pista);
-		minijuegos.add(mj, new Pair<Integer, String>(saveCodeMJ, pista));
+	public void addMJ(int mj) {
+		minijuegos.add(new T(mj));
 	}
 
 	/**
 	 * Borra un minijuego en la aventura
 	 * 
 	 * @param mj
-	 *            la key de minijuego
+	 *            el id del minijuego
 	 * @return false o true si se ha modificado
 	 */
-	public boolean delMJ(Integer mj, String pista) {
-		return minijuegos.remove(new Pair<Integer, String>(mj, pista));
+	public boolean delMJ(int mj) {
+		return minijuegos.remove(new T(mj));
+	}
+
+	/**
+	 * Modifica la pista del mj
+	 * 
+	 * @param mj
+	 *            el codigo de mj
+	 */
+	public void modPista(int mj, String pista) {
+		for (T t : minijuegos)
+			if (t.idMj == mj)
+				t.pista = pista;
+	}
+
+	/**
+	 * Modifica la pista del mj
+	 * 
+	 * @param mj
+	 *            el codigo de mj
+	 */
+	public void modSuperado(int mj, boolean superado) {
+		for (T t : minijuegos)
+			if (t.idMj == mj)
+				t.superado = superado;
 	}
 
 	/**
 	 * @return un iterador sobre las claves
 	 */
-	public Iterator<Pair<Integer, String>> iterator() {
+	public Iterator<T> iterator() {
 		return minijuegos.iterator();
 	}
 
@@ -123,10 +131,10 @@ public class Aventura implements Serializable {
 	 *            key del mj
 	 * @return si esta o no
 	 */
-	public boolean existe(Integer mj) {
-		Iterator<Pair<Integer, String>> it = iterator();
+	public boolean existe(int mj) {
+		Iterator<T> it = iterator();
 		while (it.hasNext()) {
-			if (it.next().first == mj)
+			if (it.next().idMj == mj)
 				return true;
 		}
 		return false;
@@ -145,18 +153,18 @@ public class Aventura implements Serializable {
 	 */
 	public int sizePista() {
 		int i = 0;
-		Iterator<Pair<Integer, String>> it = minijuegos.iterator();
+		Iterator<T> it = minijuegos.iterator();
 		while (it.hasNext())
-			if (it.next().second != null)
+			if (it.next().pista != null)
 				i++;
 		return i;
 	}
 
-	public ArrayList<Pair<Integer, String>> getMinijuegos() {
+	public ArrayList<T> getMinijuegos() {
 		return minijuegos;
 	}
 
-	public void setMinijuegos(ArrayList<Pair<Integer, String>> minijuegos) {
+	public void setMinijuegos(ArrayList<T> minijuegos) {
 		this.minijuegos = minijuegos;
 	}
 

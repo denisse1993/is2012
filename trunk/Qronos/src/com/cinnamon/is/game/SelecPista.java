@@ -25,7 +25,8 @@ import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
-
+import com.cinnamon.is.comun.T;
+//TODO REVISAR LOS EDITTEXT PA K NO SE AMPLIEN
 /**
  * Pantalla principal de seleccion de MJ para aventura
  * 
@@ -68,7 +69,7 @@ public class SelecPista extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.selecmj);
+		setContentView(R.layout.selecpista);
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
@@ -110,18 +111,19 @@ public class SelecPista extends Activity implements OnClickListener {
 
 		// inicializo arrays
 		// Iterator<Integer> j = aventura.iterator();
-		Iterator<Pair<Integer, String>> j = aventura.iterator();
+		Iterator<T> j = aventura.iterator();
 		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 			iBmj[i] = (ImageButton) findViewById(Props.Comun.iDiBmj[i]);
 			eTpista[i] = (EditText) findViewById(Props.Comun.iDeTmj[i]);
 			if (j.hasNext()) {
-				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[j.next().first - 1]);
+				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[j.next().idMj - 1]);
+				iBmj[i].setOnClickListener(this);
 			} else {
 				iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 				eTpista[i].setVisibility(View.INVISIBLE);
 				eTpista[i].setEnabled(false);
+				iBmj[i].setOnClickListener(null);
 			}
-			iBmj[i].setOnClickListener(null);
 		}
 
 		// habilito flechas
@@ -147,20 +149,22 @@ public class SelecPista extends Activity implements OnClickListener {
 	 */
 	private void habilitarGrupoMJ(int actual) {
 		grupoMJ = actual;
-		Iterator<Pair<Integer, String>> it = aventura.iterator();
+		Iterator<T> it = aventura.iterator();
 		switch (grupoMJ) {
 		case 0:
 
 			for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 				// imagenes de mj
 				if (it.hasNext()) {
-					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[it.next().first - 1]);
+					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[it.next().idMj - 1]);
 					eTpista[i].setVisibility(View.VISIBLE);
 					eTpista[i].setEnabled(true);
+					iBmj[i].setOnClickListener(this);
 				} else {
 					iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 					eTpista[i].setVisibility(View.INVISIBLE);
 					eTpista[i].setEnabled(false);
+					iBmj[i].setOnClickListener(null);
 				}
 			}
 			// habilito transicion derecha
@@ -176,7 +180,7 @@ public class SelecPista extends Activity implements OnClickListener {
 
 			for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 				if (it.hasNext()) {
-					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[it.next().first - 1]);
+					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[it.next().idMj - 1]);
 					eTpista[i].setVisibility(View.VISIBLE);
 					eTpista[i].setEnabled(true);
 				} else {
@@ -196,10 +200,6 @@ public class SelecPista extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 		// habilita acabar
-		if (aventura.sizePista() == aventura.size())
-			bDoneSelecPISTA.setEnabled(false);
-		else
-			bDoneSelecPISTA.setEnabled(true);
 		String pista = null;
 		switch (v.getId()) {
 		// Botones
@@ -223,9 +223,9 @@ public class SelecPista extends Activity implements OnClickListener {
 			pista = eTpista[0].getText().toString();
 			if (pista != null && !pista.equals("")) {
 				if (grupoMJ == 0) {
-					aventura.modMJ(0, pista);
+					aventura.modPista(0, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modMJ(6, pista);
+					aventura.modPista(6, pista);
 				}
 			}
 			break;
@@ -233,9 +233,9 @@ public class SelecPista extends Activity implements OnClickListener {
 			pista = eTpista[1].getText().toString();
 			if (pista != null && !pista.equals("")) {
 				if (grupoMJ == 0) {
-					aventura.modMJ(1, pista);
+					aventura.modPista(1, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modMJ(7, pista);
+					aventura.modPista(7, pista);
 				}
 			}
 			break;
@@ -243,9 +243,9 @@ public class SelecPista extends Activity implements OnClickListener {
 			pista = eTpista[2].getText().toString();
 			if (pista != null && !pista.equals("")) {
 				if (grupoMJ == 0) {
-					aventura.modMJ(2, pista);
+					aventura.modPista(2, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modMJ(8, pista);
+					aventura.modPista(8, pista);
 				}
 			}
 			break;
@@ -253,9 +253,9 @@ public class SelecPista extends Activity implements OnClickListener {
 			pista = eTpista[3].getText().toString();
 			if (pista != null && !pista.equals("")) {
 				if (grupoMJ == 0) {
-					aventura.modMJ(3, pista);
+					aventura.modPista(3, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modMJ(9, pista);
+					aventura.modPista(9, pista);
 				}
 			}
 			break;
@@ -263,9 +263,9 @@ public class SelecPista extends Activity implements OnClickListener {
 			pista = eTpista[4].getText().toString();
 			if (pista != null && !pista.equals("")) {
 				if (grupoMJ == 0) {
-					aventura.modMJ(4, pista);
+					aventura.modPista(4, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modMJ(10, pista);
+					aventura.modPista(10, pista);
 				}
 			}
 			break;
@@ -273,13 +273,17 @@ public class SelecPista extends Activity implements OnClickListener {
 			pista = eTpista[5].getText().toString();
 			if (pista != null && !pista.equals("")) {
 				if (grupoMJ == 0) {
-					aventura.modMJ(5, pista);
+					aventura.modPista(5, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modMJ(11, pista);
+					aventura.modPista(11, pista);
 				}
 			}
 			break;
 		}
+		if (aventura.sizePista() == aventura.size())
+			bDoneSelecPISTA.setEnabled(false);
+		else
+			bDoneSelecPISTA.setEnabled(true);
 	}
 
 	@Override
