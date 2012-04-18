@@ -10,13 +10,13 @@
         android:gravity="center_horizontal" >
 
         <TextView
-            android:id="@+id/textView0"
+            android:id="@+id/textViewTitulo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_span="6"
             android:gravity="center"
             android:text="TOP 5 Arcade"
-            android:textSize="18dp"
+            android:textSize="30dp"
             android:textStyle="bold"
             android:typeface="serif" >
         </TextView>
@@ -31,104 +31,97 @@
             android:id="@+id/TextView01"
             android:gravity="center_horizontal"
             android:text="Nick"
-            android:textStyle="bold" >
-        </TextView>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/TextView02"
             android:gravity="center_horizontal"
             android:text="MJ1"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/TextView03"
             android:gravity="center_horizontal"
             android:text="MJ2"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/TextView04"
             android:gravity="center_horizontal"
             android:text="MJ3"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/TextView05"
             android:gravity="center_horizontal"
             android:text="MJ4"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView06"
             android:gravity="center_horizontal"
             android:text="MJ5"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView07"
             android:gravity="center_horizontal"
             android:text="MJ6"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView08"
             android:gravity="center_horizontal"
             android:text="MJ7"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView09"
             android:gravity="center_horizontal"
             android:text="MJ8"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView10"
             android:gravity="center_horizontal"
             android:text="MJ9"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView11"
             android:gravity="center_horizontal"
             android:text="MJ10"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView012"
             android:gravity="center_horizontal"
             android:text="MJ11"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextView013"
             android:gravity="center_horizontal"
             android:text="MJ12"
             android:textStyle="bold"
-            android:typeface="serif" >
-        </TextView>
+            android:typeface="serif" />
+         <TextView
+            android:id="@+id/TextViewT"
+            android:gravity="center_horizontal"
+            android:text="TOTAL"
+            android:textStyle="bold"
+            android:typeface="serif" />
     </TableRow>
 
     <TableRow
@@ -138,81 +131,62 @@
 
         <TextView
             android:id="@+id/textView0"
-            android:text=""
-            android:textStyle="bold" >
-        </TextView>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView1"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView2"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView3"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView4"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView5"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView6"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView7"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView8"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView9"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView10"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView11"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView12"
-            android:gravity="center_horizontal"
-            android:text="" >
-        </TextView>
+            android:gravity="center_horizontal" />
+         
+         <TextView
+            android:id="@+id/textViewT1"
+            android:gravity="center_horizontal" 
+       		android:text="" >
+         </TextView>
+        
     </TableRow>
 
     <TableRow
@@ -297,6 +271,11 @@
             android:gravity="center_horizontal"
             android:text="" >
         </TextView>
+        <TextView
+            android:id="@+id/textViewT2"
+            android:gravity="center_horizontal" 
+            android:text=""
+		></TextView>
     </TableRow>
 
     <TableRow
@@ -381,6 +360,13 @@
             android:gravity="center_horizontal"
             android:text="" >
         </TextView>
+        
+        <TextView
+            android:id="@+id/textViewT3"
+            android:gravity="center_horizontal" 
+            android:text="">
+        </TextView>
+        
     </TableRow>
 
     <TableRow
@@ -465,6 +451,13 @@
             android:gravity="center_horizontal"
             android:text="" >
         </TextView>
+        
+        <TextView
+            android:id="@+id/textViewT4"
+            android:gravity="center_horizontal" 
+            android:text="">
+        </TextView>
+        
     </TableRow>
 
     <TableRow
@@ -549,6 +542,12 @@
             android:gravity="center_horizontal"
             android:text="" >
         </TextView>
+        
+        <TextView
+            android:id="@+id/textViewT5"
+            android:gravity="center_horizontal"
+            android:text="" >
+		</TextView>
     </TableRow>
 
 </TableLayout>
