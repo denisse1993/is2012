@@ -46,6 +46,12 @@ public final class Props {
 		public static final String SELECMJ = "com.cinnamon.is.game.SELECMJ";
 
 		public static final String SELECPISTA = "com.cinnamon.is.game.SELECPISTA";
+		
+		public static final String ELIGEMODOAVENTURA = "com.cinnamon.is.game.ELIGEMODOAVENTURA";
+		
+		public static final String LANZARAVENTURA = "com.cinnamon.is.game.LANZARAVENTURA";
+		
+		public static final String INGAMEAVENTURA = "com.cinnamon.is.game.INGAMEAVENTURA";
 
 		// intents de zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
