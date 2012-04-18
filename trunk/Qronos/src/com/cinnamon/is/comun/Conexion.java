@@ -54,13 +54,14 @@ public class Conexion {
 	 * @throws IOException
 	 */
 	public boolean login(String nick, String pass) throws IOException {
+		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/login.php"); //local
 		HttpPost post = new HttpPost("http://cinnamon.webatu.com/login.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("user", nick));
 		pairs.add(new BasicNameValuePair("pass", pass));
-
+		
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -68,12 +69,15 @@ public class Conexion {
 				String str = EntityUtils.toString(rp.getEntity());
 				Toast.makeText(activity.getApplicationContext(), str,
 						Toast.LENGTH_SHORT).show();
+			retorno = true;
+			}else{
+				retorno = false;
 			}
-			return true;
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			retorno = false;
 		}
-		return false;
+		return retorno;
 	}
 
 	/**
@@ -88,6 +92,7 @@ public class Conexion {
 	 */
 	public boolean register(String nick, String pass) throws IOException {
 		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post = new HttpPost("http://cinnamon.webatu.com/register.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -100,12 +105,14 @@ public class Conexion {
 				String str = EntityUtils.toString(rp.getEntity());
 				Toast.makeText(activity.getApplicationContext(), str,
 						Toast.LENGTH_SHORT).show();
+			retorno = true;
 			}
-			return true;
+			retorno = false;
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			retorno = false;
 		}
-		return false;
+		 return retorno;
 	}
 
 	/**
