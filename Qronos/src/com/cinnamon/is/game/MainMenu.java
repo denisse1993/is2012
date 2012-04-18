@@ -107,13 +107,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			l.lanzaActivity(Props.Action.ARCADE, b);
 			break;
 		case R.id.bAventura:
-			if (creaJugadorLocalPquest())
-				getJugadorLocalPquest();
-			//TODO crea aventura a pelo por ahora para pruebas
-			b.putSerializable(Props.Comun.AVENTURA, new Aventura("aventura",
-					"aventura"));
-			// l.lanzaActivity(Props.Action.AVENTURA, b);
-			l.lanzaActivity(Props.Action.SELECMJ, b);
+			l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA);
 			break;
 		case R.id.bOpciones:
 			l.lanzaActivity(Props.Action.INGAME, b);
@@ -187,40 +181,6 @@ public class MainMenu extends Activity implements OnClickListener {
 		return esta;
 	}
 
-	/**
-	 * Realiza la obtención de campos de pquest en la BD local
-	 * 
-	 * @return si esta o no el jugador en la BD local
-	 */
-	private boolean getJugadorLocalPquest() {
-		// leer de la BD si existe nombre
-		boolean esta = false;
-		// existe el registro
-		if (mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
-			// recupera info
-			Cursor mCursor = mDbHelper.fetchRow(jugador.getNombre(),
-					Tabla.pquest);
-			startManagingCursor(mCursor);
-			int[] pquest = new int[] {
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE1),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE2),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE3),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE4),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE5),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE6),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE7),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE8),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE9),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE10),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE11),
-					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE12) };
-			stopManagingCursor(mCursor);
-			jugador.setScoreQuest(pquest);
-			mCursor.close();
-			esta = true;
-		}
-		return esta;
-	}
 
 	/**
 	 * Crea el jugador si no existe en la tabla arcade de la BD local
@@ -239,20 +199,4 @@ public class MainMenu extends Activity implements OnClickListener {
 		return esta;
 	}
 
-	/**
-	 * Crea el jugador si no existe en la tabla pquest de la BD local
-	 * 
-	 * @return true o false en funcion de si existia o no
-	 */
-	private boolean creaJugadorLocalPquest() {
-		// leer de la BD si existe nombre
-		boolean esta = true;
-		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
-			// crear nuevo jugador
-			mDbHelper.createRowPquest(jugador.getNombre(), new int[] { 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0);
-			esta = false;
-		}
-		return esta;
-	}
 }
