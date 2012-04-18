@@ -890,12 +890,14 @@ public class DbAdapter {
 						null, null, null, null);
 				break;
 			case pquest:
-				mDb.query(true, TABLE_PQUEST, pquestCampos, PARCADE_KEY_PLAYER
-						+ "=" + "'" + rowId + "'", null, null, null, null, null);
+				mCursor = mDb.query(true, TABLE_PQUEST, pquestCampos,
+						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
+						null, null, null, null);
 				break;
 			case quest:
-				mDb.query(true, TABLE_QUEST, questCampos, QUEST_KEY_NAME + "="
-						+ "'" + rowId + "'", null, null, null, null, null);
+				mCursor = mDb.query(true, TABLE_QUEST, questCampos,
+						QUEST_KEY_NAME + "=" + "'" + rowId + "'", null, null,
+						null, null, null);
 				break;
 
 			}

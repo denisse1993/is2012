@@ -137,6 +137,12 @@ public final class Props {
 				R.id.eTpista3, R.id.eTpista4, R.id.eTpista5, R.id.eTpista6 };
 
 		/**
+		 * Array de ids para ImageViews de scores de mj en arcade
+		 */
+		public static final int[] iDiVsC = { R.id.iVsc1, R.id.iVsc2,
+				R.id.iVsc3, R.id.iVsc4, R.id.iVsc5, R.id.iVsc6 };
+		
+		/**
 		 * Array de ids drawables para ImageViews de minijuegos. Tamaño 12
 		 */
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
@@ -153,16 +159,11 @@ public final class Props {
 				R.drawable.starnull };
 
 		/**
-		 * TODO Array de ids drawables para ImageViews de selecMJ
+		 * Array de ids drawables para ImageViews de selecMJ
 		 */
-		public static final int[] iDiVselec = { R.drawable.starnull,
-				R.drawable.starnull, R.drawable.starnull };
+		public static final int[] iDiVselec = { R.drawable.noselec,
+				R.drawable.selec, R.drawable.starnull };
 
-		/**
-		 * Array de ids para ImageViews de scores de mj en arcade
-		 */
-		public static final int[] iDiVsC = { R.id.iVsc1, R.id.iVsc2,
-				R.id.iVsc3, R.id.iVsc4, R.id.iVsc5, R.id.iVsc6 };
 
 		/**
 		 * Limites estrellas
@@ -251,10 +252,10 @@ public final class Props {
 		 * Para uso en avisos
 		 */
 		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
-		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta";
-		public static String USER_YA_EXISTE = "Usuario ya existente! Elige otro nombre.";
+		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta en BD local";
+		public static String USER_YA_EXISTE = "Usuario ya existente en local! Elige otro nombre.";
 		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
-		public static String USER_CREADO = "Usuario creado. Lanzando Menu";
+		public static String USER_CREADO = "Usuario creado en local. Menu abierto";
 		public static String PASS_ERROR = "Password incorrecta";
 
 		private Comun() {
