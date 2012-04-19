@@ -53,7 +53,7 @@ import java.util.Map;
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-final class QRCodeEncoder {
+public final class QRCodeEncoder {
 
   private static final String TAG = QRCodeEncoder.class.getSimpleName();
 
@@ -68,7 +68,7 @@ final class QRCodeEncoder {
   private final int dimension;
   private final boolean useVCard;
 
-  QRCodeEncoder(Activity activity, Intent intent, int dimension, boolean useVCard) throws WriterException {
+  public QRCodeEncoder(Activity activity, Intent intent, int dimension, boolean useVCard) throws WriterException {
     this.activity = activity;
     this.dimension = dimension;
     this.useVCard = useVCard;
@@ -297,7 +297,7 @@ final class QRCodeEncoder {
     }
   }
 
-  Bitmap encodeAsBitmap() throws WriterException {
+  public Bitmap encodeAsBitmap() throws WriterException {
     Map<EncodeHintType,Object> hints = null;
     String encoding = guessAppropriateEncoding(contents);
     if (encoding != null) {
