@@ -41,12 +41,12 @@ public class Aventura implements Serializable {
 	 * Guarda la clave de minijuego y la pista asociada
 	 */
 	private ArrayList<T> minijuegos;
-	
+
 	/**
 	 * Nœmero de juegos superados
 	 */
 	private int nSuperados;
-	
+
 	/**
 	 * Crea una aventura con parametros
 	 * 
@@ -100,10 +100,24 @@ public class Aventura implements Serializable {
 	}
 
 	/**
+	 * Modifica la pista del mj en base a la posicion en el array
+	 * 
+	 * @param mj
+	 *            la pos del mj en el array
+	 * @param pista
+	 *            la pista a poner
+	 */
+	public void modPistaByPos(int mj, String pista) {
+		minijuegos.get(mj).pista = pista;
+	}
+
+	/**
 	 * Modifica la pista del mj
 	 * 
 	 * @param mj
-	 *            el codigo de mj
+	 *            el cod del mj
+	 * @param pista
+	 *            la pista a poner
 	 */
 	public void modPista(int mj, String pista) {
 		for (T t : minijuegos)
@@ -119,9 +133,11 @@ public class Aventura implements Serializable {
 	 */
 	public void modSuperado(int mj, boolean superado) {
 		for (T t : minijuegos)
-			if (t.idMj == mj){
-				if (superado && !t.superado ) nSuperados++;
-				else if (!superado && t.superado ) nSuperados--;
+			if (t.idMj == mj) {
+				if (superado && !t.superado)
+					nSuperados++;
+				else if (!superado && t.superado)
+					nSuperados--;
 				t.superado = superado;
 			}
 	}
@@ -163,25 +179,12 @@ public class Aventura implements Serializable {
 	public int sizePista() {
 		int i = 0;
 		Iterator<T> it = minijuegos.iterator();
-		while (it.hasNext())
-			if (it.next().pista != null)
+		while (it.hasNext()) {
+			T t = it.next();
+			if (t.pista != null && !t.equals(""))
 				i++;
+		}
 		return i;
-	}
-
-	public ArrayList<T> getMinijuegos() {
-		return minijuegos;
-	}
-	
-	public T getMinijuego(int index) {
-		return minijuegos.get(index);
-	}
-
-	public int getNSuperados() {
-		return nSuperados;
-	}
-	public void setMinijuegos(ArrayList<T> minijuegos) {
-		this.minijuegos = minijuegos;
 	}
 
 	// /**
@@ -288,6 +291,23 @@ public class Aventura implements Serializable {
 	// }
 
 	// getters and setters
+
+	public ArrayList<T> getMinijuegos() {
+		return minijuegos;
+	}
+
+	public T getMinijuego(int index) {
+		return minijuegos.get(index);
+	}
+
+	public int getNSuperados() {
+		return nSuperados;
+	}
+
+	public void setMinijuegos(ArrayList<T> minijuegos) {
+		this.minijuegos = minijuegos;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

@@ -10,6 +10,8 @@ package com.cinnamon.is.game;
 import java.util.Iterator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.MotionEvent;
@@ -26,7 +28,7 @@ import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.T;
-//TODO REVISAR LOS EDITTEXT PA K NO SE AMPLIEN
+
 /**
  * Pantalla principal de seleccion de MJ para aventura
  * 
@@ -52,11 +54,6 @@ public class SelecPista extends Activity implements OnClickListener {
 	private boolean der, izq;
 
 	/**
-	 * DbAdapter para interaccionar con la base de datos
-	 */
-	private DbAdapter mDbHelper;
-
-	/**
 	 * Jugador actual en la aplicacion
 	 */
 	private Jugador jugador;
@@ -65,7 +62,7 @@ public class SelecPista extends Activity implements OnClickListener {
 	 * Aventura actual en la aplicacion
 	 */
 	private Aventura aventura;
-	
+
 	/**
 	 * Launch de utilidad
 	 */
@@ -78,9 +75,15 @@ public class SelecPista extends Activity implements OnClickListener {
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
-		l= new Launch(this);
+		l = new Launch(this);
 		grupoMJ = 0;
 		inicializar();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		habilitarGrupoMJ(0);
 	}
 
 	/**
@@ -121,8 +124,10 @@ public class SelecPista extends Activity implements OnClickListener {
 			iBmj[i] = (ImageButton) findViewById(Props.Comun.iDiBmj[i]);
 			eTpista[i] = (EditText) findViewById(Props.Comun.iDeTmj[i]);
 			if (j.hasNext()) {
-				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[j.next().idMj - 1]);
+				T t = j.next();
+				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[t.idMj - 1]);
 				iBmj[i].setOnClickListener(this);
+				eTpista[i].setText(t.pista);
 			} else {
 				iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 				eTpista[i].setVisibility(View.INVISIBLE);
@@ -161,10 +166,13 @@ public class SelecPista extends Activity implements OnClickListener {
 			for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 				// imagenes de mj
 				if (it.hasNext()) {
-					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[it.next().idMj - 1]);
+					T t = it.next();
+					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[t.idMj - 1]);
+					iBmj[i].setOnClickListener(this);
+					// pone pista
 					eTpista[i].setVisibility(View.VISIBLE);
 					eTpista[i].setEnabled(true);
-					iBmj[i].setOnClickListener(this);
+					eTpista[i].setText(t.pista);
 				} else {
 					iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 					eTpista[i].setVisibility(View.INVISIBLE);
@@ -172,11 +180,17 @@ public class SelecPista extends Activity implements OnClickListener {
 					iBmj[i].setOnClickListener(null);
 				}
 			}
-			// habilito transicion derecha
+			// habilito flechas
 			iBleft.setEnabled(false);
 			izq = false;
-			iBright.setEnabled(true);
-			der = true;
+			// si se han selec mas de 6 mj
+			if (aventura.size() > 6) {
+				iBright.setEnabled(true);
+				der = true;
+			} else {
+				iBright.setEnabled(false);
+				der = false;
+			}
 			break;
 		case 1:
 			// desplazo hasta sexto mj, se podria acceder directamente pero pss
@@ -185,13 +199,17 @@ public class SelecPista extends Activity implements OnClickListener {
 
 			for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 				if (it.hasNext()) {
-					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[it.next().idMj - 1]);
+					T t = it.next();
+					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[t.idMj - 1]);
+					iBmj[i].setOnClickListener(this);
 					eTpista[i].setVisibility(View.VISIBLE);
 					eTpista[i].setEnabled(true);
+					eTpista[i].setText(t.pista);
 				} else {
 					iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 					eTpista[i].setVisibility(View.INVISIBLE);
 					eTpista[i].setEnabled(false);
+					iBmj[i].setOnClickListener(null);
 				}
 			}
 			// habilito transicion izquierda
@@ -201,6 +219,30 @@ public class SelecPista extends Activity implements OnClickListener {
 			der = false;
 			break;
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		// if (l.lanzaConfirmacionSimple(
+		// "¿Deseas volver a selección de Minijuegos?",
+		// "Aviso: Se resetearán las pistas"))
+		// finish();
+		// TODO temporal hasta tener un dialog en condiciones
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("¿Deseas volver a selección de Minijuegos?")
+				.setMessage("Aviso: Se resetearán las pistas")
+				.setCancelable(false)
+				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						SelecPista.this.finish();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
 	}
 
 	public void onClick(View v) {
@@ -218,78 +260,89 @@ public class SelecPista extends Activity implements OnClickListener {
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.JUGADOR, jugador);
 			b.putSerializable(Props.Comun.AVENTURA, aventura);
-			// TODO Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
+			// TODO Launch.lanzaActivity(this,Props.Action.SELECPISTA, b);
 			break;
-		case R.id.iBinfoSelecMJ:
-			Launch.lanzaAviso("Información", Props.Strings.iSelecMJ, this);
+		case R.id.iBinfoSelecPISTA:
+			Launch.lanzaAviso("Información", Props.Strings.iSelecPISTA, this);
 			break;
 		// Botones de mjs
 		case R.id.iBmj1:
 			pista = eTpista[0].getText().toString();
 			if (pista != null && !pista.equals("")) {
+				l.lanzaToast(Props.Strings.PISTA_MOD);
 				if (grupoMJ == 0) {
-					aventura.modPista(0, pista);
+					aventura.modPistaByPos(0, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modPista(6, pista);
+					aventura.modPistaByPos(6, pista);
 				}
 			}
-			l.lanzaToast(Props.Strings.PISTA_MOD);
 			break;
 		case R.id.iBmj2:
 			pista = eTpista[1].getText().toString();
 			if (pista != null && !pista.equals("")) {
+				l.lanzaToast(Props.Strings.PISTA_MOD);
 				if (grupoMJ == 0) {
-					aventura.modPista(1, pista);
+					aventura.modPistaByPos(1, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modPista(7, pista);
+					aventura.modPistaByPos(7, pista);
 				}
 			}
+
 			break;
 		case R.id.iBmj3:
 			pista = eTpista[2].getText().toString();
 			if (pista != null && !pista.equals("")) {
+				l.lanzaToast(Props.Strings.PISTA_MOD);
 				if (grupoMJ == 0) {
-					aventura.modPista(2, pista);
+					aventura.modPistaByPos(2, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modPista(8, pista);
+					aventura.modPistaByPos(8, pista);
 				}
 			}
+
 			break;
 		case R.id.iBmj4:
 			pista = eTpista[3].getText().toString();
 			if (pista != null && !pista.equals("")) {
+				l.lanzaToast(Props.Strings.PISTA_MOD);
 				if (grupoMJ == 0) {
-					aventura.modPista(3, pista);
+					aventura.modPistaByPos(3, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modPista(9, pista);
+					aventura.modPistaByPos(9, pista);
 				}
 			}
+
 			break;
 		case R.id.iBmj5:
 			pista = eTpista[4].getText().toString();
 			if (pista != null && !pista.equals("")) {
+				l.lanzaToast(Props.Strings.PISTA_MOD);
 				if (grupoMJ == 0) {
-					aventura.modPista(4, pista);
+					aventura.modPistaByPos(4, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modPista(10, pista);
+					aventura.modPistaByPos(10, pista);
 				}
 			}
+
 			break;
 		case R.id.iBmj6:
 			pista = eTpista[5].getText().toString();
 			if (pista != null && !pista.equals("")) {
+				l.lanzaToast(Props.Strings.PISTA_MOD);
 				if (grupoMJ == 0) {
-					aventura.modPista(5, pista);
+					aventura.modPistaByPos(5, pista);
 				} else if (grupoMJ == 1) {
-					aventura.modPista(11, pista);
+					aventura.modPistaByPos(11, pista);
 				}
 			}
+
 			break;
 		}
-		if (aventura.sizePista() == aventura.size())
-			bDoneSelecPISTA.setEnabled(false);
-		else
+		if (aventura.sizePista() == aventura.size()) {
 			bDoneSelecPISTA.setEnabled(true);
+			l.lanzaToast(Props.Strings.PISTAS_COMPLETO);
+		} else
+			bDoneSelecPISTA.setEnabled(false);
 	}
 
 	@Override

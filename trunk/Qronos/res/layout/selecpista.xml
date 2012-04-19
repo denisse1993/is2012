@@ -75,11 +75,13 @@
             <EditText
                 android:id="@+id/eTpista1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.95"
-                android:maxWidth="40dp"
+                android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:inputType="textMultiLine" >
+                android:maxWidth="40dp"
+                android:textSize="10dp" >
+
             </EditText>
 
         </LinearLayout>
@@ -102,8 +104,8 @@
             <EditText
                 android:id="@+id/eTpista2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_height="match_parent"
+                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
                 android:inputType="textMultiLine" >
             </EditText>
         </LinearLayout>
@@ -126,8 +128,8 @@
             <EditText
                 android:id="@+id/eTpista3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_height="match_parent"
+                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
                 android:inputType="textMultiLine" >
             </EditText>
         </LinearLayout>
@@ -160,8 +162,8 @@
              <EditText
                 android:id="@+id/eTpista4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_height="match_parent"
+                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
                 android:inputType="textMultiLine" >
             </EditText>
         </LinearLayout>
@@ -184,8 +186,8 @@
              <EditText
                 android:id="@+id/eTpista5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_height="match_parent"
+                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
                 android:inputType="textMultiLine" >
             </EditText>
         </LinearLayout>
@@ -208,8 +210,8 @@
              <EditText
                 android:id="@+id/eTpista6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_height="match_parent"
+                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
                 android:inputType="textMultiLine" >
             </EditText>
         </LinearLayout>

@@ -8,6 +8,8 @@
 package com.cinnamon.is.game;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinnamon.is.R;
-import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
@@ -67,6 +68,12 @@ public class SelecMJ extends Activity implements OnClickListener {
 
 		grupoMJ = 0;
 		inicializar();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		habilitarGrupoMJ(0);
 	}
 
 	/**
@@ -178,6 +185,30 @@ public class SelecMJ extends Activity implements OnClickListener {
 			break;
 		}
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		// if
+		// (Launch.lanzaConfirmacionSimple("¿Deseas volver a Menu Principal?",
+		// "Aviso: Se resetearán los Minijuegos", this))
+		// finish();
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("¿Deseas volver al Menu Principal?")
+				.setMessage("Aviso: Se resetearán los Minijuegos")
+				.setCancelable(false)
+				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						SelecMJ.this.finish();
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+		builder.show();
 	}
 
 	public void onClick(View v) {
