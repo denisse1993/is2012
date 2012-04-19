@@ -183,33 +183,33 @@ public class Login extends Activity implements OnClickListener {
 					online = conexion.login(nombre, passMD5);
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					l.lanzaToast(Props.Comun.ERROR_INET);
+					l.lanzaToast(Props.Strings.ERROR_INET);
 					Props.Comun.ONLINE = false;
 				}
 				local = loginLocal();
 				if (local) // &&online para k tmb tenga online obligatorio
 					lanzaMenuPrincipal();
 				else
-					l.lanzaToast(Props.Comun.USER_PASS_MAL);
+					l.lanzaToast(Props.Strings.USER_PASS_MAL);
 				break;
 			case R.id.bRegister:
 				try {
 					online = conexion.register(nombre, passMD5);
 				} catch (IOException e) {
 					e.printStackTrace();
-					l.lanzaToast(Props.Comun.ERROR_INET);
+					l.lanzaToast(Props.Strings.ERROR_INET);
 					Props.Comun.ONLINE = false;
 				}
 				local = creaJugadorLocal();
 				if (local)
-					l.lanzaToast(Props.Comun.USER_YA_EXISTE);
+					l.lanzaToast(Props.Strings.USER_YA_EXISTE);
 				else {
-					l.lanzaToast(Props.Comun.USER_CREADO);
+					l.lanzaToast(Props.Strings.USER_CREADO);
 					lanzaMenuPrincipal();
 				}
 			}
 		} else
-			l.lanzaToast(Props.Comun.CAMPOS_VACIOS);
+			l.lanzaToast(Props.Strings.CAMPOS_VACIOS);
 	}
 
 	/**

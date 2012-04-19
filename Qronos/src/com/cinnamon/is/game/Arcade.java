@@ -369,7 +369,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 					String json = conexion.dameOnlineArcade();
 					b.putSerializable(Props.Comun.JSON, json);
 				} catch (IOException e) {
-					l.lanzaToast(Props.Comun.ERROR_INET);
+					l.lanzaToast(Props.Strings.ERROR_INET);
+					Props.Comun.ONLINE = false;
 				}
 			} else {
 				b.putSerializable(Props.Comun.JUGADOR, jugador);
