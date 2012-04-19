@@ -69,6 +69,10 @@ public class T implements Serializable {
 
 		return true;
 	}
+	
+	public Boolean getSuperado(){
+		return superado;
+	}
 
 	@Override
 	public String toString() {

@@ -18,7 +18,7 @@ import com.cinnamon.is.comun.T;
  * pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.1 18.04.2012
+ * @version 1.2 19.04.2012
  */
 public class Aventura implements Serializable {
 
@@ -41,7 +41,12 @@ public class Aventura implements Serializable {
 	 * Guarda la clave de minijuego y la pista asociada
 	 */
 	private ArrayList<T> minijuegos;
-
+	
+	/**
+	 * Nœmero de juegos superados
+	 */
+	private int nSuperados;
+	
 	/**
 	 * Crea una aventura con parametros
 	 * 
@@ -56,6 +61,7 @@ public class Aventura implements Serializable {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
+		nSuperados = 0;
 	}
 
 	/**
@@ -113,8 +119,11 @@ public class Aventura implements Serializable {
 	 */
 	public void modSuperado(int mj, boolean superado) {
 		for (T t : minijuegos)
-			if (t.idMj == mj)
+			if (t.idMj == mj){
+				if (superado && !t.superado ) nSuperados++;
+				else if (!superado && t.superado ) nSuperados--;
 				t.superado = superado;
+			}
 	}
 
 	/**
@@ -163,7 +172,14 @@ public class Aventura implements Serializable {
 	public ArrayList<T> getMinijuegos() {
 		return minijuegos;
 	}
+	
+	public T getMinijuego(int index) {
+		return minijuegos.get(index);
+	}
 
+	public int getNSuperados() {
+		return nSuperados;
+	}
 	public void setMinijuegos(ArrayList<T> minijuegos) {
 		this.minijuegos = minijuegos;
 	}

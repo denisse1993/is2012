@@ -8,7 +8,7 @@
 
 package com.cinnamon.is.game;
 
-import android.R;
+import com.cinnamon.is.R;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import com.cinnamon.is.comun.Props.Enum.Tabla;
  * ella
  * 
  * @author Cinnamon Team
- * @version 1.0 16.04.2012
+ * @version 1.3 19.04.2012
  */
 public class EligeModoAventura extends Activity implements OnClickListener {
 
@@ -62,7 +62,6 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.elige_modo_aventura);
-
 		launch = new Launch(this);
 
 		bCrear = (Button) findViewById(R.id.b_crear_aventura);

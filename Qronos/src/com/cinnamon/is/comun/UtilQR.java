@@ -9,7 +9,12 @@ package com.cinnamon.is.comun;
 
 import android.app.Activity;
 import android.content.Intent;
-
+/**
+ * Clase de ayuda para lanzar y crear QRs
+ * @author Cinnamon Team
+ * @version 1.0 
+ *
+ */
 public final class UtilQR {
 
 	public static final int REQUEST_CODE = 0x0000c0de;

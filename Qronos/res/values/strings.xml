@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="inicio">Toque la pantalla para continuar</string>
     <string name="app_name">Qronos</string>
     <string name="arcade">Arcade</string>
@@ -13,12 +14,15 @@
     <!-- SelecMJ Pantalla -->
     <string name="helloSelecMJ">Selecciona MJs</string>
     <string name="helloSelecPISTA">Selecciona Pistas</string>
-	<!--  MJ1 -->
-	<string name="Presentation">Aqui va una presentacion del juego wapa wapa con su musiquita tipica de minijuego de marcianitos</string>
+    <!-- MJ1 -->
+    <string name="Presentation">Aqui va una presentacion del juego wapa wapa con su musiquita tipica de minijuego de marcianitos</string>
     <string name="killthemall">KILL THEM ALL</string>
     <string name="bRenaudar">Renaudar</string>
     <string name="bRestart">Reiniciar</string>
     <string name="bSalir">Salir</string>
     <string name="bStart">Empezar</string>
     <string name="bCancel">Atras</string>
+    <string name="bCrearAventura">Crear Aventura</string>
+     <string name="bUnirseAventura">Unirse Aventura</string>
+
 </resources>
