@@ -107,7 +107,10 @@ public class MainMenu extends Activity implements OnClickListener {
 			l.lanzaActivity(Props.Action.ARCADE, b);
 			break;
 		case R.id.bAventura:
-			l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA);
+			// l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA,b);
+			b.putSerializable(Props.Comun.AVENTURA, new Aventura("aventura",
+					"aventura"));
+			l.lanzaActivity(Props.Action.SELECMJ, b);
 			break;
 		case R.id.bOpciones:
 			l.lanzaActivity(Props.Action.INGAME, b);
@@ -180,7 +183,6 @@ public class MainMenu extends Activity implements OnClickListener {
 		}
 		return esta;
 	}
-
 
 	/**
 	 * Crea el jugador si no existe en la tabla arcade de la BD local

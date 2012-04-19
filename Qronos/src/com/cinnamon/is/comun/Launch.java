@@ -27,7 +27,7 @@ import com.cinnamon.is.comun.dialog.MenuDialog;
  * </p>
  * 
  * @author Cinnamon Team
- * @version 1.1 15.03.2012
+ * @version 1.2 19.04.2012
  */
 public final class Launch {
 
@@ -35,6 +35,8 @@ public final class Launch {
 	 * Actividad padre
 	 */
 	private final Activity a;
+
+	private static boolean yes;
 
 	/**
 	 * Metodo constructor
@@ -57,6 +59,19 @@ public final class Launch {
 	}
 
 	/**
+	 * Lanza una actividad desde static
+	 * 
+	 * @param a
+	 *            la actividad que lo lanza
+	 * @param ACTION
+	 *            la actividad a lanzar
+	 */
+	public static void lanzaActivity(Activity a, String ACTION) {
+		Intent i = new Intent(ACTION);
+		a.startActivity(i);
+	}
+
+	/**
 	 * Lanza una actividad con parametros para el intent
 	 * 
 	 * @param ACTION
@@ -66,6 +81,22 @@ public final class Launch {
 	 */
 	public void lanzaActivity(String ACTION, Bundle b) {
 		Launch.lanzaActivity(a, ACTION, b);
+	}
+
+	/**
+	 * Lanza una actividad desde static con parametros para el intent
+	 * 
+	 * @param a
+	 *            la actividad que lo lanza
+	 * @param ACTION
+	 *            la actividad a lanzar
+	 * @param b
+	 *            el bundle con la info extra
+	 */
+	public static void lanzaActivity(Activity a, String ACTION, Bundle b) {
+		Intent i = new Intent(ACTION);
+		i.putExtras(b);
+		a.startActivity(i);
 	}
 
 	/**
@@ -82,6 +113,21 @@ public final class Launch {
 	}
 
 	/**
+	 * Lanza una actividad for result desde static
+	 * 
+	 * @param a
+	 *            la actividad que lo lanza
+	 * @param ACTION
+	 *            la actividad a lanzar
+	 * @param rq
+	 *            el codigo de lanzamiento
+	 */
+	public static void lanzaActivity(Activity a, String ACTION, int rq) {
+		Intent i = new Intent(ACTION);
+		a.startActivityForResult(i, rq);
+	}
+
+	/**
 	 * Lanza una actividad for result con parametros para el intent
 	 * 
 	 * @param ACTION
@@ -93,6 +139,24 @@ public final class Launch {
 	 */
 	public void lanzaActivity(String ACTION, Bundle b, int rq) {
 		Launch.lanzaActivity(a, ACTION, b, rq);
+	}
+
+	/**
+	 * Lanza una actividad for result desde static con parametros para el intent
+	 * 
+	 * @param a
+	 *            la actividad que lo lanza
+	 * @param ACTION
+	 *            la actividad a lanzar
+	 * @param b
+	 *            el bundle con la info extra
+	 * @param rq
+	 *            el codigo de lanzamiento
+	 */
+	public static void lanzaActivity(Activity a, String ACTION, Bundle b, int rq) {
+		Intent i = new Intent(ACTION);
+		i.putExtras(b);
+		a.startActivityForResult(i, rq);
 	}
 
 	/**
@@ -123,65 +187,15 @@ public final class Launch {
 	}
 
 	/**
-	 * Lanza una actividad desde static con parametros para el intent
+	 * Devuelve una actividad desde static con parametros para el intent
 	 * 
-	 * @param a
-	 *            la actividad que lo lanza
-	 * @param ACTION
-	 *            la actividad a lanzar
-	 * @param b
-	 *            el bundle con la info extra
-	 */
-	public static void lanzaActivity(Activity a, String ACTION, Bundle b) {
-		Intent i = new Intent(ACTION);
-		i.putExtras(b);
-		a.startActivity(i);
-	}
-
-	/**
-	 * Lanza una actividad desde static
-	 * 
-	 * @param a
-	 *            la actividad que lo lanza
-	 * @param ACTION
-	 *            la actividad a lanzar
-	 */
-	public static void lanzaActivity(Activity a, String ACTION) {
-		Intent i = new Intent(ACTION);
-		a.startActivity(i);
-	}
-
-	/**
-	 * Lanza una actividad for result desde static
-	 * 
-	 * @param a
-	 *            la actividad que lo lanza
-	 * @param ACTION
-	 *            la actividad a lanzar
-	 * @param rq
-	 *            el codigo de lanzamiento
-	 */
-	public static void lanzaActivity(Activity a, String ACTION, int rq) {
-		Intent i = new Intent(ACTION);
-		a.startActivityForResult(i, rq);
-	}
-
-	/**
-	 * Lanza una actividad for result desde static con parametros para el intent
-	 * 
-	 * @param a
-	 *            la actividad que lo lanza
-	 * @param ACTION
-	 *            la actividad a lanzar
 	 * @param b
 	 *            el bundle con la info extra
 	 * @param rq
-	 *            el codigo de lanzamiento
+	 *            el codigo de retorno RESULT_OK or RESULT_CANCELED
 	 */
-	public static void lanzaActivity(Activity a, String ACTION, Bundle b, int rq) {
-		Intent i = new Intent(ACTION);
-		i.putExtras(b);
-		a.startActivityForResult(i, rq);
+	public void returnActivity(Bundle b, int rq) {
+		returnActivity(a, b, rq);
 	}
 
 	/**
@@ -206,10 +220,24 @@ public final class Launch {
 	 *            el titulo del dialog
 	 * @param texto
 	 *            el texto del dialog
+	 * @return el alertdialog
+	 */
+	public AlertDialog lanzaAviso(String title, String texto) {
+		return lanzaAviso(title, texto, a);
+	}
+
+	/**
+	 * Lanza el Dialog con un texto y un titulo
+	 * 
+	 * @param title
+	 *            el titulo del dialog
+	 * @param texto
+	 *            el texto del dialog
 	 * @param a
 	 *            la actividad de lanzamiento
+	 * @return el alertdialog
 	 */
-	public static void lanzaAviso(String title, String texto, Activity a) {
+	public static AlertDialog lanzaAviso(String title, String texto, Activity a) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
@@ -218,7 +246,18 @@ public final class Launch {
 						dialog.cancel();
 					}
 				});
-		builder.show();
+		return builder.show();
+	}
+
+	/**
+	 * Lanza el Dialog con un texto y un titulo
+	 * 
+	 * @param texto
+	 *            el texto del dialog
+	 * @return el alertdialog
+	 */
+	public AlertDialog lanzaAviso(String texto) {
+		return lanzaAviso(texto, a);
 	}
 
 	/**
@@ -228,7 +267,7 @@ public final class Launch {
 	 *            el texto del dialog
 	 * @param a
 	 *            la actividad de lanzamiento
-	 * @return
+	 * @return el alertdialog
 	 */
 	public static AlertDialog lanzaAviso(String texto, Activity a) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
@@ -252,24 +291,30 @@ public final class Launch {
 	 *            titulo del dialog
 	 * @param texto
 	 *            texto del dialog
+	 * @return el alertdialog
+	 */
+	public AlertDialog lanzaConfirmacion(String title, String texto) {
+		return lanzaConfirmacion(title, texto, a);
+	}
+
+	/**
+	 * <p>
+	 * Lanza el dialog para escoger si quieres hacer algo o no. La actividad a
+	 * debe implementar DialogInterface.OnClickListener, el boton si es
+	 * representado con un -1 y el no con un -2
+	 * </p>
+	 * 
+	 * @param title
+	 *            titulo del dialog
+	 * @param texto
+	 *            texto del dialog
 	 * @param a
 	 *            la actividad de lanzamiento
-	 * @return
+	 * @return el alertdialog
 	 */
 	public static AlertDialog lanzaConfirmacion(String title, String texto,
 			Activity a) {
 
-		/*
-		 * AlertDialog.Builder builder = new AlertDialog.Builder(a); //
-		 * builder.setTitle(title); //
-		 * builder.setMessage(texto).setCancelable(false) //
-		 * .setPositiveButton("Sí", new DialogInterface.OnClickListener() { //
-		 * public void onClick(DialogInterface dialog, int id) { // yes = true;
-		 * // dialog.cancel(); // } // }) // .setNegativeButton("No", new
-		 * DialogInterface.OnClickListener() { // public void
-		 * onClick(DialogInterface dialog, int id) { // yes = false; //
-		 * dialog.cancel(); // } // }); // builder.show(); return yes;
-		 */
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
 		builder.setMessage(texto).setCancelable(false)
@@ -301,8 +346,21 @@ public final class Launch {
 	 * salir
 	 * </p>
 	 * 
+	 * @return si o no
+	 */
+	public AlertDialog lanzaOpciones() {
+		return lanzaOpciones(a);
+	}
+
+	/**
+	 * <p>
+	 * Lanza el dialog para opciones, eligiendo entre continuar,reiniciar y
+	 * salir
+	 * </p>
+	 * 
 	 * @param a
 	 *            la actividad de lanzamiento
+	 * @return si o no
 	 */
 	public static AlertDialog lanzaOpciones(Activity a) {
 

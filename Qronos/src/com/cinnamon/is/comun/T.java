@@ -60,17 +60,19 @@ public class T implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		T t = (T) o;
-		if (!(t instanceof T))
+		if (!(o instanceof T))
 			return false;
+
+		T t = (T) o;
+
 		// seran iguales si tienen la misma pista
 		if (t.idMj != this.idMj)
 			return false;
 
 		return true;
 	}
-	
-	public Boolean getSuperado(){
+
+	public Boolean getSuperado() {
 		return superado;
 	}
 

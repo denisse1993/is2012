@@ -22,7 +22,7 @@ public class Ranking extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ranking);//TODO revisar layout
+		setContentView(R.layout.ranking);// TODO revisar layout
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		JSON = b.getString(Props.Comun.JSON);
@@ -38,7 +38,7 @@ public class Ranking extends Activity {
 	 */
 	private void rankingLocal() {
 		int[] a = jugador.getScore();
-		String suma="";
+		String suma = "";
 		setFila(1, jugador.getNombre(), String.valueOf(a[0]),
 				String.valueOf(a[1]), String.valueOf(a[2]),
 				String.valueOf(a[3]), String.valueOf(a[4]),
@@ -73,7 +73,7 @@ public class Ranking extends Activity {
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
 				setFila(j, nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9,
-						mj10, mj11, mj12,total);
+						mj10, mj11, mj12, total);
 			}
 		} catch (JSONException e1) {
 			Toast.makeText(getBaseContext(), "Error", Toast.LENGTH_LONG).show();
@@ -203,7 +203,7 @@ public class Ranking extends Activity {
 			text11.setText(mj11);
 			TextView text12 = (TextView) findViewById(R.id.textView51);
 			text12.setText(mj12);
-			
+
 			TextView text13 = (TextView) findViewById(R.id.textViewT4);
 			text13.setText(total);
 		}

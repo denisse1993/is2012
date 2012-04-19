@@ -294,7 +294,7 @@ public final class Props {
 		 */
 		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor\nToca el icono de estadisticas para ver las estadisticas\nToca los iconos de las flechas para cambiar la lista de mj";
 		public static final String iSelecMJ = "Toca en la imagen para agregar el mj asociado a la lista de MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
-		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
+		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nPara confirmar la pista, pincha en la imagen del MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
 
 		/**
 		 * Para uso en avisos
@@ -306,7 +306,8 @@ public final class Props {
 		public static String USER_CREADO = "Usuario creado en local. Menu abierto";
 		public static String PASS_ERROR = "Password incorrecta";
 		public static String PISTA_MOD = "Pista modificada!";
-		
+		public static String PISTAS_COMPLETO = "Asignadas todas las pistas";
+
 		private Strings() {
 		}
 	}
