@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    
-        
-        <Button
-            android:id="@+id/b_crear_aventura"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Crear Aventura" 
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="220dp"
-            />
+    <Button
+        android:id="@+id/b_crear_aventura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="220dp"
+        android:gravity="center"
+        android:text="@string/bCrearAventura" />
 
-        <Button
-            android:id="@+id/b_unirse_aventura"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            
-            android:layout_gravity="center"
-            
-            android:text="Unirse Aventura"
-             android:layout_marginTop="10dp" />
+    <Button
+        android:id="@+id/b_unirse_aventura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="@string/bUnirseAventura" />
 
-    </LinearLayout>
-   
+</LinearLayout>

@@ -10,15 +10,24 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="10"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="100" >
 
         <ImageButton
-            android:id="@+id/ib_info_ingame"
+            android:id="@+id/ib_info_ingame_host"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="right"
             android:layout_marginLeft="280dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/icon_information"
+            android:orientation="vertical" />
+
+        <ImageView
+            android:id="@+id/i_ingame_host_qr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@drawable/icon_information"
             android:orientation="vertical" />
@@ -29,50 +38,34 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="90"
-        android:weightSum="90"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="100" >
 
         <LinearLayout
-            android:id="@+id/ll_ranking_ingame"
+            android:id="@+id/ll_ranking_ingame_host"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="29"
+            android:layout_weight="50"
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/ib_ranking_ingame"
+                android:id="@+id/ib_ranking_ingame_host"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                
                 android:layout_gravity="center"
                 android:background="@drawable/stats"
                 android:orientation="vertical" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_camara_ingame"
+            android:id="@+id/ll_camara_ingame_host"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" 
-            android:layout_weight="30">
+            android:layout_weight="50"
+            android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/ib_camara_ingame"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/ic_menu_camara"
-                android:orientation="vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_opciones_ingame"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="30" >
-
-            <ImageButton
-                android:id="@+id/ib_opciones_ingame"
+                android:id="@+id/ib_opciones_ingame_host"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
