@@ -46,13 +46,13 @@ public final class Props {
 		public static final String SELECMJ = "com.cinnamon.is.game.SELECMJ";
 
 		public static final String SELECPISTA = "com.cinnamon.is.game.SELECPISTA";
-		
+
 		public static final String ELIGEMODOAVENTURA = "com.cinnamon.is.game.ELIGEMODOAVENTURA";
-		
+
 		public static final String LANZARAVENTURA = "com.cinnamon.is.game.LANZARAVENTURA";
-		
+
 		public static final String INGAMEAVENTURA = "com.cinnamon.is.game.INGAMEAVENTURA";
-		
+
 		public static final String INGAMEHOST = "com.cinnamon.is.game.INGAMEHOST";
 
 		// intents de zXing
@@ -149,7 +149,7 @@ public final class Props {
 		 */
 		public static final int[] iDiVsC = { R.id.iVsc1, R.id.iVsc2,
 				R.id.iVsc3, R.id.iVsc4, R.id.iVsc5, R.id.iVsc6 };
-		
+
 		/**
 		 * Array de ids drawables para ImageViews de minijuegos. Tamaño 12
 		 */
@@ -171,7 +171,6 @@ public final class Props {
 		 */
 		public static final int[] iDiVselec = { R.drawable.noselec,
 				R.drawable.selec, R.drawable.starnull };
-
 
 		/**
 		 * Limites estrellas
@@ -256,16 +255,6 @@ public final class Props {
 		 */
 		public static final String JSON = "json";
 
-		/**
-		 * Para uso en avisos
-		 */
-		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
-		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta en BD local";
-		public static String USER_YA_EXISTE = "Usuario ya existente en local! Elige otro nombre.";
-		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
-		public static String USER_CREADO = "Usuario creado en local. Menu abierto";
-		public static String PASS_ERROR = "Password incorrecta";
-
 		private Comun() {
 		}
 	}
@@ -281,9 +270,9 @@ public final class Props {
 		/**
 		 * Array con nombres de los minijuegos
 		 */
-		public static final String[] mjNames = { "Marcianos", "Topos", "ZigZagQR",
-				"CadenaQR", "EncuentraQR", "Name6", "Name7", "Name8", "Name9",
-				"Name10", "Name11", "Name12" };
+		public static final String[] mjNames = { "Marcianos", "Topos",
+				"ZigZagQR", "CadenaQR", "EncuentraQR", "Name6", "Name7",
+				"Name8", "Name9", "Name10", "Name11", "Name12" };
 		/**
 		 * Array con explicaciones de los minijuegos
 		 */
@@ -291,7 +280,7 @@ public final class Props {
 				"Elimina a todos los marcianos que puedas antes de morir",
 				"Elimina cuantos topos puedas",
 				"Lee los 10 códigos QR colocados en Zig-Zag lo más rápido que puedas",
-				"Lee 5 QR en cadena lo más rápido que puedas", 
+				"Lee 5 QR en cadena lo más rápido que puedas",
 				"Encuentra el código QR lo más rápido que puedas", "Exp6",
 				"Exp7", "Exp8", "Exp9", "Exp10", "Exp11", "Exp12" };
 
@@ -307,6 +296,17 @@ public final class Props {
 		public static final String iSelecMJ = "Toca en la imagen para agregar el mj asociado a la lista de MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
 		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
 
+		/**
+		 * Para uso en avisos
+		 */
+		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
+		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta en BD local";
+		public static String USER_YA_EXISTE = "Usuario ya existente en local! Elige otro nombre.";
+		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
+		public static String USER_CREADO = "Usuario creado en local. Menu abierto";
+		public static String PASS_ERROR = "Password incorrecta";
+		public static String PISTA_MOD = "Pista modificada!";
+		
 		private Strings() {
 		}
 	}

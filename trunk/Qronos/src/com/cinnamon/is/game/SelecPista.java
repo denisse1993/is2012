@@ -65,6 +65,11 @@ public class SelecPista extends Activity implements OnClickListener {
 	 * Aventura actual en la aplicacion
 	 */
 	private Aventura aventura;
+	
+	/**
+	 * Launch de utilidad
+	 */
+	private Launch l;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +78,7 @@ public class SelecPista extends Activity implements OnClickListener {
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
-
+		l= new Launch(this);
 		grupoMJ = 0;
 		inicializar();
 	}
@@ -228,6 +233,7 @@ public class SelecPista extends Activity implements OnClickListener {
 					aventura.modPista(6, pista);
 				}
 			}
+			l.lanzaToast(Props.Strings.PISTA_MOD);
 			break;
 		case R.id.iBmj2:
 			pista = eTpista[1].getText().toString();

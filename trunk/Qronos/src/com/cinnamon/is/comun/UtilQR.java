@@ -7,18 +7,25 @@
 //
 package com.cinnamon.is.comun;
 
+import com.google.zxing.WriterException;
+import com.google.zxing.client.android.encode.QRCodeEncoder;
+import android.content.Context;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.view.Display;
+import android.view.WindowManager;
+
 /**
  * Clase de ayuda para lanzar y crear QRs
+ * 
  * @author Cinnamon Team
- * @version 1.0 
- *
+ * @version 1.1 19.04.2012
  */
 public final class UtilQR {
 
 	public static final int REQUEST_CODE = 0x0000c0de;
-	
+
 	private final Activity activity;
 
 	public UtilQR(Activity activity) {
@@ -36,13 +43,18 @@ public final class UtilQR {
 		activity.startActivityForResult(intentScan, REQUEST_CODE);
 	}
 
-	/** Obtiene el QR
-	 * @param requestCode codigo de lanzamiento
-	 * @param resultCode codigo de rsultado
-	 * @param intent el intent con los datos
+	/**
+	 * Obtiene el QR
+	 * 
+	 * @param requestCode
+	 *            codigo de lanzamiento
+	 * @param resultCode
+	 *            codigo de rsultado
+	 * @param intent
+	 *            el intent con los datos
 	 * @return el raw del qr en string
 	 */
-	public String getQR(int requestCode, int resultCode, Intent intent) {
+	public String getRawQR(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
 				return intent.getStringExtra("SCAN_RESULT");
@@ -58,7 +70,7 @@ public final class UtilQR {
 	 * @param text
 	 *            the text string to encode as a barcode
 	 */
-	public void generarQR(String text) {
+	public void verQR(String text) {
 		Intent intent = new Intent();
 		intent.setAction(Props.Action.ENCODE);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -68,6 +80,44 @@ public final class UtilQR {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		activity.startActivity(intent);
+	}
+
+	/**
+	 * Obtiene un Bitmap del qr a partir de un texto
+	 * 
+	 * @param text
+	 *            the text string to encode as a barcode
+	 * @return el bitmap que representa el text
+	 */
+	public Bitmap getQR(String text) {
+
+		// Para establecer tamaño(copiao tal cual de zxing)
+		WindowManager manager = (WindowManager) activity
+				.getSystemService(Context.WINDOW_SERVICE);
+		Display display = manager.getDefaultDisplay();
+		int width = display.getWidth();
+		int height = display.getHeight();
+		int smallerDimension = width < height ? width : height;
+		smallerDimension = smallerDimension * 7 / 8;
+
+		// Para info de encode
+		Intent intent = new Intent();
+		intent.setAction(Props.Action.ENCODE);
+		intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
+		intent.putExtra("ENCODE_DATA", text);
+
+		// Encode
+		Bitmap bitmap = null;
+		QRCodeEncoder qrCodeEncoder = null;
+		try {
+			qrCodeEncoder = new QRCodeEncoder(activity, intent,
+					smallerDimension, false);
+			bitmap = qrCodeEncoder.encodeAsBitmap();
+		} catch (WriterException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bitmap;
 	}
 
 }

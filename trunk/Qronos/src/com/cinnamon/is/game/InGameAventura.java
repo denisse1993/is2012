@@ -163,7 +163,7 @@ public class InGameAventura extends Activity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String contents = q.getQR(requestCode, resultCode, data);
+		String contents = q.getRawQR(requestCode, resultCode, data);
 		int nMJ = Integer.parseInt(contents);
 		if (requestCode == UtilQR.REQUEST_CODE && nMJ == mjActual) {
 			if (resultCode == RESULT_OK)
