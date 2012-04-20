@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
+import com.cinnamon.is.minijuegos.mj6.MinijuegoBomba;
 
 /**
  * <p>
@@ -385,4 +386,7 @@ public final class Launch {
 				R.style.CenterDialog, mj);
 		dialogo.show();
 	}
+
+
+	
 }
