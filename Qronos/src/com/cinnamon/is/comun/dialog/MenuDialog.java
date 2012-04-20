@@ -89,6 +89,7 @@ public class MenuDialog extends Dialogos {
 		switch (v.getId()) {
 		case R.id.ButtonResumeMenu:
 			this.dismiss();
+			mj.resumir();
 			break;
 		case R.id.ButtonRestartMenu:
 			this.dismiss();
