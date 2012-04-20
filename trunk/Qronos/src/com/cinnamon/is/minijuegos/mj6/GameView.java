@@ -1,21 +1,15 @@
 package com.cinnamon.is.minijuegos.mj6;
 
-import android.R;
-import android.content.ActivityNotFoundException;
+
+import com.cinnamon.is.R;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.MediaPlayer;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
-import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
+
 
 public class GameView extends View{
 	//private GameLoop loop;
@@ -25,8 +19,6 @@ public class GameView extends View{
 	private int alto,ancho;
 	private float y,z;
 	private Bitmap fondo,boom, bomba;
-	private SurfaceHolder holder;
-	private MediaPlayer music;
 	private int centroY,centroZ;
 	//private Button boton;
 	//private Button btnQR;
@@ -34,9 +26,9 @@ public class GameView extends View{
 	private int score;
 	private int estadoAnterior;
 	private int vibracionesEspera;
-	
+	private MinijuegoBomba a;
 
-	public GameView(Context context, int width, int height) {
+	public GameView(Context context, int width, int height, MinijuegoBomba minijuegoBomba) {
 		super(context);		
 		estado = 0;
 		paint = new Paint();
@@ -48,13 +40,15 @@ public class GameView extends View{
 		centroZ = ancho/2;
 		centroY=alto/2;
 		explosion = false;
-		crearFondo(R.drawable.fondoprueba2);
-		crearBomba(R.drawable.bombareducida);
-		crearFondoExplosion(R.drawable.boom);
+		a = minijuegoBomba;
+		crearFondo(R.drawable.fondobomba);
+		crearBomba(R.drawable.bombared);
+		crearFondoExplosion(R.drawable.estallido);
 		numVibraciones = 0;
 		score = 1000;
 		vibracionesEspera = 0;
 		estadoAnterior = 0;
+		estado = 0;
 	}
 	
 	public void setY(float Y){
@@ -95,11 +89,7 @@ public void crearFondoExplosion(int resource) {
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(), resource);
 		this.bomba = bmp;
 	}
-	private void temazo(int resource) {
-		
-		music = MediaPlayer.create(getContext(), resource);
-		music.start();
-	}
+	
 	
 	public void onDraw(Canvas canvas){
 		
@@ -123,6 +113,7 @@ public void crearFondoExplosion(int resource) {
 		
 		}else {
 			canvas.drawBitmap(boom, 0, 0, paint);
+			a.finalizar(true);
 			/////
 			/*
 			btnQR=(Button) findViewById(R.id.leer);
@@ -145,17 +136,16 @@ public void crearFondoExplosion(int resource) {
 		        });*/
 	        //////
 			
-			//canvas.drawText("Te estalló la bomba!!",ancho/4 , alto/2, paint);
-			//canvas.drawText("Toca la pantalla para volver a empezar",ancho/4 , alto/2 + 20, paint);
+			
 		
 		}
-		//canvas.drawColor(Color.RED);
+		
 	}
 	public void setExplosion(Boolean b){
 		explosion = b;
 	}
 	public void crearRecursos() {
-		crearFondo(R.drawable.fondoprueba2);
+		//crearFondo(R.drawable.fondoprueba2);
 		
 	}
 
