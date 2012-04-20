@@ -1,7 +1,9 @@
 package com.cinnamon.is.minijuegos.mj6;
 
 import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
+import com.cinnamon.is.comun.dialog.Dialogos;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,13 +19,9 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.view.WindowManager;
 
-public class MinijuegoBomba extends Activity implements SensorEventListener{
+public class MinijuegoBomba extends Minijuego implements SensorEventListener{
     /** Called when the activity is first created. */
 	
 	private float  explosion = 8, peligro = 6;
@@ -32,18 +30,24 @@ public class MinijuegoBomba extends Activity implements SensorEventListener{
 	private Sensor SensorOrientacion;
 	private SensorManager sm;
 	private GameView vista;
+	private int idMJ;
 	protected boolean superado;
+	protected int modo = Dialogos.DIALOG_ARCADE;
+	
 	
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        vista = new GameView(this,display.getWidth(),display.getHeight());
+        vista = new GameView(this,display.getWidth(),display.getHeight(),this);
         setContentView(vista);
         sm = (SensorManager) getSystemService(SENSOR_SERVICE);
         SensorOrientacion = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //vista.crearRecursos();
+        /*Launch.lanzaActivity(MinijuegoBomba.this,
+				Props.Action.MJ5);
+		finish();*/
     }
    
     
@@ -57,11 +61,27 @@ public class MinijuegoBomba extends Activity implements SensorEventListener{
     	this.onPause();
     }
 	protected void onDestroy(){
+		finalizar(true);
 		super.onDestroy();
 		//vista.getloop().stop();	
 	}
     
-    public void onBackPressed() {
+	protected void lanzaOpcionesDialog() {
+		// TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
+		// para el mj y luego lanza las opciones
+		// Launch.lanzaConfirmacion("Salir del minijuego",
+		// "¿Quieres salir del minijuego sin completarlo?", this);
+		
+		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		this.onStop();
+		lanzaOpcionesDialog();
+		
+	}
+   /* public void onBackPressed() {
     	onDestroy();
        //TODO METER dialogo, quiere salir? si (pausar)/ no(reiniciar) 
     	AlertDialog LDialog = new AlertDialog.Builder(this) 
@@ -70,7 +90,7 @@ public class MinijuegoBomba extends Activity implements SensorEventListener{
     				//.setPositiveButton("ok", null)
     				.setPositiveButton("Si", new DialogInterface.OnClickListener() {
     		                   public void onClick(DialogInterface dialog, int id) {
-    		                        finish();
+    		                       finalizar(true);
     		                   }
     		               })
     		        .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -79,7 +99,7 @@ public class MinijuegoBomba extends Activity implements SensorEventListener{
     		                   }})
     				.create(); LDialog.show(); 
       
-    }
+    }*/
     public void onHomePressed() {
     	
     }
@@ -156,17 +176,26 @@ public class MinijuegoBomba extends Activity implements SensorEventListener{
     	}
     	return true;
     }
-    protected void finalizar(boolean s) {
+    public void finalizar(boolean s) {
 		// Para tiempo
-		//finishTime();
-		// Establece valores de puntuacion y superado
-		int puntuacion = vista.getScore();
-		superado = s;
-		// Creo el bundle con la info usando strings genericos de clase Props.Comun
+    	superado = s;
+		// Creo el bundle con la info usando strings genericos de clase
+		// Props.Comun
 		Bundle b = new Bundle();
-		b.putInt(Props.Comun.SCORE, puntuacion);
+		b.putInt(Props.Comun.SCORE, vista.getScore());
 		b.putBoolean(Props.Comun.SUPERADO, superado);
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
+		
+		if (s){
+			setResult(vista.getScore());
+		}
+		this.finish();
 	}
+   
+    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        
+        
+    }*/
+    
     }
