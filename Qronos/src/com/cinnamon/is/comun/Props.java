@@ -155,7 +155,7 @@ public final class Props {
 		 */
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
 				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj3,
-				R.drawable.ibmj3, R.drawable.ibmj0, R.drawable.ibmj3,
+				R.drawable.ibmj3, R.drawable.ibmj6, R.drawable.ibmj3,
 				R.drawable.ibmj1, R.drawable.ibmj0, R.drawable.ibmj0,
 				R.drawable.ibmj0, R.drawable.ibmj0 };
 
@@ -271,7 +271,7 @@ public final class Props {
 		 * Array con nombres de los minijuegos
 		 */
 		public static final String[] mjNames = { "Marcianos", "Topos",
-				"ZigZagQR", "CadenaQR", "EncuentraQR", "Name6", "Name7",
+				"ZigZagQR", "CadenaQR", "EncuentraQR", "Bomba", "Name7",
 				"Name8", "Name9", "Name10", "Name11", "Name12" };
 		/**
 		 * Array con explicaciones de los minijuegos
@@ -281,7 +281,8 @@ public final class Props {
 				"Elimina cuantos topos puedas",
 				"Lee los 10 códigos QR colocados en Zig-Zag lo más rápido que puedas",
 				"Lee 5 QR en cadena lo más rápido que puedas",
-				"Encuentra el código QR lo más rápido que puedas", "Exp6",
+				"Encuentra el código QR lo más rápido que puedas", 
+				"Trata de no hacer explotar a la bomba!!!",
 				"Exp7", "Exp8", "Exp9", "Exp10", "Exp11", "Exp12" };
 
 		/**
