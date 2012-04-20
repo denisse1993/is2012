@@ -226,4 +226,9 @@ public abstract class Minijuego extends Activity {
 		this.game = sv;
 	}
 
+	public void resumir() {
+		this.onResume();
+		
+	}
+
 }
