@@ -7,8 +7,10 @@
 //
 package com.cinnamon.is.comun;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -19,7 +21,7 @@ import android.widget.Toast;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
-import com.cinnamon.is.minijuegos.mj6.MinijuegoBomba;
+
 
 /**
  * <p>
@@ -36,8 +38,8 @@ public final class Launch {
 	 * Actividad padre
 	 */
 	private final Activity a;
+	//private static boolean yes;
 
-	private static boolean yes;
 
 	/**
 	 * Metodo constructor
@@ -47,6 +49,8 @@ public final class Launch {
 	 */
 	public Launch(Activity activity) {
 		this.a = activity;
+		/* this.conexion =new Conexion(a);	 esto era para no tener que pasarle CONEXION 
+		al lanzaDialogoEspera*/
 	}
 
 	/**
@@ -387,6 +391,42 @@ public final class Launch {
 		dialogo.show();
 	}
 
-
+	/**
+	 * @param context
+	 * @param title
+	 * @param descripcion
+	 * @param modo
+	 * @param mj
+	 */
+	
+	@SuppressWarnings("static-access")
+	public  void lanzaDialogoEspera(Context context, String title, String nick, 
+			String pass, Activity b, final Conexion conexion){ //
+		
+		final ProgressDialog dialog;
+		final String n = nick;
+		final String p = pass;
+		dialog = new ProgressDialog(context);
+		dialog.show(context, "Conectando...", "Por favor, espera...",true);
+		//final Conexion con = new Conexion(b);
+		
+		Thread thread = new Thread(){
+			@Override
+			public void run() {
+				
+					if (conexion.login(n, p)){
+						Props.Comun.ONLINE = true;
+						//dialog.dismiss();
+					}else{
+						Props.Comun.ONLINE = false;
+						//dialog.dismiss();
+						//lanzaToast(Props.Strings.ERROR_INET);
+					}
+			}
+	     };
+		 
+	     thread.start();
+	}
+	
 	
 }
