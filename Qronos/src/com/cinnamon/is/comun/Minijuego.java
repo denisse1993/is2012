@@ -8,7 +8,6 @@
 package com.cinnamon.is.comun;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
