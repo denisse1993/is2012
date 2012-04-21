@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.database.Cursor;
+//import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
@@ -47,7 +47,7 @@ public class Login extends Activity implements OnClickListener {
 	/**
 	 * Cursor para tratar las consultas en la BD
 	 */
-	private Cursor mCursor;
+	//private Cursor mCursor;
 
 	/**
 	 * Nombre del jugador leido del EditText
@@ -175,17 +175,17 @@ public class Login extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		boolean online, local;
+		boolean /*online,*/ local;
 		if (preparaLogin()) {
 			switch (v.getId()) {
 			case R.id.bLogin:
-				try {
-					online = conexion.login(nombre, passMD5);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-					l.lanzaToast(Props.Strings.ERROR_INET);
-					Props.Comun.ONLINE = false;
-				}
+				
+					l.lanzaDialogoEspera(this, "", nombre, passMD5,this, conexion);
+					//le paso en la constructora la var conexion propia del login
+					if (Props.Comun.ONLINE == false){
+						l.lanzaToast(Props.Strings.ERROR_INET);
+					}
+
 				local = loginLocal();
 				if (local) // &&online para k tmb tenga online obligatorio
 					lanzaMenuPrincipal();
@@ -194,7 +194,7 @@ public class Login extends Activity implements OnClickListener {
 				break;
 			case R.id.bRegister:
 				try {
-					online = conexion.register(nombre, passMD5);
+					/*online = */conexion.register(nombre, passMD5);
 				} catch (IOException e) {
 					e.printStackTrace();
 					l.lanzaToast(Props.Strings.ERROR_INET);
@@ -296,5 +296,5 @@ public class Login extends Activity implements OnClickListener {
 		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
 		finish();
 	}
-
+	
 }
