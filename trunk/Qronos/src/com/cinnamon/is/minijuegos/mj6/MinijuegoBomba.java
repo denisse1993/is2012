@@ -43,11 +43,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
         setContentView(vista);
         sm = (SensorManager) getSystemService(SENSOR_SERVICE);
         SensorOrientacion = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //vista.crearRecursos();
-        /*Launch.lanzaActivity(MinijuegoBomba.this,
-				Props.Action.MJ5);
-		finish();*/
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);   
     }
    
     
@@ -63,7 +59,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
 	protected void onDestroy(){
 		finalizar(true);
 		super.onDestroy();
-		//vista.getloop().stop();	
+			
 	}
     
 	protected void lanzaOpcionesDialog() {
@@ -71,7 +67,6 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
 		// para el mj y luego lanza las opciones
 		// Launch.lanzaConfirmacion("Salir del minijuego",
 		// "¿Quieres salir del minijuego sin completarlo?", this);
-		
 		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
 	}
 	
@@ -79,7 +74,6 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
 	public void onBackPressed() {
 		this.onStop();
 		lanzaOpcionesDialog();
-		
 	}
    /* public void onBackPressed() {
     	onDestroy();
@@ -107,8 +101,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
     protected void onResume() {
         super.onResume();
         sm.registerListener(this, (Sensor) SensorOrientacion, SensorManager.SENSOR_DELAY_GAME);   
-        // el sensormanager.sensor... es el rate para ver cada cuanto actualiza la captura del sensor
-         
+        // el sensormanager.sensor... es el rate para ver cada cuanto actualiza la captura del sensor  
      } 
     
     @Override
@@ -136,19 +129,11 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
             Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
            
             if ( ((absY > peligro) && (absY<explosion)) || ((absZ > peligro) && ((absZ < explosion)))){
-            	//estado amarillo
             	v.vibrate(100);
-            	vista.setEstado(2);
+            	vista.setEstado(2);	//estado amarillo
             	vista.invalidate();
-            	
-				vista.restaPuntuacion();
-				
-					
-				
-            	
-            	
+				vista.restaPuntuacion();	
             }else if ( (absY> explosion) || (absZ > explosion) ){
-            	
             	vista.setEstado(3);
             	vista.invalidate();
             	vista.setExplosion(true);       
@@ -167,10 +152,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
     public boolean onTouchEvent(MotionEvent event) {
 
     	if (vista.getExplosion() == true){
-    		
     		vista.setExplosion(false);
     		this.onResume();
-       		
     	}else{
     		//loop.stop();
     	}
