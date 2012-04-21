@@ -22,8 +22,8 @@ import org.apache.http.util.EntityUtils;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Conexion {
@@ -53,7 +53,7 @@ public class Conexion {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public boolean login(String nick, String pass) throws IOException {
+	public boolean login(String nick, String pass)  {
 		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/login.php"); //local
@@ -73,8 +73,9 @@ public class Conexion {
 			}else{
 				retorno = false;
 			}
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			Log.i("ERROR", "CONECTION PROBLEM");
 			retorno = false;
 		}
 		return retorno;
