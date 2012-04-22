@@ -114,6 +114,11 @@ public final class Props {
 				cmj7, cmj8, cmj9, cmj10, cmj11, cmj12 };
 
 		/**
+		 * Controla si se debe esperar para seguir con la aplicacion
+		 * por si necesitas informacion de un hilo que todavia no ha finalizado
+		 */
+		public static boolean ESPERA = false;
+		/**
 		 * Controla si esta habilitado el modo online, por defecto on
 		 */
 		public static boolean ONLINE = true;
@@ -300,6 +305,7 @@ public final class Props {
 		/**
 		 * Para uso en avisos
 		 */
+		public static String LOGIN_OK = "Logueado con éxito";
 		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
 		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta en BD local";
 		public static String USER_INET_NO_EXISTE = "El usuario introducido no existe";
