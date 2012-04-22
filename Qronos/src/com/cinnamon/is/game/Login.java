@@ -181,8 +181,18 @@ public class Login extends Activity implements OnClickListener {
 				
 				l.lanzaDialogoEspera(this, "", nombre, passMD5, this, conexion);
 				// le paso en la constructora la var conexion propia del login
+				Props.Comun.ESPERA = true;
+				while (Props.Comun.ESPERA);
 				if (Props.Comun.ONLINE == false) {
 					l.lanzaToast(Props.Strings.ERROR_INET);
+				}else{
+					if (conexion.getRespuesta().equals("1")){
+						l.lanzaToast(Props.Strings.LOGIN_OK);
+					}else if (conexion.getRespuesta().equals("2")){
+						l.lanzaToast(Props.Strings.PASS_ERROR);
+					}else if (conexion.getRespuesta().equals("3")){
+						l.lanzaToast(Props.Strings.USER_INET_NO_EXISTE);
+					}
 				}
 
 				local = loginLocal();
