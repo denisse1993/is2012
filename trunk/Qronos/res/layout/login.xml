@@ -38,10 +38,7 @@
                 android:textSize="20sp" android:layout_width="fill_parent"
                 android:layout_height="wrap_content"></Button>
         
-        <Button android:text="TOP ARCADE" android:id="@+id/bArcade"
-                android:nextFocusUp="@+id/cbRememberLogin" android:nextFocusDown="@+id/Username"
-                android:textSize="20sp" android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></Button>
+        
 
 
 </LinearLayout>
