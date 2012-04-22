@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.cinnamon.is.R;
@@ -407,7 +408,9 @@ public final class Launch {
 		final String n = nick;
 		final String p = pass;
 		dialog = new ProgressDialog(context);
-		dialog.show(context, "Conectando...", "Por favor, espera...",true);
+		dialog.show(context, "Conectando...", "Por favor, espera...",true,true);
+		dialog.setCancelable(true);
+		//final Handler handler = new Handler();
 		//final Conexion con = new Conexion(b);
 		
 		Thread thread = new Thread(){
@@ -416,17 +419,23 @@ public final class Launch {
 				
 					if (conexion.login(n, p)){
 						Props.Comun.ONLINE = true;
-						dialog.dismiss();
+						
+						
 					}else{
 						Props.Comun.ONLINE = false;
-						dialog.dismiss();
+						
+						
 						//lanzaToast(Props.Strings.ERROR_INET);
 					}
-			}
+					Props.Comun.ESPERA = false;
+					dialog.dismiss();
+					dialog.cancel();
+			}	
+			
 	     };
 		 
 	     thread.start();
 	}
-	
+		
 	
 }
