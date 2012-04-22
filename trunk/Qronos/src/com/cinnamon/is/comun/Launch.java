@@ -407,7 +407,7 @@ public final class Launch {
 		final ProgressDialog dialog = ProgressDialog.show(a, "Conectando...",
 				"Por favor, espera...", true, false);
 		
-		Thread thread = new Thread() {
+		Thread thread =new Thread("Hilo login") {
 			@Override
 			public void run() {
 				if (conexion.login(n, p)) {
@@ -420,6 +420,7 @@ public final class Launch {
 			}
 		};
 		thread.start();
+		
 	}
 
 }
