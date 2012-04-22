@@ -153,6 +153,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 				// actualizara los datos
 				break;
 			case Props.Comun.cmj6:
+				int score6 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score6, Props.Comun.cmj6 - 1);
+				mDbHelper.open(true);
+				mDbHelper.updateRowParcade(jugador.getNombre(),
+						jugador.getScore());
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj7:
 				break;
@@ -456,4 +463,20 @@ public class Arcade extends Activity implements View.OnClickListener,
 		 */
 		return true;
 	}
+	
+	/**
+	 * Metodo para que una vez se actualice un score del jugador recargue visualmente (estrellas)
+	 * su nueva puntuacion lograda al pasarse el MJ
+	 */
+	private void actualizarDatos(){
+		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
+			// imagenes de mj
+			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
+				iVsc[i].setImageResource(Props.Comun.getStar(jugador
+						.getScore(i)));
+			} else
+				iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
+		}
+	}
+	
 }
