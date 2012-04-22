@@ -34,6 +34,13 @@ public class Conexion {
 	 * Guarda el contexto de la actividad que le llama
 	 */
 	public Activity activity;
+	/**
+	 * Guarda la ultima respuesta del servidor
+	 * 1 user, pass concuerdan
+	 * 2 pass erronea
+	 * 3 user inexistente
+	 */
+	private String respuesta; 
 
 	/**
 	 * Constructor
@@ -43,7 +50,14 @@ public class Conexion {
 	public Conexion(Activity _activity) {
 		this.activity = _activity;
 	}
-
+	
+	/**
+	 * Getters 
+	*/ 
+	
+	public String getRespuesta(){
+		return this.respuesta;
+	}
 	/**
 	 * Login de un usuario
 	 * 
@@ -68,9 +82,9 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				String str = EntityUtils.toString(rp.getEntity());
-				Toast.makeText(activity.getApplicationContext(), str,
-						Toast.LENGTH_SHORT).show();
+				respuesta = EntityUtils.toString(rp.getEntity());
+				//Toast.makeText(activity.getApplicationContext(), str,
+				//		Toast.LENGTH_SHORT).show();
 //				if(str.equals(Props.Strings.USER_INET_NO_EXISTE)){
 //					// devuelve Usuario Inexistente, comprobar que existe en la
 //					// BDlocal, y entonces registras online directametne
@@ -78,6 +92,7 @@ public class Conexion {
 //					if(l.loginLocal())
 //						register(nick, pass);
 //				}
+				
 				retorno = true;
 			} else {
 				retorno = false;
@@ -288,4 +303,5 @@ public class Conexion {
 		}
 		return false;
 	}
+	
 }
