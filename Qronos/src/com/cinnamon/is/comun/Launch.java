@@ -416,10 +416,10 @@ public final class Launch {
 				
 					if (conexion.login(n, p)){
 						Props.Comun.ONLINE = true;
-						//dialog.dismiss();
+						dialog.dismiss();
 					}else{
 						Props.Comun.ONLINE = false;
-						//dialog.dismiss();
+						dialog.dismiss();
 						//lanzaToast(Props.Strings.ERROR_INET);
 					}
 			}

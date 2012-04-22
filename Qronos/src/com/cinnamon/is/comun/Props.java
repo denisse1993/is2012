@@ -281,9 +281,9 @@ public final class Props {
 				"Elimina cuantos topos puedas",
 				"Lee los 10 códigos QR colocados en Zig-Zag lo más rápido que puedas",
 				"Lee 5 QR en cadena lo más rápido que puedas",
-				"Encuentra el código QR lo más rápido que puedas", 
-				"Trata de no hacer explotar a la bomba!!!",
-				"Exp7", "Exp8", "Exp9", "Exp10", "Exp11", "Exp12" };
+				"Encuentra el código QR lo más rápido que puedas",
+				"Trata de no hacer explotar a la bomba!!!", "Exp7", "Exp8",
+				"Exp9", "Exp10", "Exp11", "Exp12" };
 
 		/**
 		 * Info de subida al servidor
@@ -302,6 +302,7 @@ public final class Props {
 		 */
 		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
 		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta en BD local";
+		public static String USER_INET_NO_EXISTE = "El usuario introducido no existe";
 		public static String USER_YA_EXISTE = "Usuario ya existente en local! Elige otro nombre.";
 		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
 		public static String USER_CREADO = "Usuario creado en local. Menu abierto";

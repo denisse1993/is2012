@@ -19,6 +19,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.cinnamon.is.game.Login;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,7 +55,7 @@ public class Conexion {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public boolean login(String nick, String pass)  {
+	public boolean login(String nick, String pass) {
 		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/login.php"); //local
@@ -61,7 +63,7 @@ public class Conexion {
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("user", nick));
 		pairs.add(new BasicNameValuePair("pass", pass));
-		
+
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -69,8 +71,15 @@ public class Conexion {
 				String str = EntityUtils.toString(rp.getEntity());
 				Toast.makeText(activity.getApplicationContext(), str,
 						Toast.LENGTH_SHORT).show();
-			retorno = true;
-			}else{
+//				if(str.equals(Props.Strings.USER_INET_NO_EXISTE)){
+//					// devuelve Usuario Inexistente, comprobar que existe en la
+//					// BDlocal, y entonces registras online directametne
+//					Login l = (Login) activity;
+//					if(l.loginLocal())
+//						register(nick, pass);
+//				}
+				retorno = true;
+			} else {
 				retorno = false;
 			}
 		} catch (Exception e) {
@@ -106,14 +115,14 @@ public class Conexion {
 				String str = EntityUtils.toString(rp.getEntity());
 				Toast.makeText(activity.getApplicationContext(), str,
 						Toast.LENGTH_SHORT).show();
-			retorno = true;
-			}
-			retorno = false;
+				retorno = true;
+			} else
+				retorno = false;
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			retorno = false;
 		}
-		 return retorno;
+		return retorno;
 	}
 
 	/**

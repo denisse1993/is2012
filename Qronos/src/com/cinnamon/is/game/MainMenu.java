@@ -145,7 +145,12 @@ public class MainMenu extends Activity implements OnClickListener {
 
 		bArcade.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
-		bAventura.setOnClickListener(this);
+		if (Props.Comun.ONLINE)
+			bAventura.setOnClickListener(this);
+		else {
+			bAventura.setOnClickListener(null);
+			//cambiar color,ocultar,etc
+		}
 		bSalir.setOnClickListener(this);
 	}
 
