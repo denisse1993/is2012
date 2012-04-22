@@ -31,7 +31,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
 	private SensorManager sm;
 	private GameView vista;
 	private int idMJ;
-	protected boolean superado;
+	//protected boolean superado;
 	protected int modo = Dialogos.DIALOG_ARCADE;
 	
 	
@@ -170,9 +170,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener{
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
 		
-		if (s){
-			setResult(vista.getScore());
-		}
+		setResult(vista.getScore());
+		
 		this.finish();
 	}
    
