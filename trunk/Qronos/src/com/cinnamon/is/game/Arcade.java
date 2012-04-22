@@ -195,7 +195,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 		iBleft.setOnClickListener(this);
 		iBright.setOnClickListener(this);
 		iBupSc.setOnClickListener(this);
-		iBseeSc.setOnClickListener(this);
+		if (Props.Comun.ONLINE)
+			iBseeSc.setOnClickListener(this);
+		else {
+			// deshabilitar,cambiar color, etc
+			iBseeSc.setOnClickListener(null);
+
+		}
 		// rellena texto de bienvenida
 		tVhello.setText(tVhello.getText() + " " + jugador.getNombre() + "!"
 				+ "\nPuntuacion total: " + jugador.getScoreTotal());

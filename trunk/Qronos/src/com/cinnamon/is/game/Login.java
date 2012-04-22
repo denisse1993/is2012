@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
@@ -47,7 +46,7 @@ public class Login extends Activity implements OnClickListener {
 	/**
 	 * Cursor para tratar las consultas en la BD
 	 */
-	//private Cursor mCursor;
+	// private Cursor mCursor;
 
 	/**
 	 * Nombre del jugador leido del EditText
@@ -146,7 +145,7 @@ public class Login extends Activity implements OnClickListener {
 
 		// Pondra "" y false si no se ha guardado el prefs
 		etUsername.setText(nombre);
-		etPassword.setText(passMD5);// pone pass md5
+		etPassword.setText("cadenaRelleno");// pone pass falsa en textview
 		if (prefs.getString("checked", "no").equals("yes"))
 			cbRemember.setChecked(true);
 		else
@@ -175,16 +174,16 @@ public class Login extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		boolean /*online,*/ local;
+		boolean /* online, */local;
 		if (preparaLogin()) {
 			switch (v.getId()) {
 			case R.id.bLogin:
 				
-					l.lanzaDialogoEspera(this, "", nombre, passMD5,this, conexion);
-					//le paso en la constructora la var conexion propia del login
-					if (Props.Comun.ONLINE == false){
-						l.lanzaToast(Props.Strings.ERROR_INET);
-					}
+				l.lanzaDialogoEspera(this, "", nombre, passMD5, this, conexion);
+				// le paso en la constructora la var conexion propia del login
+				if (Props.Comun.ONLINE == false) {
+					l.lanzaToast(Props.Strings.ERROR_INET);
+				}
 
 				local = loginLocal();
 				if (local) // &&online para k tmb tenga online obligatorio
@@ -194,7 +193,7 @@ public class Login extends Activity implements OnClickListener {
 				break;
 			case R.id.bRegister:
 				try {
-					/*online = */conexion.register(nombre, passMD5);
+					/* online = */conexion.register(nombre, passMD5);
 				} catch (IOException e) {
 					e.printStackTrace();
 					l.lanzaToast(Props.Strings.ERROR_INET);
@@ -251,7 +250,7 @@ public class Login extends Activity implements OnClickListener {
 	 * 
 	 * @return si esta o no el jugador en la BD local
 	 */
-	private boolean loginLocal() {
+	public boolean loginLocal() {
 		// leer de la BD si existe nombre
 		boolean esta = false;
 		// existe el registro
@@ -275,7 +274,7 @@ public class Login extends Activity implements OnClickListener {
 	 * 
 	 * @return true o false en funcion de si existia o no
 	 */
-	private boolean creaJugadorLocal() {
+	public boolean creaJugadorLocal() {
 		// leer de la BD si existe nombre
 		boolean esta = true;
 		if (!mDbHelper.existsRow(nombre, Tabla.users)) {
@@ -296,5 +295,5 @@ public class Login extends Activity implements OnClickListener {
 		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
 		finish();
 	}
-	
+
 }
