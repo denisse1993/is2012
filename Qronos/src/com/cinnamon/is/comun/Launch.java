@@ -7,7 +7,6 @@
 //
 package com.cinnamon.is.comun;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
-
 
 /**
  * <p>
@@ -39,8 +37,8 @@ public final class Launch {
 	 * Actividad padre
 	 */
 	private final Activity a;
-	//private static boolean yes;
 
+	// private static boolean yes;
 
 	/**
 	 * Metodo constructor
@@ -50,8 +48,10 @@ public final class Launch {
 	 */
 	public Launch(Activity activity) {
 		this.a = activity;
-		/* this.conexion =new Conexion(a);	 esto era para no tener que pasarle CONEXION 
-		al lanzaDialogoEspera*/
+		/*
+		 * this.conexion =new Conexion(a); esto era para no tener que pasarle
+		 * CONEXION al lanzaDialogoEspera
+		 */
 	}
 
 	/**
@@ -393,49 +393,33 @@ public final class Launch {
 	}
 
 	/**
-	 * @param context
+	 * @param a
 	 * @param title
-	 * @param descripcion
-	 * @param modo
-	 * @param mj
+	 * @param nick
+	 * @param pass
+	 * @param conexion
 	 */
-	
-	@SuppressWarnings("static-access")
-	public  void lanzaDialogoEspera(Context context, String title, String nick, 
-			String pass, Activity b, final Conexion conexion){ //
-		
-		final ProgressDialog dialog;
+	public void lanzaDialogoEspera(Activity a, String title, String nick,
+			String pass, final Conexion conexion) { //
+
 		final String n = nick;
 		final String p = pass;
-		dialog = new ProgressDialog(context);
-		dialog.show(context, "Conectando...", "Por favor, espera...",true,true);
-		dialog.setCancelable(true);
-		//final Handler handler = new Handler();
-		//final Conexion con = new Conexion(b);
+		final ProgressDialog dialog = ProgressDialog.show(a, "Conectando...",
+				"Por favor, espera...", true, false);
 		
-		Thread thread = new Thread(){
+		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				
-					if (conexion.login(n, p)){
-						Props.Comun.ONLINE = true;
-						
-						
-					}else{
-						Props.Comun.ONLINE = false;
-						
-						
-						//lanzaToast(Props.Strings.ERROR_INET);
-					}
-					Props.Comun.ESPERA = false;
-					dialog.dismiss();
-					dialog.cancel();
-			}	
-			
-	     };
-		 
-	     thread.start();
+				if (conexion.login(n, p)) {
+					Props.Comun.ONLINE = true;
+				} else {
+					Props.Comun.ONLINE = false;
+				}
+				dialog.dismiss();
+				Props.Comun.ESPERA = false;
+			}
+		};
+		thread.start();
 	}
-		
-	
+
 }

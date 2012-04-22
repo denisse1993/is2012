@@ -307,7 +307,7 @@ public final class Props {
 		 */
 		public static String LOGIN_OK = "Logueado con éxito";
 		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
-		public static String USER_PASS_MAL = "Usuario o contraseña incorrecta en BD local";
+		public static String USER_PASS_MAL = "User o pass incorrecta en BD local";
 		public static String USER_INET_NO_EXISTE = "El usuario introducido no existe";
 		public static String USER_YA_EXISTE = "Usuario ya existente en local! Elige otro nombre.";
 		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
