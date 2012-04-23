@@ -127,10 +127,17 @@ public class Arcade extends Activity implements View.OnClickListener,
 				actualizarDatos();
 				break;
 			case Props.Comun.cmj2:
+				int score2 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score2, Props.Comun.cmj2 - 1);
+				mDbHelper.open(false);
+				mDbHelper.updateRowParcade(jugador.getNombre(),
+						jugador.getScore());
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj3:
-				int score4 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score4, Props.Comun.cmj3 - 1);
+				int score3 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score3, Props.Comun.cmj3 - 1);
 				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
@@ -138,8 +145,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 				actualizarDatos();
 				break;
 			case Props.Comun.cmj4:
-				int score2 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score2, Props.Comun.cmj4 - 1);
+				int score4 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score4, Props.Comun.cmj4 - 1);
 				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
@@ -147,8 +154,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 				actualizarDatos();
 				break;
 			case Props.Comun.cmj5:
-				int score3 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score3, Props.Comun.cmj5 - 1);
+				int score5 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score5, Props.Comun.cmj5 - 1);
 				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
