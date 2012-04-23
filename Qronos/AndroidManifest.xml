@@ -216,6 +216,28 @@
             </intent-filter>
         </activity>
         
+         <!--  MJ7 -->   
+          
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj7.Game"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ7" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+           <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj7.Win"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ7W" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         
         <!-- Activity del zXing para CaptureActivity -->
         <activity

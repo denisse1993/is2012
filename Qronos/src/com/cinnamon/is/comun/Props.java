@@ -70,6 +70,7 @@ public final class Props {
 		public static final String MJ5 = "com.cinnamon.is.minijuegos.MJ5";
 		public static final String MJ6 = "com.cinnamon.is.minijuegos.MJ6";
 		public static final String MJ7 = "com.cinnamon.is.minijuegos.MJ7";
+		public static final String MJ7W = "com.cinnamon.is.minijuegos.MJ7W";
 		public static final String MJ8 = "com.cinnamon.is.minijuegos.MJ8";
 		public static final String MJ9 = "com.cinnamon.is.minijuegos.MJ9";
 		public static final String MJ10 = "com.cinnamon.is.minijuegos.MJ10";
@@ -270,7 +271,7 @@ public final class Props {
 		 * Array con nombres de los minijuegos
 		 */
 		public static final String[] mjNames = { "Marcianos", "Topos",
-				"ZigZagQR", "CadenaQR", "EncuentraQR", "Bomba", "Name7",
+				"ZigZagQR", "CadenaQR", "EncuentraQR", "Bomba", "LetrasQR",
 				"Name8", "Name9", "Name10", "Name11", "Name12" };
 		/**
 		 * Array con explicaciones de los minijuegos
@@ -281,7 +282,9 @@ public final class Props {
 				"Lee los 10 códigos QR colocados en Zig-Zag lo más rápido que puedas",
 				"Lee 5 QR en cadena lo más rápido que puedas",
 				"Encuentra el código QR lo más rápido que puedas",
-				"Trata de no hacer explotar a la bomba!!!", "Exp7", "Exp8",
+				"Trata de no hacer explotar a la bomba!!!",
+				"Lee los códigos QR para encontrar las letras y formar con ellas una palabra",
+				"Exp8",
 				"Exp9", "Exp10", "Exp11", "Exp12" };
 
 		/**

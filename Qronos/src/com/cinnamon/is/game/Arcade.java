@@ -165,6 +165,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 				actualizarDatos();
 				break;
 			case Props.Comun.cmj7:
+				int score7 = b.getInt(Props.Comun.SCORE);
+				jugador.setScore(score7, Props.Comun.cmj7 - 1);
+				mDbHelper.open(true);
+				mDbHelper.updateRowParcade(jugador.getNombre(),
+						jugador.getScore());
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj8:
 				break;
