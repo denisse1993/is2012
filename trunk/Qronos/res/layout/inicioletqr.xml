@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lee los códigos QR para encontrar las letras y luego unelas para formar una palabra"
+        android:textStyle="bold"
+        android:gravity="center" 
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:layout_marginTop="30dp" 
+        android:layout_marginBottom="20dp" 
+        android:textColor="#FFFF00"/>
+    
+   <!--   <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="El tiempo está corriendo..."
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:gravity="center" 
+        android:layout_marginTop="20dp" 
+        android:layout_marginBottom="20dp" 
+        android:textColor="#0099FF"/>   -->
+    
+
+     <Button
+        android:id="@+id/leer"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="LEER" />
+    
+     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#dd0000"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+</LinearLayout>
