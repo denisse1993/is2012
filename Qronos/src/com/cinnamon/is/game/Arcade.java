@@ -120,37 +120,40 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj1:
 				int score = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score, Props.Comun.cmj1 - 1);
+				mDbHelper.open(true);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj2:
 				break;
 			case Props.Comun.cmj3:
 				int score4 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score4, Props.Comun.cmj3 - 1);
-				// esto da problemas
+				mDbHelper.open(true);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
-				// creo que habría que recargar esta actividad para que
-				// actualizara los datos
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj4:
 				int score2 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score2, Props.Comun.cmj4 - 1);
-				// esto da problemas
+				mDbHelper.open(true);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
-				// creo que habría que recargar esta actividad para que
-				// actualizara los datos
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj5:
 				int score3 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score3, Props.Comun.cmj5 - 1);
-				// esto da problemas
+				mDbHelper.open(true);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
-				// creo que habría que recargar esta actividad para que
-				// actualizara los datos
+				mDbHelper.close();
+				actualizarDatos();
 				break;
 			case Props.Comun.cmj6:
 				int score6 = b.getInt(Props.Comun.SCORE);
@@ -173,7 +176,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj12:
 				break;
-
+				//con el actualizarDatos() carga bien las estrellas, pero no actualiza
+				//la puntuacion total arriba a la izquierda.
 			}
 		}
 	}

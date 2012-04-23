@@ -33,10 +33,7 @@ public class ZigZagQRActivity extends Minijuego {
 					 startTime();
 					 Bundle b=new Bundle();
 					 b.putLong("inicio", start);
-					 lanzador.lanzaActivity(Props.Action.MJ3G, b, Props.Comun.cmj3);
-					 //Intent openGame=new Intent("com.cinnamon.zigzagqr.GAME"); //cambiar esto 
-					 //openGame.putExtra("inicio", start );//por el lanzador nuevo de CadenaQRActivity
-					 //startActivity(openGame);
+				//	 lanzador.lanzaActivity(Props.Action.MJ3G, b, Props.Comun.cmj3);
 					}catch (ActivityNotFoundException e) {
 						e.printStackTrace();
 					}
