@@ -36,7 +36,7 @@ public class CadenaQRActivity extends Minijuego {
 					 startTime();
 					 Bundle b=new Bundle();
 					 b.putLong("inicio", start);
-					 lanzador.lanzaActivity(Props.Action.MJ4G, b, Props.Comun.cmj4);
+				//	 lanzador.lanzaActivity(Props.Action.MJ4G, b, Props.Comun.cmj4);
 					 //Intent openGame=new Intent("com.cinnamon.is.minijuegos.MJ4.Game");
 					 //openGame.putExtra("inicio", start);
 					 //startActivity(openGame);

@@ -17,10 +17,7 @@ public class Game extends Minijuego{
 
 	private Button btnQR;
 	private TextView texto;
-	//private UtilQR QR;
-	protected final static double tos = 0.000000001;
-	protected final static double tons = 1000000000;
-	
+	//private UtilQR QR;	
 	//para saber hasta donde lleva leídos en orden (0-10)
 	private int cuentaValida;
 	private boolean ordenCorrecto=false;
@@ -244,29 +241,7 @@ public class Game extends Minijuego{
 	        			texto.setTextColor(Color.rgb(0,221,0));
 	        			texto.setText("¡BIEN!\nYa has conseguido el noveno código, ¡corre al último!");
 	        				
-	        			
-	        			finalizar(true);
-	 	        	//	Bundle datos = this.getIntent().getExtras();
-	 	        		//para recoger el dato inicio que pasabamos al intent
-	 	        	//	start = datos.getLong("inicio");
-   	         	 //		finishTime(); // para calcular el tiempo total
-   	         	 //		elapsed=(long) (elapsed*tos);
-   	         	 		// texto.setText(""+elapsed);
-   	         	 		
-   	         	 //		tiempo=(int) elapsed;
-	         	 //		puntuacion=calcularPuntuacion();
-	         	 		
-	         	 //		Bundle b=new Bundle();
-	         	 //		b.putLong("tiempo", elapsed);
-	         	 //		b.putInt(Props.Comun.SCORE, puntuacion);
-	         	 		
-	         	 		
-	         	 		//Launch lanzador=new Launch(this);
-	         	 		//lanzador.lanzaActivity(Props.Action.MJ3W, b, Props.Comun.cmj3);
-	         	 		
-	         	 //		Launch.returnActivity(this, b, RESULT_OK);
-	         	 		
-   	         	 		
+	        			finalizar(true);	
 	 	        	}
 	 	        
 	 	       }

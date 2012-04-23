@@ -193,7 +193,7 @@
           
      
           <!--  MJ4 -->   
-          <activity
+     <!--     <activity
             android:label="@string/app_name"
             android:name=".minijuegos.mj4.CadenaQRActivity"
             android:screenOrientation="portrait" >
@@ -202,27 +202,27 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>  --> 
           
           <activity
             android:label="@string/app_name"
             android:name=".minijuegos.mj4.Game"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.MJ4.Game" />
+                <action android:name="com.cinnamon.is.minijuegos.MJ4" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
           
-           <activity
+      <!--      <activity
             android:label="@string/app_name"
             android:name=".minijuegos.mj4.Win"
             android:screenOrientation="portrait" > 
             <intent-filter >
                 <action android:name="com.cinnamon.is.minijuegos.MJ4.Win" />
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            </intent-filter>  
+        </activity>   -->
         
         <!--  MJ5 -->   
           <activity
