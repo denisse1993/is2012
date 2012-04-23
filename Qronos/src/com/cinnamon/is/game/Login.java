@@ -80,14 +80,14 @@ public class Login extends Activity implements OnClickListener {
 	// private TextView tvLogin;
 
 	// Utiles
-	private Conexion conexion;
-	private Launch l;
+	public Conexion conexion;
+	public Launch l;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		conexion = new Conexion(this);
+		conexion = new Conexion(Login.this);
 		l = new Launch(this);
 		inicializar();
 	}
@@ -174,48 +174,14 @@ public class Login extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		boolean /* online, */local;
 		if (preparaLogin()) {
 			switch (v.getId()) {
 			case R.id.bLogin:
-
-				l.lanzaDialogoEspera(Login.this, "", nombre, passMD5, conexion);
-				// le paso en la constructora la var conexion propia del login
-				Props.Comun.ESPERA = true;
-				while (Props.Comun.ESPERA);//semaforo de espera
-				if (Props.Comun.ONLINE == false) {
-					l.lanzaToast(Props.Strings.ERROR_INET);
-				} else {
-					if (conexion.getRespuesta().equals("1")) {
-						l.lanzaToast(Props.Strings.LOGIN_OK);
-					} else if (conexion.getRespuesta().equals("2")) {
-						l.lanzaToast(Props.Strings.PASS_ERROR);
-					} else if (conexion.getRespuesta().equals("3")) {
-						l.lanzaToast(Props.Strings.USER_INET_NO_EXISTE);
-					}
-				}
-
-				local = loginLocal();
-				if (local) // &&online para k tmb tenga online obligatorio
-					lanzaMenuPrincipal();
-				else
-					l.lanzaToast(Props.Strings.USER_PASS_MAL);
+				l.lanzaDialogoEsperaLogin(nombre, passMD5);
 				break;
 			case R.id.bRegister:
-				try {
-					/* online = */conexion.register(nombre, passMD5);
-				} catch (IOException e) {
-					e.printStackTrace();
-					l.lanzaToast(Props.Strings.ERROR_INET);
-					Props.Comun.ONLINE = false;
-				}
-				local = creaJugadorLocal();
-				if (local)
-					l.lanzaToast(Props.Strings.USER_YA_EXISTE);
-				else {
-					l.lanzaToast(Props.Strings.USER_CREADO);
-					lanzaMenuPrincipal();
-				}
+				l.lanzaDialogoEsperaRegister(nombre, passMD5);
+				break;
 			}
 		} else
 			l.lanzaToast(Props.Strings.CAMPOS_VACIOS);
@@ -230,7 +196,8 @@ public class Login extends Activity implements OnClickListener {
 		boolean bien = true;
 		nombre = etUsername.getText().toString();
 		String str = etPassword.getText().toString();
-		if (!str.equals(passMD5))// si la pass no esta en md5
+		// si no esta en md5 ni es la generica
+		if (!str.equals(passMD5) && !str.equals("cadenaRelleno"))
 			pass = etPassword.getText().toString();
 		try {
 			passMD5 = Conexion.toMD5(pass);
@@ -299,7 +266,7 @@ public class Login extends Activity implements OnClickListener {
 	/**
 	 * Abre el menu principal
 	 */
-	private void lanzaMenuPrincipal() {
+	public void lanzaMenuPrincipal() {
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);

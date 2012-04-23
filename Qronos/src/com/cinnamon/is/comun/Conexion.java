@@ -35,12 +35,10 @@ public class Conexion {
 	 */
 	public Activity activity;
 	/**
-	 * Guarda la ultima respuesta del servidor
-	 * 1 user, pass concuerdan
-	 * 2 pass erronea
-	 * 3 user inexistente
+	 * Guarda la ultima respuesta del servidor 1 user, pass concuerdan 2 pass
+	 * erronea 3 user inexistente
 	 */
-	private String respuesta; 
+	private String respuesta;
 
 	/**
 	 * Constructor
@@ -50,14 +48,15 @@ public class Conexion {
 	public Conexion(Activity _activity) {
 		this.activity = _activity;
 	}
-	
+
 	/**
-	 * Getters 
-	*/ 
-	
-	public String getRespuesta(){
+	 * Getters
+	 */
+
+	public String getRespuesta() {
 		return this.respuesta;
 	}
+
 	/**
 	 * Login de un usuario
 	 * 
@@ -83,16 +82,6 @@ public class Conexion {
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				respuesta = EntityUtils.toString(rp.getEntity());
-				//Toast.makeText(activity.getApplicationContext(), str,
-				//		Toast.LENGTH_SHORT).show();
-//				if(str.equals(Props.Strings.USER_INET_NO_EXISTE)){
-//					// devuelve Usuario Inexistente, comprobar que existe en la
-//					// BDlocal, y entonces registras online directametne
-//					Login l = (Login) activity;
-//					if(l.loginLocal())
-//						register(nick, pass);
-//				}
-				
 				retorno = true;
 			} else {
 				retorno = false;
@@ -115,7 +104,7 @@ public class Conexion {
 	 * @return
 	 * @throws IOException
 	 */
-	public boolean register(String nick, String pass) throws IOException {
+	public boolean register(String nick, String pass) {
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
@@ -127,13 +116,11 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				String str = EntityUtils.toString(rp.getEntity());
-				Toast.makeText(activity.getApplicationContext(), str,
-						Toast.LENGTH_SHORT).show();
+				respuesta = EntityUtils.toString(rp.getEntity());
 				retorno = true;
 			} else
 				retorno = false;
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = false;
 		}
@@ -201,6 +188,7 @@ public class Conexion {
 	 */
 	public boolean updateScore(int idMJ, String nick, String score)
 			throws IOException {
+		//TODO adaptar como register y login
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post = new HttpPost("http://cinnamon.webatu.com/updateMJ.php"); // server
@@ -292,9 +280,9 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				String str = EntityUtils.toString(rp.getEntity());
-				Toast.makeText(activity.getApplicationContext(), str,
-						Toast.LENGTH_SHORT).show();
+				respuesta = EntityUtils.toString(rp.getEntity());
+//				Toast.makeText(activity.getApplicationContext(), str,
+//						Toast.LENGTH_SHORT).show();
 				return true;
 			}
 
@@ -303,5 +291,5 @@ public class Conexion {
 		}
 		return false;
 	}
-	
+
 }

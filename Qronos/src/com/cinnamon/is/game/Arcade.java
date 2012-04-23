@@ -81,8 +81,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 	/**
 	 * Lanzador auxiliar
 	 */
-	private Launch l;
-	private Conexion conexion;
+	public Launch l;
+	public Conexion conexion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj1:
 				int score = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score, Props.Comun.cmj1 - 1);
-				mDbHelper.open(true);
+				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				mDbHelper.close();
@@ -131,7 +131,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj3:
 				int score4 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score4, Props.Comun.cmj3 - 1);
-				mDbHelper.open(true);
+				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				mDbHelper.close();
@@ -140,7 +140,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj4:
 				int score2 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score2, Props.Comun.cmj4 - 1);
-				mDbHelper.open(true);
+				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				mDbHelper.close();
@@ -149,7 +149,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj5:
 				int score3 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score3, Props.Comun.cmj5 - 1);
-				mDbHelper.open(true);
+				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				mDbHelper.close();
@@ -158,7 +158,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj6:
 				int score6 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score6, Props.Comun.cmj6 - 1);
-				mDbHelper.open(true);
+				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				mDbHelper.close();
@@ -167,7 +167,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj7:
 				int score7 = b.getInt(Props.Comun.SCORE);
 				jugador.setScore(score7, Props.Comun.cmj7 - 1);
-				mDbHelper.open(true);
+				mDbHelper.open(false);
 				mDbHelper.updateRowParcade(jugador.getNombre(),
 						jugador.getScore());
 				mDbHelper.close();
@@ -308,14 +308,15 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Metodo para subir puntuaciones al servidor
 	 */
 	private void subirScores() {
-		int[] arraySc = jugador.getScore();
-		try {
-			conexion.updateArcade(arraySc, jugador.getNombre());
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		l.lanzaDialogoEsperaUpdateScore(jugador.getNombre(), jugador.getScore());
+		// try {
+		//
+		// // conexion.updateArcade(arraySc, jugador.getNombre());
+		// } catch (ClientProtocolException e) {
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	public void onClick(DialogInterface dialog, int boton) {
@@ -473,26 +474,25 @@ public class Arcade extends Activity implements View.OnClickListener,
 		 */
 		return true;
 	}
-	
+
 	/**
-	 * Metodo para que una vez se actualice un score del jugador recargue visualmente (estrellas)
-	 * su nueva puntuacion lograda al pasarse el MJ
+	 * Metodo para que una vez se actualice un score del jugador recargue
+	 * visualmente (estrellas) su nueva puntuacion lograda al pasarse el MJ
 	 */
-	private void actualizarDatos(){
-		
-		
+	private void actualizarDatos() {
+
 		tVhello.setText("Hola!" + " " + jugador.getNombre() + "!"
-				+ "\nPuntuacion total: " + jugador.getScoreTotal()); //para la puntuacion
-		
-		
+				+ "\nPuntuacion total: " + jugador.getScoreTotal()); // para la
+																		// puntuacion
+
 		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 			// imagenes de mj
-			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {		//stars
+			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) { // stars
 				iVsc[i].setImageResource(Props.Comun.getStar(jugador
 						.getScore(i)));
 			} else
 				iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
 		}
 	}
-	
+
 }

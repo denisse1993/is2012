@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
+import com.cinnamon.is.game.Arcade;
+import com.cinnamon.is.game.Login;
 
 /**
  * <p>
@@ -188,8 +191,7 @@ public final class Launch {
 	 *            el mensaje
 	 */
 	public static void lanzaToast(Activity a, String msg) {
-		Toast.makeText(a.getApplicationContext(), msg, Toast.LENGTH_LONG)
-				.show();
+		Toast.makeText(a, msg, Toast.LENGTH_LONG).show();
 	}
 
 	/**
@@ -393,34 +395,146 @@ public final class Launch {
 	}
 
 	/**
-	 * @param a
-	 * @param title
 	 * @param nick
 	 * @param pass
-	 * @param conexion
 	 */
-	public void lanzaDialogoEspera(Activity a, String title, String nick,
-			String pass, final Conexion conexion) { //
+	public void lanzaDialogoEsperaLogin(String nick, String pass) { //
+		// valor 0 activa login
+		new ConexionServerTask().execute(new Object[] { 0, nick, pass });
+	}
 
-		final String n = nick;
-		final String p = pass;
-		final ProgressDialog dialog = ProgressDialog.show(a, "Conectando...",
-				"Por favor, espera...", true, false);
-		
-		Thread thread =new Thread("Hilo login") {
-			@Override
-			public void run() {
-				if (conexion.login(n, p)) {
-					Props.Comun.ONLINE = true;
-				} else {
-					Props.Comun.ONLINE = false;
+	/**
+	 * @param nick
+	 * @param pass
+	 */
+	public void lanzaDialogoEsperaRegister(String nick, String pass) { //
+		// valor 1 activa register
+		new ConexionServerTask().execute(new Object[] { 1, nick, pass });
+	}
+
+	/**
+	 * @param nick
+	 * @param pass
+	 */
+	public void lanzaDialogoEsperaUpdateScore(String nick, int[] a) { //
+		// valor 2 activa subir scores
+		new ConexionServerTask().execute(new Object[] { 2, nick, a });
+	}
+
+	/**
+	 * Clase asincrona para realizar conexiones con el server Debe usarse
+	 * siempre con un Launch creado como objeto
+	 * 
+	 * @author Cinnamon Team
+	 * @version 1.0 23.04.2012
+	 */
+	public class ConexionServerTask extends
+			AsyncTask<Object, Boolean, Object[]> {
+
+		private ProgressDialog dialog;
+
+		@Override
+		protected void onPreExecute() {
+			dialog = ProgressDialog.show(a, "Conectando...",
+					"Por favor, espera...", true, false);
+		}
+
+		@Override
+		protected Object[] doInBackground(Object... datos) {
+			String nick, pass;
+			Object[] ret = new Object[2];
+			// tarea a realizar
+			int tarea = (Integer) datos[0];
+			// rellena tarea
+			ret[0] = tarea;
+			switch (tarea) {
+			case 0:
+				// login
+				Login loginA = (Login) a;
+				nick = (String) datos[1];
+				pass = (String) datos[2];
+				// hace login y obtiene return
+				ret[1] = loginA.conexion.login(nick, pass);
+				if (loginA.conexion.getRespuesta().equals("3")) {
+					// devuelve Usuario Inexistente, comprobar que existe en la
+					// BDlocal, y entonces registras online directametne
+					if (loginA.loginLocal())
+						loginA.conexion.register(nick, pass);
 				}
-				dialog.dismiss();
-				Props.Comun.ESPERA = false;
+				break;
+			case 1:
+				// Register
+				Login register = (Login) a;
+				nick = (String) datos[1];
+				pass = (String) datos[2];
+				// hace login y obtiene return
+				ret[1] = register.conexion.register(nick, pass);
+				break;
+			case 2:
+				// Upload Score
+				Arcade upScore = (Arcade) a;
+				nick = (String) datos[1];
+				int[] a = (int[]) datos[2];
+				//TODO actualizar cuando updateArcade se adapte
+				// ret[1]=upScore.conexion.updateArcade(a, nick);
+				break;
 			}
-		};
-		thread.start();
-		
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(Object[] result) {
+			dialog.dismiss();
+			int tarea = (Integer) result[0];
+			switch (tarea) {
+			case 0:
+				// login
+				Props.Comun.ONLINE = (Boolean) result[1];
+				Login login = (Login) a;
+				if (Props.Comun.ONLINE == false) {
+					login.l.lanzaToast(Props.Strings.ERROR_INET);
+				} else {
+					if (login.conexion.getRespuesta().equals("1")) {
+						login.l.lanzaToast(Props.Strings.LOGIN_OK);
+					} else if (login.conexion.getRespuesta().equals("2")) {
+						login.l.lanzaToast(Props.Strings.PASS_ERROR);
+					} else if (login.conexion.getRespuesta().equals("3")) {
+						login.l.lanzaToast(Props.Strings.USER_INET_NO_EXISTE);
+					}
+				}
+				if (login.loginLocal())
+					login.lanzaMenuPrincipal();
+				else if (!Props.Comun.ONLINE)
+					login.l.lanzaToast(Props.Strings.USER_PASS_MAL);
+				break;
+			case 1:
+				// Register
+				Props.Comun.ONLINE = (Boolean) result[1];
+				Login register = (Login) a;
+				if (Props.Comun.ONLINE == false) {
+					register.l.lanzaToast(Props.Strings.ERROR_INET);
+				} else {
+					// TODO a filtar Toast con valores devueltos por online
+				}
+				if (!register.creaJugadorLocal())
+					register.lanzaMenuPrincipal();
+				else if (!Props.Comun.ONLINE) {
+					register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
+					// login.l.lanzaToast(Props.Strings.USER_CREADO);
+				}
+				break;
+			case 2:
+				// Upload Score
+				Arcade upScore = (Arcade) a;
+				boolean conex = (Boolean) result[1];
+				if (conex)
+					upScore.l.lanzaToast(Props.Strings.SCORE_SUBIDA);
+				else
+					upScore.l.lanzaToast(Props.Strings.SCORE_ERROR_SUBIDA);
+				break;
+			}
+
+		}
 	}
 
 }
