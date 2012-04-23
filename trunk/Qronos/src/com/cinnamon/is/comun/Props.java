@@ -109,8 +109,8 @@ public final class Props {
 				cmj7, cmj8, cmj9, cmj10, cmj11, cmj12 };
 
 		/**
-		 * Controla si se debe esperar para seguir con la aplicacion
-		 * por si necesitas informacion de un hilo que todavia no ha finalizado
+		 * Controla si se debe esperar para seguir con la aplicacion por si
+		 * necesitas informacion de un hilo que todavia no ha finalizado
 		 */
 		public static boolean ESPERA = false;
 		/**
@@ -284,8 +284,7 @@ public final class Props {
 				"Encuentra el código QR lo más rápido que puedas",
 				"Trata de no hacer explotar a la bomba!!!",
 				"Lee los códigos QR para encontrar las letras y formar con ellas una palabra",
-				"Exp8",
-				"Exp9", "Exp10", "Exp11", "Exp12" };
+				"Exp8", "Exp9", "Exp10", "Exp11", "Exp12" };
 
 		/**
 		 * Info de subida al servidor
@@ -306,12 +305,14 @@ public final class Props {
 		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
 		public static String USER_PASS_MAL = "User o pass incorrecta en BD local";
 		public static String USER_INET_NO_EXISTE = "El usuario introducido no existe";
-		public static String USER_YA_EXISTE = "Usuario ya existente en local! Elige otro nombre.";
+		public static String USER_YA_EXISTE = "Usuario existente local!";
 		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
 		public static String USER_CREADO = "Usuario creado en local. Menu abierto";
 		public static String PASS_ERROR = "Password incorrecta";
 		public static String PISTA_MOD = "Pista modificada!";
 		public static String PISTAS_COMPLETO = "Asignadas todas las pistas";
+		public static String SCORE_SUBIDA = "Puntuacion subida al servidor";
+		public static String SCORE_ERROR_SUBIDA = "Problema al subir la puntuacion al servidor";
 
 		private Strings() {
 		}
