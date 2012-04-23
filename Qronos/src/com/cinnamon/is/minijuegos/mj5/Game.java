@@ -1,13 +1,10 @@
 package com.cinnamon.is.minijuegos.mj5;
 
 import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
-import com.cinnamon.is.comun.Props;
-
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -21,13 +18,8 @@ public class Game extends Minijuego {
 	private Button btnQR;
 	private TextView texto;
 	//private UtilQR QR;
-	private long elapsed;
-	private long start;
 	private int tiempo;
-	private int puntuacion;
-	protected final static double tos = 0.000000001;
-	protected final static double tons = 1000000000;
-
+	
 	
 
 	/**
@@ -37,7 +29,8 @@ public class Game extends Minijuego {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.inicioencqr);
-        Activity.getInstanceCount();
+        
+        startTime();
 
         texto=(TextView) findViewById(R.id.textView);
         btnQR=(Button) findViewById(R.id.leer);
@@ -75,34 +68,15 @@ public class Game extends Minijuego {
 	 	        	Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
      			    vibr.vibrate(500);
 	 	         }
-	 	         //Si el código es el código objetivo detener el tiempo y lanzar otra actividad para 
-	 	         //decirle al usuario que ha acabado el juego y mostrarle su puntuación
 	 	         if(contents.equals("objetivo")){
-	 	        	try{
 	 	        		Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 	        			vibr.vibrate(300);
-	 	        		//para recoger el dato inicio que pasabamos al intent
-	 	        		 Bundle datos = this.getIntent().getExtras();
-	 	        		 start = datos.getLong("inicio");
-	 	        		 finishTime(); 
-	 	        		 elapsed=(long) (elapsed*tos);
-	 	        		// texto.setText(""+elapsed);
-	 	        		tiempo=(int) elapsed;
-   	         	 		puntuacion=calcularPuntuacion();
-   	         	 		
-   	         	 		Bundle b=new Bundle();
-   	         	 		b.putLong("tiempo", elapsed);
-   	         	 		b.putInt(Props.Comun.SCORE, puntuacion);
-   	         	 		
-   	         	 		
-   	         	 		Launch lanzador=new Launch(this);
-   	         	 		lanzador.lanzaActivity(Props.Action.MJ5W, b, Props.Comun.cmj5);
-   	         	 		
-   	         	 		Launch.returnActivity(this, b, RESULT_OK);
-   	         	 		
-						}catch (ActivityNotFoundException e) {
-							e.printStackTrace();
-						}
+	        			//poner aqui un mensaje que pueda leer el usuario con el tiempo
+	        			//que ha tardado
+	        			texto.setTextColor(Color.rgb(0,221,0));
+	        			texto.setText("¡BIEN!\nYa has conseguido el noveno código, ¡corre al último!");
+	        				
+	        			finalizar(true);
 	 	         }
 	 	        // TODO Comprobar que el código QR sea de este juego
 	 	         }
@@ -115,12 +89,9 @@ public class Game extends Minijuego {
 	 	   }
 
 	   
-		protected void finishTime() {
-			elapsed = System.nanoTime() - start;
-		}
-		
 		protected int calcularPuntuacion() {
 			int score = MAX_SCORE;
+			tiempo = (int) (elapsed * tos);
 			// tiempos de prueba para probar la aplicacion, habría que mirar cuando
 			// se tarda en cada uno, o dejarlo para todos igual
 			if (tiempo < 20)// 60segundos

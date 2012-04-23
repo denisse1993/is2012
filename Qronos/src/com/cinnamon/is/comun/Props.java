@@ -66,14 +66,8 @@ public final class Props {
 		public static final String MJ1st = "com.cinnamon.is.minijuegos.MJ1.Start";
 		public static final String MJ2 = "com.cinnamon.is.minijuegos.MJ2";
 		public static final String MJ3 = "com.cinnamon.is.minijuegos.MJ3";
-	//	public static final String MJ3G = "com.cinnamon.is.minijuegos.MJ3.Game";
-	//	public static final String MJ3W = "com.cinnamon.is.minijuegos.MJ3.Win";
 		public static final String MJ4 = "com.cinnamon.is.minijuegos.MJ4";
-	//	public static final String MJ4G = "com.cinnamon.is.minijuegos.MJ4.Game";
-	//	public static final String MJ4W = "com.cinnamon.is.minijuegos.MJ4.Win";
 		public static final String MJ5 = "com.cinnamon.is.minijuegos.MJ5";
-		public static final String MJ5G = "com.cinnamon.is.minijuegos.MJ5.Game";
-		public static final String MJ5W = "com.cinnamon.is.minijuegos.MJ5.Win";
 		public static final String MJ6 = "com.cinnamon.is.minijuegos.MJ6";
 		public static final String MJ7 = "com.cinnamon.is.minijuegos.MJ7";
 		public static final String MJ8 = "com.cinnamon.is.minijuegos.MJ8";

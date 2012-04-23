@@ -5,13 +5,25 @@
     android:orientation="vertical"
     android:screenOrientation="portrait" >
 
+    
+     <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="Encuentra este código QR en el montón de códigos lo antes posible."
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/objetivo" />
 
     <Button
@@ -27,8 +39,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
         android:text=""
         android:gravity="center"

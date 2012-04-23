@@ -34,7 +34,7 @@ public class QRGamesActivity extends Minijuego {
 					 startTime();
 					 Bundle b=new Bundle();
 					 b.putLong("inicio", start);
-					 lanzador.lanzaActivity(Props.Action.MJ5G, b, Props.Comun.cmj5);
+				//	 lanzador.lanzaActivity(Props.Action.MJ5G, b, Props.Comun.cmj5);
 					// Intent openGame=new Intent("com.cinnamon.qrgames.GAME");
 					// openGame.putExtra("inicio", start);
 					// startActivity(openGame);

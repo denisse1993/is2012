@@ -193,16 +193,6 @@
           
      
           <!--  MJ4 -->   
-     <!--     <activity
-            android:label="@string/app_name"
-            android:name=".minijuegos.mj4.CadenaQRActivity"
-            android:screenOrientation="portrait" >
-            <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.MJ4" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>  --> 
           
           <activity
             android:label="@string/app_name"
@@ -213,48 +203,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-          
-      <!--      <activity
-            android:label="@string/app_name"
-            android:name=".minijuegos.mj4.Win"
-            android:screenOrientation="portrait" > 
-            <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.MJ4.Win" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>  
-        </activity>   -->
-        
+      
         <!--  MJ5 -->   
-          <activity
-            android:label="@string/app_name"
-            android:name=".minijuegos.mj5.QRGamesActivity"
-            android:screenOrientation="portrait" >
-            <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.MJ5" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
           
           <activity
             android:label="@string/app_name"
             android:name=".minijuegos.mj5.Game"
             android:screenOrientation="portrait" >
             <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.MJ5.Game" />
+                <action android:name="com.cinnamon.is.minijuegos.MJ5" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
           
-           <activity
-            android:label="@string/app_name"
-            android:name=".minijuegos.mj5.Win"
-            android:screenOrientation="portrait" > 
-            <intent-filter >
-                <action android:name="com.cinnamon.is.minijuegos.MJ5.Win" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>      
         
            <!--  MJ6 -->
          <activity

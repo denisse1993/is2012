@@ -180,9 +180,6 @@ public class Game extends Minijuego {
 			return -1;
 		}
 
-		protected void finishTime() {
-			elapsed = System.nanoTime() - start;
-		}
 		
 		protected int calcularPuntuacion() {
 			int score = MAX_SCORE;
