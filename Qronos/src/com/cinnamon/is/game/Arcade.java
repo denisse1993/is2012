@@ -176,8 +176,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj12:
 				break;
-				//con el actualizarDatos() carga bien las estrellas, pero no actualiza
-				//la puntuacion total arriba a la izquierda.
+
 			}
 		}
 	}
@@ -473,9 +472,15 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * su nueva puntuacion lograda al pasarse el MJ
 	 */
 	private void actualizarDatos(){
+		
+		
+		tVhello.setText("Hola!" + " " + jugador.getNombre() + "!"
+				+ "\nPuntuacion total: " + jugador.getScoreTotal()); //para la puntuacion
+		
+		
 		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 			// imagenes de mj
-			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
+			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {		//stars
 				iVsc[i].setImageResource(Props.Comun.getStar(jugador
 						.getScore(i)));
 			} else
