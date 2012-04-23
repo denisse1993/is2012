@@ -3,6 +3,7 @@ package com.cinnamon.is.minijuegos.mj1;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+
 public class Marcianos {
 	private GameView gameView;
 	private Bitmap bmp;
@@ -36,7 +37,7 @@ public class Marcianos {
 		this.bmp = bmp;
 		this.gameView = gameView;
 		this.tipoMarciano=tipoMarciano;
-		this.vidasMarciano=8;
+		this.vidasMarciano=5;
 		this.velocidad =velocidad;
 		width = bmp.getWidth();
 		height = bmp.getHeight();
