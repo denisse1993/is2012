@@ -1,16 +1,26 @@
 package com.cinnamon.is.minijuegos.mj1;
 
-import android.graphics.Canvas;
-
 import com.cinnamon.is.R;
+
+import android.app.Activity;
+import android.graphics.Canvas;
 
 public class GameLoop extends Thread {
 	static final long FPS = 10;
 	private GameView view;
 	private boolean running;
+	private StartingMarcianos activity;
 
-	public GameLoop(GameView view) {
+	public GameLoop(GameView view, StartingMarcianos padre) {
 		this.view = view;
+		this.activity = padre;
+	}
+	public void setRunning(boolean b){
+		this.running= b;
+	}
+	
+	public void setRunning(){
+		this.running =false;
 	}
 
 	public void run() {
@@ -23,20 +33,38 @@ public class GameLoop extends Thread {
 		int crearMarcianolili = 43;
 		int crearMarcianoOgro = 97;
 		int velocidad =100;
+		int bomba = 300;
 		startTime = System.currentTimeMillis();
 		while (running) {
 			crearMarciano--;
 			crearMarcianolili--;
 			crearMarcianoOgro--;
 			velocidad--;
+			if(this.view.getBomba().getEstado()==true){
+				bomba--;
+			}	
 			try {
-				if (this.view.getNumVidas()==0){
-					//view.onDraw2(c);
-					running =false;
+				if (this.view.getNumVidas()<=0){
+					this.view.musicaOff();
+					running =false;	
+					activity.onStop();
+					activity.finalizar(true);
+					
+				}
+				if (bomba==0){
+					
+						bomba=300;
+						this.view.crearBomba(R.drawable.bomba1, 120, 0);
+				}
+				if (this.view.getNumVidas()==2){
+					this.view.crearCupula(R.drawable.cupularota1);				
+				}
+				if (this.view.getNumVidas()==1){
+					this.view.crearCupula(R.drawable.cupularota2);
 				}
 				if(crearMarciano==0){
 					crearMarciano=10;
-					view.crearMarciano(R.drawable.marcianito,1);
+					view.crearMarciano(R.drawable.marcianoprueba1,1);
 				}
 				if(crearMarcianolili==0){
 					crearMarcianolili=33;
