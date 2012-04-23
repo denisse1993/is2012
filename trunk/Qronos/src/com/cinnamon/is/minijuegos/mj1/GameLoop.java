@@ -15,12 +15,13 @@ public class GameLoop extends Thread {
 		this.view = view;
 		this.activity = padre;
 	}
-	public void setRunning(boolean b){
-		this.running= b;
+
+	public void setRunning(boolean b) {
+		this.running = b;
 	}
-	
-	public void setRunning(){
-		this.running =false;
+
+	public void setRunning() {
+		this.running = false;
 	}
 
 	public void run() {
@@ -32,7 +33,7 @@ public class GameLoop extends Thread {
 		int crearMarciano = 10;
 		int crearMarcianolili = 43;
 		int crearMarcianoOgro = 97;
-		int velocidad =100;
+		int velocidad = 100;
 		int bomba = 300;
 		startTime = System.currentTimeMillis();
 		while (running) {
@@ -40,45 +41,45 @@ public class GameLoop extends Thread {
 			crearMarcianolili--;
 			crearMarcianoOgro--;
 			velocidad--;
-			if(this.view.getBomba().getEstado()==true){
+			if (this.view.getBomba().getEstado() == true) {
 				bomba--;
-			}	
+			}
 			try {
-				if (this.view.getNumVidas()<=0){
+				if (this.view.getNumVidas() <= 0) {
 					this.view.musicaOff();
-					running =false;	
+					running = false;
 					activity.onStop();
 					activity.finalizar(true);
-					
+
 				}
-				if (bomba==0){
-					
-						bomba=300;
-						this.view.crearBomba(R.drawable.bomba1, 120, 0);
+				if (bomba == 0) {
+
+					bomba = 300;
+					this.view.crearBomba(R.drawable.bomba1, 120, 0);
 				}
-				if (this.view.getNumVidas()==2){
-					this.view.crearCupula(R.drawable.cupularota1);				
+				if (this.view.getNumVidas() == 2) {
+					this.view.crearCupula(R.drawable.cupularota1);
 				}
-				if (this.view.getNumVidas()==1){
+				if (this.view.getNumVidas() == 1) {
 					this.view.crearCupula(R.drawable.cupularota2);
 				}
-				if(crearMarciano==0){
-					crearMarciano=10;
-					view.crearMarciano(R.drawable.marcianoprueba1,1);
+				if (crearMarciano == 0) {
+					crearMarciano = 10;
+					view.crearMarciano(R.drawable.marcianoprueba1, 1);
 				}
-				if(crearMarcianolili==0){
-					crearMarcianolili=33;
-					view.crearMarciano(R.drawable.marcianolili,2);
+				if (crearMarcianolili == 0) {
+					crearMarcianolili = 33;
+					view.crearMarciano(R.drawable.marcianolili, 2);
 				}
-				if(crearMarcianoOgro==0){
-					crearMarcianoOgro=57;
-					view.crearMarciano(R.drawable.marcianoogro,3);
-				}	
-				if(velocidad==0){
-					velocidad=100;
+				if (crearMarcianoOgro == 0) {
+					crearMarcianoOgro = 57;
+					view.crearMarciano(R.drawable.marcianoogro, 3);
+				}
+				if (velocidad == 0) {
+					velocidad = 100;
 					this.view.acelerar();
-					
-				}	
+
+				}
 				c = view.getHolder().lockCanvas();
 				synchronized (view.getHolder()) {
 					this.view.onDraw(c);
