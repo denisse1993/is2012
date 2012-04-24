@@ -10,6 +10,7 @@ package com.cinnamon.is.game;
 
 import com.cinnamon.is.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
+import com.cinnamon.is.comun.UtilQR;
 import com.cinnamon.is.comun.Props.Enum.Tabla;
 
 /**
@@ -44,19 +46,21 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 	 * Launch de la actividad
 	 */
 	Launch launch;
-	
+
 	/**
 	 * Adaptador para conectar con la BD
 	 */
 	private DbAdapter mDbHelper;
-	
 
 	/**
 	 * Jugador actual en la aplicacion
 	 */
 	private Jugador jugador;
 
-
+	/**
+	 * Utilidad para lanzar el Scanner QR
+	 */
+	private UtilQR q;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +73,10 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 
 		bUnirse = (Button) findViewById(R.id.b_unirse_aventura);
 		bUnirse.setOnClickListener(this);
-	
+
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
-		
+
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 	}
@@ -84,11 +88,12 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 			if (creaJugadorLocalPquest())
 				getJugadorLocalPquest();
 			Bundle bundle = new Bundle();
-			bundle.putSerializable(Props.Comun.AVENTURA, new Aventura("aventura",
-					"aventura"));
+			bundle.putSerializable(Props.Comun.AVENTURA, new Aventura(
+					"aventura", "aventura"));
 			launch.lanzaActivity(Props.Action.SELECMJ, bundle);
 		case R.id.b_unirse_aventura:
-			launch.lanzaActivity(Props.Action.LANZARAVENTURA);
+			q = new UtilQR(this);
+			q.lanzarQR();
 		}
 	}
 
@@ -156,6 +161,24 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 			esta = true;
 		}
 		return esta;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String contents = q.getRawQR(requestCode, resultCode, data);
+		if (requestCode == UtilQR.REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				//TODO
+				/*
+				 * if (dameOnlineAventura(contents){
+				 * 
+				 * launch.lanzaActivity(Props.Action.LANZARAVENTURA); }
+				 */
+			} else if (resultCode == RESULT_CANCELED) {
+				// Handle cancell
+			}
+		}
+
 	}
 
 }
