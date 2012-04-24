@@ -298,13 +298,11 @@ public class Conexion {
 	 * 
 	 * 
 	 * en datosAventura iran los minijuegos usados (0 no usado, 1 usado) y su
-	 * correspondiente pista {mj1,pista1,mj2,pista2...}
-	 * longitudes actuales mj = 1, pista = 30; nombreAv = 11, 
-	 * pass da igual xq la convierto a md5 32chars
-	 * el post devuelve en respuesta 1 = correcto, 
-	 * 								 2 = error en el formato de envio
-	 * 								 3 = no se pudo abrir la db
-	 * 								 
+	 * correspondiente pista {mj1,pista1,mj2,pista2...} longitudes actuales mj =
+	 * 1, pista = 30; nombreAv = 11, pass da igual xq la convierto a md5 32chars
+	 * el post devuelve en respuesta 1 = correcto, 2 = error en el formato de
+	 * envio 3 = no se pudo abrir la db
+	 * 
 	 */
 	public boolean creaOnlineAventura(String[] datosAventura,
 			String nombreAventura, String passAventura)
@@ -343,6 +341,33 @@ public class Conexion {
 			retorno = false;
 		}
 		return retorno;
+	}
+
+	/**
+	 * descarga la aventura con el nombreAventura del servidor
+	 * 
+	 * formato de la HttpResponse
+	 * nombre,passAventura,mj1-12,pista1-12
+	 * 
+	 */
+	public String dameOnlineAventura(String nombreAventura) throws IOException {
+
+		HttpClient hc = new DefaultHttpClient();
+		// HttpPost post = new HttpPost("http://10.0.2.2/arcade.php");
+		HttpPost post = new HttpPost("http://cinnamon.webatu.com/dameAventura.php"); // server
+		String str = null;
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+				str = EntityUtils.toString(rp.getEntity());
+			return str;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return str;
 	}
 
 }
