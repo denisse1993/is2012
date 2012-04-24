@@ -312,7 +312,9 @@ public final class Props {
 		public static String PISTA_MOD = "Pista modificada!";
 		public static String PISTAS_COMPLETO = "Asignadas todas las pistas";
 		public static String SCORE_SUBIDA = "Puntuacion subida al servidor";
-		public static String SCORE_ERROR_SUBIDA = "Problema al subir la puntuacion al servidor";
+		public static String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
+		public static String AVENTURA_SUBIDA="Aventura subida al servidor";
+		public static String AVENTURA_SUBIDA_ERROR="Problema al subir la aventura al servidor";
 
 		private Strings() {
 		}

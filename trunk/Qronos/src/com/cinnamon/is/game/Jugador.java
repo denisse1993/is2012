@@ -26,6 +26,11 @@ public class Jugador implements Serializable {
 	private String nombre;
 
 	/**
+	 * Nombre de la aventura a la que esta jugando el jugador
+	 */
+	private String aventura;
+
+	/**
 	 * Pass del jugador
 	 */
 	private String pass;
@@ -63,14 +68,17 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 * @param faseActual
 	 *            del jugador
+	 * @param aventura
+	 *            nombre de la aventura
 	 */
 	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest,
-			int faseActual) {
+			int faseActual, String aventura) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.score = score;
 		this.scoreQuest = scoreQuest;
 		this.faseActual = faseActual;
+		this.aventura = aventura;
 	}
 
 	/**
@@ -87,7 +95,7 @@ public class Jugador implements Serializable {
 	 * 
 	 */
 	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest) {
-		this(nombre, pass, score, scoreQuest, 0);
+		this(nombre, pass, score, scoreQuest, 0, null);
 	}
 
 	/**
@@ -100,7 +108,7 @@ public class Jugador implements Serializable {
 	 */
 	public Jugador(String nombre, String pass) {
 		this(nombre, pass, new int[Props.Comun.MAX_MJ],
-				new int[Props.Comun.MAX_MJ], 0);
+				new int[Props.Comun.MAX_MJ], 0, null);
 	}
 
 	/**
@@ -223,6 +231,14 @@ public class Jugador implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	public String getAventura() {
+		return aventura;
+	}
+
+	public void setAventura(String aventura) {
+		this.aventura = aventura;
+	}
 
 	public void setPass(String pass) {
 		this.pass = pass;
@@ -239,7 +255,7 @@ public class Jugador implements Serializable {
 	public void setScore(int[] score) {
 		this.score = score;
 	}
-	
+
 	public int[] getScoreQuest() {
 		return scoreQuest;
 	}
@@ -260,7 +276,7 @@ public class Jugador implements Serializable {
 		sb.append("]");
 		sbQ.setLength(sb.length() - 1);
 		sbQ.append("]");
-		return nombre +" "+ faseActual + "\nScore Arcade: " + sb.toString()
+		return nombre + " " + faseActual + "\nScore Arcade: " + sb.toString()
 				+ "\nScore Quest: " + sbQ.toString();
 	}
 }
