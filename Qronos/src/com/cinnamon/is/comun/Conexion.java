@@ -188,7 +188,7 @@ public class Conexion {
 	 */
 	public boolean updateScore(int idMJ, String nick, String score)
 			throws IOException {
-		//TODO adaptar como register y login
+		// TODO adaptar como register y login
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post = new HttpPost("http://cinnamon.webatu.com/updateMJ.php"); // server
@@ -268,9 +268,9 @@ public class Conexion {
 		HttpPost post = new HttpPost(
 				"http://cinnamon.webatu.com/updateArcade.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		int i = 0;
+		int i = 1;
 
-		while (i < 12) {
+		while (i <= 12) {
 			String actual = Integer.toString(arraySc[i]);
 			pairs.add(new BasicNameValuePair("mj" + i, actual));
 		}
@@ -281,8 +281,8 @@ public class Conexion {
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				respuesta = EntityUtils.toString(rp.getEntity());
-//				Toast.makeText(activity.getApplicationContext(), str,
-//						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
 				return true;
 			}
 
@@ -290,6 +290,59 @@ public class Conexion {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	/**
+	 * Crea una nueva aventura en el servidor
+	 * 
+	 * 
+	 * 
+	 * en datosAventura iran los minijuegos usados (0 no usado, 1 usado) y su
+	 * correspondiente pista {mj1,pista1,mj2,pista2...}
+	 * longitudes actuales mj = 1, pista = 30; nombreAv = 11, 
+	 * pass da igual xq la convierto a md5 32chars
+	 * el post devuelve en respuesta 1 = correcto, 
+	 * 								 2 = error en el formato de envio
+	 * 								 3 = no se pudo abrir la db
+	 * 								 
+	 */
+	public boolean creaOnlineAventura(String[] datosAventura,
+			String nombreAventura, String passAventura)
+			throws ClientProtocolException, IOException {
+		boolean retorno;
+		// Vuelca toda la info de BD local en la BD web
+		HttpClient hc = new DefaultHttpClient();
+		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/updateAventura.php"); // server
+
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
+		pairs.add(new BasicNameValuePair("pass", passAventura));
+		int i = 1;
+		while (i <= 12) {
+			String actual = (datosAventura[i]);
+			pairs.add(new BasicNameValuePair("mj" + i, actual));
+			pairs.add(new BasicNameValuePair("pista" + i, actual));
+		}
+
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				respuesta = EntityUtils.toString(rp.getEntity());
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
+				retorno = true;
+			} else {
+				retorno = false;
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			retorno = false;
+		}
+		return retorno;
 	}
 
 }
