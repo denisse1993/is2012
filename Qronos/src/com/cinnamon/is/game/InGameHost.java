@@ -39,7 +39,7 @@ public class InGameHost extends Activity implements OnClickListener{
 	/**
 	 * Lauch de la actividad
 	 */
-	Launch launch;
+	public Launch launch;
 
 	/**
 	 * DbAdapter para interaccionar con la base de datos

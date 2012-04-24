@@ -79,11 +79,10 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
+                android:maxLength="40"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
-
             </EditText>
-
         </LinearLayout>
         <!-- MJ2 -->
 
@@ -105,8 +104,12 @@
                 android:id="@+id/eTpista2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
-                android:inputType="textMultiLine" >
+                android:layout_weight="0.95"
+                android:inputType="textMultiLine"
+                android:maxHeight="40dp"
+                android:maxLength="40"
+                android:maxWidth="40dp"
+                android:textSize="10dp" >
             </EditText>
         </LinearLayout>
         <!-- MJ3 -->
@@ -129,8 +132,12 @@
                 android:id="@+id/eTpista3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
-                android:inputType="textMultiLine" >
+                android:layout_weight="0.95"
+                android:inputType="textMultiLine"
+                android:maxHeight="40dp"
+                android:maxLength="40"
+                android:maxWidth="40dp"
+                android:textSize="10dp" >
             </EditText>
         </LinearLayout>
     </LinearLayout>
@@ -159,12 +166,16 @@
                 android:layout_weight="0.05"
                 android:background="@drawable/ibmj0" />
 
-             <EditText
+            <EditText
                 android:id="@+id/eTpista4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
-                android:inputType="textMultiLine" >
+                android:layout_weight="0.95"
+                android:inputType="textMultiLine"
+                android:maxHeight="40dp"
+                android:maxLength="40"
+                android:maxWidth="40dp"
+                android:textSize="10dp" >
             </EditText>
         </LinearLayout>
         <!-- MJ5 -->
@@ -183,12 +194,16 @@
                 android:layout_weight="0.05"
                 android:background="@drawable/ibmj0" />
 
-             <EditText
+            <EditText
                 android:id="@+id/eTpista5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
-                android:inputType="textMultiLine" >
+                android:layout_weight="0.95"
+                android:inputType="textMultiLine"
+                android:maxHeight="40dp"
+                android:maxLength="40"
+                android:maxWidth="40dp"
+                android:textSize="10dp" >
             </EditText>
         </LinearLayout>
         <!-- MJ6 -->
@@ -207,12 +222,16 @@
                 android:layout_weight="0.05"
                 android:background="@drawable/ibmj0" />
 
-             <EditText
+            <EditText
                 android:id="@+id/eTpista6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95" android:textSize="10dp" android:maxHeight="40dp" android:maxWidth="40dp"
-                android:inputType="textMultiLine" >
+                android:layout_weight="0.95"
+                android:inputType="textMultiLine"
+                android:maxHeight="40dp"
+                android:maxLength="40"
+                android:maxWidth="40dp"
+                android:textSize="10dp" >
             </EditText>
         </LinearLayout>
     </LinearLayout>

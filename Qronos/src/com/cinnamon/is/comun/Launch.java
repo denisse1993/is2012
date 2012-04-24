@@ -16,13 +16,14 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Toast;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
 import com.cinnamon.is.game.Arcade;
+import com.cinnamon.is.game.Aventura;
+import com.cinnamon.is.game.InGameHost;
 import com.cinnamon.is.game.Login;
 
 /**
@@ -395,6 +396,8 @@ public final class Launch {
 	}
 
 	/**
+	 * Sirve para loguear un jugador
+	 * 
 	 * @param nick
 	 * @param pass
 	 */
@@ -404,6 +407,8 @@ public final class Launch {
 	}
 
 	/**
+	 * Sirve para registrar un jugador
+	 * 
 	 * @param nick
 	 * @param pass
 	 */
@@ -413,12 +418,25 @@ public final class Launch {
 	}
 
 	/**
+	 * Sirve para subir las puntuaciones en el modo arcade (tabla parcade)
+	 * 
 	 * @param nick
 	 * @param pass
 	 */
-	public void lanzaDialogoEsperaUpdateScore(String nick, int[] a) { //
+	public void lanzaDialogoEsperaUpdateScoreArcade(String nick, int[] a) { //
 		// valor 2 activa subir scores
 		new ConexionServerTask().execute(new Object[] { 2, nick, a });
+	}
+
+	/**
+	 * Sirve para subir una aventura al servidor (tabla quest)
+	 * 
+	 * @param nick
+	 * @param pass
+	 */
+	public void lanzaDialogoEsperaUpdateQuest(Aventura a) { //
+		// valor 2 activa subir scores
+		new ConexionServerTask().execute(new Object[] { 3, a });
 	}
 
 	/**
@@ -471,13 +489,19 @@ public final class Launch {
 				ret[1] = register.conexion.register(nick, pass);
 				break;
 			case 2:
-				// Upload Score
+				// Upload Score Arcade
 				Arcade upScore = (Arcade) a;
 				nick = (String) datos[1];
-				int[] a = (int[]) datos[2];
-				//TODO actualizar cuando updateArcade se adapte
-				// ret[1]=upScore.conexion.updateArcade(a, nick);
+				int[] b = (int[]) datos[2];
+				// TODO actualizar cuando updateArcade se adapte
+				// ret[1]=upScore.conexion.updateArcade(b, nick);
 				break;
+			case 3:
+				// Upload Aventura (tabla quest)
+				InGameHost uploadQuest= (InGameHost) a;
+				Aventura quest = (Aventura) datos[1];
+				// TODO actualizar cuando updateAventura
+				// ret[1]=upScore.conexion.updateAventura(a);
 			}
 			return ret;
 		}
@@ -524,13 +548,22 @@ public final class Launch {
 				}
 				break;
 			case 2:
-				// Upload Score
+				// Upload Score Arcade
 				Arcade upScore = (Arcade) a;
 				boolean conex = (Boolean) result[1];
 				if (conex)
 					upScore.l.lanzaToast(Props.Strings.SCORE_SUBIDA);
 				else
-					upScore.l.lanzaToast(Props.Strings.SCORE_ERROR_SUBIDA);
+					upScore.l.lanzaToast(Props.Strings.SCORE_SUBIDA_ERROR);
+				break;
+			case 3:
+				// Upload Aventura (tabla quest)
+				boolean conex2 = (Boolean) result[1];
+				InGameHost uploadQuest= (InGameHost) a;
+				if (conex2)
+					uploadQuest.launch.lanzaToast(Props.Strings.AVENTURA_SUBIDA);
+				else
+					uploadQuest.launch.lanzaToast(Props.Strings.AVENTURA_SUBIDA_ERROR);
 				break;
 			}
 

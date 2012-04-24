@@ -315,7 +315,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Metodo para subir puntuaciones al servidor
 	 */
 	private void subirScores() {
-		l.lanzaDialogoEsperaUpdateScore(jugador.getNombre(), jugador.getScore());
+		l.lanzaDialogoEsperaUpdateScoreArcade(jugador.getNombre(), jugador.getScore());
 		// try {
 		//
 		// // conexion.updateArcade(arraySc, jugador.getNombre());

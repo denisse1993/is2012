@@ -115,8 +115,9 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 		boolean esta = true;
 		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
 			// crear nuevo jugador
+			//TODO añadir NOMBRE AVENTURA
 			mDbHelper.createRowPquest(jugador.getNombre(), new int[] { 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0);
+					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0,null);
 			esta = false;
 		}
 		return esta;

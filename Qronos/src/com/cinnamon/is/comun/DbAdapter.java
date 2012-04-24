@@ -199,6 +199,10 @@ public class DbAdapter {
 	 * Guarda la fase actual del jugador
 	 **/
 	public static final String PQUEST_KEY_ACTUAL = "actual";
+	/**
+	 * Guarda el nombre de la aventura asociada
+	 **/
+	public static final String PQUEST_KEY_QUEST = "name";
 
 	//
 	// Campos de la tabla quest
@@ -358,7 +362,7 @@ public class DbAdapter {
 			PQUEST_KEY_SCORE3, PQUEST_KEY_SCORE4, PQUEST_KEY_SCORE5,
 			PQUEST_KEY_SCORE6, PQUEST_KEY_SCORE7, PQUEST_KEY_SCORE8,
 			PQUEST_KEY_SCORE9, PQUEST_KEY_SCORE10, PQUEST_KEY_SCORE11,
-			PQUEST_KEY_SCORE12, PQUEST_KEY_ACTUAL };
+			PQUEST_KEY_SCORE12, PQUEST_KEY_ACTUAL, PQUEST_KEY_QUEST };
 
 	/**
 	 * Array con las variables de la tabla quest
@@ -403,10 +407,12 @@ public class DbAdapter {
 	public static final String SQLscore12 = PARCADE_KEY_SCORE12 + " integer";
 	public static final String SQLscore12coma = PARCADE_KEY_SCORE12
 			+ " integer,";
-	public static final String SQLactual = PQUEST_KEY_ACTUAL + " integer";
+	public static final String SQLactual = PQUEST_KEY_ACTUAL + " integer,";
+	public static final String SQLnameQuest = PQUEST_KEY_QUEST + " text";
 	// tabla quest
 	public static final String SQLname = QUEST_KEY_NAME + " text primary key,";
 	public static final String SQLpassq = QUEST_KEY_PASS + " text primary key,";
+
 	public static final String SQLmj1 = QUEST_KEY_MJ1 + " integer,";
 	public static final String SQLmj2 = QUEST_KEY_MJ2 + " integer,";
 	public static final String SQLmj3 = QUEST_KEY_MJ3 + " integer,";
@@ -470,7 +476,8 @@ public class DbAdapter {
 	public static final int PQUEST_IDCOL_SCORE10 = 10;
 	public static final int PQUEST_IDCOL_SCORE11 = 11;
 	public static final int PQUEST_IDCOL_SCORE12 = 12;
-	public static final int PAQUEST_IDCOL_ACTUAL = 13;
+	public static final int PQUEST_IDCOL_ACTUAL = 13;
+	public static final int PQUEST_IDCOL_NAME = 14;
 	/**
 	 * Indice de las columnas de la tabla quest
 	 */
@@ -546,7 +553,7 @@ public class DbAdapter {
 			+ SQLscore10
 			+ SQLscore11
 			+ SQLscore12coma
-			+ SQLactual + ")";
+			+ SQLactual + SQLnameQuest + ")";
 
 	/**
 	 * Sentencia SQL para crear la tabla quest
@@ -718,9 +725,12 @@ public class DbAdapter {
 	 *            puntuacion del jugador
 	 * @param actual
 	 *            fase actual
+	 * @param quest
+	 *            nombre de la aventura
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRowPquest(String player, int[] score, int actual) {
+	public long createRowPquest(String player, int[] score, int actual,
+			String quest) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(PARCADE_KEY_PLAYER, player);
 		initialValues.put(PQUEST_KEY_SCORE1, score[0]);
@@ -735,6 +745,7 @@ public class DbAdapter {
 		initialValues.put(PQUEST_KEY_SCORE10, score[9]);
 		initialValues.put(PQUEST_KEY_SCORE11, score[10]);
 		initialValues.put(PQUEST_KEY_SCORE12, score[11]);
+		initialValues.put(PQUEST_KEY_QUEST, quest);
 
 		initialValues.put(PQUEST_KEY_ACTUAL, actual);
 
@@ -1043,10 +1054,13 @@ public class DbAdapter {
 	 *            no se quiera actualizar debe estar a -1
 	 * @param actual
 	 *            la posicion actual del jugador
+	 * @param quest
+	 *            nombre de la aventura
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowPquest(String rowId, int[] score, int actual) {
+	public boolean updateRowPquest(String rowId, int[] score, int actual,
+			String quest) {
 		ContentValues args = new ContentValues();
 		if (score[0] != -1)
 			args.put(PARCADE_KEY_SCORE1, score[0]);
@@ -1074,6 +1088,8 @@ public class DbAdapter {
 			args.put(PARCADE_KEY_SCORE12, score[11]);
 		if (actual != -1)
 			args.put(PQUEST_KEY_ACTUAL, actual);
+		if (quest != null)
+			args.put(PQUEST_KEY_QUEST, quest);
 
 		return mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "=" + "'"
 				+ rowId + "'", null) > 0;
