@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +53,7 @@ public class InGameHost extends Activity implements OnClickListener {
 	 * Vista pulsada en onClick para uso en dialog onclick
 	 */
 	private int vClicked;
+	
 	/**
 	 * Utilidad para lanzar el Scanner QR
 	 */
@@ -70,6 +72,11 @@ public class InGameHost extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_host);
+		
+		//mDbHelper = new DbAdapter(this);
+		//mDbHelper.open(false);
+		
+		// TODO conexion.updateAventura();
 
 		bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
 		bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
@@ -78,6 +85,11 @@ public class InGameHost extends Activity implements OnClickListener {
 		bRanking.setOnClickListener(this);
 
 		ivQR = (ImageView) findViewById(R.id.ivQR);
+		conexion = new Conexion(this);
+		launch = new Launch(this);
+		q = new UtilQR(this);
+		Bitmap b = q.getQR(quest.getNombre());
+		ivQR.setImageBitmap(b);
 		conexion = new Conexion(this);
 		launch = new Launch(this);
 	}
