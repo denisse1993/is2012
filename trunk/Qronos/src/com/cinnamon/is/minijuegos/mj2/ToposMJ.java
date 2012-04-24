@@ -30,7 +30,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		introTheme = MediaPlayer.create(ToposMJ.this, R.raw.musicatopo);
 		efec = MediaPlayer.create(ToposMJ.this, R.raw.bip);
 		efec2 = MediaPlayer.create(ToposMJ.this, R.raw.aplasta);
-		lanzaExitDialog();
+		//lanzaExitDialog();
 	}
 
 	public void restartActivity() {
@@ -55,26 +55,11 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		builder.show();
 	}
 
-	private void lanzarAvisoMJ2(String texto, String title) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(title);
-		builder.setMessage(texto).setNegativeButton("Salir",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						ToposMJ.super.onBackPressed();
-					}
-				});
-		builder.show();
-	}
 
-/*	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		introTheme.release();
-		ourSurfaceView.loop.stop();
-	}*/
+	/*
+	 * @Override protected void onPause() { // TODO Auto-generated method stub
+	 * super.onPause(); introTheme.release(); ourSurfaceView.loop.stop(); }
+	 */
 
 	public void onHomePressed() {
 		onHomePressed();
@@ -94,7 +79,9 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 	 */
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+		introTheme.start();
+		ourSurfaceView.loop.setRunning(true);
+		//ourSurfaceView.loop.start();
 		super.onResume();
 	}
 
@@ -172,11 +159,10 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			/*if (va.finJuego) {
-				this.onCreate(new Bundle());
-				va.finJuego = false;
-				va.numTopos = 50;
-			}*/
+			/*
+			 * if (va.finJuego) { this.onCreate(new Bundle()); va.finJuego =
+			 * false; va.numTopos = 50; }
+			 */
 			break;
 		}
 		return false;
@@ -199,19 +185,9 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		this.onPause();
 	}
 
-	protected void lanzaOpcionesDialog() {
-		// TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
-		// para el mj y luego lanza las opciones
-		// Launch.lanzaConfirmacion("Salir del minijuego",
-		// "¿Quieres salir del minijuego sin completarlo?", this);
-		parar();
-		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
-
-	}
-
 	@Override
 	public void onBackPressed() {
-		this.onStop();
+		pausar();
 		lanzaOpcionesDialog();
 	}
 
@@ -234,11 +210,13 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 	}
 
 	public void parar() {
-		introTheme.stop();
+		introTheme.pause();
 		efec.stop();
 		efec2.stop();
+		
 		// ourSurfaceView.musicaOff();
 		ourSurfaceView.loopStop();
+		this.onPause();
 
 	}
 
