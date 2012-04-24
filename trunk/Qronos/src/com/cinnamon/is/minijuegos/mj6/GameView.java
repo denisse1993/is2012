@@ -198,12 +198,13 @@ public void crearFondoExplosion(int resource) {
 		return score;
 	}
 
+	//TODO da error el pulsarCamara y el id
 	@Override
 	public void onClick(View v) {
 		switch (vClicked = v.getId()) {
-		case R.id.ib_camara_bomba:
-			a.pulsarCamara();
-			break;
+//		case R.id.ib_camara_bomba:
+//			a.pulsarCamara();
+//			break;
 		}
 		
 	}

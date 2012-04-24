@@ -35,8 +35,8 @@ public class Conexion {
 	 */
 	public Activity activity;
 	/**
-	 * Guarda la ultima respuesta del servidor 1 user, pass concuerdan 2 pass
-	 * erronea 3 user inexistente
+	 * Guarda la respuesta del servidor, puede ser valores de control o
+	 * informacion para parsear
 	 */
 	private String respuesta;
 
@@ -116,6 +116,8 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				// en principio no usamos respuesta, solo el valor de retorno
+				// booleano
 				respuesta = EntityUtils.toString(rp.getEntity());
 				retorno = true;
 			} else
@@ -130,24 +132,26 @@ public class Conexion {
 	/**
 	 * Consigue el ranking del servidor y devuelve el valor obtenido
 	 * 
-	 * @return el ranking o null
-	 * @throws IOException
+	 * @return true o false
 	 */
-	public String dameOnlineArcade() throws IOException {
+	public boolean dameOnlineArcade() {
 
 		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/arcade.php");
 		HttpPost post = new HttpPost("http://cinnamon.webatu.com/arcade.php"); // server
-		String str = null;
 		try {
 			HttpResponse rp = hc.execute(post);
-			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-				str = EntityUtils.toString(rp.getEntity());
-			return str;
-		} catch (UnsupportedEncodingException e) {
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				respuesta = EntityUtils.toString(rp.getEntity());
+				retorno = true;
+			} else
+				retorno = false;
+		} catch (Exception e) {
 			e.printStackTrace();
+			retorno = false;
 		}
-		return str;
+		return retorno;
 	}
 
 	/**
@@ -186,10 +190,9 @@ public class Conexion {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public boolean updateScore(int idMJ, String nick, String score)
-			throws IOException {
-		// TODO adaptar como register y login
+	public boolean updateScore(int idMJ, String nick, String score) {
 		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post = new HttpPost("http://cinnamon.webatu.com/updateMJ.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -200,16 +203,18 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				String str = EntityUtils.toString(rp.getEntity());
-				Toast.makeText(activity.getApplicationContext(), str,
-						Toast.LENGTH_SHORT).show();
-				return true;
-			}
+				respuesta = EntityUtils.toString(rp.getEntity());
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
+				retorno = true;
+			} else
+				retorno = false;
 
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			retorno = false;
 		}
-		return false;
+		return retorno;
 	}
 
 	/**
@@ -260,19 +265,21 @@ public class Conexion {
 		return decodedByte;
 	}
 
-	public boolean updateArcade(int[] arraySc, String nick)
-			throws ClientProtocolException, IOException {
+	public boolean updateArcade(int[] arraySc, String nick) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post = new HttpPost(
 				"http://cinnamon.webatu.com/updateArcade.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		int i = 1;
+		int i = 0;
 
-		while (i <= 12) {
+		while (i < 12) {
 			String actual = Integer.toString(arraySc[i]);
-			pairs.add(new BasicNameValuePair("mj" + i, actual));
+			int code = i + 1;
+			pairs.add(new BasicNameValuePair("mj" + code, actual));
+			i++;
 		}
 		pairs.add(new BasicNameValuePair("user", nick));
 		// pairs.add(new BasicNameValuePair("puntuacion", score));
@@ -283,13 +290,15 @@ public class Conexion {
 				respuesta = EntityUtils.toString(rp.getEntity());
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
-				return true;
-			}
+				retorno = true;
+			} else
+				retorno = false;
 
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			retorno = false;
 		}
-		return false;
+		return retorno;
 	}
 
 	/**
@@ -304,9 +313,8 @@ public class Conexion {
 	 * envio 3 = no se pudo abrir la db
 	 * 
 	 */
-	public boolean creaOnlineAventura(String[] datosAventura,
-			String nombreAventura, String passAventura)
-			throws ClientProtocolException, IOException {
+	public boolean creaOnlineAventura(String[] mj, String[] pista,
+			String nombreAventura, String passAventura) {
 		boolean retorno;
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
@@ -317,11 +325,13 @@ public class Conexion {
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
 		pairs.add(new BasicNameValuePair("pass", passAventura));
-		int i = 1;
-		while (i <= 12) {
-			String actual = (datosAventura[i]);
-			pairs.add(new BasicNameValuePair("mj" + i, actual));
-			pairs.add(new BasicNameValuePair("pista" + i, actual));
+		int i = 0;
+		while (i < 12) {
+			int code = i + 1;
+			String pi = pista[i];
+			String mi = mj[i];
+			pairs.add(new BasicNameValuePair("mj" + code, mi));
+			pairs.add(new BasicNameValuePair("pista" + code, pi));
 		}
 
 		try {
@@ -336,7 +346,7 @@ public class Conexion {
 				retorno = false;
 			}
 
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = false;
 		}
@@ -346,28 +356,33 @@ public class Conexion {
 	/**
 	 * descarga la aventura con el nombreAventura del servidor
 	 * 
-	 * formato de la HttpResponse
-	 * nombre,passAventura,mj1-12,pista1-12
+	 * formato de la HttpResponse nombre,passAventura,mj1-12,pista1-12
+	 * 
+	 * se recoge la informacion en la variable String respuesta
 	 * 
 	 */
-	public String dameOnlineAventura(String nombreAventura) throws IOException {
-
+	public boolean dameOnlineAventura(String nombreAventura) {
+		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/arcade.php");
-		HttpPost post = new HttpPost("http://cinnamon.webatu.com/dameAventura.php"); // server
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/dameAventura.php"); // server
 		String str = null;
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
-			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-				str = EntityUtils.toString(rp.getEntity());
-			return str;
-		} catch (UnsupportedEncodingException e) {
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				respuesta = EntityUtils.toString(rp.getEntity());
+				retorno = true;
+			} else
+				retorno = false;
+		} catch (Exception e) {
 			e.printStackTrace();
+			retorno = false;
 		}
-		return str;
+		return retorno;
 	}
 
 }

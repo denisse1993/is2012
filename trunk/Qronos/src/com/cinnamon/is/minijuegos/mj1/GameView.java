@@ -24,7 +24,7 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
 
 public class GameView extends SurfaceView {
-	private GameLoop loop;
+	 GameLoop loop;
 	private SurfaceHolder holder;
 	private Marcianos marciano;
 	private ArrayList<Marcianos> marcianosList = new ArrayList<Marcianos>();
@@ -49,6 +49,7 @@ public class GameView extends SurfaceView {
 	private Thread timer;
 	private Explosion bomba;
 	private int posBomba;
+
 	// Setters y getters
 	public int getNumVidas() {
 		return numeroVidas;
@@ -57,10 +58,15 @@ public class GameView extends SurfaceView {
 	public void musicaOff() {
 		music.pause();
 	}
-	public Explosion getBomba(){
+
+	public void musicaOn() {
+		music.start();
+	}
+
+	public Explosion getBomba() {
 		return this.bomba;
 	}
-	
+
 	public void setNumVidas(int vidas) {
 		numeroVidas = vidas;
 	}
@@ -77,22 +83,24 @@ public class GameView extends SurfaceView {
 		crearExplosion(R.drawable.explosion1, x, y);
 		listaExplosion.add(explosion);
 	}
-	public void añadirBomba(int x,int y){
+
+	public void añadirBomba(int x, int y) {
 		crearBomba(R.drawable.bomba1, posBomba, 0);
 		listaExplosion.add(bomba);
 	}
+
 	public void acelerar() {
 		this.velocidad = this.velocidad + 5;
 	}
 
-	public void loopStop(){
-		 this.loop.setRunning();
+	public void loopStop() {
+		this.loop.setRunning();
 	}
 
 	public GameView(Context context, StartingMarcianos ac) {
 		super(context);
 		activity = ac;
-		loop = new GameLoop(this,ac);
+		loop = new GameLoop(this, ac);
 		holder = getHolder();
 		numeroVidas = 3;
 		posVidas = 10;
@@ -109,12 +117,12 @@ public class GameView extends SurfaceView {
 
 			public void surfaceCreated(SurfaceHolder holder) {
 				temazo(R.raw.music);
-				crearBomba(R.drawable.bomba1,posBomba, 0);
+				crearBomba(R.drawable.bomba1, posBomba, 0);
 				crearFondo(R.drawable.espacio4);
 				crearVida(R.drawable.vidas);
 				crearCupula(R.drawable.cupulacristal);
 				loop.start();
-				
+
 			}
 
 			public void surfaceDestroyed(SurfaceHolder holder) {
@@ -127,28 +135,26 @@ public class GameView extends SurfaceView {
 
 	private void ruido(int resource) {
 		ruido = MediaPlayer.create(getContext(), resource);
-		Thread timer = new Thread(){
+		Thread timer = new Thread() {
 			public void run() {
 				// TODO Auto-generated method stub
-				try{
+				try {
 					ruido.start();
 					sleep(1000);
-					
-				}
-				catch(InterruptedException e){
+
+				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
-				finally {
+				} finally {
 					ruido.pause();
-			}        	
+				}
 			}
-			};    
+		};
 		timer.start();
 		timer.stop();
-		//ruido.setLooping(true);
-		
-		//ruido.start();
-		
+		// ruido.setLooping(true);
+
+		// ruido.start();
+
 	}
 
 	private void temazo(int resource) {
@@ -208,8 +214,8 @@ public class GameView extends SurfaceView {
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(), resource);
 		explosion = new Explosion(bmp, x, y);
 	}
-	
-	public void crearBomba(int resource, int x , int y) {
+
+	public void crearBomba(int resource, int x, int y) {
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(), resource);
 		bomba = new Explosion(bmp, x, y);
 	}
@@ -257,31 +263,33 @@ public class GameView extends SurfaceView {
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-		if(bomba.isClick(event.getX(), event.getY())&&(bomba.getEstado() == false)){
-			for(int n =marcianosList.size() - 1;n>=0;n--){
+		if (bomba.isClick(event.getX(), event.getY())
+				&& (bomba.getEstado() == false)) {
+			for (int n = marcianosList.size() - 1; n >= 0; n--) {
 				int s = marcianosList.get(n).getTipo();
-				if(s==1){
+				if (s == 1) {
 					crearSangreMarciano(R.drawable.greenblood, marcianosList
 							.get(n).getX(), marcianosList.get(n).getY());
 				}
-				if(s==2){
+				if (s == 2) {
 					crearSangreMarciano(R.drawable.sangrelili, marcianosList
 							.get(n).getX(), marcianosList.get(n).getY());
 				}
-				if(s==3){
-					crearSangreMarciano(R.drawable.redblood, marcianosList
-							.get(n).getX(), marcianosList.get(n).getY());
+				if (s == 3) {
+					crearSangreMarciano(R.drawable.redblood,
+							marcianosList.get(n).getX(), marcianosList.get(n)
+									.getY());
 				}
 				marcianosList.remove(n);
 				marcianosEliminados++;
 			}
-			crearBomba(R.drawable.bomba2,posBomba,0);
+			crearBomba(R.drawable.bomba2, posBomba, 0);
 			bomba.cambiarEstado(true);
-			
+
 		}
 		for (int i = 0; i < marcianosList.size(); i++) {
 			if (marcianosList.get(i).isClick(event.getX(), event.getY())) {
-				//ruido(R.raw.ruido1);
+				// ruido(R.raw.ruido1);
 				if (marcianosList.get(i).getTipo() == 1) {
 					crearSangreMarciano(R.drawable.greenblood, marcianosList
 							.get(i).getX(), marcianosList.get(i).getY());
@@ -317,17 +325,19 @@ public class GameView extends SurfaceView {
 		}
 		// Comprobar si se ha pulsado algun marcianito,si asi ha sido
 		// eliminarlo
-		
+
 		return super.onTouchEvent(event);
 	}
-	
-	public int getScore(){
+
+	public int getScore() {
 		return this.marcianosEliminados;
 	}
 
 	public void reanudar() {
 		loop.setRunning(true);
-		
+		// loop.start();
+		//loop.run();
+
 	}
 
 }

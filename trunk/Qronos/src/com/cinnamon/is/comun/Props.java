@@ -117,6 +117,7 @@ public final class Props {
 		 * Controla si esta habilitado el modo online, por defecto on
 		 */
 		public static boolean ONLINE = true;
+
 		/**
 		 * Minijuegos maximos
 		 */
@@ -156,7 +157,7 @@ public final class Props {
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
 				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj3,
 				R.drawable.ibmj3, R.drawable.ibmj6, R.drawable.ibmj3,
-				R.drawable.ibmj1, R.drawable.ibmj0, R.drawable.ibmj0,
+				R.drawable.ibmj3, R.drawable.ibmj0, R.drawable.ibmj0,
 				R.drawable.ibmj0, R.drawable.ibmj0 };
 
 		/**
@@ -236,7 +237,7 @@ public final class Props {
 		/**
 		 * String para usar cuando se quiera pasar la aventura entre actividades
 		 */
-		public static final String AVENTURA = "a";
+		public static final String AVENTURA = "aventura";
 
 		/**
 		 * String para usar cuando se quiera pasar el puntuacion entre
@@ -254,6 +255,11 @@ public final class Props {
 		 * Para pasar elementos json
 		 */
 		public static final String JSON = "json";
+
+		/**
+		 * Para indicar que viene del arcade
+		 */
+		public static String ARCADE = "arcade";
 
 		private Comun() {
 		}
@@ -313,8 +319,13 @@ public final class Props {
 		public static String PISTAS_COMPLETO = "Asignadas todas las pistas";
 		public static String SCORE_SUBIDA = "Puntuacion subida al servidor";
 		public static String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
-		public static String AVENTURA_SUBIDA="Aventura subida al servidor";
-		public static String AVENTURA_SUBIDA_ERROR="Problema al subir la aventura al servidor";
+		public static String AVENTURA_SUBIDA = "Aventura subida al servidor";
+		public static String AVENTURA_SUBIDA_ERROR = "Problema al subir la aventura al servidor";
+		public static String VER_RANKING_ERROR = "Error de conexion viendo el ranking";
+		public static String FORMATO_ERROR = "Error en el formato de la aventura";
+		public static String DB_ABRIR_ERROR = "Error al abrir la BD";
+		public static String AVENTURA_BAJADA = "Aventura obtenida";
+		public static String AVENTURA_BAJADA_ERROR = "Error al obtener la aventura";
 
 		private Strings() {
 		}

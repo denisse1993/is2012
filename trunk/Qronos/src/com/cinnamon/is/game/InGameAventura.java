@@ -22,6 +22,7 @@ import com.cinnamon.is.comun.dialog.Dialogos;
 
 /**
  * Clase del Modo Ingame de un Jugador
+ * 
  * @author CinnamonTeam
  * @version 1.0 18.04.2012
  */
@@ -39,7 +40,7 @@ public class InGameAventura extends Activity implements OnClickListener {
 	/**
 	 * Lauch de la actividad
 	 */
-	Launch launch;
+	public Launch launch;
 
 	/**
 	 * DbAdapter para interaccionar con la base de datos
@@ -68,6 +69,13 @@ public class InGameAventura extends Activity implements OnClickListener {
 	 */
 	private int mjActual;
 
+	/**
+	 * Conectar con server
+	 */
+	public Conexion conexion;
+
+	public Launch l;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,6 +89,9 @@ public class InGameAventura extends Activity implements OnClickListener {
 		bCamara.setOnClickListener(this);
 		bRanking.setOnClickListener(this);
 
+		conexion = new Conexion(this);
+		l = new Launch(this);
+		
 		mjActual = generaMinijuego();
 		if (mjActual == -2) {
 			// TODO

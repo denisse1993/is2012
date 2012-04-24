@@ -17,20 +17,35 @@ public class Ranking extends Activity {
 
 	private String JSON;
 
+	private String arcade;
+
 	private Jugador jugador;
+
+	private TextView tvTitulo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ranking);// TODO revisar layout
+		setContentView(R.layout.ranking);
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		JSON = b.getString(Props.Comun.JSON);
-
-		if (jugador == null)
-			rankingOnline();
-		else
+		arcade = b.getString(Props.Comun.ARCADE);
+		tvTitulo = (TextView) findViewById(R.id.textViewTitulo);
+		if (jugador == null) {
+			if (arcade != null) {
+				tvTitulo.setText("Ranking Arcade");
+				rankingOnlineArcade();
+			} else {
+				tvTitulo.setText("Ranking Aventura");
+				rankingOnlineAventura();
+			}
+		} else
 			rankingLocal();
+	}
+
+	// TODO POR HACER
+	private void rankingOnlineAventura() {
 	}
 
 	/**
@@ -48,7 +63,7 @@ public class Ranking extends Activity {
 				String.valueOf(a[11]), suma);
 	}
 
-	public boolean rankingOnline() {
+	public boolean rankingOnlineArcade() {
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
 
 		JSONArray jArray;

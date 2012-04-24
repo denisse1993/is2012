@@ -31,14 +31,16 @@ public class StartingMarcianos extends Minijuego {
 		this.onPause();
 	}
 
+	// TODO se keda dialog pintao sobre el canvas despues de cerrarlo
 	public void resumir() {
+		onResume();
 		game.reanudar();
+		game.musicaOn();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		game.reanudar();
 
 		// el sensormanager.sensor... es el rate para ver cada cuanto actualiza
 		// la captura del sensor
@@ -55,8 +57,11 @@ public class StartingMarcianos extends Minijuego {
 
 	}
 
+	boolean yaFin = false;
+
 	public void finalizar(boolean s) {
 
+		yaFin = true;
 		// Establece valores de puntuacion y superado
 		int puntuacion = game.getScore() * 10;
 		superado = s;
@@ -67,9 +72,9 @@ public class StartingMarcianos extends Minijuego {
 		b.putBoolean(Props.Comun.SUPERADO, superado);
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
-		setResult(puntuacion);
-
-		this.finish();
+		// setResult(puntuacion);
+		//
+		// this.finish();
 	}
 
 	public void parar() {
@@ -79,18 +84,19 @@ public class StartingMarcianos extends Minijuego {
 	}
 
 	protected void onDestroy() {
-		finalizar(true);
+		if (!yaFin)
+			finalizar(true);
 		super.onDestroy();
 
 	}
 
-	protected void lanzaOpcionesDialog() {
-		// TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
-		// para el mj y luego lanza las opciones
-		// Launch.lanzaConfirmacion("Salir del minijuego",
-		// "¿Quieres salir del minijuego sin completarlo?", this);
-		parar();
-		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
-	}
+	// protected void lanzaOpcionesDialog() {
+	// // TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
+	// // para el mj y luego lanza las opciones
+	// // Launch.lanzaConfirmacion("Salir del minijuego",
+	// // "¿Quieres salir del minijuego sin completarlo?", this);
+	// parar();
+	// Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
+	// }
 
 }
