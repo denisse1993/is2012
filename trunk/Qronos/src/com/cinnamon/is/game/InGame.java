@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.UtilQR;
@@ -31,6 +32,8 @@ public class InGame extends Activity implements OnClickListener {
 	ImageView qr;
 
 	private UtilQR q;
+
+	String nombreAventura;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class InGame extends Activity implements OnClickListener {
 			q.lanzarQR();
 			break;
 		case R.id.bqr:
+			Toast.makeText(this, "Lee el c—digo de la aventura", 5);
 			q = new UtilQR(this);
 			Bitmap b = q.getQR(etqr.getText().toString());
 			qr.setImageBitmap(b);
@@ -66,12 +70,13 @@ public class InGame extends Activity implements OnClickListener {
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-				result.setText(contents);
-			} else if (resultCode == RESULT_CANCELED) {
-				// Handle cancell
+				if (contents.equals(nombreAventura)) {
+					String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+					result.setText(contents);
+				} else if (resultCode == RESULT_CANCELED) {
+					// Handle cancell
+				}
 			}
 		}
-
 	}
 }
