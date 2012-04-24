@@ -23,6 +23,7 @@ import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
 import com.cinnamon.is.game.Arcade;
 import com.cinnamon.is.game.Aventura;
+import com.cinnamon.is.game.InGameAventura;
 import com.cinnamon.is.game.InGameHost;
 import com.cinnamon.is.game.Login;
 
@@ -431,12 +432,29 @@ public final class Launch {
 	/**
 	 * Sirve para subir una aventura al servidor (tabla quest)
 	 * 
-	 * @param nick
-	 * @param pass
+	 * @param a
 	 */
 	public void lanzaDialogoEsperaUpdateQuest(Aventura a) { //
-		// valor 2 activa subir scores
+		// valor 3 activa actualizar aventura
 		new ConexionServerTask().execute(new Object[] { 3, a });
+	}
+
+	/**
+	 * Sirve para ver ranking arcade online (tabla arcade)
+	 * 
+	 */
+	public void lanzaDialogoEsperaVerRankingArcade() { //
+		// valor 4 activa ver ranking online
+		new ConexionServerTask().execute(new Object[] { 4 });
+	}
+
+	/**
+	 * Sirve para ver ranking arcade online (tabla arcade)
+	 * 
+	 */
+	public void lanzaDialogoEsperaGetQuest(String nombreAventura) { //
+		// valor 2 activa get aventura
+		new ConexionServerTask().execute(new Object[] { 5, nombreAventura });
 	}
 
 	/**
@@ -493,15 +511,27 @@ public final class Launch {
 				Arcade upScore = (Arcade) a;
 				nick = (String) datos[1];
 				int[] b = (int[]) datos[2];
-				// TODO actualizar cuando updateArcade se adapte
-				// ret[1]=upScore.conexion.updateArcade(b, nick);
+				ret[1] = upScore.conexion.updateArcade(b, nick);
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
-				InGameHost uploadQuest= (InGameHost) a;
+				InGameHost uploadQuest = (InGameHost) a;
 				Aventura quest = (Aventura) datos[1];
-				// TODO actualizar cuando updateAventura
-				// ret[1]=upScore.conexion.updateAventura(a);
+				ret[1] = uploadQuest.conexion.creaOnlineAventura(
+						quest.getMJArray(), quest.getPistasArray(),
+						quest.getNombre(), quest.getPass());
+			case 4:
+				// Ver ranking arcade
+				Arcade seeRanking = (Arcade) a;
+				ret[1] = seeRanking.conexion.dameOnlineArcade();
+				break;
+			case 5:
+				// Get aventura
+				InGameAventura getQuest = (InGameAventura) a;
+				String qNombre = (String) datos[1];
+				ret[1] = getQuest.conexion.dameOnlineAventura(qNombre);
+				break;
+
 			}
 			return ret;
 		}
@@ -558,13 +588,51 @@ public final class Launch {
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
-				boolean conex2 = (Boolean) result[1];
-				InGameHost uploadQuest= (InGameHost) a;
-				if (conex2)
-					uploadQuest.launch.lanzaToast(Props.Strings.AVENTURA_SUBIDA);
-				else
-					uploadQuest.launch.lanzaToast(Props.Strings.AVENTURA_SUBIDA_ERROR);
+				boolean conex3 = (Boolean) result[1];
+				InGameHost uploadQuest = (InGameHost) a;
+				if (conex3) {
+					if (uploadQuest.conexion.getRespuesta().equals("1")) {
+						uploadQuest.launch
+								.lanzaToast(Props.Strings.AVENTURA_SUBIDA);
+					} else if (uploadQuest.conexion.getRespuesta().equals("2")) {
+						uploadQuest.launch
+								.lanzaToast(Props.Strings.FORMATO_ERROR);
+					} else if (uploadQuest.conexion.getRespuesta().equals("3")) {
+						uploadQuest.launch
+								.lanzaToast(Props.Strings.DB_ABRIR_ERROR);
+					}
+				} else
+					uploadQuest.launch
+							.lanzaToast(Props.Strings.AVENTURA_SUBIDA_ERROR);
 				break;
+			case 4:
+				// Ver ranking arcade
+				boolean conex4 = (Boolean) result[1];
+				Arcade seeRanking = (Arcade) a;
+				if (conex4) {
+					String json = seeRanking.conexion.getRespuesta();
+					Bundle b = new Bundle();
+					b.putSerializable(Props.Comun.JSON, json);
+					b.putSerializable(Props.Comun.ARCADE, "Arcade");
+					seeRanking.l.lanzaActivity(Props.Action.RANKING, b);
+				} else {
+					seeRanking.l.lanzaToast(Props.Strings.VER_RANKING_ERROR);
+				}
+				break;
+			case 5:
+				// Obtener Aventura
+				boolean conex5 = (Boolean) result[1];
+				InGameAventura getQuest = (InGameAventura) a;
+				if (conex5) {
+					String aventura = getQuest.conexion.getRespuesta();
+					// TODO Aventura
+					// rellenar la aventura local en base a la aventura obtenida
+					getQuest.l.lanzaToast(Props.Strings.AVENTURA_BAJADA);
+				} else {
+					getQuest.l.lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
+				}
+				break;
+
 			}
 
 		}

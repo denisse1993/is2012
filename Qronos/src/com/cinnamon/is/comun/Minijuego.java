@@ -227,7 +227,6 @@ public abstract class Minijuego extends Activity {
 
 	public void resumir() {
 		this.onResume();
-		
 	}
 
 }

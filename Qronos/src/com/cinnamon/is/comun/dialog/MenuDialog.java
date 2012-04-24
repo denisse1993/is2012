@@ -2,6 +2,7 @@ package com.cinnamon.is.comun.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -9,7 +10,6 @@ import android.widget.LinearLayout;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Minijuego;
-
 
 /**
  * Clase que implementa los dialogs de menu
@@ -26,8 +26,7 @@ public class MenuDialog extends Dialogos {
 	Button bRenaudar;
 	Button bReiniciar;
 	Button bSalir;
-	
-	
+
 	Minijuego mj;
 
 	/**
@@ -42,7 +41,8 @@ public class MenuDialog extends Dialogos {
 	 * @param _theme
 	 *            Tema elegido para el dialog
 	 */
-	public MenuDialog(Context _context,String _title, int _modo, int _theme, Minijuego _mj) {
+	public MenuDialog(Context _context, String _title, int _modo, int _theme,
+			Minijuego _mj) {
 		super(_context, _title, _modo, _theme);
 		this.mj = _mj;
 	}
@@ -88,19 +88,18 @@ public class MenuDialog extends Dialogos {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ButtonResumeMenu:
-			this.dismiss();
+			MenuDialog.this.dismiss();
 			mj.resumir();
 			break;
 		case R.id.ButtonRestartMenu:
-			this.dismiss();
+			MenuDialog.this.dismiss();
 			mj.reiniciar();
 			break;
 		case R.id.ButtonExitMenu:
-			this.dismiss();
+			MenuDialog.this.dismiss();
 			mj.finalizar(false);
 			break;
 		}
 	}
-	
 
 }

@@ -116,69 +116,71 @@ public class Arcade extends Activity implements View.OnClickListener,
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras();
+			mDbHelper.open(false);
+			int score = b.getInt(Props.Comun.SCORE);
 			switch (requestCode) {
 			case Props.Comun.cmj1:
-				int score = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score, Props.Comun.cmj1 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice = Props.Comun.cmj1 - 1;
+				if (score > jugador.getScore(indice)) {
+					jugador.setScore(score, indice);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj2:
-				int score2 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score2, Props.Comun.cmj2 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice2 = Props.Comun.cmj2 - 1;
+				if (score > jugador.getScore(indice2)) {
+					jugador.setScore(score, indice2);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj3:
-				int score3 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score3, Props.Comun.cmj3 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice3 = Props.Comun.cmj3 - 1;
+				if (score > jugador.getScore(indice3)) {
+					jugador.setScore(score, indice3);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj4:
-				int score4 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score4, Props.Comun.cmj4 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice4 = Props.Comun.cmj4 - 1;
+				if (score > jugador.getScore(indice4)) {
+					jugador.setScore(score, indice4);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj5:
-				int score5 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score5, Props.Comun.cmj5 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice5 = Props.Comun.cmj5 - 1;
+				if (score > jugador.getScore(indice5)) {
+					jugador.setScore(score, indice5);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj6:
-				int score6 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score6, Props.Comun.cmj6 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice6 = Props.Comun.cmj6 - 1;
+				if (score > jugador.getScore(indice6)) {
+					jugador.setScore(score, indice6);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj7:
-				int score7 = b.getInt(Props.Comun.SCORE);
-				jugador.setScore(score7, Props.Comun.cmj7 - 1);
-				mDbHelper.open(false);
-				mDbHelper.updateRowParcade(jugador.getNombre(),
-						jugador.getScore());
-				mDbHelper.close();
-				actualizarDatos();
+				int indice7 = Props.Comun.cmj7 - 1;
+				if (score > jugador.getScore(indice7)) {
+					jugador.setScore(score, indice7);
+					mDbHelper.updateRowParcade(jugador.getNombre(),
+							jugador.getScore());
+					actualizarDatos();
+				}
 				break;
 			case Props.Comun.cmj8:
 				break;
@@ -192,7 +194,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 
 			}
+			mDbHelper.close();
 		}
+
 	}
 
 	/**
@@ -315,7 +319,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Metodo para subir puntuaciones al servidor
 	 */
 	private void subirScores() {
-		l.lanzaDialogoEsperaUpdateScoreArcade(jugador.getNombre(), jugador.getScore());
+		l.lanzaDialogoEsperaUpdateScoreArcade(jugador.getNombre(),
+				jugador.getScore());
 		// try {
 		//
 		// // conexion.updateArcade(arraySc, jugador.getNombre());
@@ -391,22 +396,18 @@ public class Arcade extends Activity implements View.OnClickListener,
 		case R.id.iBinfoArcade:
 			Launch.lanzaAviso("Información de arcade", Props.Strings.iArcade,
 					this);
-			// TODO lanzaOpciones prueba aDactual = Launch.lanzaOpciones(this);
 			break;
 		case R.id.iBseeSc:
-			Bundle b = new Bundle();
 			if (Props.Comun.ONLINE) {
-				try {
-					String json = conexion.dameOnlineArcade();
-					b.putSerializable(Props.Comun.JSON, json);
-				} catch (IOException e) {
-					l.lanzaToast(Props.Strings.ERROR_INET);
-					Props.Comun.ONLINE = false;
-				}
+				l.lanzaDialogoEsperaVerRankingArcade();
 			} else {
+				Bundle b = new Bundle();
 				b.putSerializable(Props.Comun.JUGADOR, jugador);
+				b.putSerializable(Props.Comun.ARCADE, "Arcade");
+				l.lanzaActivity(Props.Action.RANKING, b);
 			}
-			l.lanzaActivity(Props.Action.RANKING, b);
+			
+			break;
 		case R.id.iBupSc:
 			Launch.lanzaConfirmacion("Confirmacion para subir puntuaciones de "
 					+ jugador.getNombre(), Props.Strings.upSc, this);

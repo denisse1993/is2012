@@ -22,9 +22,9 @@ import android.widget.ImageView;
  * 
  * @author Cinnamon Team
  * @version 1.0 19.04.2012
- *
+ * 
  */
-public class InGameHost extends Activity implements OnClickListener{
+public class InGameHost extends Activity implements OnClickListener {
 
 	/**
 	 * Conexion de la actividad
@@ -61,11 +61,11 @@ public class InGameHost extends Activity implements OnClickListener{
 	 * 
 	 */
 	private ImageButton bOpciones, bRanking;
-	
+
 	private ImageView ivQR;
 
+	public Conexion conexion;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,11 +76,12 @@ public class InGameHost extends Activity implements OnClickListener{
 
 		bOpciones.setOnClickListener(this);
 		bRanking.setOnClickListener(this);
-		
+
 		ivQR = (ImageView) findViewById(R.id.ivQR);
-		
+		conexion = new Conexion(this);
+		launch = new Launch(this);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
@@ -123,6 +124,5 @@ public class InGameHost extends Activity implements OnClickListener{
 			launch.lanzaActivity(Props.Action.OPCIONES);
 		}
 	}
-
 
 }

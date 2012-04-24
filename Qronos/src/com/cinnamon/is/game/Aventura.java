@@ -324,4 +324,26 @@ public class Aventura implements Serializable {
 		this.pass = pass;
 	}
 
+	/**
+	 * @return un array con los mj
+	 */
+	public String[] getMJArray() {
+		String[] a = new String[minijuegos.size()];
+		int i = 0;
+		for (T t : minijuegos)
+			a[i++] = String.valueOf(t.idMj);
+		return a;
+	}
+
+	/**
+	 * @return un array con las pistas
+	 */
+	public String[] getPistasArray() {
+		String[] a = new String[minijuegos.size()];
+		int i = 0;
+		for (T t : minijuegos)
+			a[i++] = String.valueOf(t.pista);
+		return a;
+	}
+
 }
