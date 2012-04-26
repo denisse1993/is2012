@@ -16,7 +16,7 @@ import com.cinnamon.is.comun.Props;
  * poder ser pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.2 16.04.2012
+ * @version 1.3 26.04.2012
  */
 public class Jugador implements Serializable {
 
@@ -53,7 +53,7 @@ public class Jugador implements Serializable {
 	/**
 	 * ID para la serializacion
 	 */
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 
 	/**
 	 * Genera un jugador por parametros
@@ -82,7 +82,7 @@ public class Jugador implements Serializable {
 	}
 
 	/**
-	 * Genera un jugador por parametros
+	 * Genera un jugador por parametros con scores
 	 * 
 	 * @param nombre
 	 *            del jugador
@@ -96,6 +96,20 @@ public class Jugador implements Serializable {
 	 */
 	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest) {
 		this(nombre, pass, score, scoreQuest, 0, null);
+	}
+
+	/**
+	 * Genera un jugador por parametros con score arcade
+	 * 
+	 * @param nombre
+	 *            del jugador
+	 * @param pass
+	 *            del jugador
+	 * @param score
+	 *            del jugador
+	 */
+	public Jugador(String nombre, String pass, int[] score) {
+		this(nombre, pass, score, new int[Props.Comun.MAX_MJ], 0, null);
 	}
 
 	/**
@@ -231,7 +245,7 @@ public class Jugador implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public String getAventura() {
 		return aventura;
 	}

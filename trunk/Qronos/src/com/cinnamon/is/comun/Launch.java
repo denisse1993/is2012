@@ -7,6 +7,11 @@
 //
 package com.cinnamon.is.comun;
 
+import org.apache.http.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -23,9 +28,11 @@ import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
 import com.cinnamon.is.game.Arcade;
 import com.cinnamon.is.game.Aventura;
+import com.cinnamon.is.game.EligeModoAventura;
 import com.cinnamon.is.game.InGameAventura;
 import com.cinnamon.is.game.InGameHost;
 import com.cinnamon.is.game.Login;
+import com.cinnamon.is.game.Ranking;
 
 /**
  * <p>
@@ -434,8 +441,8 @@ public final class Launch {
 	 * 
 	 * @param a
 	 */
-	public void lanzaDialogoEsperaUpdateQuest(Aventura a) { //
-		// valor 3 activa actualizar aventura
+	public void lanzaDialogoEsperaCreaQuest(Aventura a) { //
+		// valor 3 activa crear aventura
 		new ConexionServerTask().execute(new Object[] { 3, a });
 	}
 
@@ -449,17 +456,31 @@ public final class Launch {
 	}
 
 	/**
-	 * Sirve para ver ranking arcade online (tabla arcade)
+	 * Sirve para obtener una aventura (tabla quest)
 	 * 
 	 */
 	public void lanzaDialogoEsperaGetQuest(String nombreAventura) { //
-		// valor 2 activa get aventura
+		// valor 5 activa get aventura
 		new ConexionServerTask().execute(new Object[] { 5, nombreAventura });
 	}
 
 	/**
-	 * Clase asincrona para realizar conexiones con el server Debe usarse
-	 * siempre con un Launch creado como objeto
+	 * Sirve para actualizar una aventura (tabla quest)
+	 * 
+	 */
+	public void lanzaDialogoEsperaUpdateQuest(Aventura a) { //
+		// valor 6 activa update aventura
+		new ConexionServerTask().execute(new Object[] { 6, a });
+	}
+
+	/**
+	 * <p>
+	 * Clase asincrona para realizar conexiones con el server
+	 * </p>
+	 * <p>
+	 * Debe usarse siempre con un Launch creado como objeto e implementar la
+	 * interfaz Inet para las opciones: 3 y 5
+	 * </p>
 	 * 
 	 * @author Cinnamon Team
 	 * @version 1.0 23.04.2012
@@ -478,7 +499,7 @@ public final class Launch {
 		@Override
 		protected Object[] doInBackground(Object... datos) {
 			String nick, pass;
-			Object[] ret = new Object[2];
+			Object[] ret = new Object[3];
 			// tarea a realizar
 			int tarea = (Integer) datos[0];
 			// rellena tarea
@@ -491,20 +512,54 @@ public final class Launch {
 				pass = (String) datos[2];
 				// hace login y obtiene return
 				ret[1] = loginA.conexion.login(nick, pass);
-				if (loginA.conexion.getRespuesta().equals("3")) {
+				String respuestaSave = loginA.conexion.getRespuesta();
+				if (respuestaSave.equals("3")) {
+					// TODO Desactivado Solo permitimos registro con inet previo
 					// devuelve Usuario Inexistente, comprobar que existe en la
 					// BDlocal, y entonces registras online directametne
-					if (loginA.loginLocal())
-						loginA.conexion.register(nick, pass);
+					// if (loginA.loginLocal())
+					// loginA.conexion.register(nick, pass);
+				} else if (respuestaSave.equals("1")) {
+					// esta en la bd online, comprobar si existe en bd local,
+					// si no existe crearlo cogiendo sus datos de la bd online
+					if (!loginA.loginLocal()) {
+						loginA.conexion.dameOnlineArcade();
+						String json = loginA.conexion.getRespuesta();
+						String n;
+						int[] a = new int[Props.Comun.MAX_MJ];
+						JSONArray jArray;
+						try {
+							jArray = new JSONArray(json);
+							JSONObject json_data = null;
+							for (int i = 0; i < jArray.length(); i++) {
+								json_data = jArray.getJSONObject(i);
+								n = json_data.getString("NICK");
+								if (n.equals(loginA.nombre)) {// mismo nombre
+									for (int j = 0; j < a.length; j++) {
+										int code = j + 1;
+										a[j] = Integer.parseInt(json_data
+												.getString("MJ" + code));
+									}
+									loginA.creaJugadorLocalActualizado(a);
+									respuestaSave = "4";
+									break;
+								}
+							}
+						} catch (JSONException e1) {
+						} catch (ParseException e1) {
+						}
+					}
 				}
+				ret[2] = respuestaSave;
 				break;
 			case 1:
 				// Register
 				Login register = (Login) a;
 				nick = (String) datos[1];
 				pass = (String) datos[2];
-				// hace login y obtiene return
+				// hace registro y obtiene return
 				ret[1] = register.conexion.register(nick, pass);
+				ret[2] = register.conexion.getRespuesta();
 				break;
 			case 2:
 				// Upload Score Arcade
@@ -515,11 +570,12 @@ public final class Launch {
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
-				InGameHost uploadQuest = (InGameHost) a;
+				Inet inet = (Inet) a;
 				Aventura quest = (Aventura) datos[1];
-				ret[1] = uploadQuest.conexion.creaOnlineAventura(
-						quest.getMJArray(), quest.getPistasArray(),
-						quest.getNombre(), quest.getPass());
+				ret[1] = inet.c().creaOnlineAventura(quest.getMJArrayString(),
+						quest.getPistasArrayString(), quest.getNombre(),
+						quest.getPass(), false);
+				break;
 			case 4:
 				// Ver ranking arcade
 				Arcade seeRanking = (Arcade) a;
@@ -527,11 +583,19 @@ public final class Launch {
 				break;
 			case 5:
 				// Get aventura
-				InGameAventura getQuest = (InGameAventura) a;
+				Inet getQuest = (Inet) a;
 				String qNombre = (String) datos[1];
-				ret[1] = getQuest.conexion.dameOnlineAventura(qNombre);
+				ret[1] = getQuest.c().dameOnlineAventura(qNombre);
 				break;
-
+			case 6:
+				// Update Aventura (tabla quest)
+				Inet updateQ = (Inet) a;
+				Aventura quest2 = (Aventura) datos[1];
+				ret[1] = updateQ.c().creaOnlineAventura(
+						quest2.getMJArrayString(),
+						quest2.getPistasArrayString(), quest2.getNombre(),
+						quest2.getPass(), true);
+				break;
 			}
 			return ret;
 		}
@@ -540,47 +604,62 @@ public final class Launch {
 		protected void onPostExecute(Object[] result) {
 			dialog.dismiss();
 			int tarea = (Integer) result[0];
+			String respuestaSave;
+			boolean conex;
 			switch (tarea) {
 			case 0:
 				// login
 				Props.Comun.ONLINE = (Boolean) result[1];
+				respuestaSave = (String) result[2];
 				Login login = (Login) a;
 				if (Props.Comun.ONLINE == false) {
 					login.l.lanzaToast(Props.Strings.ERROR_INET);
+					if (login.loginLocal())
+						login.lanzaMenuPrincipal();
+					else if (!Props.Comun.ONLINE)
+						login.l.lanzaToast(Props.Strings.USER_PASS_MAL);
 				} else {
-					if (login.conexion.getRespuesta().equals("1")) {
+					if (respuestaSave.equals("1")) {
 						login.l.lanzaToast(Props.Strings.LOGIN_OK);
-					} else if (login.conexion.getRespuesta().equals("2")) {
+						if (login.loginLocal())
+							login.lanzaMenuPrincipal();
+					} else if (respuestaSave.equals("2")) {
 						login.l.lanzaToast(Props.Strings.PASS_ERROR);
-					} else if (login.conexion.getRespuesta().equals("3")) {
+					} else if (respuestaSave.equals("3")) {
 						login.l.lanzaToast(Props.Strings.USER_INET_NO_EXISTE);
+					} else if (respuestaSave.equals("4")) {
+						login.l.lanzaToast(Props.Strings.USER_UPDATE);
+						login.lanzaMenuPrincipal();
 					}
 				}
-				if (login.loginLocal())
-					login.lanzaMenuPrincipal();
-				else if (!Props.Comun.ONLINE)
-					login.l.lanzaToast(Props.Strings.USER_PASS_MAL);
 				break;
 			case 1:
 				// Register
 				Props.Comun.ONLINE = (Boolean) result[1];
 				Login register = (Login) a;
+				respuestaSave = (String) result[2];
 				if (Props.Comun.ONLINE == false) {
 					register.l.lanzaToast(Props.Strings.ERROR_INET);
 				} else {
-					// TODO a filtar Toast con valores devueltos por online
-				}
-				if (!register.creaJugadorLocal())
-					register.lanzaMenuPrincipal();
-				else if (!Props.Comun.ONLINE) {
-					register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
-					// login.l.lanzaToast(Props.Strings.USER_CREADO);
+					if (respuestaSave.equals("1")) {
+						// TODO solo registra offline si ha registrado online
+						register.l.lanzaToast(Props.Strings.USER_CREADO_ONLINE);
+						if (!register.creaJugadorLocal())
+							register.lanzaMenuPrincipal();
+						// else if (!Props.Comun.ONLINE) {
+						// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
+						// login.l.lanzaToast(Props.Strings.USER_CREADO);
+						// }
+					} else if (respuestaSave.equals("2")) {
+						register.l
+								.lanzaToast(Props.Strings.USER_YA_EXISTE_ONLINE);
+					}
 				}
 				break;
 			case 2:
 				// Upload Score Arcade
 				Arcade upScore = (Arcade) a;
-				boolean conex = (Boolean) result[1];
+				conex = (Boolean) result[1];
 				if (conex)
 					upScore.l.lanzaToast(Props.Strings.SCORE_SUBIDA);
 				else
@@ -588,28 +667,27 @@ public final class Launch {
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
-				boolean conex3 = (Boolean) result[1];
-				InGameHost uploadQuest = (InGameHost) a;
-				if (conex3) {
-					if (uploadQuest.conexion.getRespuesta().equals("1")) {
-						uploadQuest.launch
-								.lanzaToast(Props.Strings.AVENTURA_SUBIDA);
-					} else if (uploadQuest.conexion.getRespuesta().equals("2")) {
-						uploadQuest.launch
-								.lanzaToast(Props.Strings.FORMATO_ERROR);
-					} else if (uploadQuest.conexion.getRespuesta().equals("3")) {
-						uploadQuest.launch
-								.lanzaToast(Props.Strings.DB_ABRIR_ERROR);
+				conex = (Boolean) result[1];
+				Inet inet = (Inet) a;
+				if (conex) {
+					if (inet.c().getRespuesta().equals("1")) {
+						inet.l().lanzaToast(Props.Strings.AVENTURA_SUBIDA);
+						EligeModoAventura eli = (EligeModoAventura) a;
+						eli.creaAventuraLocal();
+						eli.lanzaSelecMJ();
+					} else if (inet.c().getRespuesta().equals("2")) {
+						inet.l().lanzaToast(Props.Strings.AVENTURA_YA_EXISTE);
+					} else if (inet.c().getRespuesta().equals("3")) {
+						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
 				} else
-					uploadQuest.launch
-							.lanzaToast(Props.Strings.AVENTURA_SUBIDA_ERROR);
+					inet.l().lanzaToast(Props.Strings.AVENTURA_SUBIDA_ERROR);
 				break;
 			case 4:
 				// Ver ranking arcade
-				boolean conex4 = (Boolean) result[1];
+				conex = (Boolean) result[1];
 				Arcade seeRanking = (Arcade) a;
-				if (conex4) {
+				if (conex) {
 					String json = seeRanking.conexion.getRespuesta();
 					Bundle b = new Bundle();
 					b.putSerializable(Props.Comun.JSON, json);
@@ -621,18 +699,32 @@ public final class Launch {
 				break;
 			case 5:
 				// Obtener Aventura
-				boolean conex5 = (Boolean) result[1];
-				InGameAventura getQuest = (InGameAventura) a;
-				if (conex5) {
-					String aventura = getQuest.conexion.getRespuesta();
+				conex = (Boolean) result[1];
+				Inet getQuest = (Inet) a;
+				if (conex) {
+					String aventura = getQuest.c().getRespuesta();
 					// TODO Aventura
 					// rellenar la aventura local en base a la aventura obtenida
-					getQuest.l.lanzaToast(Props.Strings.AVENTURA_BAJADA);
+					getQuest.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
 				} else {
-					getQuest.l.lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
+					getQuest.l()
+							.lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
 				}
 				break;
-
+			case 6:
+				// Update Aventura
+				conex = (Boolean) result[1];
+				Inet upQ = (Inet) a;
+				if (conex) {
+					if (upQ.c().getRespuesta().equals("1")) {
+						upQ.l().lanzaToast(Props.Strings.AVENTURA_UPDATED);
+					} else if (upQ.c().getRespuesta().equals("3")) {
+						upQ.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
+					}
+				} else {
+					upQ.l().lanzaToast(Props.Strings.AVENTURA_UPDATED_ERROR);
+				}
+				break;
 			}
 
 		}

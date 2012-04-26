@@ -2,7 +2,7 @@
 // Universidad Complutense de Madrid
 // Ingenieria Informática
 //
-// PROYECTO: TuringApp
+// PROYECTO: QRonos
 // ASIGNATURA : Ingeniería del Software
 //
 
@@ -17,7 +17,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.UtilQR;
@@ -30,7 +32,8 @@ import com.cinnamon.is.comun.Props.Enum.Tabla;
  * @author Cinnamon Team
  * @version 1.3 19.04.2012
  */
-public class EligeModoAventura extends Activity implements OnClickListener {
+public class EligeModoAventura extends Activity implements Inet,
+		OnClickListener {
 
 	/**
 	 * Botones del view
@@ -62,11 +65,28 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 	 */
 	private UtilQR q;
 
+	/**
+	 * Nombre de la aventura
+	 */
+	private String nameQuest="quest";
+
+	/**
+	 * Para contactar con BD online
+	 */
+	private Conexion conexion;
+
+	/**
+	 * Aventura inicial
+	 */
+	private Aventura a;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.elige_modo_aventura);
 		launch = new Launch(this);
+
+		conexion = new Conexion(this);
 
 		bCrear = (Button) findViewById(R.id.b_crear_aventura);
 		bCrear.setOnClickListener(this);
@@ -85,16 +105,42 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (vClicked = v.getId()) {
 		case R.id.b_crear_aventura:
+			// name escrito de la aventura no existe ya en la BD
+			a = new Aventura(nameQuest, nameQuest);
+			launch.lanzaDialogoEsperaCreaQuest(a);
+			break;
+		case R.id.b_unirse_aventura:
 			if (creaJugadorLocalPquest())
 				getJugadorLocalPquest();
-			Bundle bundle = new Bundle();
-			bundle.putSerializable(Props.Comun.AVENTURA, new Aventura(
-					"aventura", "aventura"));
-			launch.lanzaActivity(Props.Action.SELECMJ, bundle);
-		case R.id.b_unirse_aventura:
-			q = new UtilQR(this);
-			q.lanzarQR();
+
 		}
+	}
+
+	/**
+	 * Abre el menu principal
+	 */
+	public void lanzaSelecMJ() {
+		Bundle b = new Bundle();
+		b.putSerializable(Props.Comun.AVENTURA, a);
+		Launch.lanzaActivity(this, Props.Action.SELECMJ, b);
+		finish();
+	}
+
+	/**
+	 * Crea la aventura si no existe en la tabla arcade de la BD local
+	 * 
+	 * @return true o false en funcion de si existia o no
+	 */
+	public boolean creaAventuraLocal() {
+		// leer de la BD si existe nombre
+		boolean esta = true;
+		if (!mDbHelper.existsRow(nameQuest, Tabla.quest)) {
+			// crear nuevo jugador
+			mDbHelper.createRowQuest(nameQuest, nameQuest, new Integer[12],
+					new String[12]);
+			esta = false;
+		}
+		return esta;
 	}
 
 	@Override
@@ -120,9 +166,8 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 		boolean esta = true;
 		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
 			// crear nuevo jugador
-			//TODO añadir NOMBRE AVENTURA
 			mDbHelper.createRowPquest(jugador.getNombre(), new int[] { 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0,null);
+					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, null);
 			esta = false;
 		}
 		return esta;
@@ -168,7 +213,7 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				//TODO
+				// TODO
 				/*
 				 * if (dameOnlineAventura(contents){
 				 * 
@@ -179,6 +224,16 @@ public class EligeModoAventura extends Activity implements OnClickListener {
 			}
 		}
 
+	}
+
+	@Override
+	public Launch l() {
+		return launch;
+	}
+
+	@Override
+	public Conexion c() {
+		return conexion;
 	}
 
 }

@@ -54,11 +54,6 @@ public class SelecPista extends Activity implements OnClickListener {
 	private boolean der, izq;
 
 	/**
-	 * Jugador actual en la aplicacion
-	 */
-	private Jugador jugador;
-
-	/**
 	 * Aventura actual en la aplicacion
 	 */
 	private Aventura aventura;
@@ -68,22 +63,36 @@ public class SelecPista extends Activity implements OnClickListener {
 	 */
 	private Launch l;
 
+	/**
+	 * Adaptador para conectar con la BD
+	 */
+	private DbAdapter mDbHelper;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.selecpista);
 		Bundle b = getIntent().getExtras();
-		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
 		l = new Launch(this);
+		mDbHelper = new DbAdapter(this);
+		mDbHelper.open(false);
 		grupoMJ = 0;
 		inicializar();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mDbHelper.close();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		habilitarGrupoMJ(0);
+		if (!mDbHelper.isOpen())
+			mDbHelper.open(false);
 	}
 
 	/**
@@ -227,7 +236,7 @@ public class SelecPista extends Activity implements OnClickListener {
 		// "¿Deseas volver a selección de Minijuegos?",
 		// "Aviso: Se resetearán las pistas"))
 		// finish();
-		// TODO temporal hasta tener un dialog en condiciones
+		// TODO temporal hasta tener un dialog normal
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("¿Deseas volver a selección de Minijuegos?")
 				.setMessage("Aviso: Se resetearán las pistas")
@@ -258,9 +267,14 @@ public class SelecPista extends Activity implements OnClickListener {
 			break;
 		case R.id.bDoneSelecPISTA:
 			Bundle b = new Bundle();
-			b.putSerializable(Props.Comun.JUGADOR, jugador);
 			b.putSerializable(Props.Comun.AVENTURA, aventura);
-			// TODO Launch.lanzaActivity(this,Props.Action.SELECPISTA, b);
+			// actualizar en BD tabla quest
+			mDbHelper.updateRowQuest(aventura.getNombre(), null,
+					aventura.getMJArrayInteger(),
+					aventura.getPistasArrayString());
+			Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+			Props.Comun.ACTIVIDAD = null;// resetea
+			// TODO Lanzar Siguiente Actividad
 			break;
 		case R.id.iBinfoSelecPISTA:
 			Launch.lanzaAviso("Información", Props.Strings.iSelecPISTA, this);
@@ -344,34 +358,34 @@ public class SelecPista extends Activity implements OnClickListener {
 		} else
 			bDoneSelecPISTA.setEnabled(false);
 	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// funciona pero si lo haces por el centro de la pantalla, donde esta el
-		// layout arcade, y no siempre
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_MOVE:
-			float x1,
-			x2,
-			dif,
-			lim = llselecpista.getWidth() / 4;
-
-			x1 = event.getHistoricalX(0);
-			x2 = event.getX();
-			dif = x1 - x2;
-			if (!izq && der && dif > 0 && dif > lim)
-				habilitarGrupoMJ(grupoMJ + 1);
-			else if (izq && !der && dif < 0 && Math.abs(dif) > lim)
-				habilitarGrupoMJ(grupoMJ - 1);
-			break;
-		}
-		/*
-		 * switch (event.getAction()) { case MotionEvent.ACTION_DOWN: x1 =
-		 * event.getX(); break; case MotionEvent.ACTION_UP: x2 = event.getX();
-		 * dif=x1-x2; lim = arcade.getWidth() / 3; if (!izq && der && dif > 0 &&
-		 * dif > lim) { habilitarGrupoMJ(grupoMJ + 1); } else if (izq && !der &&
-		 * dif < 0 && Math.abs(dif) > lim) { habilitarGrupoMJ(grupoMJ - 1); } }
-		 */
-		return true;
-	}
+	// TODO ontouch desactivado
+	// @Override
+	// public boolean onTouchEvent(MotionEvent event) {
+	// // funciona pero si lo haces por el centro de la pantalla, donde esta el
+	// // layout arcade, y no siempre
+	// switch (event.getAction()) {
+	// case MotionEvent.ACTION_MOVE:
+	// float x1,
+	// x2,
+	// dif,
+	// lim = llselecpista.getWidth() / 4;
+	//
+	// x1 = event.getHistoricalX(0);
+	// x2 = event.getX();
+	// dif = x1 - x2;
+	// if (!izq && der && dif > 0 && dif > lim)
+	// habilitarGrupoMJ(grupoMJ + 1);
+	// else if (izq && !der && dif < 0 && Math.abs(dif) > lim)
+	// habilitarGrupoMJ(grupoMJ - 1);
+	// break;
+	// }
+	// /*
+	// * switch (event.getAction()) { case MotionEvent.ACTION_DOWN: x1 =
+	// * event.getX(); break; case MotionEvent.ACTION_UP: x2 = event.getX();
+	// * dif=x1-x2; lim = arcade.getWidth() / 3; if (!izq && der && dif > 0 &&
+	// * dif > lim) { habilitarGrupoMJ(grupoMJ + 1); } else if (izq && !der &&
+	// * dif < 0 && Math.abs(dif) > lim) { habilitarGrupoMJ(grupoMJ - 1); } }
+	// */
+	// return true;
+	// }
 }

@@ -70,7 +70,7 @@ public class Ranking extends Activity {
 		try {
 			jArray = new JSONArray(JSON);
 			JSONObject json_data = null;
-			for (int i = 0; i < jArray.length(); i++) {
+			for (int i = 0; i < 5; i++) {// solo muestra 5 primeros
 				int j = i + 1;
 				json_data = jArray.getJSONObject(i);
 				nick = json_data.getString("NICK");

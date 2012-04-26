@@ -7,6 +7,8 @@
 //
 package com.cinnamon.is.comun;
 
+import android.app.Activity;
+
 import com.cinnamon.is.R;
 
 /**
@@ -157,7 +159,7 @@ public final class Props {
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
 				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj3,
 				R.drawable.ibmj3, R.drawable.ibmj6, R.drawable.ibmj3,
-				R.drawable.ibmj3, R.drawable.ibmj0, R.drawable.ibmj0,
+				R.drawable.ibmj0, R.drawable.ibmj0, R.drawable.ibmj0,
 				R.drawable.ibmj0, R.drawable.ibmj0 };
 
 		/**
@@ -259,7 +261,12 @@ public final class Props {
 		/**
 		 * Para indicar que viene del arcade
 		 */
-		public static String ARCADE = "arcade";
+		public static final String ARCADE = "arcade";
+
+		/**
+		 * Para guardar una referencia a una actividad concreta
+		 */
+		public static Activity ACTIVIDAD = null;
 
 		private Comun() {
 		}
@@ -307,25 +314,33 @@ public final class Props {
 		/**
 		 * Para uso en avisos
 		 */
-		public static String LOGIN_OK = "Logueado con éxito";
-		public static String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
-		public static String USER_PASS_MAL = "User o pass incorrecta en BD local";
-		public static String USER_INET_NO_EXISTE = "El usuario introducido no existe";
-		public static String USER_YA_EXISTE = "Usuario existente local!";
-		public static String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
-		public static String USER_CREADO = "Usuario creado en local. Menu abierto";
-		public static String PASS_ERROR = "Password incorrecta";
-		public static String PISTA_MOD = "Pista modificada!";
-		public static String PISTAS_COMPLETO = "Asignadas todas las pistas";
-		public static String SCORE_SUBIDA = "Puntuacion subida al servidor";
-		public static String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
-		public static String AVENTURA_SUBIDA = "Aventura subida al servidor";
-		public static String AVENTURA_SUBIDA_ERROR = "Problema al subir la aventura al servidor";
-		public static String VER_RANKING_ERROR = "Error de conexion viendo el ranking";
-		public static String FORMATO_ERROR = "Error en el formato de la aventura";
-		public static String DB_ABRIR_ERROR = "Error al abrir la BD";
-		public static String AVENTURA_BAJADA = "Aventura obtenida";
-		public static String AVENTURA_BAJADA_ERROR = "Error al obtener la aventura";
+		public static final String LOGIN_OK = "Logueado con éxito";
+		public static final String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
+		public static final String USER_PASS_MAL = "User o pass incorrecta en BD local";
+		public static final String USER_INET_NO_EXISTE = "El usuario introducido no existe";
+		public static final String USER_YA_EXISTE = "Usuario existente local!";
+		public static final String USER_YA_EXISTE_ONLINE = "Usuario existente online!";
+		public static final String USER_CREADO_ONLINE = "Registro correcto!";
+		public static final String USER_CREADO = "Usuario creado en local. Menu abierto";
+		public static final String CAMPOS_VACIOS = "Alguno de los campos estan vacios";
+		public static final String PASS_ERROR = "Password incorrecta";
+		public static final String PISTA_MOD = "Pista modificada!";
+		public static final String PISTAS_COMPLETO = "Asignadas todas las pistas";
+		public static final String SCORE_SUBIDA = "Puntuacion subida al servidor";
+		public static final String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
+		public static final String AVENTURA_SUBIDA = "Aventura subida al servidor";
+		public static final String AVENTURA_SUBIDA_ERROR = "Problema al subir la aventura al servidor";
+		public static final String VER_RANKING_ERROR = "Error de conexion viendo el ranking";
+		public static final String FORMATO_ERROR = "Error en el formato de la aventura";
+		public static final String DB_ABRIR_ERROR = "Error al abrir la BD";
+		public static final String AVENTURA_BAJADA = "Aventura obtenida";
+		public static final String AVENTURA_BAJADA_ERROR = "Error al obtener la aventura";
+		public static final String RESULTADO_MJ_COMPLETO = "Minijuego Completado";
+		public static final String RESULTADO_MJ_INCOMPLETO = "Minijuego No Completado";
+		public static final String USER_UPDATE = "Usuario Actualizado desde Online";
+		public static final String AVENTURA_YA_EXISTE = "Ya existe aventura con ese nombre";
+		public static final String AVENTURA_UPDATED="Aventura actualizada";
+		public static final String AVENTURA_UPDATED_ERROR="Aventura actualizada";
 
 		private Strings() {
 		}
