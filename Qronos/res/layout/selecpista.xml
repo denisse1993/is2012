@@ -79,7 +79,7 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:maxLength="40"
+                android:maxLength="30"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
@@ -107,7 +107,7 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:maxLength="40"
+                android:maxLength="30"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
@@ -135,7 +135,7 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:maxLength="40"
+                android:maxLength="30"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
@@ -173,7 +173,7 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:maxLength="40"
+                android:maxLength="30"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
@@ -201,7 +201,7 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:maxLength="40"
+                android:maxLength="30"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
@@ -229,7 +229,7 @@
                 android:layout_weight="0.95"
                 android:inputType="textMultiLine"
                 android:maxHeight="40dp"
-                android:maxLength="40"
+                android:maxLength="30"
                 android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>

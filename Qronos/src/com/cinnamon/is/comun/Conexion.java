@@ -119,6 +119,8 @@ public class Conexion {
 				// en principio no usamos respuesta, solo el valor de retorno
 				// booleano
 				respuesta = EntityUtils.toString(rp.getEntity());
+				if (respuesta.length() > 1)
+					respuesta = respuesta.substring(0, 1);
 				retorno = true;
 			} else
 				retorno = false;
@@ -314,13 +316,16 @@ public class Conexion {
 	 * 
 	 */
 	public boolean creaOnlineAventura(String[] mj, String[] pista,
-			String nombreAventura, String passAventura) {
+			String nombreAventura, String passAventura, boolean update) {
 		boolean retorno;
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
-		HttpPost post = new HttpPost(
-				"http://cinnamon.webatu.com/updateAventura.php"); // server
+		HttpPost post;
+		if (!update)
+			post = new HttpPost("http://cinnamon.webatu.com/creaAventura.php"); // server
+		else
+			post = new HttpPost("http://cinnamon.webatu.com/updateAventura.php"); // server
 
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
@@ -332,6 +337,7 @@ public class Conexion {
 			String mi = mj[i];
 			pairs.add(new BasicNameValuePair("mj" + code, mi));
 			pairs.add(new BasicNameValuePair("pista" + code, pi));
+			i++;
 		}
 
 		try {

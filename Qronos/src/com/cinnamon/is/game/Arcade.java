@@ -118,10 +118,11 @@ public class Arcade extends Activity implements View.OnClickListener,
 			Bundle b = data.getExtras();
 			mDbHelper.open(false);
 			int score = b.getInt(Props.Comun.SCORE);
+			boolean superado = b.getBoolean(Props.Comun.SUPERADO);
 			switch (requestCode) {
 			case Props.Comun.cmj1:
 				int indice = Props.Comun.cmj1 - 1;
-				if (score > jugador.getScore(indice)) {
+				if (score > jugador.getScore(indice)&&superado) {
 					jugador.setScore(score, indice);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -130,7 +131,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj2:
 				int indice2 = Props.Comun.cmj2 - 1;
-				if (score > jugador.getScore(indice2)) {
+				if (score > jugador.getScore(indice2)&&superado) {
 					jugador.setScore(score, indice2);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -139,7 +140,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj3:
 				int indice3 = Props.Comun.cmj3 - 1;
-				if (score > jugador.getScore(indice3)) {
+				if (score > jugador.getScore(indice3) && superado) {
 					jugador.setScore(score, indice3);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -148,7 +149,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj4:
 				int indice4 = Props.Comun.cmj4 - 1;
-				if (score > jugador.getScore(indice4)) {
+				if (score > jugador.getScore(indice4) && superado) {
 					jugador.setScore(score, indice4);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -157,7 +158,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj5:
 				int indice5 = Props.Comun.cmj5 - 1;
-				if (score > jugador.getScore(indice5)) {
+				if (score > jugador.getScore(indice5) && superado) {
 					jugador.setScore(score, indice5);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -166,7 +167,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj6:
 				int indice6 = Props.Comun.cmj6 - 1;
-				if (score > jugador.getScore(indice6)) {
+				if (score > jugador.getScore(indice6) && superado) {
 					jugador.setScore(score, indice6);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -175,7 +176,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj7:
 				int indice7 = Props.Comun.cmj7 - 1;
-				if (score > jugador.getScore(indice7)) {
+				if (score > jugador.getScore(indice7) && superado) {
 					jugador.setScore(score, indice7);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -192,9 +193,15 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj12:
 				break;
-
 			}
 			mDbHelper.close();
+			if (superado)
+				l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
+						"Puntuacion obtenida: " + score);
+			else
+				l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
+						"No has completado el MJ, no se guardara tu puntuacion.");
+
 		}
 
 	}
@@ -358,30 +365,6 @@ public class Arcade extends Activity implements View.OnClickListener,
 				dialog.cancel();
 				break;
 			}
-
-		/*
-		 * else switch (boton) { case -1: dialog.cancel(); switch (vClicked) {
-		 * case R.id.iBmj1: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ1,
-		 * Props.Comun.cmj1); else if (grupoMJ == 1)
-		 * l.lanzaActivity(Props.Action.MJ7, Props.Comun.cmj7); break; case
-		 * R.id.iBmj2: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ2,
-		 * Props.Comun.cmj2); else if (grupoMJ == 1)
-		 * l.lanzaActivity(Props.Action.MJ8, Props.Comun.cmj8); break; case
-		 * R.id.iBmj3: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ3,
-		 * Props.Comun.cmj3); else if (grupoMJ == 1)
-		 * l.lanzaActivity(Props.Action.MJ9, Props.Comun.cmj9); break; case
-		 * R.id.iBmj4: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ4,
-		 * Props.Comun.cmj4); else if (grupoMJ == 1)
-		 * l.lanzaActivity(Props.Action.MJ10, Props.Comun.cmj10); break; case
-		 * R.id.iBmj5: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ5,
-		 * Props.Comun.cmj6); else if (grupoMJ == 1)
-		 * l.lanzaActivity(Props.Action.MJ11, Props.Comun.cmj11); break; case
-		 * R.id.iBmj6: if (grupoMJ == 0) l.lanzaActivity(Props.Action.MJ6,
-		 * Props.Comun.cmj6); else if (grupoMJ == 1)
-		 * l.lanzaActivity(Props.Action.MJ12, Props.Comun.cmj12); break; case
-		 * R.id.iBupSc: subirScores(); break; } case -2: dialog.cancel(); break;
-		 * }
-		 */
 	}
 
 	public void onClick(View v) {
@@ -406,7 +389,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				b.putSerializable(Props.Comun.ARCADE, "Arcade");
 				l.lanzaActivity(Props.Action.RANKING, b);
 			}
-			
+
 			break;
 		case R.id.iBupSc:
 			Launch.lanzaConfirmacion("Confirmacion para subir puntuaciones de "
@@ -452,36 +435,30 @@ public class Arcade extends Activity implements View.OnClickListener,
 		}
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// funciona pero si lo haces por el centro de la pantalla, donde esta el
-		// layout arcade, y no siempre
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_MOVE:
-			float x1,
-			x2,
-			dif,
-			lim = llarcade.getWidth() / 4;
-			;
-
-			x1 = event.getHistoricalX(0);
-			x2 = event.getX();
-			dif = x1 - x2;
-			if (!izq && der && dif > 0 && dif > lim)
-				habilitarGrupoMJ(grupoMJ + 1);
-			else if (izq && !der && dif < 0 && Math.abs(dif) > lim)
-				habilitarGrupoMJ(grupoMJ - 1);
-			break;
-		}
-		/*
-		 * switch (event.getAction()) { case MotionEvent.ACTION_DOWN: x1 =
-		 * event.getX(); break; case MotionEvent.ACTION_UP: x2 = event.getX();
-		 * dif=x1-x2; lim = arcade.getWidth() / 3; if (!izq && der && dif > 0 &&
-		 * dif > lim) { habilitarGrupoMJ(grupoMJ + 1); } else if (izq && !der &&
-		 * dif < 0 && Math.abs(dif) > lim) { habilitarGrupoMJ(grupoMJ - 1); } }
-		 */
-		return true;
-	}
+	// TODO ontouch desactivado
+	// @Override
+	// public boolean onTouchEvent(MotionEvent event) {
+	// // funciona pero si lo haces por el centro de la pantalla, donde esta el
+	// // layout arcade, y no siempre
+	// switch (event.getAction()) {
+	// case MotionEvent.ACTION_MOVE:
+	// float x1,
+	// x2,
+	// dif,
+	// lim = llarcade.getWidth() / 4;
+	// ;
+	//
+	// x1 = event.getHistoricalX(0);
+	// x2 = event.getX();
+	// dif = x1 - x2;
+	// if (!izq && der && dif > 0 && dif > lim)
+	// habilitarGrupoMJ(grupoMJ + 1);
+	// else if (izq && !der && dif < 0 && Math.abs(dif) > lim)
+	// habilitarGrupoMJ(grupoMJ - 1);
+	// break;
+	// }
+	// return true;
+	// }
 
 	/**
 	 * Metodo para que una vez se actualice un score del jugador recargue
@@ -490,17 +467,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 	private void actualizarDatos() {
 
 		tVhello.setText("Hola!" + " " + jugador.getNombre() + "!"
-				+ "\nPuntuacion total: " + jugador.getScoreTotal()); // para la
-																		// puntuacion
+				+ "\nPuntuacion total: " + jugador.getScoreTotal());
 
-		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
-			// imagenes de mj
-			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) { // stars
-				iVsc[i].setImageResource(Props.Comun.getStar(jugador
-						.getScore(i)));
-			} else
-				iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
-		}
+		habilitarGrupoMJ(grupoMJ);
 	}
 
 }

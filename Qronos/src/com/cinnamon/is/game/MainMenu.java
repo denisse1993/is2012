@@ -107,10 +107,10 @@ public class MainMenu extends Activity implements OnClickListener {
 			l.lanzaActivity(Props.Action.ARCADE, b);
 			break;
 		case R.id.bAventura:
-			// l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA,b);
-			b.putSerializable(Props.Comun.AVENTURA, new Aventura("aventura",
-					"aventura"));
-			l.lanzaActivity(Props.Action.SELECMJ, b);
+			l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA, b);
+			// b.putSerializable(Props.Comun.AVENTURA, new Aventura("aventura",
+			// "aventura"));
+			// l.lanzaActivity(Props.Action.SELECMJ, b);
 			break;
 		case R.id.bOpciones:
 			l.lanzaActivity(Props.Action.INGAME, b);
@@ -149,7 +149,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			bAventura.setOnClickListener(this);
 		else {
 			bAventura.setOnClickListener(null);
-			//cambiar color,ocultar,etc
+			// cambiar color,ocultar,etc
 		}
 		bSalir.setOnClickListener(this);
 	}

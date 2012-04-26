@@ -24,7 +24,7 @@ import com.cinnamon.is.comun.Props.Enum.Tabla;
  * Este adaptador nos permite acceder a la base de datos y modificarla
  * 
  * @author Cinnamon Team
- * @version 1.7 17.04.2012
+ * @version 1.8 26.04.2012
  */
 public class DbAdapter {
 
@@ -56,7 +56,7 @@ public class DbAdapter {
 	/**
 	 * Version de la base de datos
 	 */
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
 	/**
 	 * Nombre de las tablas de la BD
@@ -411,8 +411,7 @@ public class DbAdapter {
 	public static final String SQLnameQuest = PQUEST_KEY_QUEST + " text";
 	// tabla quest
 	public static final String SQLname = QUEST_KEY_NAME + " text primary key,";
-	public static final String SQLpassq = QUEST_KEY_PASS + " text primary key,";
-
+	public static final String SQLpasscoma = QUEST_KEY_PASS + " text,";
 	public static final String SQLmj1 = QUEST_KEY_MJ1 + " integer,";
 	public static final String SQLmj2 = QUEST_KEY_MJ2 + " integer,";
 	public static final String SQLmj3 = QUEST_KEY_MJ3 + " integer,";
@@ -562,7 +561,7 @@ public class DbAdapter {
 			+ TABLE_QUEST
 			+ "( "
 			+ SQLname
-			+ SQLpass
+			+ SQLpasscoma
 			+ SQLmj1
 			+ SQLmj2
 			+ SQLmj3
@@ -772,6 +771,7 @@ public class DbAdapter {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(QUEST_KEY_NAME, name);
 		initialValues.put(QUEST_KEY_PASS, pass);
+
 		initialValues.put(QUEST_KEY_MJ1, minijuegos[0]);
 		initialValues.put(QUEST_KEY_MJ2, minijuegos[1]);
 		initialValues.put(QUEST_KEY_MJ3, minijuegos[2]);
@@ -784,6 +784,7 @@ public class DbAdapter {
 		initialValues.put(QUEST_KEY_MJ10, minijuegos[9]);
 		initialValues.put(QUEST_KEY_MJ11, minijuegos[10]);
 		initialValues.put(QUEST_KEY_MJ12, minijuegos[11]);
+
 		initialValues.put(QUEST_KEY_PISTA1, pista[0]);
 		initialValues.put(QUEST_KEY_PISTA2, pista[1]);
 		initialValues.put(QUEST_KEY_PISTA3, pista[2]);

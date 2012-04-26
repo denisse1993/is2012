@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.T;
 
 /**
@@ -73,7 +74,7 @@ public class Aventura implements Serializable {
 	 *            de la aventura
 	 */
 	public Aventura(String nombre, String pass) {
-		this(nombre, pass, new ArrayList<T>());
+		this(nombre, pass, new ArrayList<T>(Props.Comun.MAX_MJ));
 	}
 
 	/**
@@ -126,10 +127,12 @@ public class Aventura implements Serializable {
 	}
 
 	/**
-	 * Modifica la pista del mj
+	 * Modifica el valor de superado del mj
 	 * 
 	 * @param mj
 	 *            el codigo de mj
+	 * @param superado
+	 *            si se ha superado o no
 	 */
 	public void modSuperado(int mj, boolean superado) {
 		for (T t : minijuegos)
@@ -185,6 +188,75 @@ public class Aventura implements Serializable {
 				i++;
 		}
 		return i;
+	}
+
+	/**
+	 * Crea un array de MAX_MJ y devuelve ese array con valores NULL excepto
+	 * donde coincida ese mj, que contendra su id ( a[0] estara el codigo de
+	 * mj1)
+	 * 
+	 * @return un array con los mj en formato integer
+	 */
+	public Integer[] getMJArrayInteger() {
+		Integer[] a = new Integer[Props.Comun.MAX_MJ];
+		if (minijuegos.size() == 0)
+			return a;
+		Iterator<T> it = iterator();
+		while (it.hasNext()) {
+			T t = it.next();
+			for (int i = 0; i < a.length; i++)
+				if (i == (t.idMj - 1)) {
+					a[i] = t.idMj;
+					break;
+				}
+		}
+		return a;
+	}
+
+	/**
+	 * Crea un array de MAX_MJ y devuelve ese array con valores NULL excepto
+	 * donde coincida ese mj, que contendra su id ( a[0] estara el codigo de
+	 * mj1)
+	 * 
+	 * @return un array con los mj en formato String
+	 */
+	public String[] getMJArrayString() {
+		String[] a = new String[Props.Comun.MAX_MJ];
+		if (minijuegos.size() == 0)
+			return a;
+		Iterator<T> it = iterator();
+		while (it.hasNext()) {
+			T t = it.next();
+			for (int i = 0; i < a.length; i++)
+				if (i == (t.idMj - 1)) {
+					a[i] = String.valueOf(t.idMj);
+					break;
+				}
+		}
+		return a;
+	}
+
+	/**
+	 * Crea un array de MAX_MJ y devuelve ese array con valores NULL excepto
+	 * donde coincida ese mj, que contendra su pista asociada ( a[0] estara la
+	 * pista de mj1)
+	 * 
+	 * @return un array con la pista de cada mj en formato String
+	 */
+	public String[] getPistasArrayString() {
+		String[] a = new String[Props.Comun.MAX_MJ];
+		if (minijuegos.size() == 0)
+			return a;
+		Iterator<T> it = iterator();
+		while (it.hasNext()) {
+			T t = it.next();
+			for (int i = 0; i < a.length; i++)
+				if (i == (t.idMj - 1)) {
+					a[i] = String.valueOf(t.pista);
+					break;
+				}
+		}
+		return a;
 	}
 
 	// /**
@@ -323,27 +395,4 @@ public class Aventura implements Serializable {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-
-	/**
-	 * @return un array con los mj
-	 */
-	public String[] getMJArray() {
-		String[] a = new String[minijuegos.size()];
-		int i = 0;
-		for (T t : minijuegos)
-			a[i++] = String.valueOf(t.idMj);
-		return a;
-	}
-
-	/**
-	 * @return un array con las pistas
-	 */
-	public String[] getPistasArray() {
-		String[] a = new String[minijuegos.size()];
-		int i = 0;
-		for (T t : minijuegos)
-			a[i++] = String.valueOf(t.pista);
-		return a;
-	}
-
 }

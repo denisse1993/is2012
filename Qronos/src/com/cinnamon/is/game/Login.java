@@ -26,6 +26,7 @@ import android.widget.EditText;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.Props.Enum.Tabla;
@@ -37,21 +38,17 @@ import com.cinnamon.is.comun.Props.Enum.Tabla;
  * @author Cinnamon Team
  * @version 1.1 24.11.2011
  */
-public class Login extends Activity implements OnClickListener {
+public class Login extends Activity implements Inet,OnClickListener {
 
 	/**
 	 * Adaptador para conectar con la BD
 	 */
 	private DbAdapter mDbHelper;
-	/**
-	 * Cursor para tratar las consultas en la BD
-	 */
-	// private Cursor mCursor;
 
 	/**
 	 * Nombre del jugador leido del EditText
 	 */
-	private String nombre;
+	public String nombre;
 
 	/**
 	 * Pass del jugador leido del EditText
@@ -144,8 +141,8 @@ public class Login extends Activity implements OnClickListener {
 		}
 
 		// Pondra "" y false si no se ha guardado el prefs
-		etUsername.setText(nombre);
-		etPassword.setText("cadenaRelleno");// pone pass falsa en textview
+		etUsername.setText(nombre);// TODO
+		etPassword.setText(pass);// pone pass
 		if (prefs.getString("checked", "no").equals("yes"))
 			cbRemember.setChecked(true);
 		else
@@ -195,10 +192,7 @@ public class Login extends Activity implements OnClickListener {
 	private boolean preparaLogin() {
 		boolean bien = true;
 		nombre = etUsername.getText().toString();
-		String str = etPassword.getText().toString();
-		// si no esta en md5 ni es la generica
-		if (!str.equals(passMD5) && !str.equals("cadenaRelleno"))
-			pass = etPassword.getText().toString();
+		pass = etPassword.getText().toString();
 		try {
 			passMD5 = Conexion.toMD5(pass);
 		} catch (NoSuchAlgorithmException e1) {
@@ -264,6 +258,26 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * Crea el jugador si no existe en la BD local rellenando valores de arcade
+	 * 
+	 * @param score
+	 *            puntuaciones bajadas del servidor
+	 * @return true o false en funcion de si existia o no
+	 */
+	public boolean creaJugadorLocalActualizado(int[] score) {
+		// leer de la BD si existe nombre
+		boolean esta = true;
+		if (!mDbHelper.existsRow(nombre, Tabla.users)) {
+			// crear nuevo jugador
+			mDbHelper.createRowUsers(nombre, passMD5);
+			mDbHelper.createRowParcade(nombre, score);// No existira en parcade
+			jugador = new Jugador(nombre, pass, score);
+			esta = false;
+		}
+		return esta;
+	}
+
+	/**
 	 * Abre el menu principal
 	 */
 	public void lanzaMenuPrincipal() {
@@ -271,6 +285,16 @@ public class Login extends Activity implements OnClickListener {
 		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
 		finish();
+	}
+
+	@Override
+	public Launch l() {
+		return l;
+	}
+
+	@Override
+	public Conexion c() {
+		return conexion;
 	}
 
 }
