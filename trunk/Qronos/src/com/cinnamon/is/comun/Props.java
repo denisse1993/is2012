@@ -267,6 +267,10 @@ public final class Props {
 		 * Para abrir selecPista en modo lectura
 		 */
 		public static final String READ = "read";
+		/**
+		 * Para elegir el modo en los dialogos
+		 */
+		public static final String MODO = "modo";
 		
 		/**
 		 * Para guardar una referencia a una actividad concreta
