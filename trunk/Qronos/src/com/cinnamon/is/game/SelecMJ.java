@@ -105,23 +105,12 @@ public class SelecMJ extends Activity implements OnClickListener {
 		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 			iBmj[i] = (ImageButton) findViewById(Props.Comun.iDiBmj[i]);
 			iVselec[i] = (ImageView) findViewById(Props.Comun.iDiVsC[i]);
-
-			// imagenes de mj
-			iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
-			if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
-				iBmj[i].setOnClickListener(this);
-				iVselec[i].setImageResource(Props.Comun.iDiVselec[0]);
-			} else
-				iVselec[i].setImageResource(Props.Comun.iDiVselec[2]);
-
 		}
-		// habilito flechas
-		iBleft.setEnabled(false);
-		iBright.setEnabled(true);
-		der = true;
-		izq = false;
-		// deshabilito hasta que se elija al menos 1
-		bDoneSelecMJ.setEnabled(false);
+		habilitarGrupoMJ(0);
+		if (aventura.size() > 0)
+			bDoneSelecMJ.setEnabled(true);
+		else
+			bDoneSelecMJ.setEnabled(false);
 	}
 
 	/**
@@ -217,7 +206,7 @@ public class SelecMJ extends Activity implements OnClickListener {
 		case R.id.bDoneSelecMJ:
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.AVENTURA, aventura);
-			Props.Comun.ACTIVIDAD=SelecMJ.this;
+			Props.Comun.ACTIVIDAD = SelecMJ.this;
 			Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
 			break;
 		case R.id.iBinfoSelecMJ:
@@ -347,33 +336,33 @@ public class SelecMJ extends Activity implements OnClickListener {
 	}
 
 	// TODO ontouch desactivado
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event) {
-//		// funciona pero si lo haces por el centro de la pantalla, donde esta el
-//		// layout arcade, y no siempre
-//		switch (event.getAction()) {
-//		case MotionEvent.ACTION_MOVE:
-//			float x1,
-//			x2,
-//			dif,
-//			lim = llselecmj.getWidth() / 4;
-//
-//			x1 = event.getHistoricalX(0);
-//			x2 = event.getX();
-//			dif = x1 - x2;
-//			if (!izq && der && dif > 0 && dif > lim)
-//				habilitarGrupoMJ(grupoMJ + 1);
-//			else if (izq && !der && dif < 0 && Math.abs(dif) > lim)
-//				habilitarGrupoMJ(grupoMJ - 1);
-//			break;
-//		}
-//		/*
-//		 * switch (event.getAction()) { case MotionEvent.ACTION_DOWN: x1 =
-//		 * event.getX(); break; case MotionEvent.ACTION_UP: x2 = event.getX();
-//		 * dif=x1-x2; lim = arcade.getWidth() / 3; if (!izq && der && dif > 0 &&
-//		 * dif > lim) { habilitarGrupoMJ(grupoMJ + 1); } else if (izq && !der &&
-//		 * dif < 0 && Math.abs(dif) > lim) { habilitarGrupoMJ(grupoMJ - 1); } }
-//		 */
-//		return true;
-//	}
+	// @Override
+	// public boolean onTouchEvent(MotionEvent event) {
+	// // funciona pero si lo haces por el centro de la pantalla, donde esta el
+	// // layout arcade, y no siempre
+	// switch (event.getAction()) {
+	// case MotionEvent.ACTION_MOVE:
+	// float x1,
+	// x2,
+	// dif,
+	// lim = llselecmj.getWidth() / 4;
+	//
+	// x1 = event.getHistoricalX(0);
+	// x2 = event.getX();
+	// dif = x1 - x2;
+	// if (!izq && der && dif > 0 && dif > lim)
+	// habilitarGrupoMJ(grupoMJ + 1);
+	// else if (izq && !der && dif < 0 && Math.abs(dif) > lim)
+	// habilitarGrupoMJ(grupoMJ - 1);
+	// break;
+	// }
+	// /*
+	// * switch (event.getAction()) { case MotionEvent.ACTION_DOWN: x1 =
+	// * event.getX(); break; case MotionEvent.ACTION_UP: x2 = event.getX();
+	// * dif=x1-x2; lim = arcade.getWidth() / 3; if (!izq && der && dif > 0 &&
+	// * dif > lim) { habilitarGrupoMJ(grupoMJ + 1); } else if (izq && !der &&
+	// * dif < 0 && Math.abs(dif) > lim) { habilitarGrupoMJ(grupoMJ - 1); } }
+	// */
+	// return true;
+	// }
 }

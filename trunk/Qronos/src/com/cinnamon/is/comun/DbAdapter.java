@@ -585,7 +585,6 @@ public class DbAdapter {
 			+ SQLpista9
 			+ SQLpista10 + SQLpista11 + SQLpista12 + ")";
 
-	// TAG para el log
 	/**
 	 * Clase interna de utilidad para creacion y gestion de la base de datos
 	 */

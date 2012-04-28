@@ -38,7 +38,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	/**
 	 * Botones del view
 	 */
-	Button bCrear, bUnirse;
+	Button bCrear, bUnirse, bEditar, bUsar;
 
 	/**
 	 * Vista pulsada en onClick para uso en dialog onclick
@@ -68,7 +68,11 @@ public class EligeModoAventura extends Activity implements Inet,
 	/**
 	 * Nombre de la aventura
 	 */
-	private String nameQuest="quest";
+	private String nameQuest = "quest";
+	/**
+	 * Pass de la aventura
+	 */
+	private String passQuest = "quest";
 
 	/**
 	 * Para contactar con BD online
@@ -94,6 +98,12 @@ public class EligeModoAventura extends Activity implements Inet,
 		bUnirse = (Button) findViewById(R.id.b_unirse_aventura);
 		bUnirse.setOnClickListener(this);
 
+		bEditar = (Button) findViewById(R.id.b_editar_aventura);
+		bEditar.setOnClickListener(this);
+
+		bUsar = (Button) findViewById(R.id.b_usar_aventura);
+		bUsar.setOnClickListener(this);
+
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 
@@ -103,27 +113,68 @@ public class EligeModoAventura extends Activity implements Inet,
 
 	@Override
 	public void onClick(View v) {
+		a = new Aventura(nameQuest, passQuest);
 		switch (vClicked = v.getId()) {
 		case R.id.b_crear_aventura:
-			// name escrito de la aventura no existe ya en la BD
-			a = new Aventura(nameQuest, nameQuest);
+			// name y pass escritos de la aventura no existe ya en la BD
 			launch.lanzaDialogoEsperaCreaQuest(a);
+			break;
+		case R.id.b_editar_aventura:
+			// leer name y password check si existe y concuerda, descargar,
+			// rellenar y lanzar SELECMJ
+			launch.lanzaDialogoEsperaGetQuest(a);
+			break;
+		case R.id.b_usar_aventura:
+			// leer name, check si existe, descargar,rellenar y lanzar
+			// SelecPista en modo lectura
+			launch.lanzaDialogoEsperaGetQuestPass(a);
 			break;
 		case R.id.b_unirse_aventura:
 			if (creaJugadorLocalPquest())
 				getJugadorLocalPquest();
-
+			break;
 		}
 	}
 
 	/**
-	 * Abre el menu principal
+	 * Abre el selecMJ
 	 */
 	public void lanzaSelecMJ() {
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.AVENTURA, a);
 		Launch.lanzaActivity(this, Props.Action.SELECMJ, b);
 		finish();
+	}
+
+	/**
+	 * Abre el selecPISTA modo lectura
+	 */
+	public void lanzaSelecPISTA() {
+		Bundle b = new Bundle();
+		b.putSerializable(Props.Comun.AVENTURA, a);
+		b.putBoolean(Props.Comun.READ, true);
+		Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
+		finish();
+	}
+
+	/**
+	 * Crea la aventura si no existe en la tabla arcade de la BD local
+	 * 
+	 * @return true o false en funcion de si existia o no
+	 */
+	public boolean creaAventuraLocalActualizada() {
+		// leer de la BD si existe nombre
+		boolean esta = true;
+		if (!mDbHelper.existsRow(nameQuest, Tabla.quest)) {
+			// crear nuevo jugador
+			mDbHelper.createRowQuest(nameQuest, a.getPass(),
+					a.getMJArrayInteger(), a.getPistasArrayString());
+			esta = false;
+		} else {
+			mDbHelper.updateRowQuest(nameQuest, a.getPass(),
+					a.getMJArrayInteger(), a.getPistasArrayString());
+		}
+		return esta;
 	}
 
 	/**

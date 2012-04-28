@@ -366,16 +366,25 @@ public class Conexion {
 	 * 
 	 * se recoge la informacion en la variable String respuesta
 	 * 
+	 * @param nombreAventura
+	 *            el nombre
+	 * @param qPass
+	 *            la pass
+	 * 
 	 */
-	public boolean dameOnlineAventura(String nombreAventura) {
+	public boolean dameOnlineAventura(String nombreAventura, String qPass) {
 		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
+		HttpPost post;
 		// HttpPost post = new HttpPost("http://10.0.2.2/arcade.php");
-		HttpPost post = new HttpPost(
-				"http://cinnamon.webatu.com/dameAventura.php"); // server
-		String str = null;
+		if (qPass == null)
+			post = new HttpPost("http://cinnamon.webatu.com/dameAventura.php"); // server
+		else
+			post = new HttpPost(
+					"http://cinnamon.webatu.com/dameAventuraPass.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
+		pairs.add(new BasicNameValuePair("pass", qPass));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -391,4 +400,82 @@ public class Conexion {
 		return retorno;
 	}
 
+	/**
+	 * @param arraySc
+	 * @param nick
+	 * @param quest
+	 * @param actual
+	 * @return conexion o no
+	 */
+	public boolean updatePquest(int[] arraySc, String nick, String quest,
+			int actual) {
+		// Vuelca toda la info de BD local en la BD web
+		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
+		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/updatepquest.php"); // server
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		int i = 0;
+
+		while (i < 12) {
+			String punt = Integer.toString(arraySc[i]);
+			int code = i + 1;
+			pairs.add(new BasicNameValuePair("mj" + code, punt));
+			i++;
+		}
+		pairs.add(new BasicNameValuePair("user", nick));
+		pairs.add(new BasicNameValuePair("quest", quest));
+		pairs.add(new BasicNameValuePair("actual", String.valueOf(actual)));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				respuesta = EntityUtils.toString(rp.getEntity());
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
+				retorno = true;
+			} else
+				retorno = false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = false;
+		}
+		return retorno;
+	}
+
+	/**
+	 * 
+	 * @param quest
+	 * @return conexion o no
+	 */
+	public boolean getPquest(String quest) {
+		// Vuelca toda la info de BD local en la BD web
+		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
+		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/damepquest.php"); // server
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		int i = 0;
+
+		pairs.add(new BasicNameValuePair("quest", quest));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				respuesta = EntityUtils.toString(rp.getEntity());
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
+				retorno = true;
+			} else
+				retorno = false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = false;
+		}
+		return retorno;
+	}
 }
