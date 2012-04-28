@@ -38,6 +38,11 @@ public class InGameAventura extends Activity implements OnClickListener {
 	Aventura quest;
 
 	/**
+	 * Jugador
+	 */
+	Jugador jugador;
+
+	/**
 	 * Lauch de la actividad
 	 */
 	public Launch launch;
@@ -81,6 +86,10 @@ public class InGameAventura extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_aventura);
 
+		Bundle b = getIntent().getExtras();
+		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
+		 quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
+
 		bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
 		bCamara = (ImageButton) findViewById(R.id.ib_camara_ingame);
 		bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
@@ -91,13 +100,13 @@ public class InGameAventura extends Activity implements OnClickListener {
 
 		conexion = new Conexion(this);
 		l = new Launch(this);
-		
+
 		mjActual = generaMinijuego();
 		if (mjActual == -2) {
 			// TODO
-			// launch.lanzaActivity(Props.Action.ENDGAME);
+			// launch.lanzaActivity(Props.Action.ENDGAME);		
 		} else if (mjActual != -1) {
-			String dialogText = quest.getMinijuego(mjActual).toString();
+			String dialogText = quest.getMinijuego(mjActual).pista;
 			Launch.lanzaAviso(dialogText, this);
 		}
 
@@ -108,15 +117,15 @@ public class InGameAventura extends Activity implements OnClickListener {
 			return -1;
 		else {
 			int n = quest.size();
-			if (n == quest.getNSuperados())
+			if (n == jugador.getFase())
 				return -2;
 			else {
 				Random rand = new Random();
 				int x;
-				// Peligro bucle infinito si no hemos marcado bien los superados
+				// Peligro bucle infinito si no hemos marcado las fases
 				while (true) {
 					x = rand.nextInt(n);
-					if (quest.getMinijuego(x).getSuperado())
+					if (!quest.getMinijuego(x).getSuperado())
 						return x;
 				}
 			}
@@ -178,11 +187,119 @@ public class InGameAventura extends Activity implements OnClickListener {
 		int nMJ = Integer.parseInt(contents);
 		if (requestCode == UtilQR.REQUEST_CODE && nMJ == mjActual) {
 			if (resultCode == RESULT_OK)
-				Launch.lanzaConfirmacion(this, Integer.parseInt(contents),
+				Launch.lanzaConfirmacion(this,nMJ,
 						launch, Dialogos.DIALOG_AVENTURA);
 			else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell
 			}
+		} else if (resultCode == RESULT_OK) {
+			Bundle b = data.getExtras();
+			mDbHelper.open(false);
+			int score = b.getInt(Props.Comun.SCORE);
+			int fase = jugador.getFase();
+			boolean superado = b.getBoolean(Props.Comun.SUPERADO);
+			switch (requestCode) {
+			case Props.Comun.cmj1:
+				if (superado) {
+					int indice1 = Props.Comun.cmj1 - 1;
+					jugador.setScoreQuest(score, indice1);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+				break;
+			case Props.Comun.cmj2:
+				if (superado) {
+					int indice2 = Props.Comun.cmj2 - 1;
+					jugador.setScoreQuest(score, indice2);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+
+				break;
+			case Props.Comun.cmj3:
+				if (superado) {
+					int indice3 = Props.Comun.cmj3 - 1;
+					jugador.setScoreQuest(score, indice3);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+				break;
+			case Props.Comun.cmj4:
+				if (superado) {
+					int indice4 = Props.Comun.cmj4 - 1;
+					jugador.setScoreQuest(score, indice4);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+				break;
+			case Props.Comun.cmj5:
+				if (superado) {
+					int indice5 = Props.Comun.cmj5 - 1;
+					jugador.setScoreQuest(score, indice5);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+				break;
+			case Props.Comun.cmj6:
+				if (superado) {
+					int indice6 = Props.Comun.cmj6 - 1;
+					jugador.setScoreQuest(score, indice6);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+				break;
+			case Props.Comun.cmj7:
+				if (superado) {
+					int indice7 = Props.Comun.cmj7 - 1;
+					jugador.setScoreQuest(score, indice7);
+					jugador.setFase(fase + 1);
+					mDbHelper.updateRowPQuest(jugador.getNombre(),
+							jugador.getScoreQuest(), jugador.getFase(),
+							quest.getNombre());
+				}
+				break;
+			case Props.Comun.cmj8:
+				break;
+			case Props.Comun.cmj9:
+				break;
+			case Props.Comun.cmj10:
+				break;
+			case Props.Comun.cmj11:
+				break;
+			case Props.Comun.cmj12:
+				break;
+			}
+			mDbHelper.close();
+			if (superado){
+				l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
+						"Puntuacion obtenida: " + score);
+				launch.lanzaDialogoUpdatePquest(jugador);
+			}
+			else
+				l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
+						"No has completado el MJ, no se guardara tu puntuacion.");
+
+			mjActual = generaMinijuego();
+			if (mjActual == -2) {
+				// TODO
+				// launch.lanzaActivity(Props.Action.ENDGAME);
+			} else if (mjActual != -1) {
+				String dialogText = quest.getMinijuego(mjActual).pista;
+				Launch.lanzaAviso(dialogText, this);
+			}
+
 		}
 	}
 
