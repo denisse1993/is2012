@@ -45,10 +45,7 @@ public class Aventura implements Serializable {
 	 */
 	private ArrayList<T> minijuegos;
 
-	/**
-	 * Nœmero de juegos superados
-	 */
-	private int nSuperados;
+
 
 	/**
 	 * Crea una aventura con parametros
@@ -64,7 +61,6 @@ public class Aventura implements Serializable {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
-		nSuperados = 0;
 	}
 
 	/**
@@ -128,24 +124,6 @@ public class Aventura implements Serializable {
 				t.pista = pista;
 	}
 
-	/**
-	 * Modifica el valor de superado del mj
-	 * 
-	 * @param mj
-	 *            el codigo de mj
-	 * @param superado
-	 *            si se ha superado o no
-	 */
-	public void modSuperado(int mj, boolean superado) {
-		for (T t : minijuegos)
-			if (t.idMj == mj) {
-				if (superado && !t.superado)
-					nSuperados++;
-				else if (!superado && t.superado)
-					nSuperados--;
-				t.superado = superado;
-			}
-	}
 
 	/**
 	 * @return un iterador sobre las claves
@@ -374,9 +352,7 @@ public class Aventura implements Serializable {
 		return minijuegos.get(index);
 	}
 
-	public int getNSuperados() {
-		return nSuperados;
-	}
+
 
 	public void setMinijuegos(ArrayList<T> minijuegos) {
 		this.minijuegos = minijuegos;
