@@ -59,6 +59,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
@@ -78,6 +79,7 @@ import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriev
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
+@SuppressWarnings("deprecation")
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
   //private Jugador jugador;
@@ -149,6 +151,25 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
+    
+    Bundle b = getIntent().getExtras();
+	Boolean limiteTiempo = b.getBoolean("camara_bomba");
+	
+	if (limiteTiempo){
+		Thread t = new Thread(){
+			public void run(){
+				try {
+					sleep(5000);//3650
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} finally {
+					finish();
+				}
+			}
+		};
+		t.run();
+	}
+    //jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
