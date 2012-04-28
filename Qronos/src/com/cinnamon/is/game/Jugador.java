@@ -238,15 +238,6 @@ public class Jugador implements Serializable {
 	}
 
 	// getter & setter
-
-	public int getActual() {
-		return faseActual;
-	}
-
-	public void setActual(int actual) {
-		this.faseActual = actual;
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -287,6 +278,14 @@ public class Jugador implements Serializable {
 		this.scoreQuest = scoreQuest;
 	}
 
+	public int getFase(){
+		return this.faseActual;
+	}
+	
+	public void setFase(int fase){
+		this.faseActual = fase;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("[");

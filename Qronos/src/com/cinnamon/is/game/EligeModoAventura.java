@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
@@ -132,6 +133,8 @@ public class EligeModoAventura extends Activity implements Inet,
 		case R.id.b_unirse_aventura:
 			if (creaJugadorLocalPquest())
 				getJugadorLocalPquest();
+			q = new UtilQR(this);
+			q.lanzarQR();
 			break;
 		}
 	}
@@ -154,6 +157,17 @@ public class EligeModoAventura extends Activity implements Inet,
 		b.putSerializable(Props.Comun.AVENTURA, a);
 		b.putBoolean(Props.Comun.READ, true);
 		Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
+		finish();
+	}
+	
+	/**
+	 * Lanza InGameAventura
+	 */
+	public void lanzaInGameAventura() {
+		Bundle b = new Bundle();
+		b.putSerializable(Props.Comun.AVENTURA, a);
+		b.putSerializable(Props.Comun.JUGADOR, jugador);
+		Launch.lanzaActivity(this, Props.Action.INGAMEAVENTURA, b);
 		finish();
 	}
 
@@ -264,12 +278,13 @@ public class EligeModoAventura extends Activity implements Inet,
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				// TODO
-				/*
-				 * if (dameOnlineAventura(contents){
-				 * 
-				 * launch.lanzaActivity(Props.Action.LANZARAVENTURA); }
-				 */
+				mDbHelper.open(false);
+				mDbHelper.updateRowPQuest(jugador.getNombre(),
+						jugador.getScoreQuest(),
+						jugador.getFase(),
+						contents);
+				Aventura quest = new Aventura(contents, null);
+				launch.lanzaDialogoEsperaGetQuestUnirse(quest);
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell
 			}
