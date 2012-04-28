@@ -625,7 +625,7 @@ public final class Launch {
 				inet = (Inet) a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getAventura(), j.getActual());
+						j.getNombre(), j.getAventura(), j.getFase());
 				break;
 			case 9:
 				// Ver ranking pquest
@@ -852,6 +852,8 @@ public final class Launch {
 							// metodo de
 							// x clase pues castear la variable a y usarlo, pero
 							// tiene k ser correcta la clase o petara
+							EligeModoAventura eli = (EligeModoAventura) a;
+							eli.lanzaInGameAventura(av);
 						}
 					}
 				} else {
