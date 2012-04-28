@@ -1059,7 +1059,7 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowPquest(String rowId, int[] score, int actual,
+	public boolean updateRowPQuest(String rowId, int[] score, int actual,
 			String quest) {
 		ContentValues args = new ContentValues();
 		if (score[0] != -1)
