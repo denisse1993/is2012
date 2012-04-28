@@ -853,7 +853,7 @@ public final class Launch {
 							// x clase pues castear la variable a y usarlo, pero
 							// tiene k ser correcta la clase o petara
 							EligeModoAventura eli = (EligeModoAventura) a;
-							eli.lanzaInGameAventura(av);
+							eli.lanzaInGameAventura();
 						}
 					}
 				} else {
