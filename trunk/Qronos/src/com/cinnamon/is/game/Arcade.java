@@ -17,6 +17,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -46,6 +49,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	private ImageButton[] iBmj;
 	private ImageView[] iVsc;
 	private TextView tVhello;
+	private Menu menuArcade;
 	// private ImageButton iBmj1,iBmj2,iBmj3,iBmj4,iBmj5,iBmj6;
 	// private ImageView iBsc1,iBsc2,iBsc3,iBsc4,iBsc5,iBsc6;
 
@@ -210,7 +214,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Metodo de utilidad para inicializar la Actividad
 	 */
 	private void inicializar() {
-
+		//asigna el menu
+		//menuArcade = findViewById(R.menu.menu_arcade);
+		
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
@@ -470,6 +476,34 @@ public class Arcade extends Activity implements View.OnClickListener,
 				+ "\nPuntuacion total: " + jugador.getScoreTotal());
 
 		habilitarGrupoMJ(grupoMJ);
+	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_arcade, menu);
+        return true;
+    }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.btIz:
+	            
+	            return true;
+	        case R.id.btDer:
+	            
+	            return true;
+	        case R.id.btUp:
+	            
+	            return true;
+	        case R.id.btChart:
+	           
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 }
