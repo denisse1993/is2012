@@ -7,14 +7,16 @@
 //
 package com.cinnamon.is.comun;
 
-import com.google.zxing.WriterException;
-import com.google.zxing.client.android.encode.QRCodeEncoder;
-import android.content.Context;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.WindowManager;
+
+import com.google.zxing.WriterException;
+import com.google.zxing.client.android.encode.QRCodeEncoder;
 
 /**
  * Clase de ayuda para lanzar y crear QRs
@@ -27,6 +29,7 @@ public final class UtilQR {
 	public static final int REQUEST_CODE = 0x0000c0de;
 
 	private final Activity activity;
+	
 
 	public UtilQR(Activity activity) {
 		this.activity = activity;
@@ -41,6 +44,16 @@ public final class UtilQR {
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		activity.startActivityForResult(intentScan, REQUEST_CODE);
+	}
+	
+	public void lanzarQRTiempo(){
+		Intent intentScan = new Intent(Props.Action.SCAN);
+		intentScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+		Bundle b = new Bundle();
+		b.putBoolean(Props.Comun.CAMARABOMBA, true);
+		Launch.lanzaActivity(activity, Props.Comun.CAMARABOMBA, b, REQUEST_CODE);
 	}
 
 	/**

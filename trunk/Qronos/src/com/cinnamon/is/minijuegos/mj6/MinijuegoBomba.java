@@ -186,9 +186,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 
 	public void pulsarCamara() {
 
-		// TODO camara 5 seg
 		q = new UtilQR(this);
-		q.lanzarQR();
+		q.lanzarQRTiempo();
 	}
 
 	@Override
@@ -203,7 +202,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 							5);
 				}
 			} else if (resultCode == RESULT_CANCELED) {
-				superado = false;
+					superado = false;
 				// Handle cancell
 			}
 		}

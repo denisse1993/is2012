@@ -276,6 +276,11 @@ public final class Props {
 		 * Para guardar una referencia a una actividad concreta
 		 */
 		public static Activity ACTIVIDAD = null;
+		
+		/**
+		 * String para usar cuando se quiera pasar la aventura entre actividades
+		 */
+		public static final String CAMARABOMBA = "camara_bomba";
 
 		private Comun() {
 		}
