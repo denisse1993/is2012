@@ -24,5 +24,7 @@
     <string name="bCancel">Atras</string>
     <string name="bCrearAventura">Crear Aventura</string>
      <string name="bUnirseAventura">Unirse Aventura</string>
+     <string name="bUsarAventura">Usar Aventura</string>
+     <string name="bEditarAventura">Editar Aventura</string>
 
 </resources>

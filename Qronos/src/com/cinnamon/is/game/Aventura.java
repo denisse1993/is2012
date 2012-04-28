@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import android.R.integer;
+
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.T;
 
@@ -31,7 +33,7 @@ public class Aventura implements Serializable {
 	/**
 	 * Nombre de la aventura
 	 */
-	private String nombre;
+	private String nombre;// lim a 20
 
 	/**
 	 * Password de la aventura
@@ -378,6 +380,22 @@ public class Aventura implements Serializable {
 
 	public void setMinijuegos(ArrayList<T> minijuegos) {
 		this.minijuegos = minijuegos;
+	}
+
+	/**
+	 * Rellena minijuegos a partir de 2 arrays de strings
+	 * 
+	 * @param mjs
+	 *            los mj
+	 * @param pistas
+	 *            las pistas
+	 */
+	public void setMinijuegos(String[] mjs, String[] pistas) {
+		for (int i = 0; i < pistas.length; i++) {
+			Integer a = Integer.parseInt(mjs[i]);
+			if (!pistas[i].equals("") && a != 0)
+				minijuegos.add(new T(a, pistas[i], false));
+		}
 	}
 
 	public String getNombre() {

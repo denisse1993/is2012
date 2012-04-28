@@ -1,17 +1,12 @@
 package com.cinnamon.is.game;
 
-import org.apache.http.ParseException;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Props;
+import com.cinnamon.is.comun.UtilJSON;
 
 public class Ranking extends Activity {
 
@@ -23,6 +18,8 @@ public class Ranking extends Activity {
 
 	private TextView tvTitulo;
 
+	private UtilJSON utilj;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,20 +29,18 @@ public class Ranking extends Activity {
 		JSON = b.getString(Props.Comun.JSON);
 		arcade = b.getString(Props.Comun.ARCADE);
 		tvTitulo = (TextView) findViewById(R.id.textViewTitulo);
+		utilj = new UtilJSON(this);
+
 		if (jugador == null) {
 			if (arcade != null) {
 				tvTitulo.setText("Ranking Arcade");
-				rankingOnlineArcade();
+				utilj.rankingOnlineArcade(JSON,5);
 			} else {
 				tvTitulo.setText("Ranking Aventura");
-				rankingOnlineAventura();
+				utilj.rankingOnlineAventura(JSON);
 			}
 		} else
 			rankingLocal();
-	}
-
-	// TODO POR HACER
-	private void rankingOnlineAventura() {
 	}
 
 	/**
@@ -61,41 +56,6 @@ public class Ranking extends Activity {
 				String.valueOf(a[7]), String.valueOf(a[8]),
 				String.valueOf(a[9]), String.valueOf(a[10]),
 				String.valueOf(a[11]), suma);
-	}
-
-	public boolean rankingOnlineArcade() {
-		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
-
-		JSONArray jArray;
-		try {
-			jArray = new JSONArray(JSON);
-			JSONObject json_data = null;
-			for (int i = 0; i < 5; i++) {// solo muestra 5 primeros
-				int j = i + 1;
-				json_data = jArray.getJSONObject(i);
-				nick = json_data.getString("NICK");
-				mj1 = json_data.getString("MJ1");
-				mj2 = json_data.getString("MJ2");
-				mj3 = json_data.getString("MJ3");
-				mj4 = json_data.getString("MJ4");
-				mj5 = json_data.getString("MJ5");
-				mj6 = json_data.getString("MJ6");
-				mj7 = json_data.getString("MJ7");
-				mj8 = json_data.getString("MJ8");
-				mj9 = json_data.getString("MJ9");
-				mj10 = json_data.getString("MJ10");
-				mj11 = json_data.getString("MJ11");
-				mj12 = json_data.getString("MJ12");
-				total = json_data.getString("TOTAL");
-				setFila(j, nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9,
-						mj10, mj11, mj12, total);
-			}
-		} catch (JSONException e1) {
-			Toast.makeText(getBaseContext(), "Error", Toast.LENGTH_LONG).show();
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		return false;
 	}
 
 	public void setFila(int i, String nick, String mj1, String mj2, String mj3,

@@ -264,6 +264,11 @@ public final class Props {
 		public static final String ARCADE = "arcade";
 
 		/**
+		 * Para abrir selecPista en modo lectura
+		 */
+		public static final String READ = "read";
+		
+		/**
 		 * Para guardar una referencia a una actividad concreta
 		 */
 		public static Activity ACTIVIDAD = null;
@@ -330,6 +335,7 @@ public final class Props {
 		public static final String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
 		public static final String AVENTURA_SUBIDA = "Aventura subida al servidor";
 		public static final String AVENTURA_SUBIDA_ERROR = "Problema al subir la aventura al servidor";
+		public static final String AVENTURA_NO_EXISTE = "No existe esa aventura!";
 		public static final String VER_RANKING_ERROR = "Error de conexion viendo el ranking";
 		public static final String FORMATO_ERROR = "Error en el formato de la aventura";
 		public static final String DB_ABRIR_ERROR = "Error al abrir la BD";
@@ -339,8 +345,9 @@ public final class Props {
 		public static final String RESULTADO_MJ_INCOMPLETO = "Minijuego No Completado";
 		public static final String USER_UPDATE = "Usuario Actualizado desde Online";
 		public static final String AVENTURA_YA_EXISTE = "Ya existe aventura con ese nombre";
-		public static final String AVENTURA_UPDATED="Aventura actualizada";
-		public static final String AVENTURA_UPDATED_ERROR="Aventura actualizada";
+		public static final String AVENTURA_UPDATED = "Aventura actualizada";
+		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
+		public static final String ERROR_JSON = "Error parseando informacion servidor";
 
 		private Strings() {
 		}

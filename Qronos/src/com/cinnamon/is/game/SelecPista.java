@@ -13,8 +13,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Pair;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,7 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.T;
@@ -35,7 +35,7 @@ import com.cinnamon.is.comun.T;
  * @author Cinnamon Team
  * @version 1.0 23.03.2012
  */
-public class SelecPista extends Activity implements OnClickListener {
+public class SelecPista extends Activity implements Inet, OnClickListener {
 	// interfaz
 	private LinearLayout llselecpista;
 	private ImageButton iBinfo, iBleft, iBright;
@@ -64,9 +64,19 @@ public class SelecPista extends Activity implements OnClickListener {
 	private Launch l;
 
 	/**
+	 * Launch de utilidad
+	 */
+	private Conexion c;
+
+	/**
 	 * Adaptador para conectar con la BD
 	 */
 	private DbAdapter mDbHelper;
+
+	/**
+	 * Modo lectura
+	 */
+	private boolean read;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +84,9 @@ public class SelecPista extends Activity implements OnClickListener {
 		setContentView(R.layout.selecpista);
 		Bundle b = getIntent().getExtras();
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
+		read = b.getBoolean(Props.Comun.READ, false);
 		l = new Launch(this);
+		c = new Conexion(this);
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 		grupoMJ = 0;
@@ -127,37 +139,19 @@ public class SelecPista extends Activity implements OnClickListener {
 		eTpista = new EditText[Props.Comun.MAX_MJ_P];
 
 		// inicializo arrays
-		// Iterator<Integer> j = aventura.iterator();
-		Iterator<T> j = aventura.iterator();
 		for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 			iBmj[i] = (ImageButton) findViewById(Props.Comun.iDiBmj[i]);
 			eTpista[i] = (EditText) findViewById(Props.Comun.iDeTmj[i]);
-			if (j.hasNext()) {
-				T t = j.next();
-				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[t.idMj - 1]);
-				iBmj[i].setOnClickListener(this);
-				eTpista[i].setText(t.pista);
-			} else {
-				iBmj[i].setBackgroundResource(R.drawable.ibmj0);
-				eTpista[i].setVisibility(View.INVISIBLE);
-				eTpista[i].setEnabled(false);
-				iBmj[i].setOnClickListener(null);
-			}
 		}
-
-		// habilito flechas
-		iBleft.setEnabled(false);
-		izq = false;
-		// si se han selec mas de 6 mj
-		if (aventura.size() > 6) {
-			iBright.setEnabled(true);
-			der = true;
+		habilitarGrupoMJ(0);
+		if (!read) {
+			if (aventura.size() == aventura.sizePista())
+				bDoneSelecPISTA.setEnabled(true);
+			else
+				bDoneSelecPISTA.setEnabled(false);
 		} else {
-			iBright.setEnabled(false);
-			der = false;
+			bDoneSelecPISTA.setEnabled(true);
 		}
-		// deshabilito hasta que se escriban todas las pistas
-		bDoneSelecPISTA.setEnabled(false);
 	}
 
 	/**
@@ -177,11 +171,17 @@ public class SelecPista extends Activity implements OnClickListener {
 				if (it.hasNext()) {
 					T t = it.next();
 					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[t.idMj - 1]);
-					iBmj[i].setOnClickListener(this);
 					// pone pista
 					eTpista[i].setVisibility(View.VISIBLE);
 					eTpista[i].setEnabled(true);
 					eTpista[i].setText(t.pista);
+					if (read) {
+						iBmj[i].setOnClickListener(null);
+						eTpista[i].setKeyListener(null);
+					} else {
+						iBmj[i].setOnClickListener(this);
+					}
+
 				} else {
 					iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 					eTpista[i].setVisibility(View.INVISIBLE);
@@ -210,10 +210,15 @@ public class SelecPista extends Activity implements OnClickListener {
 				if (it.hasNext()) {
 					T t = it.next();
 					iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[t.idMj - 1]);
-					iBmj[i].setOnClickListener(this);
 					eTpista[i].setVisibility(View.VISIBLE);
 					eTpista[i].setEnabled(true);
 					eTpista[i].setText(t.pista);
+					if (read) {
+						iBmj[i].setOnClickListener(null);
+						eTpista[i].setKeyListener(null);
+					} else {
+						iBmj[i].setOnClickListener(this);
+					}
 				} else {
 					iBmj[i].setBackgroundResource(R.drawable.ibmj0);
 					eTpista[i].setVisibility(View.INVISIBLE);
@@ -239,7 +244,7 @@ public class SelecPista extends Activity implements OnClickListener {
 		// TODO temporal hasta tener un dialog normal
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("¿Deseas volver a selección de Minijuegos?")
-				.setMessage("Aviso: Se resetearán las pistas")
+				.setMessage("Aviso: Se resetearán las pistas no guardadas")
 				.setCancelable(false)
 				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
@@ -272,9 +277,7 @@ public class SelecPista extends Activity implements OnClickListener {
 			mDbHelper.updateRowQuest(aventura.getNombre(), null,
 					aventura.getMJArrayInteger(),
 					aventura.getPistasArrayString());
-			Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
-			Props.Comun.ACTIVIDAD = null;// resetea
-			// TODO Lanzar Siguiente Actividad
+			l.lanzaDialogoEsperaUpdateQuest(aventura);
 			break;
 		case R.id.iBinfoSelecPISTA:
 			Launch.lanzaAviso("Información", Props.Strings.iSelecPISTA, this);
@@ -358,6 +361,7 @@ public class SelecPista extends Activity implements OnClickListener {
 		} else
 			bDoneSelecPISTA.setEnabled(false);
 	}
+
 	// TODO ontouch desactivado
 	// @Override
 	// public boolean onTouchEvent(MotionEvent event) {
@@ -388,4 +392,14 @@ public class SelecPista extends Activity implements OnClickListener {
 	// */
 	// return true;
 	// }
+
+	@Override
+	public Launch l() {
+		return l;
+	}
+
+	@Override
+	public Conexion c() {
+		return c;
+	}
 }

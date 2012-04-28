@@ -7,11 +7,6 @@
 //
 package com.cinnamon.is.comun;
 
-import org.apache.http.ParseException;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -29,10 +24,8 @@ import com.cinnamon.is.comun.dialog.MenuDialog;
 import com.cinnamon.is.game.Arcade;
 import com.cinnamon.is.game.Aventura;
 import com.cinnamon.is.game.EligeModoAventura;
-import com.cinnamon.is.game.InGameAventura;
-import com.cinnamon.is.game.InGameHost;
+import com.cinnamon.is.game.Jugador;
 import com.cinnamon.is.game.Login;
-import com.cinnamon.is.game.Ranking;
 
 /**
  * <p>
@@ -459,18 +452,45 @@ public final class Launch {
 	 * Sirve para obtener una aventura (tabla quest)
 	 * 
 	 */
-	public void lanzaDialogoEsperaGetQuest(String nombreAventura) { //
+	public void lanzaDialogoEsperaGetQuest(Aventura av) { //
 		// valor 5 activa get aventura
-		new ConexionServerTask().execute(new Object[] { 5, nombreAventura });
+		new ConexionServerTask().execute(new Object[] { 5, av });
 	}
 
 	/**
 	 * Sirve para actualizar una aventura (tabla quest)
 	 * 
 	 */
-	public void lanzaDialogoEsperaUpdateQuest(Aventura a) { //
+	public void lanzaDialogoEsperaUpdateQuest(Aventura av) { //
 		// valor 6 activa update aventura
-		new ConexionServerTask().execute(new Object[] { 6, a });
+		new ConexionServerTask().execute(new Object[] { 6, av });
+	}
+
+	/**
+	 * Sirve para obtener una aventura y ver si concuerda su pass (tabla quest)
+	 * 
+	 */
+	public void lanzaDialogoEsperaGetQuestPass(Aventura av) { //
+		// valor 7 activa get aventura con pass
+		new ConexionServerTask().execute(new Object[] { 7, av });
+	}
+
+	/**
+	 * Sirve para subir puntuaciones de pquest
+	 * 
+	 */
+	public void lanzaDialogoUpdatePquest(Jugador j) { //
+		// valor 8 activa updatePquest
+		new ConexionServerTask().execute(new Object[] { 8, j });
+	}
+
+	/**
+	 * Sirve para obtener las puntuaciones de pquest en base a quest
+	 * 
+	 */
+	public void lanzaDialogoGetPquest(String quest) { //
+		// valor 9 activa getPquest
+		new ConexionServerTask().execute(new Object[] { 9, quest });
 	}
 
 	/**
@@ -498,7 +518,10 @@ public final class Launch {
 
 		@Override
 		protected Object[] doInBackground(Object... datos) {
-			String nick, pass;
+			String nick, pass, qStr;
+			UtilJSON u;
+			Inet inet;
+			Aventura av;
 			Object[] ret = new Object[3];
 			// tarea a realizar
 			int tarea = (Integer) datos[0];
@@ -525,28 +548,12 @@ public final class Launch {
 					if (!loginA.loginLocal()) {
 						loginA.conexion.dameOnlineArcade();
 						String json = loginA.conexion.getRespuesta();
-						String n;
-						int[] a = new int[Props.Comun.MAX_MJ];
-						JSONArray jArray;
-						try {
-							jArray = new JSONArray(json);
-							JSONObject json_data = null;
-							for (int i = 0; i < jArray.length(); i++) {
-								json_data = jArray.getJSONObject(i);
-								n = json_data.getString("NICK");
-								if (n.equals(loginA.nombre)) {// mismo nombre
-									for (int j = 0; j < a.length; j++) {
-										int code = j + 1;
-										a[j] = Integer.parseInt(json_data
-												.getString("MJ" + code));
-									}
-									loginA.creaJugadorLocalActualizado(a);
-									respuestaSave = "4";
-									break;
-								}
-							}
-						} catch (JSONException e1) {
-						} catch (ParseException e1) {
+						u = new UtilJSON(a);
+						int[] d = u.verSiJugadorExisteArcade(json,
+								loginA.nombre);
+						if (d != null) {
+							loginA.creaJugadorLocalActualizado(d);
+							respuestaSave = "4";
 						}
 					}
 				}
@@ -570,7 +577,7 @@ public final class Launch {
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
-				Inet inet = (Inet) a;
+				inet = (Inet) a;
 				Aventura quest = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest.getMJArrayString(),
 						quest.getPistasArrayString(), quest.getNombre(),
@@ -583,18 +590,39 @@ public final class Launch {
 				break;
 			case 5:
 				// Get aventura
-				Inet getQuest = (Inet) a;
-				String qNombre = (String) datos[1];
-				ret[1] = getQuest.c().dameOnlineAventura(qNombre);
+				inet = (Inet) a;
+				av = (Aventura) datos[1];
+				ret[2] = av;
+				ret[1] = inet.c().dameOnlineAventura(av.getNombre(), null);
 				break;
 			case 6:
 				// Update Aventura (tabla quest)
-				Inet updateQ = (Inet) a;
+				inet = (Inet) a;
 				Aventura quest2 = (Aventura) datos[1];
-				ret[1] = updateQ.c().creaOnlineAventura(
-						quest2.getMJArrayString(),
+				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
 						quest2.getPass(), true);
+				break;
+			case 7:
+				// Get aventura con pass
+				inet = (Inet) a;
+				av = (Aventura) datos[1];
+				ret[2] = av;
+				ret[1] = inet.c().dameOnlineAventura(av.getNombre(),
+						av.getPass());
+				break;
+			case 8:
+				// Update Pquest (tabla pquest)
+				inet = (Inet) a;
+				Jugador j = (Jugador) datos[1];
+				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
+						j.getNombre(), j.getAventura(), j.getActual());
+				break;
+			case 9:
+				// Ver ranking pquest
+				inet = (Inet) a;
+				qStr = (String) datos[1];
+				ret[1] = inet.c().getPquest(qStr);
 				break;
 			}
 			return ret;
@@ -605,7 +633,10 @@ public final class Launch {
 			dialog.dismiss();
 			int tarea = (Integer) result[0];
 			String respuestaSave;
+			Inet inet;
 			boolean conex;
+			UtilJSON u;
+			Aventura av;
 			switch (tarea) {
 			case 0:
 				// login
@@ -668,7 +699,7 @@ public final class Launch {
 			case 3:
 				// Upload Aventura (tabla quest)
 				conex = (Boolean) result[1];
-				Inet inet = (Inet) a;
+				inet = (Inet) a;
 				if (conex) {
 					if (inet.c().getRespuesta().equals("1")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_SUBIDA);
@@ -700,33 +731,91 @@ public final class Launch {
 			case 5:
 				// Obtener Aventura
 				conex = (Boolean) result[1];
-				Inet getQuest = (Inet) a;
+				inet = (Inet) a;
 				if (conex) {
-					String aventura = getQuest.c().getRespuesta();
-					// TODO Aventura
-					// rellenar la aventura local en base a la aventura obtenida
-					getQuest.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
+					String aventura = inet.c().getRespuesta();
+					if (aventura.equals("3"))
+						inet.l().lanzaToast(Props.Strings.AVENTURA_NO_EXISTE);
+					else {
+						av = (Aventura) result[2];
+						u = new UtilJSON(a);
+						if (u.rellenaQuest(aventura, av)) {
+							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
+							EligeModoAventura eli = (EligeModoAventura) a;
+							eli.creaAventuraLocalActualizada();
+							eli.lanzaSelecMJ();
+						}
+					}
 				} else {
-					getQuest.l()
-							.lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
+					inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
 				}
 				break;
 			case 6:
 				// Update Aventura
 				conex = (Boolean) result[1];
-				Inet upQ = (Inet) a;
+				inet = (Inet) a;
 				if (conex) {
-					if (upQ.c().getRespuesta().equals("1")) {
-						upQ.l().lanzaToast(Props.Strings.AVENTURA_UPDATED);
-					} else if (upQ.c().getRespuesta().equals("3")) {
-						upQ.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
+					if (inet.c().getRespuesta().equals("1")) {
+						inet.l().lanzaToast(Props.Strings.AVENTURA_UPDATED);
+						Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+						Props.Comun.ACTIVIDAD = null;// resetea
+						// TODO Lanzar Siguiente Actividad
+					} else if (inet.c().getRespuesta().equals("3")) {
+						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
 				} else {
-					upQ.l().lanzaToast(Props.Strings.AVENTURA_UPDATED_ERROR);
+					inet.l().lanzaToast(Props.Strings.AVENTURA_UPDATED_ERROR);
+				}
+				break;
+
+			case 7:
+				// Obtener Aventura con pass
+				conex = (Boolean) result[1];
+				inet = (Inet) a;
+				if (conex) {
+					String aventura = inet.c().getRespuesta();
+					u = new UtilJSON(a);
+					if (aventura.equals("3"))
+						inet.l().lanzaToast(Props.Strings.AVENTURA_NO_EXISTE);
+					else if (aventura.equals("2"))
+						inet.l().lanzaToast(Props.Strings.PASS_ERROR);
+					else {
+						av = (Aventura) result[2];
+						u = new UtilJSON(a);
+						if (u.rellenaQuest(aventura, av)) {
+							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
+							EligeModoAventura eli = (EligeModoAventura) a;
+							eli.creaAventuraLocalActualizada();
+							eli.lanzaSelecPISTA();
+						}
+					}
+				} else {
+					inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
+				}
+				break;
+			case 8:
+				// Upload Score pquest
+				inet = (Inet) a;
+				conex = (Boolean) result[1];
+				if (conex)
+					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA);
+				else
+					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA_ERROR);
+				break;
+			case 9:
+				// Ver ranking pquest
+				conex = (Boolean) result[1];
+				inet = (Inet) a;
+				if (conex) {
+					String json = inet.c().getRespuesta();
+					Bundle b = new Bundle();
+					b.putSerializable(Props.Comun.JSON, json);
+					inet.l().lanzaActivity(Props.Action.RANKING, b);
+				} else {
+					inet.l().lanzaToast(Props.Strings.VER_RANKING_ERROR);
 				}
 				break;
 			}
-
 		}
 	}
 
