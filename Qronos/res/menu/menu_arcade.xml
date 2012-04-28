@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+      <item
+            android:id="@+id/btIz"
+            android:title="Ir izq"
+            android:icon="@drawable/ic_menu_left">
+      </item>
+      <item
+            android:id="@+id/btDer"
+            android:title="Ir der"
+            android:icon="@drawable/ic_menu_right">
+      </item>
+       <item
+            android:id="@+id/btUp"
+            android:title="Subir Score"
+            android:icon="@drawable/ic_menu_upload32">
+      </item>
+       <item
+            android:id="@+id/btChart"
+            android:title="Top Arcade"
+            android:icon="@drawable/ic_menu_chart">
+      </item>
+      <item
+            android:id="@+id/btConf"
+            android:title="Opciones"
+            android:icon="@drawable/ic_menu_gear">
+      </item>
+</menu>
