@@ -494,6 +494,15 @@ public final class Launch {
 	}
 
 	/**
+	 * Sirve para obtener una aventura (tabla quest) y pasar a unirse
+	 * 
+	 */
+	public void lanzaDialogoEsperaGetQuestUnirse(Aventura av) { //
+		// valor 10 activa get aventura para unirse a partida
+		new ConexionServerTask().execute(new Object[] { 10, av });
+	}
+
+	/**
 	 * <p>
 	 * Clase asincrona para realizar conexiones con el server
 	 * </p>
@@ -624,7 +633,16 @@ public final class Launch {
 				qStr = (String) datos[1];
 				ret[1] = inet.c().getPquest(qStr);
 				break;
+			case 10:
+				// Get aventura
+				inet = (Inet) a;
+				av = (Aventura) datos[1];
+				ret[2] = av;
+				ret[1] = inet.c().dameOnlineAventura(av.getNombre(), null);
+				break;
+
 			}
+
 			return ret;
 		}
 
@@ -813,6 +831,31 @@ public final class Launch {
 					inet.l().lanzaActivity(Props.Action.RANKING, b);
 				} else {
 					inet.l().lanzaToast(Props.Strings.VER_RANKING_ERROR);
+				}
+				break;
+			case 10:
+				// Obtener Aventura
+				conex = (Boolean) result[1];
+				inet = (Inet) a;// TODO la k lo use tiene k
+				// implementar la interfaz Inet para k esto no pete y pueda usar
+				// los metodos l() y c(),
+				if (conex) {
+					String aventura = inet.c().getRespuesta();
+					if (aventura.equals("3"))
+						inet.l().lanzaToast(Props.Strings.AVENTURA_NO_EXISTE);
+					else {
+						av = (Aventura) result[2];
+						u = new UtilJSON(a);
+						if (u.rellenaQuest(aventura, av)) {
+							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
+							// TODO A HACER OTRA COSA , si necesitas un
+							// metodo de
+							// x clase pues castear la variable a y usarlo, pero
+							// tiene k ser correcta la clase o petara
+						}
+					}
+				} else {
+					inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
 				}
 				break;
 			}
