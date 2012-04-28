@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 
 import com.cinnamon.is.comun.dialog.Dialogos;
+import com.cinnamon.is.game.Jugador;
 
 /**
  * Actividad abtracta que representa un minijuego
@@ -42,7 +43,7 @@ public abstract class Minijuego extends Activity {
 	/**
 	 * Modo de juego (Arcade o Aventura)
 	 */
-	protected int modo = Dialogos.DIALOG_ARCADE;
+	protected int modo;
 	/**
 	 * Maxima puntuacion
 	 */
@@ -107,6 +108,17 @@ public abstract class Minijuego extends Activity {
 		else
 			return 0;
 	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Bundle b = getIntent().getExtras();
+		Boolean bool = (Boolean) b.getBoolean(Props.Comun.MODO);
+		if (bool)
+			modo = Dialogos.DIALOG_ARCADE;
+		else modo = Dialogos.DIALOG_AVENTURA;
+	}
+
 
 	/**
 	 * <p>
@@ -190,6 +202,7 @@ public abstract class Minijuego extends Activity {
 	// break;
 	// }
 	// }
+
 
 	@Override
 	public void onBackPressed() {
