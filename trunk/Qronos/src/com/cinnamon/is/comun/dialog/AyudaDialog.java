@@ -129,7 +129,9 @@ public class AyudaDialog extends Dialogos {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ButtonStartAyuda:
-			launch.lanzaActivity(Props.Action.MJ[numMJ],Props.Comun.CMJ[numMJ]);	
+			Bundle b = new Bundle();
+			b.putBoolean(Props.Comun.MODO, modo);
+			launch.lanzaActivity(Props.Action.MJ[numMJ],b,Props.Comun.CMJ[numMJ]);	
 		case R.id.ButtonCancelAyuda:
 			this.dismiss();
 		}
