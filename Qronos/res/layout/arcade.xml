@@ -242,6 +242,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="horizontal"
+        android:background="@drawable/menu_background"
+        android:clickable="true"
         android:weightSum="4" >
 
         <LinearLayout
