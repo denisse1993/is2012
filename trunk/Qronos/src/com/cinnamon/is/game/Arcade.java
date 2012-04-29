@@ -45,7 +45,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 
 	// interfaz
 	private LinearLayout llarcade;
-	private ImageButton iBinfo, iBupSc, iBseeSc, iBleft, iBright;
+	private ImageButton iBinfo;
+	private ImageView iBseeSc, iBright, iBleft, iBupSc;
 	private ImageButton[] iBmj;
 	private ImageView[] iVsc;
 	private TextView tVhello;
@@ -126,7 +127,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			switch (requestCode) {
 			case Props.Comun.cmj1:
 				int indice = Props.Comun.cmj1 - 1;
-				if (score > jugador.getScore(indice)&&superado) {
+				if (score > jugador.getScore(indice) && superado) {
 					jugador.setScore(score, indice);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -135,7 +136,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			case Props.Comun.cmj2:
 				int indice2 = Props.Comun.cmj2 - 1;
-				if (score > jugador.getScore(indice2)&&superado) {
+				if (score > jugador.getScore(indice2) && superado) {
 					jugador.setScore(score, indice2);
 					mDbHelper.updateRowParcade(jugador.getNombre(),
 							jugador.getScore());
@@ -214,9 +215,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Metodo de utilidad para inicializar la Actividad
 	 */
 	private void inicializar() {
-		//asigna el menu
-		//menuArcade = findViewById(R.menu.menu_arcade);
-		
+		// asigna el menu
+		// menuArcade = findViewById(R.menu.menu_arcade);
+
 		// abre base de datos
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
@@ -224,10 +225,10 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// genericos
 		llarcade = (LinearLayout) findViewById(R.id.llarcade);
 		iBinfo = (ImageButton) findViewById(R.id.iBinfoArcade);
-		iBupSc = (ImageButton) findViewById(R.id.iBupSc);
-		iBseeSc = (ImageButton) findViewById(R.id.iBseeSc);
-		iBleft = (ImageButton) findViewById(R.id.iBleft);
-		iBright = (ImageButton) findViewById(R.id.iBright);
+		iBupSc = (ImageView) findViewById(R.id.iBupSc);
+		iBseeSc = (ImageView) findViewById(R.id.iBseeSc);
+		iBleft = (ImageView) findViewById(R.id.iBleft);
+		iBright = (ImageView) findViewById(R.id.iBright);
 		tVhello = (TextView) findViewById(R.id.tVhello);
 
 		// establezco Listeners
@@ -477,33 +478,33 @@ public class Arcade extends Activity implements View.OnClickListener,
 
 		habilitarGrupoMJ(grupoMJ);
 	}
-	
+
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_arcade, menu);
-        return true;
-    }
-	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_arcade, menu);
+		return true;
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	        case R.id.btIz:
-	            
-	            return true;
-	        case R.id.btDer:
-	            
-	            return true;
-	        case R.id.btUp:
-	            
-	            return true;
-	        case R.id.btChart:
-	           
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.btIz:
+
+			return true;
+		case R.id.btDer:
+
+			return true;
+		case R.id.btUp:
+
+			return true;
+		case R.id.btChart:
+
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }
