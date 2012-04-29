@@ -3,26 +3,26 @@
       <item
             android:id="@+id/btIz"
             android:title="Ir izq"
-            android:icon="@drawable/ic_menu_left">
+            android:icon="@drawable/ic_menu_der">
       </item>
       <item
             android:id="@+id/btDer"
             android:title="Ir der"
-            android:icon="@drawable/ic_menu_right">
+            android:icon="@drawable/ic_menu_izq">
       </item>
        <item
             android:id="@+id/btUp"
             android:title="Subir Score"
-            android:icon="@drawable/ic_menu_upload32">
+            android:icon="@drawable/ic_menu_up">
       </item>
        <item
             android:id="@+id/btChart"
             android:title="Top Arcade"
-            android:icon="@drawable/ic_menu_chart">
+            android:icon="@drawable/ic_menu_stats">
       </item>
       <item
             android:id="@+id/btConf"
             android:title="Opciones"
-            android:icon="@drawable/ic_menu_gear">
+            android:icon="@drawable/ic_menu_izq">
       </item>
 </menu>
