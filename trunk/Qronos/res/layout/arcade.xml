@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llarcade"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="4dp"
     android:weightSum="10" >
@@ -133,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
         android:weightSum="3" >
 
         <!-- MJ4 -->
@@ -205,53 +206,147 @@
                 android:src="@drawable/starnull" />
         </LinearLayout>
     </LinearLayout>
-    <!-- BARRA INFERIOR -->
 
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/tL1"
-        android:layout_width="match_parent"
+    <!-- BARRA HORIZONTAL -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:orientation="vertical" >
+        android:background="#000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="0dip" >
 
-        <TableRow
-            android:id="@+id/fila1"
+        <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="32px"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" >
-        <!--   android:background="@drawable/fondo_raw"-->
-            
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/custom_menu_header" />
+
+        <TableLayout
+            android:id="@+id/custom_menu_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:stretchColumns="*" >
+        </TableLayout>
+    </LinearLayout>
+    <!-- Menu -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageView
                 android:id="@+id/iBleft"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:src="@drawable/left_2" />
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingTop="2dip"
+                android:src="@drawable/ic_menu_izq" />
+
+            <TextView
+                android:id="@+id/tVleft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Ir izq"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageView
                 android:id="@+id/iBright"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:src="@drawable/right_2" />
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingTop="2dip"
+                android:src="@drawable/ic_menu_der" />
+
+            <TextView
+                android:id="@+id/tVUpSc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Ir derecha"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <ImageView
                 android:id="@+id/iBupSc"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:src="@drawable/upload_2" />
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingTop="2dip"
+                android:src="@drawable/ic_menu_up" />
+
+            <TextView
+                android:id="@+id/tVupSc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Subir Score"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
             <ImageView
-                android:id="@+id/iBseeSc"          
-                android:layout_width="wrap_content"
+                android:id="@+id/iBseeSc"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:src="@drawable/chart_2" />
-        </TableRow>
-    </TableLayout>
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingTop="2dip"
+                android:src="@drawable/ic_menu_stats" />
+
+            <TextView
+                android:id="@+id/tVseeSc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Top 10"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
