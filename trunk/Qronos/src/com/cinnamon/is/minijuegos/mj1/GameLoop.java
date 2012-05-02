@@ -2,33 +2,64 @@ package com.cinnamon.is.minijuegos.mj1;
 
 import com.cinnamon.is.R;
 
+import android.app.Activity;
 import android.graphics.Canvas;
 
 public class GameLoop extends Thread {
 	static final long FPS = 10;
-	private final GameView view;
+	private GameView view;
 	private boolean running;
-	private final StartingMarcianos activity;
+	private StartingMarcianos activity;
+	private boolean paused = false;
+	//private Object pauseLock = new Object();
 
-	public GameLoop(final GameView view, final StartingMarcianos padre) {
+	public GameLoop(GameView view, StartingMarcianos padre) {
 		this.view = view;
 		this.activity = padre;
 	}
-
-	public void setRunning(final boolean b) {
-		this.running = b;
-	}
-
-	public void setRunning() {
+	
+	public synchronized void stopLoop(){
 		this.running = false;
+		if(paused){
+			resumeLoop();
+		}
 	}
-
-	@Override
+	
+	public synchronized void pauseLoop(){
+		if(paused){
+			return;
+		}
+		
+		paused = true;
+	}
+	
+	public synchronized void resumeLoop(){
+		
+		if(!paused){
+			return;
+		}
+		
+		this.notify();
+		paused = false;
+	}
+	
+	private synchronized void checkPaused(){
+		if(paused){
+			
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void run() {
 		long ticksPS = 1000 / FPS;
 		long startTime;
 		long sleepTime;
-		this.running = true;
+		running = true;
 		Canvas c = null;
 		int crearMarciano = 10;
 		int crearMarcianolili = 43;
@@ -36,20 +67,23 @@ public class GameLoop extends Thread {
 		int velocidad = 100;
 		int bomba = 300;
 		startTime = System.currentTimeMillis();
-		while (this.running) {
+		while (running) {
 			crearMarciano--;
 			crearMarcianolili--;
 			crearMarcianoOgro--;
 			velocidad--;
+			
+			checkPaused();
+			
 			if (this.view.getBomba().getEstado() == true) {
 				bomba--;
 			}
 			try {
 				if (this.view.getNumVidas() <= 0) {
 					this.view.musicaOff();
-					this.running = false;
-					this.activity.onStop();
-					this.activity.finalizar(true);
+					running = false;
+					activity.onStop();
+					activity.finalizar(true);
 
 				}
 				if (bomba == 0) {
@@ -65,39 +99,37 @@ public class GameLoop extends Thread {
 				}
 				if (crearMarciano == 0) {
 					crearMarciano = 10;
-					this.view.crearMarciano(R.drawable.marcianoprueba1, 1);
+					view.crearMarciano(R.drawable.marcianoprueba1, 1);
 				}
 				if (crearMarcianolili == 0) {
 					crearMarcianolili = 33;
-					this.view.crearMarciano(R.drawable.marcianolili, 2);
+					view.crearMarciano(R.drawable.marcianolili, 2);
 				}
 				if (crearMarcianoOgro == 0) {
 					crearMarcianoOgro = 57;
-					this.view.crearMarciano(R.drawable.marcianoogro, 3);
+					view.crearMarciano(R.drawable.marcianoogro, 3);
 				}
 				if (velocidad == 0) {
 					velocidad = 100;
 					this.view.acelerar();
 
 				}
-				c = this.view.getHolder().lockCanvas();
-				synchronized (this.view.getHolder()) {
+				c = view.getHolder().lockCanvas();
+				synchronized (view.getHolder()) {
 					this.view.onDraw(c);
 				}
 			} finally {
 				if (c != null) {
-					this.view.getHolder().unlockCanvasAndPost(c);
+					view.getHolder().unlockCanvasAndPost(c);
 				}
 			}
 			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
 			try {
-				if (sleepTime > 0) {
+				if (sleepTime > 0)
 					sleep(sleepTime + 100);
-				} else {
+				else
 					sleep(100);
-				}
 			} catch (Exception e) {
-				//
 			}
 		}
 	}

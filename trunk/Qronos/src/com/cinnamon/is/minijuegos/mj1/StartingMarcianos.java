@@ -77,12 +77,12 @@ public class StartingMarcianos extends Minijuego {
 		// this.finish();
 	}
 
+	@Override
 	public void parar() {
 		game.musicaOff();
 		game.loopStop();
-
 	}
-
+	
 	protected void onDestroy() {
 		if (!yaFin)
 			finalizar(true);
@@ -94,7 +94,7 @@ public class StartingMarcianos extends Minijuego {
 	// // TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
 	// // para el mj y luego lanza las opciones
 	// // Launch.lanzaConfirmacion("Salir del minijuego",
-	// // "¿Quieres salir del minijuego sin completarlo?", this);
+	// // "ï¿½Quieres salir del minijuego sin completarlo?", this);
 	// parar();
 	// Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
 	// }

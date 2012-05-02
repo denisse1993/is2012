@@ -48,7 +48,7 @@ public class Marcianos {
 		canvas.drawBitmap(this.bmp, this.x, this.y, null);
 		if(y>=gameView.getHeight()-gameView.getHeightCupula()){//El marcinao llega donde no queremos y perdemos una vida(evidentemente ese marciano deja de existir)
 			quitarVida();
-			gameView.añadirExplosion(this.x,this.y);
+			gameView.anadirExplosion(this.x,this.y);
 			gameView.quitarMarciano(this);
 		} 
 
