@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.cinnamon.is.R;
 
-public class GameView extends View implements OnTouchListener {
+public class GameView extends View {
 	// private GameLoop loop;
 	private int estado;
 	private final Paint paint;
@@ -67,7 +67,6 @@ public class GameView extends View implements OnTouchListener {
 		vibracionesEspera = 0;
 		estadoAnterior = 0;
 		estado = 0;
-		setOnTouchListener(this);
 	}
 
 	public void setY(final float Y) {
@@ -210,25 +209,20 @@ public class GameView extends View implements OnTouchListener {
 	}
 
 	@Override
-	public boolean onTouch(final View v, final MotionEvent event) {
-		Toast.makeText(a, "Hola1", 5000);
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			int x = (int) event.getX();
-			int y = (int) event.getY();
-			if (areaCamara(x, y)) {
-				a.pulsarCamara();
-			}
-
-			break;
+	public boolean onTouchEvent(final MotionEvent event) {
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+		if (areaCamara(x, y)) {
+			a.pulsarCamara();
+			return true;
 		}
 		return false;
 	}
 
-	private boolean areaCamara(final int x, final int y2) {
+	private boolean areaCamara(final int x, final int y) {
 		Toast.makeText(a, "Hola", 5000);
-		if (posicionZ_camara > x && posicionZ_camara + ANCHO_CAMARA < x) {
-			if (posicionY_camara > x && posicionY_camara + ALTO_CAMARA < x) {
+		if (posicionZ_camara < x && posicionZ_camara + ANCHO_CAMARA > x) {
+			if (posicionY_camara < y && posicionY_camara + ALTO_CAMARA > y) {
 				return true;
 			}
 		}
