@@ -79,12 +79,12 @@ public class GameView extends SurfaceView {
 		return cupula.getHeight();
 	}
 
-	public void añadirExplosion(int x, int y) {
+	public void anadirExplosion(int x, int y) {
 		crearExplosion(R.drawable.explosion1, x, y);
 		listaExplosion.add(explosion);
 	}
 
-	public void añadirBomba(int x, int y) {
+	public void anadirBomba(int x, int y) {
 		crearBomba(R.drawable.bomba1, posBomba, 0);
 		listaExplosion.add(bomba);
 	}
@@ -94,7 +94,7 @@ public class GameView extends SurfaceView {
 	}
 
 	public void loopStop() {
-		this.loop.setRunning();
+		this.loop.pauseLoop();
 	}
 
 	public GameView(Context context, StartingMarcianos ac) {
@@ -334,9 +334,11 @@ public class GameView extends SurfaceView {
 	}
 
 	public void reanudar() {
-		loop.setRunning(true);
-		// loop.start();
+		loop.resumeLoop();
+		//loop.setRunning(true);
+		//loop.start();
 		//loop.run();
+		
 
 	}
 
