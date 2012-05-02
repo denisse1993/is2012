@@ -29,9 +29,8 @@ public final class UtilQR {
 	public static final int REQUEST_CODE = 0x0000c0de;
 
 	private final Activity activity;
-	
 
-	public UtilQR(Activity activity) {
+	public UtilQR(final Activity activity) {
 		this.activity = activity;
 	}
 
@@ -43,17 +42,18 @@ public final class UtilQR {
 		intentScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		activity.startActivityForResult(intentScan, REQUEST_CODE);
+		this.activity.startActivityForResult(intentScan, REQUEST_CODE);
 	}
-	
-	public void lanzarQRTiempo(){
+
+	public void lanzarQRTiempo() {
 		Intent intentScan = new Intent(Props.Action.SCAN);
 		intentScan.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		Bundle b = new Bundle();
 		b.putBoolean(Props.Comun.CAMARABOMBA, true);
-		Launch.lanzaActivity(activity, Props.Comun.CAMARABOMBA, b, REQUEST_CODE);
+		Launch.lanzaActivity(this.activity, Props.Comun.CAMARABOMBA, b,
+				REQUEST_CODE);
 	}
 
 	/**
@@ -67,7 +67,8 @@ public final class UtilQR {
 	 *            el intent con los datos
 	 * @return el raw del qr en string
 	 */
-	public String getRawQR(int requestCode, int resultCode, Intent intent) {
+	public String getRawQR(final int requestCode, final int resultCode,
+			final Intent intent) {
 		if (requestCode == REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
 				return intent.getStringExtra("SCAN_RESULT");
@@ -83,7 +84,7 @@ public final class UtilQR {
 	 * @param text
 	 *            the text string to encode as a barcode
 	 */
-	public void verQR(String text) {
+	public void verQR(final String text) {
 		Intent intent = new Intent();
 		intent.setAction(Props.Action.ENCODE);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -92,7 +93,7 @@ public final class UtilQR {
 		intent.putExtra("ENCODE_DATA", text);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		activity.startActivity(intent);
+		this.activity.startActivity(intent);
 	}
 
 	/**
@@ -102,10 +103,10 @@ public final class UtilQR {
 	 *            the text string to encode as a barcode
 	 * @return el bitmap que representa el text
 	 */
-	public Bitmap getQR(String text) {
+	public Bitmap getQR(final String text) {
 
 		// Para establecer tamaño(copiao tal cual de zxing)
-		WindowManager manager = (WindowManager) activity
+		WindowManager manager = (WindowManager) this.activity
 				.getSystemService(Context.WINDOW_SERVICE);
 		Display display = manager.getDefaultDisplay();
 		int width = display.getWidth();
@@ -123,7 +124,7 @@ public final class UtilQR {
 		Bitmap bitmap = null;
 		QRCodeEncoder qrCodeEncoder = null;
 		try {
-			qrCodeEncoder = new QRCodeEncoder(activity, intent,
+			qrCodeEncoder = new QRCodeEncoder(this.activity, intent,
 					smallerDimension, false);
 			bitmap = qrCodeEncoder.encodeAsBitmap();
 		} catch (WriterException e) {

@@ -51,7 +51,7 @@ public final class Launch {
 	 * @param activity
 	 *            la actividad padre
 	 */
-	public Launch(Activity activity) {
+	public Launch(final Activity activity) {
 		this.a = activity;
 		/*
 		 * this.conexion =new Conexion(a); esto era para no tener que pasarle
@@ -65,8 +65,8 @@ public final class Launch {
 	 * @param ACTION
 	 *            la actividad a lanzar
 	 */
-	public void lanzaActivity(String ACTION) {
-		Launch.lanzaActivity(a, ACTION);
+	public void lanzaActivity(final String ACTION) {
+		Launch.lanzaActivity(this.a, ACTION);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public final class Launch {
 	 * @param ACTION
 	 *            la actividad a lanzar
 	 */
-	public static void lanzaActivity(Activity a, String ACTION) {
+	public static void lanzaActivity(final Activity a, final String ACTION) {
 		Intent i = new Intent(ACTION);
 		a.startActivity(i);
 	}
@@ -90,8 +90,8 @@ public final class Launch {
 	 * @param b
 	 *            el bundle con la info extra
 	 */
-	public void lanzaActivity(String ACTION, Bundle b) {
-		Launch.lanzaActivity(a, ACTION, b);
+	public void lanzaActivity(final String ACTION, final Bundle b) {
+		Launch.lanzaActivity(this.a, ACTION, b);
 	}
 
 	/**
@@ -104,7 +104,8 @@ public final class Launch {
 	 * @param b
 	 *            el bundle con la info extra
 	 */
-	public static void lanzaActivity(Activity a, String ACTION, Bundle b) {
+	public static void lanzaActivity(final Activity a, final String ACTION,
+			final Bundle b) {
 		Intent i = new Intent(ACTION);
 		i.putExtras(b);
 		a.startActivity(i);
@@ -119,8 +120,8 @@ public final class Launch {
 	 * @param rq
 	 *            el codigo de lanzamiento
 	 */
-	public void lanzaActivity(String ACTION, int rq) {
-		Launch.lanzaActivity(a, ACTION, rq);
+	public void lanzaActivity(final String ACTION, final int rq) {
+		Launch.lanzaActivity(this.a, ACTION, rq);
 	}
 
 	/**
@@ -133,7 +134,8 @@ public final class Launch {
 	 * @param rq
 	 *            el codigo de lanzamiento
 	 */
-	public static void lanzaActivity(Activity a, String ACTION, int rq) {
+	public static void lanzaActivity(final Activity a, final String ACTION,
+			final int rq) {
 		Intent i = new Intent(ACTION);
 		a.startActivityForResult(i, rq);
 	}
@@ -148,8 +150,8 @@ public final class Launch {
 	 * @param rq
 	 *            el codigo de lanzamiento
 	 */
-	public void lanzaActivity(String ACTION, Bundle b, int rq) {
-		Launch.lanzaActivity(a, ACTION, b, rq);
+	public void lanzaActivity(final String ACTION, final Bundle b, final int rq) {
+		Launch.lanzaActivity(this.a, ACTION, b, rq);
 	}
 
 	/**
@@ -164,7 +166,8 @@ public final class Launch {
 	 * @param rq
 	 *            el codigo de lanzamiento
 	 */
-	public static void lanzaActivity(Activity a, String ACTION, Bundle b, int rq) {
+	public static void lanzaActivity(final Activity a, final String ACTION,
+			final Bundle b, final int rq) {
 		Intent i = new Intent(ACTION);
 		i.putExtras(b);
 		a.startActivityForResult(i, rq);
@@ -179,8 +182,8 @@ public final class Launch {
 	 * @param msg
 	 *            el mensaje
 	 */
-	public void lanzaToast(String msg) {
-		lanzaToast(a, msg);
+	public void lanzaToast(final String msg) {
+		lanzaToast(this.a, msg);
 	}
 
 	/**
@@ -192,7 +195,7 @@ public final class Launch {
 	 * @param msg
 	 *            el mensaje
 	 */
-	public static void lanzaToast(Activity a, String msg) {
+	public static void lanzaToast(final Activity a, final String msg) {
 		Toast.makeText(a, msg, Toast.LENGTH_LONG).show();
 	}
 
@@ -204,8 +207,8 @@ public final class Launch {
 	 * @param rq
 	 *            el codigo de retorno RESULT_OK or RESULT_CANCELED
 	 */
-	public void returnActivity(Bundle b, int rq) {
-		returnActivity(a, b, rq);
+	public void returnActivity(final Bundle b, final int rq) {
+		returnActivity(this.a, b, rq);
 	}
 
 	/**
@@ -218,7 +221,8 @@ public final class Launch {
 	 * @param rq
 	 *            el codigo de retorno RESULT_OK or RESULT_CANCELED
 	 */
-	public static void returnActivity(Activity a, Bundle b, int rq) {
+	public static void returnActivity(final Activity a, final Bundle b,
+			final int rq) {
 		a.setResult(rq, new Intent().putExtras(b));
 		a.finish();
 	}
@@ -232,8 +236,8 @@ public final class Launch {
 	 *            el texto del dialog
 	 * @return el alertdialog
 	 */
-	public AlertDialog lanzaAviso(String title, String texto) {
-		return lanzaAviso(title, texto, a);
+	public AlertDialog lanzaAviso(final String title, final String texto) {
+		return lanzaAviso(title, texto, this.a);
 	}
 
 	/**
@@ -247,12 +251,15 @@ public final class Launch {
 	 *            la actividad de lanzamiento
 	 * @return el alertdialog
 	 */
-	public static AlertDialog lanzaAviso(String title, String texto, Activity a) {
+	public static AlertDialog lanzaAviso(final String title,
+			final String texto, final Activity a) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int id) {
 						dialog.cancel();
 					}
 				});
@@ -266,8 +273,8 @@ public final class Launch {
 	 *            el texto del dialog
 	 * @return el alertdialog
 	 */
-	public AlertDialog lanzaAviso(String texto) {
-		return lanzaAviso(texto, a);
+	public AlertDialog lanzaAviso(final String texto) {
+		return lanzaAviso(texto, this.a);
 	}
 
 	/**
@@ -279,11 +286,13 @@ public final class Launch {
 	 *            la actividad de lanzamiento
 	 * @return el alertdialog
 	 */
-	public static AlertDialog lanzaAviso(String texto, Activity a) {
+	public static AlertDialog lanzaAviso(final String texto, final Activity a) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setMessage(texto).setNegativeButton("Cerrar",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int id) {
 						dialog.cancel();
 					}
 				});
@@ -303,8 +312,8 @@ public final class Launch {
 	 *            texto del dialog
 	 * @return el alertdialog
 	 */
-	public AlertDialog lanzaConfirmacion(String title, String texto) {
-		return lanzaConfirmacion(title, texto, a);
+	public AlertDialog lanzaConfirmacion(final String title, final String texto) {
+		return lanzaConfirmacion(title, texto, this.a);
 	}
 
 	/**
@@ -322,8 +331,8 @@ public final class Launch {
 	 *            la actividad de lanzamiento
 	 * @return el alertdialog
 	 */
-	public static AlertDialog lanzaConfirmacion(String title, String texto,
-			Activity a) {
+	public static AlertDialog lanzaConfirmacion(final String title,
+			final String texto, final Activity a) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setTitle(title);
@@ -339,9 +348,11 @@ public final class Launch {
 	 *            Contexto de la actividad
 	 * @param nMJ
 	 *            Nœmero de Minijuego
+	 * @param launch
+	 * @param modo
 	 */
-	public static void lanzaConfirmacion(Context context, int nMJ,
-			Launch launch, int modo) {
+	public static void lanzaConfirmacion(final Context context, final int nMJ,
+			final Launch launch, final int modo) {
 		AyudaDialog dialogo = new AyudaDialog(context,
 				Props.Strings.mjNames[nMJ], modo, R.style.CenterDialog, nMJ,
 				Props.Action.MJ[nMJ], Props.Strings.mjExps[nMJ],
@@ -359,7 +370,7 @@ public final class Launch {
 	 * @return si o no
 	 */
 	public AlertDialog lanzaOpciones() {
-		return lanzaOpciones(a);
+		return lanzaOpciones(this.a);
 	}
 
 	/**
@@ -372,7 +383,7 @@ public final class Launch {
 	 *            la actividad de lanzamiento
 	 * @return si o no
 	 */
-	public static AlertDialog lanzaOpciones(Activity a) {
+	public static AlertDialog lanzaOpciones(final Activity a) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		builder.setItems(
@@ -389,8 +400,8 @@ public final class Launch {
 	 * @param modo
 	 * @param mj
 	 */
-	public static void lanzaOpciones(Context context, String title, int modo,
-			Minijuego mj) {
+	public static void lanzaOpciones(final Context context, final String title,
+			final int modo, final Minijuego mj) {
 		MenuDialog dialogo = new MenuDialog(context, title, modo,
 				R.style.CenterDialog, mj);
 		dialogo.show();
@@ -402,7 +413,7 @@ public final class Launch {
 	 * @param nick
 	 * @param pass
 	 */
-	public void lanzaDialogoEsperaLogin(String nick, String pass) { //
+	public void lanzaDialogoEsperaLogin(final String nick, final String pass) { //
 		// valor 0 activa login
 		new ConexionServerTask().execute(new Object[] { 0, nick, pass });
 	}
@@ -413,7 +424,7 @@ public final class Launch {
 	 * @param nick
 	 * @param pass
 	 */
-	public void lanzaDialogoEsperaRegister(String nick, String pass) { //
+	public void lanzaDialogoEsperaRegister(final String nick, final String pass) { //
 		// valor 1 activa register
 		new ConexionServerTask().execute(new Object[] { 1, nick, pass });
 	}
@@ -422,21 +433,23 @@ public final class Launch {
 	 * Sirve para subir las puntuaciones en el modo arcade (tabla parcade)
 	 * 
 	 * @param nick
+	 * @param a1
 	 * @param pass
 	 */
-	public void lanzaDialogoEsperaUpdateScoreArcade(String nick, int[] a) { //
+	public void lanzaDialogoEsperaUpdateScoreArcade(final String nick,
+			final int[] a1) { //
 		// valor 2 activa subir scores
-		new ConexionServerTask().execute(new Object[] { 2, nick, a });
+		new ConexionServerTask().execute(new Object[] { 2, nick, a1 });
 	}
 
 	/**
 	 * Sirve para subir una aventura al servidor (tabla quest)
 	 * 
-	 * @param a
+	 * @param a1
 	 */
-	public void lanzaDialogoEsperaCreaQuest(Aventura a) { //
+	public void lanzaDialogoEsperaCreaQuest(final Aventura a1) { //
 		// valor 3 activa crear aventura
-		new ConexionServerTask().execute(new Object[] { 3, a });
+		new ConexionServerTask().execute(new Object[] { 3, a1 });
 	}
 
 	/**
@@ -451,8 +464,10 @@ public final class Launch {
 	/**
 	 * Sirve para obtener una aventura (tabla quest)
 	 * 
+	 * @param av
+	 * 
 	 */
-	public void lanzaDialogoEsperaGetQuest(Aventura av) { //
+	public void lanzaDialogoEsperaGetQuest(final Aventura av) { //
 		// valor 5 activa get aventura
 		new ConexionServerTask().execute(new Object[] { 5, av });
 	}
@@ -460,8 +475,10 @@ public final class Launch {
 	/**
 	 * Sirve para actualizar una aventura (tabla quest)
 	 * 
+	 * @param av
+	 * 
 	 */
-	public void lanzaDialogoEsperaUpdateQuest(Aventura av) { //
+	public void lanzaDialogoEsperaUpdateQuest(final Aventura av) { //
 		// valor 6 activa update aventura
 		new ConexionServerTask().execute(new Object[] { 6, av });
 	}
@@ -469,8 +486,10 @@ public final class Launch {
 	/**
 	 * Sirve para obtener una aventura y ver si concuerda su pass (tabla quest)
 	 * 
+	 * @param av
+	 * 
 	 */
-	public void lanzaDialogoEsperaGetQuestPass(Aventura av) { //
+	public void lanzaDialogoEsperaGetQuestPass(final Aventura av) { //
 		// valor 7 activa get aventura con pass
 		new ConexionServerTask().execute(new Object[] { 7, av });
 	}
@@ -478,8 +497,10 @@ public final class Launch {
 	/**
 	 * Sirve para subir puntuaciones de pquest
 	 * 
+	 * @param j
+	 * 
 	 */
-	public void lanzaDialogoUpdatePquest(Jugador j) { //
+	public void lanzaDialogoUpdatePquest(final Jugador j) { //
 		// valor 8 activa updatePquest
 		new ConexionServerTask().execute(new Object[] { 8, j });
 	}
@@ -487,8 +508,10 @@ public final class Launch {
 	/**
 	 * Sirve para obtener las puntuaciones de pquest en base a quest
 	 * 
+	 * @param quest
+	 * 
 	 */
-	public void lanzaDialogoGetPquest(String quest) { //
+	public void lanzaDialogoGetPquest(final String quest) { //
 		// valor 9 activa getPquest
 		new ConexionServerTask().execute(new Object[] { 9, quest });
 	}
@@ -496,8 +519,10 @@ public final class Launch {
 	/**
 	 * Sirve para obtener una aventura (tabla quest) y pasar a unirse
 	 * 
+	 * @param av
+	 * 
 	 */
-	public void lanzaDialogoEsperaGetQuestUnirse(Aventura av) { //
+	public void lanzaDialogoEsperaGetQuestUnirse(final Aventura av) { //
 		// valor 10 activa get aventura para unirse a partida
 		new ConexionServerTask().execute(new Object[] { 10, av });
 	}
@@ -521,12 +546,12 @@ public final class Launch {
 
 		@Override
 		protected void onPreExecute() {
-			dialog = ProgressDialog.show(a, "Conectando...",
+			this.dialog = ProgressDialog.show(Launch.this.a, "Conectando...",
 					"Por favor, espera...", true, false);
 		}
 
 		@Override
-		protected Object[] doInBackground(Object... datos) {
+		protected Object[] doInBackground(final Object... datos) {
 			String nick, pass, qStr;
 			UtilJSON u;
 			Inet inet;
@@ -539,7 +564,7 @@ public final class Launch {
 			switch (tarea) {
 			case 0:
 				// login
-				Login loginA = (Login) a;
+				Login loginA = (Login) Launch.this.a;
 				nick = (String) datos[1];
 				pass = (String) datos[2];
 				// hace login y obtiene return
@@ -557,7 +582,7 @@ public final class Launch {
 					if (!loginA.loginLocal()) {
 						loginA.conexion.dameOnlineArcade();
 						String json = loginA.conexion.getRespuesta();
-						u = new UtilJSON(a);
+						u = new UtilJSON(Launch.this.a);
 						int[] d = u.verSiJugadorExisteArcade(json,
 								loginA.nombre);
 						if (d != null) {
@@ -570,7 +595,7 @@ public final class Launch {
 				break;
 			case 1:
 				// Register
-				Login register = (Login) a;
+				Login register = (Login) Launch.this.a;
 				nick = (String) datos[1];
 				pass = (String) datos[2];
 				// hace registro y obtiene return
@@ -579,14 +604,14 @@ public final class Launch {
 				break;
 			case 2:
 				// Upload Score Arcade
-				Arcade upScore = (Arcade) a;
+				Arcade upScore = (Arcade) Launch.this.a;
 				nick = (String) datos[1];
 				int[] b = (int[]) datos[2];
 				ret[1] = upScore.conexion.updateArcade(b, nick);
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				Aventura quest = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest.getMJArrayString(),
 						quest.getPistasArrayString(), quest.getNombre(),
@@ -594,19 +619,19 @@ public final class Launch {
 				break;
 			case 4:
 				// Ver ranking arcade
-				Arcade seeRanking = (Arcade) a;
+				Arcade seeRanking = (Arcade) Launch.this.a;
 				ret[1] = seeRanking.conexion.dameOnlineArcade();
 				break;
 			case 5:
 				// Get aventura
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				av = (Aventura) datos[1];
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(), null);
 				break;
 			case 6:
 				// Update Aventura (tabla quest)
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				Aventura quest2 = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
@@ -614,7 +639,7 @@ public final class Launch {
 				break;
 			case 7:
 				// Get aventura con pass
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				av = (Aventura) datos[1];
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(),
@@ -622,20 +647,20 @@ public final class Launch {
 				break;
 			case 8:
 				// Update Pquest (tabla pquest)
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
 						j.getNombre(), j.getAventura(), j.getFase());
 				break;
 			case 9:
 				// Ver ranking pquest
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
 				ret[1] = inet.c().getPquest(qStr);
 				break;
 			case 10:
 				// Get aventura
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				av = (Aventura) datos[1];
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(), null);
@@ -647,8 +672,8 @@ public final class Launch {
 		}
 
 		@Override
-		protected void onPostExecute(Object[] result) {
-			dialog.dismiss();
+		protected void onPostExecute(final Object[] result) {
+			this.dialog.dismiss();
 			int tarea = (Integer) result[0];
 			String respuestaSave;
 			Inet inet;
@@ -660,18 +685,20 @@ public final class Launch {
 				// login
 				Props.Comun.ONLINE = (Boolean) result[1];
 				respuestaSave = (String) result[2];
-				Login login = (Login) a;
+				Login login = (Login) Launch.this.a;
 				if (Props.Comun.ONLINE == false) {
 					login.l.lanzaToast(Props.Strings.ERROR_INET);
-					if (login.loginLocal())
+					if (login.loginLocal()) {
 						login.lanzaMenuPrincipal();
-					else if (!Props.Comun.ONLINE)
+					} else if (!Props.Comun.ONLINE) {
 						login.l.lanzaToast(Props.Strings.USER_PASS_MAL);
+					}
 				} else {
 					if (respuestaSave.equals("1")) {
 						login.l.lanzaToast(Props.Strings.LOGIN_OK);
-						if (login.loginLocal())
+						if (login.loginLocal()) {
 							login.lanzaMenuPrincipal();
+						}
 					} else if (respuestaSave.equals("2")) {
 						login.l.lanzaToast(Props.Strings.PASS_ERROR);
 					} else if (respuestaSave.equals("3")) {
@@ -685,7 +712,7 @@ public final class Launch {
 			case 1:
 				// Register
 				Props.Comun.ONLINE = (Boolean) result[1];
-				Login register = (Login) a;
+				Login register = (Login) Launch.this.a;
 				respuestaSave = (String) result[2];
 				if (Props.Comun.ONLINE == false) {
 					register.l.lanzaToast(Props.Strings.ERROR_INET);
@@ -693,12 +720,13 @@ public final class Launch {
 					if (respuestaSave.equals("1")) {
 						// TODO solo registra offline si ha registrado online
 						register.l.lanzaToast(Props.Strings.USER_CREADO_ONLINE);
-						if (!register.creaJugadorLocal())
+						if (!register.creaJugadorLocal()) {
 							register.lanzaMenuPrincipal();
-						// else if (!Props.Comun.ONLINE) {
-						// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
-						// login.l.lanzaToast(Props.Strings.USER_CREADO);
-						// }
+							// else if (!Props.Comun.ONLINE) {
+							// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
+							// login.l.lanzaToast(Props.Strings.USER_CREADO);
+							// }
+						}
 					} else if (respuestaSave.equals("2")) {
 						register.l
 								.lanzaToast(Props.Strings.USER_YA_EXISTE_ONLINE);
@@ -707,21 +735,22 @@ public final class Launch {
 				break;
 			case 2:
 				// Upload Score Arcade
-				Arcade upScore = (Arcade) a;
+				Arcade upScore = (Arcade) Launch.this.a;
 				conex = (Boolean) result[1];
-				if (conex)
+				if (conex) {
 					upScore.l.lanzaToast(Props.Strings.SCORE_SUBIDA);
-				else
+				} else {
 					upScore.l.lanzaToast(Props.Strings.SCORE_SUBIDA_ERROR);
+				}
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
 				conex = (Boolean) result[1];
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				if (conex) {
 					if (inet.c().getRespuesta().equals("1")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_SUBIDA);
-						EligeModoAventura eli = (EligeModoAventura) a;
+						EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 						eli.creaAventuraLocal();
 						eli.lanzaSelecMJ();
 					} else if (inet.c().getRespuesta().equals("2")) {
@@ -729,13 +758,14 @@ public final class Launch {
 					} else if (inet.c().getRespuesta().equals("3")) {
 						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
-				} else
+				} else {
 					inet.l().lanzaToast(Props.Strings.AVENTURA_SUBIDA_ERROR);
+				}
 				break;
 			case 4:
 				// Ver ranking arcade
 				conex = (Boolean) result[1];
-				Arcade seeRanking = (Arcade) a;
+				Arcade seeRanking = (Arcade) Launch.this.a;
 				if (conex) {
 					String json = seeRanking.conexion.getRespuesta();
 					Bundle b = new Bundle();
@@ -749,17 +779,17 @@ public final class Launch {
 			case 5:
 				// Obtener Aventura
 				conex = (Boolean) result[1];
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				if (conex) {
 					String aventura = inet.c().getRespuesta();
-					if (aventura.equals("3"))
+					if (aventura.equals("3")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_NO_EXISTE);
-					else {
+					} else {
 						av = (Aventura) result[2];
-						u = new UtilJSON(a);
+						u = new UtilJSON(Launch.this.a);
 						if (u.rellenaQuest(aventura, av)) {
 							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
-							EligeModoAventura eli = (EligeModoAventura) a;
+							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 							eli.creaAventuraLocalActualizada();
 							eli.lanzaSelecMJ();
 						}
@@ -771,7 +801,7 @@ public final class Launch {
 			case 6:
 				// Update Aventura
 				conex = (Boolean) result[1];
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				if (conex) {
 					if (inet.c().getRespuesta().equals("1")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_UPDATED);
@@ -789,20 +819,20 @@ public final class Launch {
 			case 7:
 				// Obtener Aventura con pass
 				conex = (Boolean) result[1];
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				if (conex) {
 					String aventura = inet.c().getRespuesta();
-					u = new UtilJSON(a);
-					if (aventura.equals("3"))
+					u = new UtilJSON(Launch.this.a);
+					if (aventura.equals("3")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_NO_EXISTE);
-					else if (aventura.equals("2"))
+					} else if (aventura.equals("2")) {
 						inet.l().lanzaToast(Props.Strings.PASS_ERROR);
-					else {
+					} else {
 						av = (Aventura) result[2];
-						u = new UtilJSON(a);
+						u = new UtilJSON(Launch.this.a);
 						if (u.rellenaQuest(aventura, av)) {
 							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
-							EligeModoAventura eli = (EligeModoAventura) a;
+							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 							eli.creaAventuraLocalActualizada();
 							eli.lanzaSelecPISTA();
 						}
@@ -813,17 +843,18 @@ public final class Launch {
 				break;
 			case 8:
 				// Upload Score pquest
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				conex = (Boolean) result[1];
-				if (conex)
+				if (conex) {
 					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA);
-				else
+				} else {
 					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA_ERROR);
+				}
 				break;
 			case 9:
 				// Ver ranking pquest
 				conex = (Boolean) result[1];
-				inet = (Inet) a;
+				inet = (Inet) Launch.this.a;
 				if (conex) {
 					String json = inet.c().getRespuesta();
 					Bundle b = new Bundle();
@@ -836,23 +867,23 @@ public final class Launch {
 			case 10:
 				// Obtener Aventura
 				conex = (Boolean) result[1];
-				inet = (Inet) a;// TODO la k lo use tiene k
+				inet = (Inet) Launch.this.a;// TODO la k lo use tiene k
 				// implementar la interfaz Inet para k esto no pete y pueda usar
 				// los metodos l() y c(),
 				if (conex) {
 					String aventura = inet.c().getRespuesta();
-					if (aventura.equals("3"))
+					if (aventura.equals("3")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_NO_EXISTE);
-					else {
+					} else {
 						av = (Aventura) result[2];
-						u = new UtilJSON(a);
+						u = new UtilJSON(Launch.this.a);
 						if (u.rellenaQuest(aventura, av)) {
 							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
 							// TODO A HACER OTRA COSA , si necesitas un
 							// metodo de
 							// x clase pues castear la variable a y usarlo, pero
 							// tiene k ser correcta la clase o petara
-							EligeModoAventura eli = (EligeModoAventura) a;
+							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 							eli.lanzaInGameAventura();
 						}
 					}

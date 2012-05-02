@@ -30,25 +30,27 @@ public class Intro extends Activity {
 	private MediaPlayer introTheme;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intro);
 		introTheme = MediaPlayer.create(Intro.this, R.raw.hearthbeat_sound);
 		introTheme.start();
 		Thread timer = new Thread() {
+			@Override
 			public void run() {
 				try {
-					sleep(0);//3650
+					sleep(0);// 3650
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} finally {
-					Launch.lanzaActivity(Intro.this, Props.Action.INTRO2);
+					Launch.lanzaActivity(Intro.this, Props.Action.MJ6);
 				}
 			}
 		};
 		timer.start();
-//		Dialogos dialog = new Dialogos (this, "Hola", false, R.style.CenterDialog);
-//		dialog.show();
+		// Dialogos dialog = new Dialogos (this, "Hola", false,
+		// R.style.CenterDialog);
+		// dialog.show();
 	}
 
 	@Override

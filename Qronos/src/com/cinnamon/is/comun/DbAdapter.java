@@ -582,20 +582,19 @@ public class DbAdapter {
 			+ SQLpista6
 			+ SQLpista7
 			+ SQLpista8
-			+ SQLpista9
-			+ SQLpista10 + SQLpista11 + SQLpista12 + ")";
+			+ SQLpista9 + SQLpista10 + SQLpista11 + SQLpista12 + ")";
 
 	/**
 	 * Clase interna de utilidad para creacion y gestion de la base de datos
 	 */
 	private static class DbHelper extends SQLiteOpenHelper {
 
-		DbHelper(Context context) {
+		DbHelper(final Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) {
+		public void onCreate(final SQLiteDatabase db) {
 			db.execSQL(TABLE_USERS_CREATE);
 			db.execSQL(TABLE_PARCADE_CREATE);
 			db.execSQL(TABLE_PQUEST_CREATE);
@@ -603,7 +602,8 @@ public class DbAdapter {
 		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		public void onUpgrade(final SQLiteDatabase db, final int oldVersion,
+				final int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 					+ newVersion + ", which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
@@ -620,7 +620,7 @@ public class DbAdapter {
 	 * @param ctx
 	 *            Contexto en el que estamos trabajando
 	 */
-	public DbAdapter(Context ctx) {
+	public DbAdapter(final Context ctx) {
 		this.mCtx = ctx;
 	}
 
@@ -636,13 +636,13 @@ public class DbAdapter {
 	 * @throws SQLException
 	 *             if the database could be neither opened or created
 	 */
-	public DbAdapter open(boolean onlyRead) throws SQLException {
-		mDbHelper = new DbHelper(mCtx);
+	public DbAdapter open(final boolean onlyRead) throws SQLException {
+		this.mDbHelper = new DbHelper(this.mCtx);
 		// obtiene la base de datos en modo lectura o escritura en funcion del
 		// parametro onlyRead
-		mDb = onlyRead ? mDbHelper.getReadableDatabase() : mDbHelper
-				.getWritableDatabase();
-		open = true;
+		this.mDb = onlyRead ? this.mDbHelper.getReadableDatabase()
+				: this.mDbHelper.getWritableDatabase();
+		this.open = true;
 		return this;
 	}
 
@@ -652,7 +652,7 @@ public class DbAdapter {
 	 * @return si esta abierta o no
 	 */
 	public boolean isOpen() {
-		return open;
+		return this.open;
 
 	}
 
@@ -660,8 +660,8 @@ public class DbAdapter {
 	 * Cierra la base de datos
 	 */
 	public void close() {
-		open = false;
-		mDbHelper.close();
+		this.open = false;
+		this.mDbHelper.close();
 	}
 
 	/**
@@ -673,13 +673,14 @@ public class DbAdapter {
 	 *            nombre del jugador
 	 * @param pass
 	 *            password del jugador
+	 * @return long
 	 */
-	public long createRowUsers(String player, String pass) {
+	public long createRowUsers(final String player, final String pass) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(USERS_KEY_PLAYER, player);
 		initialValues.put(USERS_KEY_PASS, pass);
 
-		return mDb.insert(TABLE_USERS, null, initialValues);
+		return this.mDb.insert(TABLE_USERS, null, initialValues);
 	}
 
 	/**
@@ -693,7 +694,7 @@ public class DbAdapter {
 	 *            puntuacion del jugador
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRowParcade(String player, int[] score) {
+	public long createRowParcade(final String player, final int[] score) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(PARCADE_KEY_PLAYER, player);
 		initialValues.put(PARCADE_KEY_SCORE1, score[0]);
@@ -709,7 +710,7 @@ public class DbAdapter {
 		initialValues.put(PARCADE_KEY_SCORE11, score[10]);
 		initialValues.put(PARCADE_KEY_SCORE12, score[11]);
 
-		return mDb.insert(TABLE_PARCADE, null, initialValues);
+		return this.mDb.insert(TABLE_PARCADE, null, initialValues);
 	}
 
 	/**
@@ -727,8 +728,8 @@ public class DbAdapter {
 	 *            nombre de la aventura
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRowPquest(String player, int[] score, int actual,
-			String quest) {
+	public long createRowPquest(final String player, final int[] score,
+			final int actual, final String quest) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(PARCADE_KEY_PLAYER, player);
 		initialValues.put(PQUEST_KEY_SCORE1, score[0]);
@@ -747,7 +748,7 @@ public class DbAdapter {
 
 		initialValues.put(PQUEST_KEY_ACTUAL, actual);
 
-		return mDb.insert(TABLE_PQUEST, null, initialValues);
+		return this.mDb.insert(TABLE_PQUEST, null, initialValues);
 	}
 
 	/**
@@ -761,12 +762,12 @@ public class DbAdapter {
 	 *            password de la aventura
 	 * @param minijuegos
 	 *            minijuegos de la aventura
-	 * @param pistas
+	 * @param pista
 	 *            las pista asociadas a los mj
 	 * @return rowId o -1 si ha fallado
 	 */
-	public long createRowQuest(String name, String pass, Integer[] minijuegos,
-			String[] pista) {
+	public long createRowQuest(final String name, final String pass,
+			final Integer[] minijuegos, final String[] pista) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(QUEST_KEY_NAME, name);
 		initialValues.put(QUEST_KEY_PASS, pass);
@@ -797,7 +798,7 @@ public class DbAdapter {
 		initialValues.put(QUEST_KEY_PISTA11, pista[10]);
 		initialValues.put(QUEST_KEY_PISTA12, pista[11]);
 
-		return mDb.insert(TABLE_QUEST, null, initialValues);
+		return this.mDb.insert(TABLE_QUEST, null, initialValues);
 	}
 
 	/**
@@ -812,24 +813,24 @@ public class DbAdapter {
 	 *            tabla a tratar
 	 * @return true si se ha borrado, false en caso contrario
 	 */
-	public boolean deleteRow(String rowId, Tabla indiceTabla) {
+	public boolean deleteRow(final String rowId, final Tabla indiceTabla) {
 		boolean del = false;
 		switch (indiceTabla) {
 		case users:
-			del = mDb.delete(TABLE_USERS, USERS_KEY_PLAYER + "=" + "'" + rowId
-					+ "'", null) > 0;
+			del = this.mDb.delete(TABLE_USERS, USERS_KEY_PLAYER + "=" + "'"
+					+ rowId + "'", null) > 0;
 			break;
 		case parcade:
-			del = mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "=" + "'"
+			del = this.mDb.delete(TABLE_PARCADE, PARCADE_KEY_PLAYER + "=" + "'"
 					+ rowId + "'", null) > 0;
 			break;
 		case pquest:
-			del = mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "=" + "'"
+			del = this.mDb.delete(TABLE_PQUEST, PARCADE_KEY_PLAYER + "=" + "'"
 					+ rowId + "'", null) > 0;
 			break;
 		case quest:
-			del = mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "=" + "'" + rowId
-					+ "'", null) > 0;
+			del = this.mDb.delete(TABLE_QUEST, QUEST_KEY_NAME + "=" + "'"
+					+ rowId + "'", null) > 0;
 			break;
 		}
 		return del;
@@ -846,27 +847,27 @@ public class DbAdapter {
 	 *            tabla a tratar
 	 * @return Cursor de todas las filas
 	 */
-	public Cursor fetchAllRows(Tabla indiceTabla) {
+	public Cursor fetchAllRows(final Tabla indiceTabla) {
 
 		Cursor mCursor = null;
 		try {
 			switch (indiceTabla) {
 			case users:
-				mCursor = mDb.query(TABLE_USERS, usersCampos, null, null, null,
-						null, null);
+				mCursor = this.mDb.query(TABLE_USERS, usersCampos, null, null,
+						null, null, null);
 				break;
 			case parcade:
-				mCursor = mDb.query(TABLE_PARCADE, parcadeCampos, null, null,
-						null, null, null);
+				mCursor = this.mDb.query(TABLE_PARCADE, parcadeCampos, null,
+						null, null, null, null);
 				break;
 			case pquest:
-				mCursor = mDb.query(TABLE_PQUEST, pquestCampos, null, null,
-						null, null, null);
+				mCursor = this.mDb.query(TABLE_PQUEST, pquestCampos, null,
+						null, null, null, null);
 				break;
 			case quest:
 
-				mCursor = mDb.query(TABLE_QUEST, questCampos, null, null, null,
-						null, null);
+				mCursor = this.mDb.query(TABLE_QUEST, questCampos, null, null,
+						null, null, null);
 				break;
 			}
 		} catch (SQLException e) {
@@ -886,27 +887,27 @@ public class DbAdapter {
 	 *            tabla a tratar
 	 * @return Cursor posicionado en la fila que queremos
 	 */
-	public Cursor fetchRow(String rowId, Tabla indiceTabla) {
+	public Cursor fetchRow(final String rowId, final Tabla indiceTabla) {
 		Cursor mCursor = null;
 		try {
 			switch (indiceTabla) {
 			case users:
-				mCursor = mDb.query(true, TABLE_USERS, usersCampos,
+				mCursor = this.mDb.query(true, TABLE_USERS, usersCampos,
 						USERS_KEY_PLAYER + "=" + "'" + rowId + "'", null, null,
 						null, null, null);
 				break;
 			case parcade:
-				mCursor = mDb.query(true, TABLE_PARCADE, parcadeCampos,
+				mCursor = this.mDb.query(true, TABLE_PARCADE, parcadeCampos,
 						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
 						null, null, null, null);
 				break;
 			case pquest:
-				mCursor = mDb.query(true, TABLE_PQUEST, pquestCampos,
+				mCursor = this.mDb.query(true, TABLE_PQUEST, pquestCampos,
 						PARCADE_KEY_PLAYER + "=" + "'" + rowId + "'", null,
 						null, null, null, null);
 				break;
 			case quest:
-				mCursor = mDb.query(true, TABLE_QUEST, questCampos,
+				mCursor = this.mDb.query(true, TABLE_QUEST, questCampos,
 						QUEST_KEY_NAME + "=" + "'" + rowId + "'", null, null,
 						null, null, null);
 				break;
@@ -933,7 +934,7 @@ public class DbAdapter {
 	 * @throws SQLException
 	 *             si no se ha podido encontrar la fila
 	 */
-	public boolean existsRow(String rowId, Tabla indiceTabla) {
+	public boolean existsRow(final String rowId, final Tabla indiceTabla) {
 		Cursor mCursor = fetchRow(rowId, indiceTabla);
 		boolean existe = false;
 
@@ -959,7 +960,7 @@ public class DbAdapter {
 	 *            a comprobar en MD5
 	 * @return si la pass es correcta o no y si ademas existe la fila
 	 */
-	public boolean passOk(String nombre, String pass) {
+	public boolean passOk(final String nombre, final String pass) {
 		boolean passOk = false;
 		Cursor mCursor = fetchRow(nombre, Tabla.users);
 
@@ -967,10 +968,11 @@ public class DbAdapter {
 			if (mCursor.getCount() <= 0) {
 				passOk = false;
 			} else {
-				if (pass.equals(mCursor.getString(USERS_IDCOL_PASS)))
+				if (pass.equals(mCursor.getString(USERS_IDCOL_PASS))) {
 					passOk = true;
-				else
+				} else {
 					passOk = false;
+				}
 			}
 			mCursor.close();
 		} else {
@@ -987,13 +989,15 @@ public class DbAdapter {
 	 *            id de la fila a actualizar
 	 * @param pass
 	 *            nueva password
+	 * @return boolean
 	 * */
-	public boolean updateRowUsers(String rowId, String pass) {
+	public boolean updateRowUsers(final String rowId, final String pass) {
 		ContentValues args = new ContentValues();
-		if (pass != null)
+		if (pass != null) {
 			args.put(USERS_KEY_PASS, pass);
+		}
 
-		return mDb.update(TABLE_USERS, args, USERS_KEY_PLAYER + "=" + "'"
+		return this.mDb.update(TABLE_USERS, args, USERS_KEY_PLAYER + "=" + "'"
 				+ rowId + "'", null) > 0;
 	}
 
@@ -1011,35 +1015,47 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowParcade(String rowId, int[] score) {
+	public boolean updateRowParcade(final String rowId, final int[] score) {
 		ContentValues args = new ContentValues();
-		if (score[0] != -1)
+		if (score[0] != -1) {
 			args.put(PARCADE_KEY_SCORE1, score[0]);
-		if (score[1] != -1)
+		}
+		if (score[1] != -1) {
 			args.put(PARCADE_KEY_SCORE2, score[1]);
-		if (score[2] != -1)
+		}
+		if (score[2] != -1) {
 			args.put(PARCADE_KEY_SCORE3, score[2]);
-		if (score[3] != -1)
+		}
+		if (score[3] != -1) {
 			args.put(PARCADE_KEY_SCORE4, score[3]);
-		if (score[4] != -1)
+		}
+		if (score[4] != -1) {
 			args.put(PARCADE_KEY_SCORE5, score[4]);
-		if (score[5] != -1)
+		}
+		if (score[5] != -1) {
 			args.put(PARCADE_KEY_SCORE6, score[5]);
-		if (score[6] != -1)
+		}
+		if (score[6] != -1) {
 			args.put(PARCADE_KEY_SCORE7, score[6]);
-		if (score[7] != -1)
+		}
+		if (score[7] != -1) {
 			args.put(PARCADE_KEY_SCORE8, score[7]);
-		if (score[8] != -1)
+		}
+		if (score[8] != -1) {
 			args.put(PARCADE_KEY_SCORE9, score[8]);
-		if (score[9] != -1)
+		}
+		if (score[9] != -1) {
 			args.put(PARCADE_KEY_SCORE10, score[9]);
-		if (score[10] != -1)
+		}
+		if (score[10] != -1) {
 			args.put(PARCADE_KEY_SCORE11, score[10]);
-		if (score[11] != -1)
+		}
+		if (score[11] != -1) {
 			args.put(PARCADE_KEY_SCORE12, score[11]);
+		}
 
-		return mDb.update(TABLE_PARCADE, args, PARCADE_KEY_PLAYER + "=" + "'"
-				+ rowId + "'", null) > 0;
+		return this.mDb.update(TABLE_PARCADE, args, PARCADE_KEY_PLAYER + "="
+				+ "'" + rowId + "'", null) > 0;
 	}
 
 	/**
@@ -1059,40 +1075,54 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowPQuest(String rowId, int[] score, int actual,
-			String quest) {
+	public boolean updateRowPQuest(final String rowId, final int[] score,
+			final int actual, final String quest) {
 		ContentValues args = new ContentValues();
-		if (score[0] != -1)
+		if (score[0] != -1) {
 			args.put(PARCADE_KEY_SCORE1, score[0]);
-		if (score[1] != -1)
+		}
+		if (score[1] != -1) {
 			args.put(PARCADE_KEY_SCORE2, score[1]);
-		if (score[2] != -1)
+		}
+		if (score[2] != -1) {
 			args.put(PARCADE_KEY_SCORE3, score[2]);
-		if (score[3] != -1)
+		}
+		if (score[3] != -1) {
 			args.put(PARCADE_KEY_SCORE4, score[3]);
-		if (score[4] != -1)
+		}
+		if (score[4] != -1) {
 			args.put(PARCADE_KEY_SCORE5, score[4]);
-		if (score[5] != -1)
+		}
+		if (score[5] != -1) {
 			args.put(PARCADE_KEY_SCORE6, score[5]);
-		if (score[6] != -1)
+		}
+		if (score[6] != -1) {
 			args.put(PARCADE_KEY_SCORE7, score[6]);
-		if (score[7] != -1)
+		}
+		if (score[7] != -1) {
 			args.put(PARCADE_KEY_SCORE8, score[7]);
-		if (score[8] != -1)
+		}
+		if (score[8] != -1) {
 			args.put(PARCADE_KEY_SCORE9, score[8]);
-		if (score[9] != -1)
+		}
+		if (score[9] != -1) {
 			args.put(PARCADE_KEY_SCORE10, score[9]);
-		if (score[10] != -1)
+		}
+		if (score[10] != -1) {
 			args.put(PARCADE_KEY_SCORE11, score[10]);
-		if (score[11] != -1)
+		}
+		if (score[11] != -1) {
 			args.put(PARCADE_KEY_SCORE12, score[11]);
-		if (actual != -1)
+		}
+		if (actual != -1) {
 			args.put(PQUEST_KEY_ACTUAL, actual);
-		if (quest != null)
+		}
+		if (quest != null) {
 			args.put(PQUEST_KEY_QUEST, quest);
+		}
 
-		return mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "=" + "'"
-				+ rowId + "'", null) > 0;
+		return this.mDb.update(TABLE_PQUEST, args, PARCADE_KEY_PLAYER + "="
+				+ "'" + rowId + "'", null) > 0;
 	}
 
 	/**
@@ -1112,61 +1142,86 @@ public class DbAdapter {
 	 * @return true si la fila se ha editado correctamente, false en caso
 	 *         contrario
 	 */
-	public boolean updateRowQuest(String rowId, String pass,
-			Integer[] minijuegos, String[] pistas) {
+	public boolean updateRowQuest(final String rowId, final String pass,
+			final Integer[] minijuegos, final String[] pistas) {
 		ContentValues args = new ContentValues();
-		if (pass != null)
+		if (pass != null) {
 			args.put(QUEST_KEY_PASS, pass);
-		if (minijuegos[0] != null)
+		}
+		if (minijuegos[0] != null) {
 			args.put(QUEST_KEY_MJ1, minijuegos[0]);
-		if (minijuegos[1] != null)
+		}
+		if (minijuegos[1] != null) {
 			args.put(QUEST_KEY_MJ2, minijuegos[1]);
-		if (minijuegos[2] != null)
+		}
+		if (minijuegos[2] != null) {
 			args.put(QUEST_KEY_MJ3, minijuegos[2]);
-		if (minijuegos[3] != null)
+		}
+		if (minijuegos[3] != null) {
 			args.put(QUEST_KEY_MJ4, minijuegos[3]);
-		if (minijuegos[4] != null)
+		}
+		if (minijuegos[4] != null) {
 			args.put(QUEST_KEY_MJ5, minijuegos[4]);
-		if (minijuegos[5] != null)
+		}
+		if (minijuegos[5] != null) {
 			args.put(QUEST_KEY_MJ6, minijuegos[5]);
-		if (minijuegos[6] != null)
+		}
+		if (minijuegos[6] != null) {
 			args.put(QUEST_KEY_MJ7, minijuegos[6]);
-		if (minijuegos[7] != null)
+		}
+		if (minijuegos[7] != null) {
 			args.put(QUEST_KEY_MJ8, minijuegos[7]);
-		if (minijuegos[8] != null)
+		}
+		if (minijuegos[8] != null) {
 			args.put(QUEST_KEY_MJ9, minijuegos[8]);
-		if (minijuegos[9] != null)
+		}
+		if (minijuegos[9] != null) {
 			args.put(QUEST_KEY_MJ10, minijuegos[9]);
-		if (minijuegos[10] != null)
+		}
+		if (minijuegos[10] != null) {
 			args.put(QUEST_KEY_MJ11, minijuegos[10]);
-		if (minijuegos[11] != null)
+		}
+		if (minijuegos[11] != null) {
 			args.put(QUEST_KEY_MJ12, minijuegos[11]);
-		if (pistas[0] != null)
+		}
+		if (pistas[0] != null) {
 			args.put(QUEST_KEY_PISTA1, pistas[0]);
-		if (pistas[1] != null)
+		}
+		if (pistas[1] != null) {
 			args.put(QUEST_KEY_PISTA2, pistas[1]);
-		if (pistas[2] != null)
+		}
+		if (pistas[2] != null) {
 			args.put(QUEST_KEY_PISTA3, pistas[2]);
-		if (pistas[3] != null)
+		}
+		if (pistas[3] != null) {
 			args.put(QUEST_KEY_PISTA4, pistas[3]);
-		if (pistas[4] != null)
+		}
+		if (pistas[4] != null) {
 			args.put(QUEST_KEY_PISTA5, pistas[4]);
-		if (pistas[5] != null)
+		}
+		if (pistas[5] != null) {
 			args.put(QUEST_KEY_PISTA6, pistas[5]);
-		if (pistas[6] != null)
+		}
+		if (pistas[6] != null) {
 			args.put(QUEST_KEY_PISTA7, pistas[6]);
-		if (pistas[7] != null)
+		}
+		if (pistas[7] != null) {
 			args.put(QUEST_KEY_PISTA8, pistas[7]);
-		if (pistas[8] != null)
+		}
+		if (pistas[8] != null) {
 			args.put(QUEST_KEY_PISTA9, pistas[8]);
-		if (pistas[9] != null)
+		}
+		if (pistas[9] != null) {
 			args.put(QUEST_KEY_PISTA10, pistas[9]);
-		if (pistas[10] != null)
+		}
+		if (pistas[10] != null) {
 			args.put(QUEST_KEY_PISTA11, pistas[10]);
-		if (pistas[11] != null)
+		}
+		if (pistas[11] != null) {
 			args.put(QUEST_KEY_PISTA12, pistas[11]);
+		}
 
-		return mDb.update(TABLE_QUEST, args, QUEST_KEY_NAME + "=" + "'" + rowId
-				+ "'", null) > 0;
+		return this.mDb.update(TABLE_QUEST, args, QUEST_KEY_NAME + "=" + "'"
+				+ rowId + "'", null) > 0;
 	}
 }

@@ -11,9 +11,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
-import com.cinnamon.is.comun.dialog.Dialogos;
-import com.cinnamon.is.game.Jugador;
-
 /**
  * Actividad abtracta que representa un minijuego
  * 
@@ -74,14 +71,14 @@ public abstract class Minijuego extends Activity {
 	 * Inicia el contador de tiempo del minijuego
 	 */
 	protected void startTime() {
-		start = System.nanoTime();
+		this.start = System.nanoTime();
 	}
 
 	/**
 	 * Detiene el contador de tiempo del minijuego y obtiene el tiempo
 	 */
 	protected void finishTime() {
-		elapsed = System.nanoTime() - start;
+		this.elapsed = System.nanoTime() - this.start;
 	}
 
 	/**
@@ -91,34 +88,34 @@ public abstract class Minijuego extends Activity {
 	 */
 	protected int calcularPuntuacion() {
 		// pasa el tiempo a segundos
-		double elapsedS = elapsed * tos;
-		int score = MAX_SCORE;
+		double elapsedS = this.elapsed * tos;
+		int score = this.MAX_SCORE;
 		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
 		// se tarda en cada uno, o dejarlo para todos igual
-		if (elapsedS < 60)// 60segundos
+		if (elapsedS < 60) {
 			return score;
-		else if (elapsedS >= 60 && elapsedS < 120)
+		} else if (elapsedS >= 60 && elapsedS < 120) {
 			return score - 200;
-		else if (elapsedS >= 120 && elapsedS < 240)
+		} else if (elapsedS >= 120 && elapsedS < 240) {
 			return score - 400;
-		else if (elapsedS >= 240 && elapsedS < 300)
+		} else if (elapsedS >= 240 && elapsedS < 300) {
 			return score - 600;
-		else if (elapsedS >= 300 && elapsedS < 360)
+		} else if (elapsedS >= 300 && elapsedS < 360) {
 			return score - 800;
-		else
+		} else {
 			return 0;
-	}
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Bundle b = getIntent().getExtras();
-		Boolean bool = (Boolean) b.getBoolean(Props.Comun.MODO);
-		if (bool)
-			modo = Dialogos.DIALOG_ARCADE;
-		else modo = Dialogos.DIALOG_AVENTURA;
+		}
 	}
 
+	@Override
+	protected void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		/*
+		 * Bundle b = getIntent().getExtras(); Boolean bool = (Boolean)
+		 * b.getBoolean(Props.Comun.MODO); if (bool) modo =
+		 * Dialogos.DIALOG_ARCADE; else modo = Dialogos.DIALOG_AVENTURA;
+		 */
+	}
 
 	/**
 	 * <p>
@@ -143,17 +140,17 @@ public abstract class Minijuego extends Activity {
 	 * @param s
 	 *            si se ha superado completamente o no
 	 */
-	public void finalizar(boolean s) {
+	public void finalizar(final boolean s) {
 		// Para tiempo
 		finishTime();
 		// Establece valores de puntuacion y superado
 		int puntuacion = calcularPuntuacion();
-		superado = s;
+		this.superado = s;
 		// Creo el bundle con la info usando strings genericos de clase
 		// Props.Comun
 		Bundle b = new Bundle();
 		b.putInt(Props.Comun.SCORE, puntuacion);
-		b.putBoolean(Props.Comun.SUPERADO, superado);
+		b.putBoolean(Props.Comun.SUPERADO, this.superado);
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
 	}
@@ -183,7 +180,7 @@ public abstract class Minijuego extends Activity {
 		// Launch.lanzaConfirmacion("Salir del minijuego",
 		// "¿Quieres salir del minijuego sin completarlo?", this);
 		parar();
-		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
+		Launch.lanzaOpciones(this, "Juego Pausado", this.modo, this);
 	}
 
 	// @Override
@@ -203,38 +200,37 @@ public abstract class Minijuego extends Activity {
 	// }
 	// }
 
-
 	@Override
 	public void onBackPressed() {
 		lanzaOpcionesDialog();
 	}
 
 	// getters & setters
-	public void setNombre(String nombre) {
+	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public boolean isSuperado() {
-		return superado;
+		return this.superado;
 	}
 
-	public void setSuperado(boolean superado) {
+	public void setSuperado(final boolean superado) {
 		this.superado = superado;
 	}
 
 	public int getFase() {
-		return fase;
+		return this.fase;
 	}
 
-	public void setFase(int fase) {
+	public void setFase(final int fase) {
 		this.fase = fase;
 	}
 
-	public void setSV(SurfaceView sv) {
+	public void setSV(final SurfaceView sv) {
 		this.game = sv;
 	}
 

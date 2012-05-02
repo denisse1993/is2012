@@ -5,16 +5,17 @@ import android.graphics.Canvas;
 
 public class GameLoopTopos extends Thread {
 	static final long FPS = 15;
-	private GameView view;
+	private final GameView view;
 	private boolean running = true;
-	private ToposMJ activity;
+	private final ToposMJ activity;
 
-	public GameLoopTopos(GameView view, ToposMJ a) {
+	public GameLoopTopos(final GameView view, final ToposMJ a) {
 		this.view = view;
 		activity = a;
 	}
 
 	// con .start() llama a este metodo
+	@Override
 	public void run() {
 		long ticksPS = 1000 / FPS;
 		long startTime;
@@ -43,17 +44,19 @@ public class GameLoopTopos extends Thread {
 				}
 				sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
 				try {
-					if (sleepTime > 0)
+					if (sleepTime > 0) {
 						sleep(sleepTime + 100);
-					else
+					} else {
 						sleep(100);
+					}
 				} catch (Exception e) {
+					//
 				}
 			}
 		}
 	}
 
-	public void setRunning(boolean b) {
+	public void setRunning(final boolean b) {
 		running = b;
 
 	}

@@ -11,8 +11,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import android.R.integer;
-
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.T;
 
@@ -45,8 +43,6 @@ public class Aventura implements Serializable {
 	 */
 	private ArrayList<T> minijuegos;
 
-
-
 	/**
 	 * Crea una aventura con parametros
 	 * 
@@ -57,7 +53,8 @@ public class Aventura implements Serializable {
 	 * @param minijuegos
 	 *            lista minijuegos
 	 */
-	public Aventura(String nombre, String pass, ArrayList<T> minijuegos) {
+	public Aventura(final String nombre, final String pass,
+			final ArrayList<T> minijuegos) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
@@ -71,7 +68,7 @@ public class Aventura implements Serializable {
 	 * @param pass
 	 *            de la aventura
 	 */
-	public Aventura(String nombre, String pass) {
+	public Aventura(final String nombre, final String pass) {
 		this(nombre, pass, new ArrayList<T>(Props.Comun.MAX_MJ));
 	}
 
@@ -83,7 +80,7 @@ public class Aventura implements Serializable {
 	 * @param pista
 	 *            la pista asociada
 	 */
-	public void addMJ(int mj) {
+	public void addMJ(final int mj) {
 		minijuegos.add(new T(mj));
 	}
 
@@ -94,7 +91,7 @@ public class Aventura implements Serializable {
 	 *            el id del minijuego
 	 * @return false o true si se ha modificado
 	 */
-	public boolean delMJ(int mj) {
+	public boolean delMJ(final int mj) {
 		return minijuegos.remove(new T(mj));
 	}
 
@@ -106,7 +103,7 @@ public class Aventura implements Serializable {
 	 * @param pista
 	 *            la pista a poner
 	 */
-	public void modPistaByPos(int mj, String pista) {
+	public void modPistaByPos(final int mj, final String pista) {
 		minijuegos.get(mj).pista = pista;
 	}
 
@@ -118,12 +115,13 @@ public class Aventura implements Serializable {
 	 * @param pista
 	 *            la pista a poner
 	 */
-	public void modPista(int mj, String pista) {
-		for (T t : minijuegos)
-			if (t.idMj == mj)
+	public void modPista(final int mj, final String pista) {
+		for (T t : minijuegos) {
+			if (t.idMj == mj) {
 				t.pista = pista;
+			}
+		}
 	}
-
 
 	/**
 	 * @return un iterador sobre las claves
@@ -135,15 +133,18 @@ public class Aventura implements Serializable {
 	/**
 	 * Comprueba si el mj ha sido add
 	 * 
+	 * @param mj
+	 * 
 	 * @param la
 	 *            key del mj
 	 * @return si esta o no
 	 */
-	public boolean existe(int mj) {
+	public boolean existe(final int mj) {
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
-			if (it.next().idMj == mj)
+			if (it.next().idMj == mj) {
 				return true;
+			}
 		}
 		return false;
 
@@ -164,8 +165,9 @@ public class Aventura implements Serializable {
 		Iterator<T> it = minijuegos.iterator();
 		while (it.hasNext()) {
 			T t = it.next();
-			if (t.pista != null && !t.equals(""))
+			if (t.pista != null && !t.equals("")) {
 				i++;
+			}
 		}
 		return i;
 	}
@@ -179,16 +181,18 @@ public class Aventura implements Serializable {
 	 */
 	public Integer[] getMJArrayInteger() {
 		Integer[] a = new Integer[Props.Comun.MAX_MJ];
-		if (minijuegos.size() == 0)
+		if (minijuegos.size() == 0) {
 			return a;
+		}
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
 			T t = it.next();
-			for (int i = 0; i < a.length; i++)
+			for (int i = 0; i < a.length; i++) {
 				if (i == (t.idMj - 1)) {
 					a[i] = t.idMj;
 					break;
 				}
+			}
 		}
 		return a;
 	}
@@ -202,16 +206,18 @@ public class Aventura implements Serializable {
 	 */
 	public String[] getMJArrayString() {
 		String[] a = new String[Props.Comun.MAX_MJ];
-		if (minijuegos.size() == 0)
+		if (minijuegos.size() == 0) {
 			return a;
+		}
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
 			T t = it.next();
-			for (int i = 0; i < a.length; i++)
+			for (int i = 0; i < a.length; i++) {
 				if (i == (t.idMj - 1)) {
 					a[i] = String.valueOf(t.idMj);
 					break;
 				}
+			}
 		}
 		return a;
 	}
@@ -225,16 +231,18 @@ public class Aventura implements Serializable {
 	 */
 	public String[] getPistasArrayString() {
 		String[] a = new String[Props.Comun.MAX_MJ];
-		if (minijuegos.size() == 0)
+		if (minijuegos.size() == 0) {
 			return a;
+		}
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
 			T t = it.next();
-			for (int i = 0; i < a.length; i++)
+			for (int i = 0; i < a.length; i++) {
 				if (i == (t.idMj - 1)) {
 					a[i] = String.valueOf(t.pista);
 					break;
 				}
+			}
 		}
 		return a;
 	}
@@ -348,13 +356,11 @@ public class Aventura implements Serializable {
 		return minijuegos;
 	}
 
-	public T getMinijuego(int index) {
+	public T getMinijuego(final int index) {
 		return minijuegos.get(index);
 	}
 
-
-
-	public void setMinijuegos(ArrayList<T> minijuegos) {
+	public void setMinijuegos(final ArrayList<T> minijuegos) {
 		this.minijuegos = minijuegos;
 	}
 
@@ -366,11 +372,12 @@ public class Aventura implements Serializable {
 	 * @param pistas
 	 *            las pistas
 	 */
-	public void setMinijuegos(String[] mjs, String[] pistas) {
+	public void setMinijuegos(final String[] mjs, final String[] pistas) {
 		for (int i = 0; i < pistas.length; i++) {
 			Integer a = Integer.parseInt(mjs[i]);
-			if (!pistas[i].equals("") && a != 0)
+			if (!pistas[i].equals("") && a != 0) {
 				minijuegos.add(new T(a, pistas[i], false));
+			}
 		}
 	}
 
@@ -378,7 +385,7 @@ public class Aventura implements Serializable {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
 
@@ -386,7 +393,7 @@ public class Aventura implements Serializable {
 		return pass;
 	}
 
-	public void setPass(String pass) {
+	public void setPass(final String pass) {
 		this.pass = pass;
 	}
 }

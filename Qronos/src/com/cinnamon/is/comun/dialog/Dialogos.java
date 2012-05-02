@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 
-
 /**
- * Clase abstracta que implementa todos los tipos de dialog de nuestra aplicacion
+ * Clase abstracta que implementa todos los tipos de dialog de nuestra
+ * aplicacion
  * 
  * Menu - Dialogos para mostrar el menu de juego Ayuda - Dialogos para mostra la
  * informacion de ayuda
@@ -24,7 +24,6 @@ public abstract class Dialogos extends Dialog implements
 	 */
 	String title;
 
-	
 	/**
 	 * Constantes que asignan el tipo de dialogo Aventura o Arcade
 	 */
@@ -37,18 +36,20 @@ public abstract class Dialogos extends Dialog implements
 	 */
 	boolean modo;
 
-	public Dialogos(Context _context, String _title, int _modo, int _theme) {
+	public Dialogos(final Context _context, final String _title,
+			final int _modo, final int _theme) {
 		super(_context, _theme);
 		this.title = _title;
 		if (DIALOG_ARCADE == _modo) {
-			modo = true;
+			this.modo = true;
 		} else if (DIALOG_AVENTURA == _modo) {
-			modo = false;
+			this.modo = false;
 		}
 	}
 
 	abstract void init();
 
+	@Override
 	public abstract void onClick(View v);
 
 }
