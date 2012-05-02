@@ -67,6 +67,7 @@ public class GameView extends View implements OnTouchListener {
 		vibracionesEspera = 0;
 		estadoAnterior = 0;
 		estado = 0;
+		setOnTouchListener(this);
 	}
 
 	public void setY(final float Y) {
@@ -210,6 +211,7 @@ public class GameView extends View implements OnTouchListener {
 
 	@Override
 	public boolean onTouch(final View v, final MotionEvent event) {
+		Toast.makeText(a, "Hola1", 5000);
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			int x = (int) event.getX();
@@ -224,6 +226,7 @@ public class GameView extends View implements OnTouchListener {
 	}
 
 	private boolean areaCamara(final int x, final int y2) {
+		Toast.makeText(a, "Hola", 5000);
 		if (posicionZ_camara > x && posicionZ_camara + ANCHO_CAMARA < x) {
 			if (posicionY_camara > x && posicionY_camara + ALTO_CAMARA < x) {
 				return true;
