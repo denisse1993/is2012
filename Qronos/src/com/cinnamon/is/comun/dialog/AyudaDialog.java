@@ -135,6 +135,7 @@ public class AyudaDialog extends Dialogos {
 		case R.id.ButtonStartAyuda:
 			Bundle b = new Bundle();
 			b.putBoolean(Props.Comun.MODO, this.modo);
+			this.dismiss();
 			this.launch.lanzaActivity(Props.Action.MJ[this.numMJ], b,
 					Props.Comun.CMJ[this.numMJ]);
 			break;
