@@ -8,10 +8,6 @@
 
 package com.cinnamon.is.game;
 
-import java.io.IOException;
-
-import org.apache.http.client.ClientProtocolException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,7 +16,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -90,7 +85,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	public Conexion conexion;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.arcade);
 		Bundle b = getIntent().getExtras();
@@ -113,12 +108,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (!mDbHelper.isOpen())
+		if (!mDbHelper.isOpen()) {
 			mDbHelper.open(false);
+		}
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras();
 			mDbHelper.open(false);
@@ -200,12 +196,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 				break;
 			}
 			mDbHelper.close();
-			if (superado)
+			if (superado) {
 				l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
 						"Puntuacion obtenida: " + score);
-			else
+			} else {
 				l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
 						"No has completado el MJ, no se guardara tu puntuacion.");
+			}
 
 		}
 
@@ -237,9 +234,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 		iBleft.setOnClickListener(this);
 		iBright.setOnClickListener(this);
 		iBupSc.setOnClickListener(this);
-		if (Props.Comun.ONLINE)
+		if (Props.Comun.ONLINE) {
 			iBseeSc.setOnClickListener(this);
-		else {
+		} else {
 			// deshabilitar,cambiar color, etc
 			iBseeSc.setOnClickListener(null);
 
@@ -263,8 +260,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 				iBmj[i].setOnClickListener(this);
 				iVsc[i].setImageResource(Props.Comun.getStar(jugador
 						.getScore(i)));
-			} else
+			} else {
 				iVsc[i].setImageResource(Props.Comun.iDiVstar[4]);
+			}
 
 		}
 		// habilito flechas
@@ -281,7 +279,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * @param actual
 	 *            el grupo a activar
 	 */
-	private void habilitarGrupoMJ(int actual) {
+	private void habilitarGrupoMJ(final int actual) {
 		grupoMJ = actual;
 		switch (grupoMJ) {
 		case 0:
@@ -316,8 +314,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 					iBmj[j].setOnClickListener(null);
 					iVsc[j].setImageResource(Props.Comun.iDiVstar[4]);
 				}
-				if (j < 6)
+				if (j < 6) {
 					j++;
+				}
 			}
 			// habilito transicion izquierda
 			iBleft.setEnabled(true);
@@ -345,7 +344,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// }
 	}
 
-	public void onClick(DialogInterface dialog, int boton) {
+	public void onClick(final DialogInterface dialog, final int boton) {
 		if (aDactual == dialog) {
 			aDactual = null;
 			switch (boton) {
@@ -359,7 +358,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 				tVhello.setText("pulsado salir");
 				break;
 			}
-		} else
+		} else {
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
@@ -372,9 +371,10 @@ public class Arcade extends Activity implements View.OnClickListener,
 				dialog.cancel();
 				break;
 			}
+		}
 	}
 
-	public void onClick(View v) {
+	public void onClick(final View v) {
 		switch (vClicked = v.getId()) {
 		// Botones
 		case R.id.iBleft:
@@ -404,40 +404,46 @@ public class Arcade extends Activity implements View.OnClickListener,
 			break;
 		// Botones de mjs
 		case R.id.iBmj1:
-			if (grupoMJ == 0)
+			if (grupoMJ == 0) {
 				Launch.lanzaConfirmacion(this, 0, l, Dialogos.DIALOG_ARCADE);
-			else if (grupoMJ == 1)
+			} else if (grupoMJ == 1) {
 				Launch.lanzaConfirmacion(this, 6, l, Dialogos.DIALOG_ARCADE);
+			}
 			break;
 		case R.id.iBmj2:
-			if (grupoMJ == 0)
+			if (grupoMJ == 0) {
 				Launch.lanzaConfirmacion(this, 1, l, Dialogos.DIALOG_ARCADE);
-			else if (grupoMJ == 1)
+			} else if (grupoMJ == 1) {
 				Launch.lanzaConfirmacion(this, 7, l, Dialogos.DIALOG_ARCADE);
+			}
 			break;
 		case R.id.iBmj3:
-			if (grupoMJ == 0)
+			if (grupoMJ == 0) {
 				Launch.lanzaConfirmacion(this, 2, l, Dialogos.DIALOG_ARCADE);
-			else if (grupoMJ == 1)
+			} else if (grupoMJ == 1) {
 				Launch.lanzaConfirmacion(this, 8, l, Dialogos.DIALOG_ARCADE);
+			}
 			break;
 		case R.id.iBmj4:
-			if (grupoMJ == 0)
+			if (grupoMJ == 0) {
 				Launch.lanzaConfirmacion(this, 3, l, Dialogos.DIALOG_ARCADE);
-			else if (grupoMJ == 1)
+			} else if (grupoMJ == 1) {
 				Launch.lanzaConfirmacion(this, 9, l, Dialogos.DIALOG_ARCADE);
+			}
 			break;
 		case R.id.iBmj5:
-			if (grupoMJ == 0)
+			if (grupoMJ == 0) {
 				Launch.lanzaConfirmacion(this, 4, l, Dialogos.DIALOG_ARCADE);
-			else if (grupoMJ == 1)
+			} else if (grupoMJ == 1) {
 				Launch.lanzaConfirmacion(this, 10, l, Dialogos.DIALOG_ARCADE);
+			}
 			break;
 		case R.id.iBmj6:
-			if (grupoMJ == 0)
+			if (grupoMJ == 0) {
 				Launch.lanzaConfirmacion(this, 5, l, Dialogos.DIALOG_ARCADE);
-			else if (grupoMJ == 1)
+			} else if (grupoMJ == 1) {
 				Launch.lanzaConfirmacion(this, 11, l, Dialogos.DIALOG_ARCADE);
+			}
 			break;
 		}
 	}
@@ -480,14 +486,14 @@ public class Arcade extends Activity implements View.OnClickListener,
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_arcade, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.btIz:

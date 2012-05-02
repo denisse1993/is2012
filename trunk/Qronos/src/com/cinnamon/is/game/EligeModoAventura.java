@@ -16,8 +16,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Inet;
@@ -69,11 +67,11 @@ public class EligeModoAventura extends Activity implements Inet,
 	/**
 	 * Nombre de la aventura
 	 */
-	private String nameQuest = "quest";
+	private final String nameQuest = "quest";
 	/**
 	 * Pass de la aventura
 	 */
-	private String passQuest = "quest";
+	private final String passQuest = "quest";
 
 	/**
 	 * Para contactar con BD online
@@ -86,7 +84,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	private Aventura a;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.elige_modo_aventura);
 		launch = new Launch(this);
@@ -113,7 +111,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(final View v) {
 		a = new Aventura(nameQuest, passQuest);
 		switch (vClicked = v.getId()) {
 		case R.id.b_crear_aventura:
@@ -131,8 +129,9 @@ public class EligeModoAventura extends Activity implements Inet,
 			launch.lanzaDialogoEsperaGetQuestPass(a);
 			break;
 		case R.id.b_unirse_aventura:
-			if (creaJugadorLocalPquest())
+			if (creaJugadorLocalPquest()) {
 				getJugadorLocalPquest();
+			}
 			q = new UtilQR(this);
 			q.lanzarQR();
 			break;
@@ -159,7 +158,7 @@ public class EligeModoAventura extends Activity implements Inet,
 		Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
 		finish();
 	}
-	
+
 	/**
 	 * Lanza InGameAventura
 	 */
@@ -217,8 +216,9 @@ public class EligeModoAventura extends Activity implements Inet,
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (!mDbHelper.isOpen())
+		if (!mDbHelper.isOpen()) {
 			mDbHelper.open(false);
+		}
 	}
 
 	/**
@@ -274,15 +274,13 @@ public class EligeModoAventura extends Activity implements Inet,
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				mDbHelper.open(false);
 				mDbHelper.updateRowPQuest(jugador.getNombre(),
-						jugador.getScoreQuest(),
-						jugador.getFase(),
-						contents);
+						jugador.getScoreQuest(), jugador.getFase(), contents);
 				Aventura quest = new Aventura(contents, null);
 				launch.lanzaDialogoEsperaGetQuestUnirse(quest);
 			} else if (resultCode == RESULT_CANCELED) {

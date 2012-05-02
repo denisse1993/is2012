@@ -19,8 +19,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.cinnamon.is.game.Login;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,14 +41,18 @@ public class Conexion {
 	/**
 	 * Constructor
 	 * 
+	 * @param _activity
+	 * 
 	 * @param _context
 	 */
-	public Conexion(Activity _activity) {
+	public Conexion(final Activity _activity) {
 		this.activity = _activity;
 	}
 
 	/**
 	 * Getters
+	 * 
+	 * @return String
 	 */
 
 	public String getRespuesta() {
@@ -64,11 +66,11 @@ public class Conexion {
 	 *            Nombre de usuario
 	 * @param pass
 	 *            Contrase–a
-	 * @return
+	 * @return True ƒxito
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public boolean login(String nick, String pass) {
+	public boolean login(final String nick, final String pass) {
 		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/login.php"); //local
@@ -81,7 +83,7 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				retorno = true;
 			} else {
 				retorno = false;
@@ -101,10 +103,10 @@ public class Conexion {
 	 *            Nombre de usuario
 	 * @param pass
 	 *            Contrase–a
-	 * @return
+	 * @return True ƒxito
 	 * @throws IOException
 	 */
-	public boolean register(String nick, String pass) {
+	public boolean register(final String nick, final String pass) {
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
@@ -118,12 +120,14 @@ public class Conexion {
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				// en principio no usamos respuesta, solo el valor de retorno
 				// booleano
-				respuesta = EntityUtils.toString(rp.getEntity());
-				if (respuesta.length() > 1)
-					respuesta = respuesta.substring(0, 1);
+				this.respuesta = EntityUtils.toString(rp.getEntity());
+				if (this.respuesta.length() > 1) {
+					this.respuesta = this.respuesta.substring(0, 1);
+				}
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = false;
@@ -145,10 +149,11 @@ public class Conexion {
 		try {
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = false;
@@ -160,10 +165,11 @@ public class Conexion {
 	 * Codifica md5
 	 * 
 	 * @param clear
-	 * @return
+	 * @return Codificado a Md5
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static String toMD5(String clear) throws NoSuchAlgorithmException {
+	public static String toMD5(final String clear)
+			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] b = md.digest(clear.getBytes());
 
@@ -188,11 +194,12 @@ public class Conexion {
 	 *            Nombre Usuario
 	 * @param score
 	 *            Puntuacion
-	 * @return
+	 * @return True ƒxito
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public boolean updateScore(int idMJ, String nick, String score) {
+	public boolean updateScore(final int idMJ, final String nick,
+			final String score) {
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
@@ -205,12 +212,13 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -224,14 +232,14 @@ public class Conexion {
 	 * 
 	 * @param imagen
 	 *            Imagen a subir
-	 * @return
+	 * @return True ƒxito
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public boolean uploadImage(int imagen) throws IOException {
+	public boolean uploadImage(final int imagen) throws IOException {
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
 		Bitmap uploadIMG = BitmapFactory.decodeResource(
-				activity.getResources(), imagen);
+				this.activity.getResources(), imagen);
 		;
 		uploadIMG.compress(Bitmap.CompressFormat.JPEG, 90, bao);
 		String name = "launcher";
@@ -247,7 +255,7 @@ public class Conexion {
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String str = EntityUtils.toString(rp.getEntity());
-				Toast.makeText(activity.getApplicationContext(), str,
+				Toast.makeText(this.activity.getApplicationContext(), str,
 						Toast.LENGTH_LONG).show();
 				return true;
 			}
@@ -259,7 +267,7 @@ public class Conexion {
 
 	}
 
-	public Bitmap decodificaBase64(String encodedImage) {
+	public Bitmap decodificaBase64(final String encodedImage) {
 
 		byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
 		Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0,
@@ -267,7 +275,7 @@ public class Conexion {
 		return decodedByte;
 	}
 
-	public boolean updateArcade(int[] arraySc, String nick) {
+	public boolean updateArcade(final int[] arraySc, final String nick) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -289,12 +297,13 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -314,18 +323,27 @@ public class Conexion {
 	 * el post devuelve en respuesta 1 = correcto, 2 = error en el formato de
 	 * envio 3 = no se pudo abrir la db
 	 * 
+	 * @param mj
+	 * @param pista
+	 * @param nombreAventura
+	 * @param passAventura
+	 * @param update
+	 * 
+	 * @return boolean
 	 */
-	public boolean creaOnlineAventura(String[] mj, String[] pista,
-			String nombreAventura, String passAventura, boolean update) {
+	public boolean creaOnlineAventura(final String[] mj, final String[] pista,
+			final String nombreAventura, final String passAventura,
+			final boolean update) {
 		boolean retorno;
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post;
-		if (!update)
+		if (!update) {
 			post = new HttpPost("http://cinnamon.webatu.com/creaAventura.php"); // server
-		else
+		} else {
 			post = new HttpPost("http://cinnamon.webatu.com/updateAventura.php"); // server
+		}
 
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
@@ -344,7 +362,7 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
 				retorno = true;
@@ -370,18 +388,21 @@ public class Conexion {
 	 *            el nombre
 	 * @param qPass
 	 *            la pass
+	 * @return boolean
 	 * 
 	 */
-	public boolean dameOnlineAventura(String nombreAventura, String qPass) {
+	public boolean dameOnlineAventura(final String nombreAventura,
+			final String qPass) {
 		boolean retorno;
 		HttpClient hc = new DefaultHttpClient();
 		HttpPost post;
 		// HttpPost post = new HttpPost("http://10.0.2.2/arcade.php");
-		if (qPass == null)
+		if (qPass == null) {
 			post = new HttpPost("http://cinnamon.webatu.com/dameAventura.php"); // server
-		else
+		} else {
 			post = new HttpPost(
 					"http://cinnamon.webatu.com/dameAventuraPass.php"); // server
+		}
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
 		pairs.add(new BasicNameValuePair("pass", qPass));
@@ -389,10 +410,11 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = false;
@@ -407,8 +429,8 @@ public class Conexion {
 	 * @param actual
 	 * @return conexion o no
 	 */
-	public boolean updatePquest(int[] arraySc, String nick, String quest,
-			int actual) {
+	public boolean updatePquest(final int[] arraySc, final String nick,
+			final String quest, final int actual) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -431,12 +453,13 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -450,7 +473,7 @@ public class Conexion {
 	 * @param quest
 	 * @return conexion o no
 	 */
-	public boolean getPquest(String quest) {
+	public boolean getPquest(final String quest) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -458,19 +481,18 @@ public class Conexion {
 		HttpPost post = new HttpPost(
 				"http://cinnamon.webatu.com/damepquest.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		int i = 0;
-
 		pairs.add(new BasicNameValuePair("quest", quest));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				respuesta = EntityUtils.toString(rp.getEntity());
+				this.respuesta = EntityUtils.toString(rp.getEntity());
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
 				retorno = true;
-			} else
+			} else {
 				retorno = false;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.cinnamon.is.minijuegos.mj6;
 
+import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
@@ -20,15 +21,19 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	/** Called when the activity is first created. */
 
-	private float explosion = 8, peligro = 6;
+	private final float explosion = 8, peligro = 6;
 	private float curX = 0, curY = 0, curZ = 0;
 	private Canvas canvas;
 	private Sensor SensorOrientacion;
@@ -39,7 +44,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	protected int modo = Dialogos.DIALOG_ARCADE;
 	private UtilQR q;
 
-	public void onCreate(Bundle savedInstanceState) {
+	@Override
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
@@ -51,6 +57,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 
+	@Override
 	public void reiniciar() {
 		this.onResume();
 	}
@@ -63,18 +70,11 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		this.onPause();
 	}
 
+	@Override
 	protected void onDestroy() {
 		finalizar(true);
 		super.onDestroy();
 
-	}
-
-	protected void lanzaOpcionesDialog() {
-		// TODO Ahora mismo muestra 3 opciones, continuar, reiniciar o salir
-		// para el mj y luego lanza las opciones
-		// Launch.lanzaConfirmacion("Salir del minijuego",
-		// "¿Quieres salir del minijuego sin completarlo?", this);
-		Launch.lanzaOpciones(this, "Juego Pausado", modo, this);
 	}
 
 	@Override
@@ -97,13 +97,13 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	 * }
 	 */
 	public void onHomePressed() {
-
+		return;
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		sm.registerListener(this, (Sensor) SensorOrientacion,
+		sm.registerListener(this, SensorOrientacion,
 				SensorManager.SENSOR_DELAY_GAME);
 		// el sensormanager.sensor... es el rate para ver cada cuanto actualiza
 		// la captura del sensor
@@ -121,10 +121,11 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		sm.unregisterListener(this);
 	}
 
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	public void onAccuracyChanged(final Sensor sensor, final int accuracy) {
+		return;
 	}
 
-	public void onSensorChanged(SensorEvent event) {
+	public void onSensorChanged(final SensorEvent event) {
 
 		curX = event.values[0];
 		curY = event.values[1];
@@ -156,7 +157,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 
 	}
 
-	public boolean onTouchEvent(MotionEvent event) {
+	@Override
+	public boolean onTouchEvent(final MotionEvent event) {
 
 		if (vista.getExplosion() == true) {
 			vista.setExplosion(false);
@@ -167,7 +169,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		return true;
 	}
 
-	public void finalizar(boolean s) {
+	@Override
+	public void finalizar(final boolean s) {
 		// Para tiempo
 		superado = s;
 		// Creo el bundle con la info usando strings genericos de clase
@@ -185,13 +188,13 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	}
 
 	public void pulsarCamara() {
-
 		q = new UtilQR(this);
 		q.lanzarQRTiempo();
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(final int requestCode,
+			final int resultCode, final Intent data) {
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
@@ -202,7 +205,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 							5);
 				}
 			} else if (resultCode == RESULT_CANCELED) {
-					superado = false;
+				superado = false;
 				// Handle cancell
 			}
 		}

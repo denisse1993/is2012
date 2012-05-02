@@ -38,17 +38,20 @@ public final class UtilJSON {
 	 * @param activity
 	 *            la actividad padre
 	 */
-	public UtilJSON(Activity activity) {
+	public UtilJSON(final Activity activity) {
 		this.a = activity;
 	}
 
 	/**
 	 * @param json
 	 *            la info con la aventura
+	 * @param av
 	 * @param a
 	 *            la aventura a rellenar
+	 * 
+	 * @return boolean
 	 */
-	public boolean rellenaQuest(String json, Aventura av) {
+	public boolean rellenaQuest(final String json, final Aventura av) {
 		boolean retorno;
 		String name, pass, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, pista1, pista2, pista3, pista4, pista5, pista6, pista7, pista8, pista9, pista10, pista11, pista12;
 		JSONArray jArray;
@@ -95,10 +98,10 @@ public final class UtilJSON {
 			av.setMinijuegos(mjs, pistas);
 			retorno = true;
 		} catch (JSONException e1) {
-			Launch.lanzaToast(a, Props.Strings.ERROR_JSON);
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		} catch (ParseException e1) {
-			Launch.lanzaToast(a, Props.Strings.ERROR_JSON);
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		}
 		return retorno;
@@ -112,7 +115,7 @@ public final class UtilJSON {
 	 *            del jugador a comprobar
 	 * @return el array con los datos de arcade o null si no existe
 	 */
-	public int[] verSiJugadorExisteArcade(String json, String nombre) {
+	public int[] verSiJugadorExisteArcade(final String json, final String nombre) {
 		String n;
 		int[] d = new int[Props.Comun.MAX_MJ];
 		JSONArray jArray;
@@ -139,7 +142,7 @@ public final class UtilJSON {
 		return d;
 	}
 
-	public boolean rankingOnlineAventura(String jSON) {
+	public boolean rankingOnlineAventura(final String jSON) {
 		boolean retorno;
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
 
@@ -164,21 +167,21 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
-				((Ranking) a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5, mj6,
-						mj7, mj8, mj9, mj10, mj11, mj12, total);
+				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
+						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
 			}
 			retorno = true;
 		} catch (JSONException e1) {
-			Launch.lanzaToast(a, Props.Strings.ERROR_JSON);
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		} catch (ParseException e1) {
-			Launch.lanzaToast(a, Props.Strings.ERROR_JSON);
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		}
 		return retorno;
 	}
 
-	public boolean rankingOnlineArcade(String jSON, int limite) {
+	public boolean rankingOnlineArcade(final String jSON, final int limite) {
 		boolean retorno;
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
 
@@ -203,15 +206,15 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
-				((Ranking) a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5, mj6,
-						mj7, mj8, mj9, mj10, mj11, mj12, total);
+				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
+						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
 			}
 			retorno = true;
 		} catch (JSONException e1) {
-			Launch.lanzaToast(a, Props.Strings.ERROR_JSON);
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		} catch (ParseException e1) {
-			Launch.lanzaToast(a, Props.Strings.ERROR_JSON);
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		}
 		return retorno;

@@ -82,51 +82,52 @@ public class InGameAventura extends Activity implements OnClickListener {
 	public Launch l;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_aventura);
 
 		Bundle b = getIntent().getExtras();
-		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
-		 quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
+		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
+		this.quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
 
-		bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
-		bCamara = (ImageButton) findViewById(R.id.ib_camara_ingame);
-		bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
+		this.bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
+		this.bCamara = (ImageButton) findViewById(R.id.ib_camara_ingame);
+		this.bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
 
-		bOpciones.setOnClickListener(this);
-		bCamara.setOnClickListener(this);
-		bRanking.setOnClickListener(this);
+		this.bOpciones.setOnClickListener(this);
+		this.bCamara.setOnClickListener(this);
+		this.bRanking.setOnClickListener(this);
 
-		conexion = new Conexion(this);
-		l = new Launch(this);
+		this.conexion = new Conexion(this);
+		this.l = new Launch(this);
 
-		mjActual = generaMinijuego();
-		if (mjActual == -2) {
+		this.mjActual = generaMinijuego();
+		if (this.mjActual == -2) {
 			// TODO
-			// launch.lanzaActivity(Props.Action.ENDGAME);		
-		} else if (mjActual != -1) {
-			String dialogText = quest.getMinijuego(mjActual).pista;
+			// launch.lanzaActivity(Props.Action.ENDGAME);
+		} else if (this.mjActual != -1) {
+			String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 			Launch.lanzaAviso(dialogText, this);
 		}
 
 	}
 
 	private int generaMinijuego() {
-		if (quest == null)
+		if (this.quest == null) {
 			return -1;
-		else {
-			int n = quest.size();
-			if (n == jugador.getFase())
+		} else {
+			int n = this.quest.size();
+			if (n == this.jugador.getFase()) {
 				return -2;
-			else {
+			} else {
 				Random rand = new Random();
 				int x;
 				// Peligro bucle infinito si no hemos marcado las fases
 				while (true) {
 					x = rand.nextInt(n);
-					if (!quest.getMinijuego(x).getSuperado())
+					if (!this.quest.getMinijuego(x).getSuperado()) {
 						return x;
+					}
 				}
 			}
 		}
@@ -135,28 +136,30 @@ public class InGameAventura extends Activity implements OnClickListener {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		aDactual = Launch.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
+		this.aDactual = Launch
+				.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mDbHelper.close();
+		this.mDbHelper.close();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (!mDbHelper.isOpen())
-			mDbHelper.open(false);
+		if (!this.mDbHelper.isOpen()) {
+			this.mDbHelper.open(false);
+		}
 	}
 
-	public void onClick(DialogInterface dialog, int boton) {
-		if (aDactual == dialog) {
+	public void onClick(final DialogInterface dialog, final int boton) {
+		if (this.aDactual == dialog) {
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
-				launch.lanzaActivity(Props.Action.MAINMENU);
+				this.launch.lanzaActivity(Props.Action.MAINMENU);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -166,108 +169,113 @@ public class InGameAventura extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (vClicked = v.getId()) {
+	public void onClick(final View v) {
+		switch (this.vClicked = v.getId()) {
 		case R.id.ll_ranking_ingame:
-			launch.lanzaActivity(Props.Action.RANKING);
+			this.launch.lanzaActivity(Props.Action.RANKING);
+			break;
 		case R.id.ll_camara_ingame:
-			q = new UtilQR(this);
-			q.lanzarQR();
+			this.q = new UtilQR(this);
+			this.q.lanzarQR();
+			break;
 		case R.id.ll_opciones_ingame:
-			launch.lanzaActivity(Props.Action.OPCIONES);
+			this.launch.lanzaActivity(Props.Action.OPCIONES);
+			break;
 		case R.id.ib_info_ingame:
-			String dialogText = quest.getMinijuego(mjActual).toString();
+			String dialogText = this.quest.getMinijuego(this.mjActual)
+					.toString();
 			Launch.lanzaAviso(dialogText, this);
 		}
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String contents = q.getRawQR(requestCode, resultCode, data);
+	protected void onActivityResult(final int requestCode,
+			final int resultCode, final Intent data) {
+		String contents = this.q.getRawQR(requestCode, resultCode, data);
 		int nMJ = Integer.parseInt(contents);
-		if (requestCode == UtilQR.REQUEST_CODE && nMJ == mjActual) {
-			if (resultCode == RESULT_OK)
-				Launch.lanzaConfirmacion(this,nMJ,
-						launch, Dialogos.DIALOG_AVENTURA);
-			else if (resultCode == RESULT_CANCELED) {
+		if (requestCode == UtilQR.REQUEST_CODE && nMJ == this.mjActual) {
+			if (resultCode == RESULT_OK) {
+				Launch.lanzaConfirmacion(this, nMJ, this.launch,
+						Dialogos.DIALOG_AVENTURA);
+			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell
 			}
 		} else if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras();
-			mDbHelper.open(false);
+			this.mDbHelper.open(false);
 			int score = b.getInt(Props.Comun.SCORE);
-			int fase = jugador.getFase();
+			int fase = this.jugador.getFase();
 			boolean superado = b.getBoolean(Props.Comun.SUPERADO);
 			switch (requestCode) {
 			case Props.Comun.cmj1:
 				if (superado) {
 					int indice1 = Props.Comun.cmj1 - 1;
-					jugador.setScoreQuest(score, indice1);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice1);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 				break;
 			case Props.Comun.cmj2:
 				if (superado) {
 					int indice2 = Props.Comun.cmj2 - 1;
-					jugador.setScoreQuest(score, indice2);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice2);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 
 				break;
 			case Props.Comun.cmj3:
 				if (superado) {
 					int indice3 = Props.Comun.cmj3 - 1;
-					jugador.setScoreQuest(score, indice3);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice3);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 				break;
 			case Props.Comun.cmj4:
 				if (superado) {
 					int indice4 = Props.Comun.cmj4 - 1;
-					jugador.setScoreQuest(score, indice4);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice4);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 				break;
 			case Props.Comun.cmj5:
 				if (superado) {
 					int indice5 = Props.Comun.cmj5 - 1;
-					jugador.setScoreQuest(score, indice5);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice5);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 				break;
 			case Props.Comun.cmj6:
 				if (superado) {
 					int indice6 = Props.Comun.cmj6 - 1;
-					jugador.setScoreQuest(score, indice6);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice6);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 				break;
 			case Props.Comun.cmj7:
 				if (superado) {
 					int indice7 = Props.Comun.cmj7 - 1;
-					jugador.setScoreQuest(score, indice7);
-					jugador.setFase(fase + 1);
-					mDbHelper.updateRowPQuest(jugador.getNombre(),
-							jugador.getScoreQuest(), jugador.getFase(),
-							quest.getNombre());
+					this.jugador.setScoreQuest(score, indice7);
+					this.jugador.setFase(fase + 1);
+					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
+							this.jugador.getScoreQuest(),
+							this.jugador.getFase(), this.quest.getNombre());
 				}
 				break;
 			case Props.Comun.cmj8:
@@ -281,22 +289,22 @@ public class InGameAventura extends Activity implements OnClickListener {
 			case Props.Comun.cmj12:
 				break;
 			}
-			mDbHelper.close();
-			if (superado){
-				l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
+			this.mDbHelper.close();
+			if (superado) {
+				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
 						"Puntuacion obtenida: " + score);
-				launch.lanzaDialogoUpdatePquest(jugador);
-			}
-			else
-				l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
+				this.launch.lanzaDialogoUpdatePquest(this.jugador);
+			} else {
+				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
 						"No has completado el MJ, no se guardara tu puntuacion.");
+			}
 
-			mjActual = generaMinijuego();
-			if (mjActual == -2) {
+			this.mjActual = generaMinijuego();
+			if (this.mjActual == -2) {
 				// TODO
 				// launch.lanzaActivity(Props.Action.ENDGAME);
-			} else if (mjActual != -1) {
-				String dialogText = quest.getMinijuego(mjActual).pista;
+			} else if (this.mjActual != -1) {
+				String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 				Launch.lanzaAviso(dialogText, this);
 			}
 

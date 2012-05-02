@@ -2,21 +2,20 @@ package com.cinnamon.is.minijuegos.mj1;
 
 import com.cinnamon.is.R;
 
-import android.app.Activity;
 import android.graphics.Canvas;
 
 public class GameLoop extends Thread {
 	static final long FPS = 10;
-	private GameView view;
+	private final GameView view;
 	private boolean running;
-	private StartingMarcianos activity;
+	private final StartingMarcianos activity;
 
-	public GameLoop(GameView view, StartingMarcianos padre) {
+	public GameLoop(final GameView view, final StartingMarcianos padre) {
 		this.view = view;
 		this.activity = padre;
 	}
 
-	public void setRunning(boolean b) {
+	public void setRunning(final boolean b) {
 		this.running = b;
 	}
 
@@ -24,11 +23,12 @@ public class GameLoop extends Thread {
 		this.running = false;
 	}
 
+	@Override
 	public void run() {
 		long ticksPS = 1000 / FPS;
 		long startTime;
 		long sleepTime;
-		running = true;
+		this.running = true;
 		Canvas c = null;
 		int crearMarciano = 10;
 		int crearMarcianolili = 43;
@@ -36,7 +36,7 @@ public class GameLoop extends Thread {
 		int velocidad = 100;
 		int bomba = 300;
 		startTime = System.currentTimeMillis();
-		while (running) {
+		while (this.running) {
 			crearMarciano--;
 			crearMarcianolili--;
 			crearMarcianoOgro--;
@@ -47,9 +47,9 @@ public class GameLoop extends Thread {
 			try {
 				if (this.view.getNumVidas() <= 0) {
 					this.view.musicaOff();
-					running = false;
-					activity.onStop();
-					activity.finalizar(true);
+					this.running = false;
+					this.activity.onStop();
+					this.activity.finalizar(true);
 
 				}
 				if (bomba == 0) {
@@ -65,37 +65,39 @@ public class GameLoop extends Thread {
 				}
 				if (crearMarciano == 0) {
 					crearMarciano = 10;
-					view.crearMarciano(R.drawable.marcianoprueba1, 1);
+					this.view.crearMarciano(R.drawable.marcianoprueba1, 1);
 				}
 				if (crearMarcianolili == 0) {
 					crearMarcianolili = 33;
-					view.crearMarciano(R.drawable.marcianolili, 2);
+					this.view.crearMarciano(R.drawable.marcianolili, 2);
 				}
 				if (crearMarcianoOgro == 0) {
 					crearMarcianoOgro = 57;
-					view.crearMarciano(R.drawable.marcianoogro, 3);
+					this.view.crearMarciano(R.drawable.marcianoogro, 3);
 				}
 				if (velocidad == 0) {
 					velocidad = 100;
 					this.view.acelerar();
 
 				}
-				c = view.getHolder().lockCanvas();
-				synchronized (view.getHolder()) {
+				c = this.view.getHolder().lockCanvas();
+				synchronized (this.view.getHolder()) {
 					this.view.onDraw(c);
 				}
 			} finally {
 				if (c != null) {
-					view.getHolder().unlockCanvasAndPost(c);
+					this.view.getHolder().unlockCanvasAndPost(c);
 				}
 			}
 			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
 			try {
-				if (sleepTime > 0)
+				if (sleepTime > 0) {
 					sleep(sleepTime + 100);
-				else
+				} else {
 					sleep(100);
+				}
 			} catch (Exception e) {
+				//
 			}
 		}
 	}

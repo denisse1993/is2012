@@ -45,38 +45,38 @@ public class Opciones extends PreferenceActivity implements
 	private DbAdapter mDbHelper;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.opciones);
 		Bundle b = getIntent().getExtras();
-		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
+		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		// abre base de datos
-		mDbHelper = new DbAdapter(this);
-		mDbHelper.open(false);
+		this.mDbHelper = new DbAdapter(this);
+		this.mDbHelper.open(false);
 
-		pLogin = (Preference) findPreference("loginChange");
-		pLogin.setOnPreferenceClickListener(this);
-		pReset = (Preference) findPreference("resetGame");
-		pReset.setOnPreferenceClickListener(this);
+		this.pLogin = findPreference("loginChange");
+		this.pLogin.setOnPreferenceClickListener(this);
+		this.pReset = findPreference("resetGame");
+		this.pReset.setOnPreferenceClickListener(this);
 	}
 
 	@Override
 	public void onBackPressed() {
-		mDbHelper.close();
+		this.mDbHelper.close();
 		Bundle b = new Bundle();
-		b.putSerializable(Props.Comun.JUGADOR, jugador);
+		b.putSerializable(Props.Comun.JUGADOR, this.jugador);
 		finish();
-		Launch.lanzaActivity(this, Props.Action.MAINMENU,b);
+		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
 	}
 
 	@Override
-	public boolean onPreferenceClick(Preference preference) {
+	public boolean onPreferenceClick(final Preference preference) {
 		String key = preference.getKey();
-		if (key.equals(pLogin.getKey())) {
-			mDbHelper.close();
+		if (key.equals(this.pLogin.getKey())) {
+			this.mDbHelper.close();
 			finish();
 			Launch.lanzaActivity(this, Props.Action.LOGIN);
-		} else if (key.equals(pReset.getKey())) {
+		} else if (key.equals(this.pReset.getKey())) {
 			resetJugadorArcade();
 			Launch.lanzaAviso("Arcade Reseteado!", this);
 		}
@@ -87,8 +87,9 @@ public class Opciones extends PreferenceActivity implements
 	 * Metodo que resetea al jugador accediendo a la base de datos
 	 */
 	private void resetJugadorArcade() {
-		jugador.resetArcade();
-		mDbHelper.updateRowParcade(jugador.getNombre(), jugador.getScore());
-		
+		this.jugador.resetArcade();
+		this.mDbHelper.updateRowParcade(this.jugador.getNombre(),
+				this.jugador.getScore());
+
 	}
 }

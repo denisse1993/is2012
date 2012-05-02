@@ -39,7 +39,7 @@ public class T implements Serializable {
 	 * @param idMj
 	 *            el id de mj
 	 */
-	public T(int idMj) {
+	public T(final int idMj) {
 		this.idMj = idMj;
 		this.pista = null;
 		this.superado = false;
@@ -52,32 +52,35 @@ public class T implements Serializable {
 	 * @param pista
 	 * @param superado
 	 */
-	public T(int idMj, String pista, boolean superado) {
+	public T(final int idMj, final String pista, final boolean superado) {
 		this.idMj = idMj;
 		this.pista = pista;
 		this.superado = superado;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof T))
+	public boolean equals(final Object o) {
+		if (!(o instanceof T)) {
 			return false;
+		}
 
 		T t = (T) o;
 
 		// seran iguales si tienen la misma pista
-		if (t.idMj != this.idMj)
+		if (t.idMj != this.idMj) {
 			return false;
+		}
 
 		return true;
 	}
 
 	public Boolean getSuperado() {
-		return superado;
+		return this.superado;
 	}
 
 	@Override
 	public String toString() {
-		return idMj + " " + pista + " " + (superado ? "si" : "no");
+		return this.idMj + " " + this.pista + " "
+				+ (this.superado ? "si" : "no");
 	}
 }

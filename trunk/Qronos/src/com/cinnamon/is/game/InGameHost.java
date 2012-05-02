@@ -6,12 +6,9 @@ import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.UtilQR;
-import com.cinnamon.is.comun.dialog.Dialogos;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -52,8 +49,9 @@ public class InGameHost extends Activity implements OnClickListener {
 	/**
 	 * Vista pulsada en onClick para uso en dialog onclick
 	 */
+	@SuppressWarnings("unused")
 	private int vClicked;
-	
+
 	/**
 	 * Utilidad para lanzar el Scanner QR
 	 */
@@ -69,56 +67,58 @@ public class InGameHost extends Activity implements OnClickListener {
 	public Conexion conexion;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_host);
-		
-		//mDbHelper = new DbAdapter(this);
-		//mDbHelper.open(false);
-		
+
+		// mDbHelper = new DbAdapter(this);
+		// mDbHelper.open(false);
+
 		// TODO conexion.updateAventura();
 
-		bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
-		bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
+		this.bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
+		this.bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
 
-		bOpciones.setOnClickListener(this);
-		bRanking.setOnClickListener(this);
+		this.bOpciones.setOnClickListener(this);
+		this.bRanking.setOnClickListener(this);
 
-		ivQR = (ImageView) findViewById(R.id.ivQR);
-		conexion = new Conexion(this);
-		launch = new Launch(this);
-		q = new UtilQR(this);
-		Bitmap b = q.getQR(quest.getNombre());
-		ivQR.setImageBitmap(b);
-		conexion = new Conexion(this);
-		launch = new Launch(this);
+		this.ivQR = (ImageView) findViewById(R.id.ivQR);
+		this.conexion = new Conexion(this);
+		this.launch = new Launch(this);
+		this.q = new UtilQR(this);
+		Bitmap b = this.q.getQR(this.quest.getNombre());
+		this.ivQR.setImageBitmap(b);
+		this.conexion = new Conexion(this);
+		this.launch = new Launch(this);
 	}
 
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		aDactual = Launch.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
+		this.aDactual = Launch
+				.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mDbHelper.close();
+		this.mDbHelper.close();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (!mDbHelper.isOpen())
-			mDbHelper.open(false);
+		if (!this.mDbHelper.isOpen()) {
+			this.mDbHelper.open(false);
+		}
 	}
 
-	public void onClick(DialogInterface dialog, int boton) {
-		if (aDactual == dialog) {
+	public void onClick(final DialogInterface dialog, final int boton) {
+		if (this.aDactual == dialog) {
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
-				launch.lanzaActivity(Props.Action.MAINMENU);
+				this.launch.lanzaActivity(Props.Action.MAINMENU);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -128,12 +128,13 @@ public class InGameHost extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (vClicked = v.getId()) {
+	public void onClick(final View v) {
+		switch (this.vClicked = v.getId()) {
 		case R.id.ll_ranking_ingame:
-			launch.lanzaActivity(Props.Action.RANKING);
+			this.launch.lanzaActivity(Props.Action.RANKING);
+			break;
 		case R.id.ll_opciones_ingame:
-			launch.lanzaActivity(Props.Action.OPCIONES);
+			this.launch.lanzaActivity(Props.Action.OPCIONES);
 		}
 	}
 

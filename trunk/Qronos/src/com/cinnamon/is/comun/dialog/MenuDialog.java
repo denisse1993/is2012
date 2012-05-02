@@ -2,7 +2,6 @@ package com.cinnamon.is.comun.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,9 +39,11 @@ public class MenuDialog extends Dialogos {
 	 *            Modo de juego elegido ( DIALOG_ARCADE , DIALOG_AVENTURA)
 	 * @param _theme
 	 *            Tema elegido para el dialog
+	 * @param _mj
+	 *            Minijuego relacionado con el menu
 	 */
-	public MenuDialog(Context _context, String _title, int _modo, int _theme,
-			Minijuego _mj) {
+	public MenuDialog(final Context _context, final String _title,
+			final int _modo, final int _theme, final Minijuego _mj) {
 		super(_context, _title, _modo, _theme);
 		this.mj = _mj;
 	}
@@ -52,7 +53,7 @@ public class MenuDialog extends Dialogos {
 	 * 
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
 	}
@@ -60,44 +61,49 @@ public class MenuDialog extends Dialogos {
 	/**
 	 * Inicializa el xml del dialog y todas sus views
 	 */
+	@Override
 	void init() {
 		setContentView(R.layout.dialog_menu);
-		bReiniciar = (Button) findViewById(R.id.ButtonRestartMenu);
-		bRenaudar = (Button) findViewById(R.id.ButtonResumeMenu);
-		bSalir = (Button) findViewById(R.id.ButtonExitMenu);
+		this.bReiniciar = (Button) findViewById(R.id.ButtonRestartMenu);
+		this.bRenaudar = (Button) findViewById(R.id.ButtonResumeMenu);
+		this.bSalir = (Button) findViewById(R.id.ButtonExitMenu);
 		LinearLayout fondo = (LinearLayout) findViewById(R.id.LinearLayoutMainMenu);
 
-		if (!modo) {
-			ViewGroup vg = (ViewGroup) (bReiniciar.getParent());
-			vg.removeView(bReiniciar);
-		} else
-			bReiniciar.setOnClickListener(this);
+		if (!this.modo) {
+			ViewGroup vg = (ViewGroup) (this.bReiniciar.getParent());
+			vg.removeView(this.bReiniciar);
+		} else {
+			this.bReiniciar.setOnClickListener(this);
+		}
 
-		bRenaudar.setOnClickListener(this);
-		bSalir.setOnClickListener(this);
-		this.setTitle(title);
+		this.bRenaudar.setOnClickListener(this);
+		this.bSalir.setOnClickListener(this);
+		this.setTitle(this.title);
 		fondo.getBackground().setAlpha(45);
-		bReiniciar.getBackground().setAlpha(45);
-		bRenaudar.getBackground().setAlpha(45);
-		bSalir.getBackground().setAlpha(45);
+		this.bReiniciar.getBackground().setAlpha(45);
+		this.bRenaudar.getBackground().setAlpha(45);
+		this.bSalir.getBackground().setAlpha(45);
 	}
 
 	/**
 	 * Asigna una accion a cada uno de los botones
+	 * 
+	 * @param v
 	 */
-	public void onClick(View v) {
+	@Override
+	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.ButtonResumeMenu:
 			MenuDialog.this.dismiss();
-			mj.resumir();
+			this.mj.resumir();
 			break;
 		case R.id.ButtonRestartMenu:
 			MenuDialog.this.dismiss();
-			mj.reiniciar();
+			this.mj.reiniciar();
 			break;
 		case R.id.ButtonExitMenu:
 			MenuDialog.this.dismiss();
-			mj.finalizar(false);
+			this.mj.finalizar(false);
 			break;
 		}
 	}
