@@ -77,7 +77,10 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Jugador actual en la aplicacion
 	 */
 	private Jugador jugador;
-
+	/**
+	 * Para saber que item del menu clickeado
+	 */
+	private int iClicked;
 	/**
 	 * Lanzador auxiliar
 	 */
@@ -381,6 +384,16 @@ public class Arcade extends Activity implements View.OnClickListener,
 					subirScores();
 					break;
 				}
+				switch (iClicked) {
+				case R.id.bMenuReset:
+					jugador.resetArcade();
+					mDbHelper.updateRowParcade(this.jugador.getNombre(),
+							this.jugador.getScore());
+					Launch.lanzaAviso("Arcade Reseteado!", this);
+					actualizarDatos();
+					break;
+
+				}
 			case -2:// no
 				dialog.cancel();
 				break;
@@ -511,7 +524,10 @@ public class Arcade extends Activity implements View.OnClickListener,
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.bMenuReset:
-
+			Launch.lanzaConfirmacion("Estás seguro?",
+					"Confirma que quieres resetear todas tus puntuaciones!!",
+					this);
+			iClicked = item.getItemId();
 			return true;
 		case R.id.bMenuCambiaUser:
 
@@ -524,5 +540,4 @@ public class Arcade extends Activity implements View.OnClickListener,
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
 }
