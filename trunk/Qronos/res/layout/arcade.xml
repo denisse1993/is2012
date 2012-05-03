@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="50dp"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/info" />
         </LinearLayout>
     </LinearLayout>
     <!-- PRIMERA MJ -->
@@ -242,7 +242,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="horizontal"
-        android:background="@drawable/menu_background"
+        
         android:clickable="true"
         android:weightSum="4" >
 
@@ -250,6 +250,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -276,6 +277,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -302,6 +304,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -328,6 +331,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
