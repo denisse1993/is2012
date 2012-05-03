@@ -52,4 +52,9 @@ public abstract class Dialogos extends Dialog implements
 	@Override
 	public abstract void onClick(View v);
 
+	@Override
+	public void onBackPressed() {
+		this.dismiss();
+	}
+
 }

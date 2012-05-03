@@ -61,7 +61,7 @@ public class GameView extends View {
 		crearFondo(R.drawable.fondobomba);
 		crearBomba(R.drawable.bombared);
 		crearFondoExplosion(R.drawable.estallido);
-		crearBotonCamara(R.drawable.ic_menu_camara);
+		crearBotonCamara(R.drawable.ic_menu_photo);
 		numVibraciones = 0;
 		score = 1000;
 		vibracionesEspera = 0;

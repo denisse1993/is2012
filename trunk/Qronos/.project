@@ -3,6 +3,7 @@
 	<name>Qronos</name>
 	<comment></comment>
 	<projects>
+		<project>zXing-rev2099</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

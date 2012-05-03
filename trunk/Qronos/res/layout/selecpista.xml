@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="50dp"
-                android:src="@drawable/icon_information" />
+                android:src="@drawable/ic_menu_info" />
         </LinearLayout>
     </LinearLayout>
     <!-- PRIMERA MJ -->
@@ -257,14 +257,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="50dp"
-                android:src="@drawable/flechaizq" />
+                android:src="@drawable/ic_menu_arrow_left" />
 
             <ImageButton
                 android:id="@+id/iBright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="50dp"
-                android:src="@drawable/flechader" />
+                android:src="@drawable/ic_menu_arrow_right" />
         </LinearLayout>
         <!-- PARTE DER -->
 

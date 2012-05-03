@@ -20,7 +20,7 @@
             android:layout_gravity="right"
             android:layout_marginLeft="280dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/icon_information"
+            android:background="@drawable/ic_menu_info"
             android:orientation="vertical" />
 
         <ImageView
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:background="@drawable/icon_information"
+            android:background="@drawable/ic_menu_info"
             android:orientation="vertical" />
     </LinearLayout>
 
@@ -53,7 +53,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:background="@drawable/stats"
+                android:background="@drawable/ic_menu_chart_bar"
                 android:orientation="vertical" />
         </LinearLayout>
 
@@ -69,7 +69,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_settings"
+                android:background="@drawable/ic_menu_gear"
                 android:orientation="vertical" />
         </LinearLayout>
     </LinearLayout>
