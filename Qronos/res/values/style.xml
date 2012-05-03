@@ -16,4 +16,9 @@
         <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
     </style>
 
+    <style name="LetrasBar">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/azul_action_bar</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.StatusBar.EventContent</item>
+    </style>
 </resources>
