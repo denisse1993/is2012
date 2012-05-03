@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <item
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+      <item
         android:id="@+id/bMenuReset"
-        android:icon="@drawable/ic_menu_der"
+        android:icon="@drawable/ic_menu_arrow_right"
         android:title="Resetear Puntuaciones">
     </item>
     <item
         android:id="@+id/bMenuCambiaUser"
-        android:icon="@drawable/ic_menu_izq"
+        android:icon="@drawable/ic_menu_arrow_left"
         android:title="Cambiar Usuario">
     </item>
     <item
         android:id="@+id/bMenuSalir"
-        android:icon="@drawable/ic_menu_up"
+        android:icon="@drawable/ic_menu_arrow_up"
         android:title="Salir del Juego">
     </item>
-
 </menu>

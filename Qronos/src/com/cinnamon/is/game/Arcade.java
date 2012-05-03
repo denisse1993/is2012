@@ -39,8 +39,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 		DialogInterface.OnClickListener {
 
 	// interfaz
-	private LinearLayout llarcade;
-	private ImageButton iBinfo;
+	private LinearLayout llArcade, llArcadeActionBar, llArcadeBottomBar;
+	private ImageView iVinfo;
 	private ImageView iBseeSc, iBright, iBleft, iBupSc;
 	private ImageButton[] iBmj;
 	private ImageView[] iVsc;
@@ -221,17 +221,24 @@ public class Arcade extends Activity implements View.OnClickListener,
 		mDbHelper.open(false);
 
 		// genericos
-		llarcade = (LinearLayout) findViewById(R.id.llarcade);
-		iBinfo = (ImageButton) findViewById(R.id.iBinfoArcade);
+		llArcade = (LinearLayout) findViewById(R.id.ll_arcade);
+		llArcadeActionBar = (LinearLayout) findViewById(R.id.ll_action_bar);
+		llArcadeBottomBar = (LinearLayout) findViewById(R.id.ll_arcade_bottom_bar);
+		iVinfo = (ImageView) findViewById(R.id.iBinfoArcade);
 		iBupSc = (ImageView) findViewById(R.id.iBupSc);
 		iBseeSc = (ImageView) findViewById(R.id.iBseeSc);
 		iBleft = (ImageView) findViewById(R.id.iBleft);
 		iBright = (ImageView) findViewById(R.id.iBright);
 		tVhello = (TextView) findViewById(R.id.tVhello);
 
+		// Opacidad
+		llArcade.getBackground().setAlpha(75);
+		llArcadeActionBar.getBackground().setAlpha(175);
+		llArcadeBottomBar.getBackground().setAlpha(175);
+
 		// establezco Listeners
 		// arcade.setOnTouchListener(this);
-		iBinfo.setOnClickListener(this);
+		iVinfo.setOnClickListener(this);
 		iBleft.setOnClickListener(this);
 		iBright.setOnClickListener(this);
 		iBupSc.setOnClickListener(this);
