@@ -3,10 +3,13 @@ package com.cinnamon.is.minijuegos.mj1;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 public class StartingMarcianos extends Minijuego {
 	GameView game;
+	boolean yaFin = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,7 +23,11 @@ public class StartingMarcianos extends Minijuego {
 	 */
 
 	public void reiniciar() {
-		this.onResume();
+		/*Intent intent = getIntent();
+		finish();
+		startActivity(intent);*/
+		game = new GameView(this, this);
+		setContentView(game);
 	}
 
 	public void terminar() {
@@ -57,8 +64,6 @@ public class StartingMarcianos extends Minijuego {
 
 	}
 
-	boolean yaFin = false;
-
 	public void finalizar(boolean s) {
 
 		yaFin = true;
@@ -82,7 +87,7 @@ public class StartingMarcianos extends Minijuego {
 		game.musicaOff();
 		game.loopStop();
 	}
-	
+
 	protected void onDestroy() {
 		if (!yaFin)
 			finalizar(true);
