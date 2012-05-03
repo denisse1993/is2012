@@ -157,8 +157,8 @@ public final class Props {
 		 * Array de ids drawables para ImageViews de minijuegos. Tamaño 12
 		 */
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
-				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj3,
-				R.drawable.ibmj3, R.drawable.ibmj6, R.drawable.ibmj3,
+				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj4,
+				R.drawable.ibmj5, R.drawable.ibmj6, R.drawable.ibmj7,
 				R.drawable.ibmj0, R.drawable.ibmj0, R.drawable.ibmj0,
 				R.drawable.ibmj0, R.drawable.ibmj0 };
 
@@ -189,15 +189,16 @@ public final class Props {
 		 *            la puntuacion a comparar
 		 * @return la estrella a usar
 		 */
-		public static int getStar(int sc) {
-			if (sc > STAR3)
+		public static int getStar(final int sc) {
+			if (sc > STAR3) {
 				return iDiVstar[3];
-			else if (sc > STAR2)
+			} else if (sc > STAR2) {
 				return iDiVstar[2];
-			else if (sc > STAR1)
+			} else if (sc > STAR1) {
 				return iDiVstar[1];
-			else
+			} else {
 				return iDiVstar[0];
+			}
 		}
 
 		/**
@@ -208,7 +209,7 @@ public final class Props {
 		 *            el id de la imagen que tiene ese mj
 		 * @return true si esta habilitado false en caso contrario
 		 */
-		public static boolean bHabilitado(int iDimg) {
+		public static boolean bHabilitado(final int iDimg) {
 			return R.drawable.ibmj0 == iDimg ? false : true;
 		}
 
@@ -271,12 +272,12 @@ public final class Props {
 		 * Para elegir el modo en los dialogos
 		 */
 		public static final String MODO = "modo";
-		
+
 		/**
 		 * Para guardar una referencia a una actividad concreta
 		 */
 		public static Activity ACTIVIDAD = null;
-		
+
 		/**
 		 * String para usar cuando se quiera pasar la aventura entre actividades
 		 */
@@ -329,7 +330,7 @@ public final class Props {
 		 * Para uso en avisos
 		 */
 		public static final String LOGIN_OK = "Logueado con éxito";
-		public static final String MODO_OFFLINE="Modo offline activado";
+		public static final String MODO_OFFLINE = "Modo offline activado";
 		public static final String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión.";
 		public static final String USER_PASS_MAL = "User o pass incorrecta en BD local";
 		public static final String USER_INET_NO_EXISTE = "El usuario introducido no existe";
