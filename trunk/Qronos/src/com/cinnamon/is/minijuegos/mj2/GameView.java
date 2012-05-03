@@ -18,7 +18,6 @@ import android.view.SurfaceHolder.Callback;
 
 public class GameView extends SurfaceView {
 
-	private ToposMJ activity;
 	GameLoopTopos loop;
 	SurfaceHolder ourHolder;
 	Bitmap fondoTopo;
@@ -33,18 +32,20 @@ public class GameView extends SurfaceView {
 	int cont;
 	float hx, hy;
 	int vidafuerte = 2;
+	private ToposMJ actividad;
 
-	public GameView(Context context, ToposMJ ac) {
+	public GameView(Context context, ToposMJ actividad) {
 		super(context);
-		activity = ac;
-		loop = new GameLoopTopos(this, ac);
+		finJuego = false;
+		numTopos = 30;
+		this.actividad = actividad;
+		loop = new GameLoopTopos(this);
 		ourHolder = getHolder();
 		ourHolder.addCallback(new Callback() {
 
 			public void surfaceChanged(SurfaceHolder holder, int format,
 					int width, int height) {
 				// TODO Auto-generated method stub
-
 			}
 
 			public void surfaceCreated(SurfaceHolder holder) {
@@ -78,9 +79,8 @@ public class GameView extends SurfaceView {
 			}
 
 			public void surfaceDestroyed(SurfaceHolder holder) {
-				// TODO Auto-generated method stub
-				/*finJuego = true;
-				loop.stop();*/
+				finJuego = true;
+				loop.stop();
 
 			}
 
@@ -276,25 +276,35 @@ public class GameView extends SurfaceView {
 		p.setTextSize(45);
 		canvas.drawText(text, this.getWidth() * 5 / 6, this.getHeight() / 10, p);
 		if (finJuego) {
-
 			/*
-			 * canvas.drawBitmap(est, canvas.getWidth()*1/5,
-			 * canvas.getHeight()/2, null); if(toposEliminados>18){
-			 * canvas.drawBitmap(est, canvas.getWidth()*2/5,
-			 * canvas.getHeight()/2, null); } if(toposEliminados>30){
-			 * canvas.drawBitmap(est, canvas.getWidth()*3/5,
-			 * canvas.getHeight()/2, null); }
+			 * canvas.drawBitmap(est, canvas.getWidth() * 1 / 5,
+			 * canvas.getHeight() / 2, null); if (toposEliminados > 18) {
+			 * canvas.drawBitmap(est, canvas.getWidth() * 2 / 5,
+			 * canvas.getHeight() / 2, null); } if (toposEliminados > 30) {
+			 * canvas.drawBitmap(est, canvas.getWidth() * 3 / 5,
+			 * canvas.getHeight() / 2, null); }
 			 */
+			actividad.finalizar(true);
+
 		}
 	}
 
 	public int getScore() {
+
 		return this.toposEliminados;
 	}
 
-	public void loopStop() {
-		loop.setRunning(false);
+	public void reanudar() {
+		loop.resumeLoop();
 
 	}
 
+	public void loopStop() {
+		this.loop.pauseLoop();
+	}
+
+	public void musicaOn() {
+		// TODO Auto-generated method stub
+
+	}
 }
