@@ -329,7 +329,8 @@ public final class Props {
 		 * Para uso en avisos
 		 */
 		public static final String LOGIN_OK = "Logueado con éxito";
-		public static final String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión. Se usará el modo offline.";
+		public static final String MODO_OFFLINE="Modo offline activado";
+		public static final String ERROR_INET = "No se pudo conectar con el servidor. Revisa tu conexión.";
 		public static final String USER_PASS_MAL = "User o pass incorrecta en BD local";
 		public static final String USER_INET_NO_EXISTE = "El usuario introducido no existe";
 		public static final String USER_YA_EXISTE = "Usuario existente local!";

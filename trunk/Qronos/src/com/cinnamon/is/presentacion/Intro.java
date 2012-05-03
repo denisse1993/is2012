@@ -43,7 +43,8 @@ public class Intro extends Activity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} finally {
-					Launch.lanzaActivity(Intro.this, Props.Action.MJ6);
+					//Launch.lanzaActivity(Intro.this, Props.Action.MJ6);
+					Launch.lanzaActivity(Intro.this, Props.Action.LOGIN);
 				}
 			}
 		};

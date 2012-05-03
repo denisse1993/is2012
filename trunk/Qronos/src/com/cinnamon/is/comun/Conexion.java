@@ -47,6 +47,7 @@ public class Conexion {
 	 */
 	public Conexion(final Activity _activity) {
 		this.activity = _activity;
+		this.respuesta="";
 	}
 
 	/**

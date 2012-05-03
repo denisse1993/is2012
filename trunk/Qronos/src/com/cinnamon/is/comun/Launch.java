@@ -547,7 +547,7 @@ public final class Launch {
 		@Override
 		protected void onPreExecute() {
 			this.dialog = ProgressDialog.show(Launch.this.a, "Conectando...",
-					"Por favor, espera...", true, false);
+					"Por favor, espera...", true, true);
 		}
 
 		@Override
@@ -689,6 +689,7 @@ public final class Launch {
 				if (Props.Comun.ONLINE == false) {
 					login.l.lanzaToast(Props.Strings.ERROR_INET);
 					if (login.loginLocal()) {
+						login.l.lanzaToast(Props.Strings.MODO_OFFLINE);
 						login.lanzaMenuPrincipal();
 					} else if (!Props.Comun.ONLINE) {
 						login.l.lanzaToast(Props.Strings.USER_PASS_MAL);
