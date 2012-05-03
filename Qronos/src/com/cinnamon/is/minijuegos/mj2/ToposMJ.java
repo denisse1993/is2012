@@ -18,10 +18,10 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 public class ToposMJ extends Minijuego implements OnTouchListener {
-
 	MediaPlayer introTheme, efec, efec2;
 	GameView ourSurfaceView;
 	boolean vi;
+	private boolean yaFin;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,14 +30,16 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		introTheme = MediaPlayer.create(ToposMJ.this, R.raw.musicatopo);
 		efec = MediaPlayer.create(ToposMJ.this, R.raw.bip);
 		efec2 = MediaPlayer.create(ToposMJ.this, R.raw.aplasta);
-		//lanzaExitDialog();
+		// lanzaExitDialog();
+
+		/** Inicia lo que antes era el boton EMPEZAR **/
+		
+		introTheme.setVolume(0.4f, 0.4f);
+		introTheme.start();
+		setContentView(ourSurfaceView);
 	}
 
-	public void restartActivity() {
-		super.onRestart();
-	}
-
-	private void lanzarAvisoMJ(String texto, String title) {
+/*	private void lanzarAvisoMJ(String texto, String title) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(title);
 		builder.setMessage(texto).setNegativeButton("Empezar",
@@ -48,44 +50,81 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 						introTheme.setVolume(0.4f, 0.4f);
 						introTheme.start();
 						setContentView(ourSurfaceView);
-
 						dialog.cancel();
+					}
+				});
+		builder.show();
+	}*/
+
+/*	private void lanzarAvisoMJ2(String texto, String title) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(title);
+		builder.setMessage(texto).setNegativeButton("Salir",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						ToposMJ.super.onBackPressed();
 					}
 				});
 		builder.show();
 	}
 
-
-	/*
-	 * @Override protected void onPause() { // TODO Auto-generated method stub
-	 * super.onPause(); introTheme.release(); ourSurfaceView.loop.stop(); }
-	 */
-
+*/
 	public void onHomePressed() {
 		onHomePressed();
 		ourSurfaceView.finJuego = true;
 
 	}
 
-	/*
-	 * public void onBackPressed() { onDestroy(); ourSurfaceView.finJuego=true;
-	 * lanzarAvisoMJ2("¿Desea salir?" ,"QRonos Topos");
-	 * 
-	 * }
-	 */
-	/*
-	 * protected void onDestroy(){ super.onDestroy(); introTheme.release();
-	 * ourSurfaceView.loop.stop(); }
-	 */
 	@Override
-	protected void onResume() {
+	public void parar() {
+		//efec.pause();
+		//efec2.pause();
+		
+		introTheme.pause();
+		ourSurfaceView.loopStop();
+	}
+	
+	public void reiniciar() {
+		introTheme = MediaPlayer.create(ToposMJ.this, R.raw.musicatopo);
+		efec = MediaPlayer.create(ToposMJ.this, R.raw.bip);
+		efec2 = MediaPlayer.create(ToposMJ.this, R.raw.aplasta);
+		introTheme.setVolume(0.4f, 0.4f);
+		ourSurfaceView = new GameView(this, this);
+		ourSurfaceView.setOnTouchListener(this);
+		setContentView(ourSurfaceView);
 		introTheme.start();
-		ourSurfaceView.loop.setRunning(true);
-		//ourSurfaceView.loop.start();
-		super.onResume();
 	}
 
-	private void lanzaExitDialog() {
+	public void terminar() {
+		this.finish();
+	}
+
+	public void pausar() {
+		this.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		// el sensormanager.sensor... es el rate para ver cada cuanto actualiza
+		// la captura del sensor
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+	}
+
+
+	/*private void lanzaExitDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("¿Quieres activar la vibración?")
 				.setCancelable(false)
@@ -108,7 +147,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 					}
 				});
 		builder.show();
-	}
+	}*/
 
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
@@ -145,9 +184,8 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 						if (vi) {
 							vib.vibrate(60);
 						}
-
+						va.topoSanb = true;
 					}
-					va.topoSanb = true;
 				}
 			}
 			// huevo de pascua
@@ -159,69 +197,47 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			/*
-			 * if (va.finJuego) { this.onCreate(new Bundle()); va.finJuego =
-			 * false; va.numTopos = 50; }
-			 */
+			/*if (va.finJuego) {
+				this.onCreate(new Bundle());
+				va.finJuego = false;
+				va.numTopos = 50;
+			}*/
+
 			break;
 		}
 		return false;
 	}
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-	}
+	public void resumir() {
 
-	public void reiniciar() {
-		this.onResume();
-	}
+		onResume();
+		ourSurfaceView.reanudar();	
+		efec.start();
+		introTheme.start();
 
-	public void terminar() {
-		this.finish();
-	}
-
-	public void pausar() {
-		this.onPause();
-	}
-
-	@Override
-	public void onBackPressed() {
-		pausar();
-		lanzaOpcionesDialog();
 	}
 
 	public void finalizar(boolean s) {
-		// Para tiempo
+
+		yaFin = true;
+		// Establece valores de puntuacion y superado
+		int puntuacion = ourSurfaceView.getScore() * 10;
 		superado = s;
-		introTheme.stop();
 		// Creo el bundle con la info usando strings genericos de clase
 		// Props.Comun
-		int puntuacion = ourSurfaceView.getScore() * 10;
 		Bundle b = new Bundle();
 		b.putInt(Props.Comun.SCORE, puntuacion);
 		b.putBoolean(Props.Comun.SUPERADO, superado);
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
-
-		setResult(puntuacion);
-
-		this.finish();
-	}
-
-	public void parar() {
-		introTheme.pause();
-		efec.stop();
-		efec2.stop();
-		
-		// ourSurfaceView.musicaOff();
-		ourSurfaceView.loopStop();
-		this.onPause();
-
+		// setResult(puntuacion);
+		//
+		// this.finish();
 	}
 
 	protected void onDestroy() {
-		finalizar(true);
+		if (!yaFin)
+			finalizar(true);
 		super.onDestroy();
 
 	}
