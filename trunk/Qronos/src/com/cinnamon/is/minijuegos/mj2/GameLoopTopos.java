@@ -1,21 +1,55 @@
 package com.cinnamon.is.minijuegos.mj2;
 
-import android.app.Activity;
 import android.graphics.Canvas;
 
 public class GameLoopTopos extends Thread {
 	static final long FPS = 15;
-	private final GameView view;
+	private GameView view;
 	private boolean running = true;
-	private final ToposMJ activity;
+	private boolean paused = false;
 
-	public GameLoopTopos(final GameView view, final ToposMJ a) {
+	public GameLoopTopos(GameView view) {
 		this.view = view;
-		activity = a;
+	}
+
+	public synchronized void stopLoop() {
+		this.running = false;
+		if (paused) {
+			resumeLoop();
+		}
+	}
+
+	public synchronized void pauseLoop() {
+		if (paused) {
+			return;
+		}
+
+		paused = true;
+	}
+
+	public synchronized void resumeLoop() {
+
+		if (!paused) {
+			return;
+		}
+
+		this.notify();
+		paused = false;
+	}
+
+	private synchronized void checkPaused() {
+		if (paused) {
+
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// con .start() llama a este metodo
-	@Override
 	public void run() {
 		long ticksPS = 1000 / FPS;
 		long startTime;
@@ -24,41 +58,31 @@ public class GameLoopTopos extends Thread {
 		Canvas c = null;
 
 		startTime = System.currentTimeMillis();
+		
 		while (running) {
+			checkPaused();
 			if (this.view.finJuego) {
 				running = false;
-
-				activity.finalizar(true);
-				activity.onStop();
-			} else {
-				try {
-
-					c = view.getHolder().lockCanvas();
-					synchronized (view.getHolder()) {
-						this.view.onDraw(c);
-					}
-				} finally {
-					if (c != null) {
-						view.getHolder().unlockCanvasAndPost(c);
-					}
+			}
+			try {
+				c = view.getHolder().lockCanvas();
+				synchronized (view.getHolder()) {
+					this.view.onDraw(c);
 				}
-				sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
-				try {
-					if (sleepTime > 0) {
-						sleep(sleepTime + 100);
-					} else {
-						sleep(100);
-					}
-				} catch (Exception e) {
-					//
+			} finally {
+				if (c != null) {
+					view.getHolder().unlockCanvasAndPost(c);
 				}
 			}
+			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
+			try {
+				if (sleepTime > 0)
+					sleep(sleepTime + 100);
+				else
+					sleep(100);
+			} catch (Exception e) {
+			}
 		}
-	}
-
-	public void setRunning(final boolean b) {
-		running = b;
-
 	}
 
 }
