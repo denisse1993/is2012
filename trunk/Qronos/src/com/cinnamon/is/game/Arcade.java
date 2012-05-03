@@ -114,7 +114,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 	}
 
 	@Override
-	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	protected void onActivityResult(final int requestCode,
+			final int resultCode, final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras();
 			mDbHelper.open(false);
@@ -496,18 +497,16 @@ public class Arcade extends Activity implements View.OnClickListener,
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-		case R.id.btIz:
+		case R.id.bMenuReset:
 
 			return true;
-		case R.id.btDer:
+		case R.id.bMenuCambiaUser:
 
 			return true;
-		case R.id.btUp:
+		case R.id.bMenuSalir:
 
 			return true;
-		case R.id.btChart:
 
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
