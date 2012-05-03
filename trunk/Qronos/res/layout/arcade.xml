@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llarcade"
+    android:id="@+id/ll_arcade"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="4dp"
-    android:weightSum="10" >
+    android:weightSum="100"
+    android:background="#e0e5e9" >
 
     <!-- BARRA SUPERIOR -->
 
     <LinearLayout
+        android:id="@+id/ll_action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/actionbar"
         android:orientation="horizontal" >
 
         <!-- PARTE IZQ -->
@@ -28,7 +31,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="@+string/helloArcade" />
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingTop="17dp"
+                android:text="@+string/helloArcade"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar" />
         </LinearLayout>
         <!-- PARTE DER -->
 
@@ -38,12 +46,12 @@
             android:gravity="right"
             android:orientation="horizontal" >
 
-            <ImageButton
+            <ImageView
+                android:paddingTop="10dp"
                 android:id="@+id/iBinfoArcade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="50dp"
-                android:src="@drawable/info" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_menu_info" />
         </LinearLayout>
     </LinearLayout>
     <!-- PRIMERA MJ -->
@@ -52,7 +60,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
-        android:layout_weight="4"
+        android:paddingTop="10dp"
+        android:layout_weight="50"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -131,9 +140,10 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:orientation="horizontal"
         android:layout_marginBottom="20dp"
+        android:layout_weight="50"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
         android:weightSum="3" >
 
         <!-- MJ4 -->
@@ -207,50 +217,23 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- BARRA HORIZONTAL -->
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:padding="0dip" >
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/custom_menu_header" />
-
-        <TableLayout
-            android:id="@+id/custom_menu_table"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:stretchColumns="*" >
-        </TableLayout>
-    </LinearLayout>
+   
     <!-- Menu -->
 
     <LinearLayout
+        android:id="@+id/ll_arcade_bottom_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:orientation="horizontal"
-        
+        android:layout_weight="40"
+        android:background="@drawable/bottom_bar_arcade"
         android:clickable="true"
+        android:orientation="horizontal"
         android:weightSum="4" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -261,7 +244,7 @@
                 android:gravity="center"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip"
-                android:src="@drawable/ic_menu_izq" />
+                android:src="@drawable/ic_menu_arrow_left" />
 
             <TextView
                 android:id="@+id/tVleft"
@@ -269,15 +252,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Ir izq"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -288,7 +271,7 @@
                 android:gravity="center"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip"
-                android:src="@drawable/ic_menu_der" />
+                android:src="@drawable/ic_menu_arrow_right" />
 
             <TextView
                 android:id="@+id/tVUpSc"
@@ -296,15 +279,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Ir derecha"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -315,7 +298,7 @@
                 android:gravity="center"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip"
-                android:src="@drawable/ic_menu_up" />
+                android:src="@drawable/ic_menu_arrow_up" />
 
             <TextView
                 android:id="@+id/tVupSc"
@@ -323,15 +306,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Subir Score"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@drawable/menu_background"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -342,7 +325,7 @@
                 android:gravity="center"
                 android:paddingBottom="2dip"
                 android:paddingTop="2dip"
-                android:src="@drawable/ic_menu_stats" />
+                android:src="@drawable/ic_menu_chart_bar" />
 
             <TextView
                 android:id="@+id/tVseeSc"
@@ -350,8 +333,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Top 10"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>
 
