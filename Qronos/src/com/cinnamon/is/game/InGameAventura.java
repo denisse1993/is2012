@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
@@ -64,9 +66,11 @@ public class InGameAventura extends Activity implements OnClickListener {
 	private UtilQR q;
 
 	/**
-	 * 
+	 * Interfaz
 	 */
-	private ImageButton bOpciones, bCamara, bRanking;
+	private LinearLayout llInGame, llInGameActionBar, llInGameBottomBar;
+	private ImageView bOpciones, bCamara, bRanking;
+	private TextView title;
 
 	/**
 	 * Minijuego Actual -1 NO existe la aventura -2 Todos los minijuegos han
@@ -86,21 +90,43 @@ public class InGameAventura extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_aventura);
 
+		// Bundle
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		this.quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
 
-		this.bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
-		this.bCamara = (ImageButton) findViewById(R.id.ib_camara_ingame);
-		this.bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
+		// FindViewByID
+		this.bOpciones = (ImageView) findViewById(R.id.iv_opciones_ingame);
+		this.bCamara = (ImageView) findViewById(R.id.iv_camara_ingame);
+		this.bRanking = (ImageView) findViewById(R.id.iv_ranking_ingame);
 
+		llInGame = (LinearLayout) findViewById(R.id.ll_ingame);
+		llInGameActionBar = (LinearLayout) findViewById(R.id.ll_ingame_action_bar);
+		llInGameBottomBar = (LinearLayout) findViewById(R.id.ll_ingame_bottom_bar);
+
+		this.title = (TextView) findViewById(R.id.title_in_game);
+
+		title.setText(quest.getNombre());
+
+		// Opacidad
+		llInGame.getBackground().setAlpha(75);
+		llInGameActionBar.getBackground().setAlpha(175);
+		llInGameBottomBar.getBackground().setAlpha(175);
+
+		bOpciones.setAlpha(150);
+		bCamara.setAlpha(150);
+		bRanking.setAlpha(150);
+
+		// Listeners
 		this.bOpciones.setOnClickListener(this);
 		this.bCamara.setOnClickListener(this);
 		this.bRanking.setOnClickListener(this);
 
+		// Conexion
 		this.conexion = new Conexion(this);
 		this.l = new Launch(this);
 
+		// Generar Minijuegos
 		this.mjActual = generaMinijuego();
 		if (this.mjActual == -2) {
 			// TODO
@@ -148,10 +174,12 @@ public class InGameAventura extends Activity implements OnClickListener {
 
 	@Override
 	protected void onResume() {
+
 		super.onResume();
 		if (!this.mDbHelper.isOpen()) {
 			this.mDbHelper.open(false);
 		}
+
 	}
 
 	public void onClick(final DialogInterface dialog, final int boton) {
@@ -171,14 +199,14 @@ public class InGameAventura extends Activity implements OnClickListener {
 	@Override
 	public void onClick(final View v) {
 		switch (this.vClicked = v.getId()) {
-		case R.id.ll_ranking_ingame:
+		case R.id.iv_ranking_ingame:
 			this.launch.lanzaActivity(Props.Action.RANKING);
 			break;
-		case R.id.ll_camara_ingame:
+		case R.id.iv_camara_ingame:
 			this.q = new UtilQR(this);
 			this.q.lanzarQR();
 			break;
-		case R.id.ll_opciones_ingame:
+		case R.id.iv_opciones_ingame:
 			this.launch.lanzaActivity(Props.Action.OPCIONES);
 			break;
 		case R.id.ib_info_ingame:

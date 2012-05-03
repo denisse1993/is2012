@@ -236,6 +236,12 @@ public class Arcade extends Activity implements View.OnClickListener,
 		llArcadeActionBar.getBackground().setAlpha(175);
 		llArcadeBottomBar.getBackground().setAlpha(175);
 
+		iVinfo.setAlpha(150);
+		iBleft.setAlpha(150);
+		iBright.setAlpha(150);
+		iBseeSc.setAlpha(150);
+		iBupSc.setAlpha(150);
+
 		// establezco Listeners
 		// arcade.setOnTouchListener(this);
 		iVinfo.setOnClickListener(this);

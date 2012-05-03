@@ -76,8 +76,8 @@ public class InGameHost extends Activity implements OnClickListener {
 
 		// TODO conexion.updateAventura();
 
-		this.bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame);
-		this.bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame);
+		this.bOpciones = (ImageButton) findViewById(R.id.ib_opciones_ingame_host);
+		this.bRanking = (ImageButton) findViewById(R.id.ib_ranking_ingame_host);
 
 		this.bOpciones.setOnClickListener(this);
 		this.bRanking.setOnClickListener(this);
@@ -130,10 +130,10 @@ public class InGameHost extends Activity implements OnClickListener {
 	@Override
 	public void onClick(final View v) {
 		switch (this.vClicked = v.getId()) {
-		case R.id.ll_ranking_ingame:
+		case R.id.ll_ranking_ingame_host:
 			this.launch.lanzaActivity(Props.Action.RANKING);
 			break;
-		case R.id.ll_opciones_ingame:
+		case R.id.ib_opciones_ingame_host:
 			this.launch.lanzaActivity(Props.Action.OPCIONES);
 		}
 	}

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="4dp"
     android:weightSum="100"
-    android:background="#e0e5e9" >
+    android:background="#000000" >
 
     <!-- BARRA SUPERIOR -->
 
@@ -47,10 +47,10 @@
             android:orientation="horizontal" >
 
             <ImageView
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:id="@+id/iBinfoArcade"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/ic_menu_info" />
         </LinearLayout>
     </LinearLayout>
@@ -243,7 +243,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="2dip"
-                android:paddingTop="2dip"
+                android:paddingTop="15dip"
                 android:src="@drawable/ic_menu_arrow_left" />
 
             <TextView
@@ -270,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="2dip"
-                android:paddingTop="2dip"
+                android:paddingTop="15dip"
                 android:src="@drawable/ic_menu_arrow_right" />
 
             <TextView
@@ -297,7 +297,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="2dip"
-                android:paddingTop="2dip"
+                android:paddingTop="15dip"
                 android:src="@drawable/ic_menu_arrow_up" />
 
             <TextView
@@ -324,7 +324,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="2dip"
-                android:paddingTop="2dip"
+                android:paddingTop="15dip"
                 android:src="@drawable/ic_menu_chart_bar" />
 
             <TextView

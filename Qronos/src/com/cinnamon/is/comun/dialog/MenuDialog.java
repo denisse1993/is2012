@@ -108,4 +108,10 @@ public class MenuDialog extends Dialogos {
 		}
 	}
 
+	@Override
+	public void onBackPressed() {
+		this.dismiss();
+		this.mj.resumir();
+	}
+
 }

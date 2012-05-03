@@ -1,85 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_ingame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
+    android:padding="4dp"
     android:weightSum="100" >
 
-    <LinearLayout
-        android:id="@+id/ll_main_ingame"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="10"
-        android:orientation="horizontal"
-        android:weightSum="100" >
-
-        <ImageButton
-            android:id="@+id/ib_info_ingame"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="right"
-            android:layout_marginLeft="280dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_menu_info"
-            android:orientation="vertical" />
-    </LinearLayout>
+    <!-- BARRA SUPERIOR -->
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/ll_ingame_action_bar"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="90"
-        android:weightSum="90"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/actionbar"
         android:orientation="horizontal" >
 
-        <LinearLayout
-            android:id="@+id/ll_ranking_ingame"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="29"
-            android:orientation="vertical" >
+        <!-- PARTE IZQ -->
 
-            <ImageButton
-                android:id="@+id/ib_ranking_ingame"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                
-                android:layout_gravity="center"
-                android:background="@drawable/ic_menu_chart_bar"
-                android:orientation="vertical" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/title_in_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:paddingLeft="55dp"
+                android:paddingTop="17dp"
+                android:text="@+string/inGame"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar" />
         </LinearLayout>
+        <!-- PARTE DER -->
 
         <LinearLayout
-            android:id="@+id/ll_camara_ingame"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" 
-            android:layout_weight="30">
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal" >
 
-            <ImageButton
-                android:id="@+id/ib_camara_ingame"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_menu_photo"
-                android:orientation="vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_opciones_ingame"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="30" >
-
-            <ImageButton
-                android:id="@+id/ib_opciones_ingame"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_menu_gear"
-                android:orientation="vertical" />
+            <ImageView
+                android:id="@+id/ib_info_ingame"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:paddingTop="15dp"
+                android:src="@drawable/ic_menu_info" />
         </LinearLayout>
     </LinearLayout>
+    
+    <!-- PARTE CENTRAL -->
+    <LinearLayout
+         android:id="@+id/ll_medio_ingame"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="96"
+        android:orientation="horizontal" >
+        
+    </LinearLayout>
 
+     <!-- Menu -->
+
+    <LinearLayout
+        android:id="@+id/ll_ingame_bottom_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:background="@drawable/bottom_bar_quest"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:weightSum="13" 
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageView
+                android:id="@+id/iv_opciones_ingame"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingRight="5dp"
+                android:paddingTop="15dip"
+                android:src="@drawable/ic_menu_gear" />
+
+            <TextView
+                android:id="@+id/tVleft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Opciones"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageView
+                android:id="@+id/iv_camara_ingame"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingTop="15dip"
+                android:src="@drawable/ic_menu_photo" />
+
+            <TextView
+                android:id="@+id/tVUpSc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Leer QR"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageView
+                android:id="@+id/iv_ranking_ingame"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="2dip"
+                android:paddingTop="15dip"
+                android:src="@drawable/ic_menu_chart_bar" />
+
+            <TextView
+                android:id="@+id/tVupSc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Ranking"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    
 </LinearLayout>
