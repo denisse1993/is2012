@@ -43,7 +43,6 @@ public class GameView extends SurfaceView {
 	private Explosion explosion;
 	private int velocidad;
 	private MediaPlayer music;
-	private MediaPlayer ruido;
 	private Integer marcianosEliminados;
 	private StartingMarcianos activity;
 	private Thread timer;
@@ -133,29 +132,6 @@ public class GameView extends SurfaceView {
 		});
 	}
 
-	private void ruido(int resource) {
-		ruido = MediaPlayer.create(getContext(), resource);
-		Thread timer = new Thread() {
-			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					ruido.start();
-					sleep(1000);
-
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} finally {
-					ruido.pause();
-				}
-			}
-		};
-		timer.start();
-		timer.stop();
-		// ruido.setLooping(true);
-
-		// ruido.start();
-
-	}
 
 	private void temazo(int resource) {
 		music = MediaPlayer.create(getContext(), resource);
@@ -289,7 +265,7 @@ public class GameView extends SurfaceView {
 		}
 		for (int i = 0; i < marcianosList.size(); i++) {
 			if (marcianosList.get(i).isClick(event.getX(), event.getY())) {
-				// ruido(R.raw.ruido1);
+				
 				if (marcianosList.get(i).getTipo() == 1) {
 					crearSangreMarciano(R.drawable.greenblood, marcianosList
 							.get(i).getX(), marcianosList.get(i).getY());
