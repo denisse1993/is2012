@@ -79,8 +79,14 @@ public class InGameHost extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_host);
 
+		// BBDD
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
+
+		// Launch
+		this.launch = new Launch(this);
+
+		launch.lanzaDialogoEsperaCreaQuest(quest);
 
 		// Iniciar Interfaz
 		this.ivOpciones = (ImageButton) findViewById(R.id.iv_in_game_host_opciones);
@@ -109,11 +115,6 @@ public class InGameHost extends Activity implements OnClickListener {
 
 		// Titulo
 		this.title.setText(quest.getNombre());
-
-		// Launch
-		this.launch = new Launch(this);
-
-		launch.lanzaDialogoEsperaCreaQuest(quest);
 
 		// QR
 		this.q = new UtilQR(this);
