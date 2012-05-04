@@ -33,6 +33,7 @@ public abstract class Dialogos extends Dialog implements
 	/**
 	 * Selecciona el tipo de dialogo segun el modo de juego Modo == True =>
 	 * Dialogo Arcade Modo == False => Dialogo Aventura
+	 * 
 	 */
 	boolean modo;
 
