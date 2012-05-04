@@ -200,7 +200,7 @@ public class InGameAventura extends Activity implements OnClickListener {
 	public void onClick(final View v) {
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_ranking_ingame:
-			this.launch.lanzaActivity(Props.Action.RANKING);
+			this.launch.lanzaDialogoGetPquest(quest.getNombre());
 			break;
 		case R.id.iv_camara_ingame:
 			this.q = new UtilQR(this);
@@ -209,10 +209,8 @@ public class InGameAventura extends Activity implements OnClickListener {
 		case R.id.iv_opciones_ingame:
 			this.launch.lanzaActivity(Props.Action.OPCIONES);
 			break;
-		case R.id.ib_info_ingame:
-			String dialogText = this.quest.getMinijuego(this.mjActual)
-					.toString();
-			Launch.lanzaAviso(dialogText, this);
+		case R.id.iv_info_ingame:
+			Launch.lanzaAviso("Informaci—n Aventura", Props.Strings.iHost, this);
 		}
 	}
 

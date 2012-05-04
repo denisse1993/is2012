@@ -411,7 +411,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			habilitarGrupoMJ(grupoMJ + 1);
 			break;
 		case R.id.iBinfoArcade:
-			Launch.lanzaAviso("Información de arcade", Props.Strings.iArcade,
+			Launch.lanzaAviso("Informaci—n de arcade", Props.Strings.iArcade,
 					this);
 			break;
 		case R.id.iBseeSc:
@@ -426,7 +426,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 
 			break;
 		case R.id.iBupSc:
-			Launch.lanzaConfirmacion("Confirmacion para subir puntuaciones de "
+			Launch.lanzaConfirmacion("Confirmaci—n para subir puntuaciones de "
 					+ jugador.getNombre(), Props.Strings.upSc, this);
 			break;
 		// Botones de mjs
