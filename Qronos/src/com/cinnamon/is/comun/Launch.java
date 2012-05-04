@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
 import com.cinnamon.is.comun.dialog.MenuDialog;
+import com.cinnamon.is.comun.dialog.TextDialog;
 import com.cinnamon.is.game.Arcade;
 import com.cinnamon.is.game.Aventura;
 import com.cinnamon.is.game.EligeModoAventura;
@@ -408,6 +409,21 @@ public final class Launch {
 	}
 
 	/**
+	 * Lanza un dialogo con
+	 * 
+	 * @param context
+	 * @param title
+	 * @param modo
+	 * @param launch
+	 */
+	public static void lanzaTextoDialogo(final Context context, final int modo,
+			final String title, final Launch launch) {
+		TextDialog dialogo = new TextDialog(context, title, modo,
+				R.style.CenterDialog, launch);
+		dialogo.show();
+	}
+
+	/**
 	 * Sirve para loguear un jugador
 	 * 
 	 * @param nick
@@ -636,7 +652,7 @@ public final class Launch {
 				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
 						quest2.getPass(), true);
-				ret[2]=quest2;
+				ret[2] = quest2;
 				break;
 			case 7:
 				// Get aventura con pass
@@ -803,7 +819,7 @@ public final class Launch {
 				// Update Aventura
 				conex = (Boolean) result[1];
 				inet = (Inet) Launch.this.a;
-				av= (Aventura)result[2];
+				av = (Aventura) result[2];
 				if (conex) {
 					if (inet.c().getRespuesta().equals("1")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_UPDATED);
@@ -812,7 +828,7 @@ public final class Launch {
 						Bundle b = new Bundle();
 						b.putSerializable(Props.Comun.AVENTURA, av);
 						inet.l().lanzaActivity(Props.Action.INGAMEHOST, b);
-						a.finish();//cerrara selecPista
+						a.finish();// cerrara selecPista
 					} else if (inet.c().getRespuesta().equals("3")) {
 						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
