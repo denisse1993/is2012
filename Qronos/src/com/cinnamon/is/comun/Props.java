@@ -325,6 +325,7 @@ public final class Props {
 		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor\nToca el icono de estadisticas para ver las estadisticas\nToca los iconos de las flechas para cambiar la lista de mj";
 		public static final String iSelecMJ = "Toca en la imagen para agregar el mj asociado a la lista de MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
 		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nPara confirmar la pista, pincha en la imagen del MJ.\nToca los iconos de las flechas para cambiar la lista de mj";
+		public static final String iHost = "Comparte el c—digo QR generado a los jugadores de la Aventura";
 
 		/**
 		 * Para uso en avisos
