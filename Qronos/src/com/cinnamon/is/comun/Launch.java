@@ -636,6 +636,7 @@ public final class Launch {
 				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
 						quest2.getPass(), true);
+				ret[2]=quest2;
 				break;
 			case 7:
 				// Get aventura con pass
@@ -665,7 +666,6 @@ public final class Launch {
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(), null);
 				break;
-
 			}
 
 			return ret;
@@ -803,12 +803,16 @@ public final class Launch {
 				// Update Aventura
 				conex = (Boolean) result[1];
 				inet = (Inet) Launch.this.a;
+				av= (Aventura)result[2];
 				if (conex) {
 					if (inet.c().getRespuesta().equals("1")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_UPDATED);
 						Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
 						Props.Comun.ACTIVIDAD = null;// resetea
-						// TODO Lanzar Siguiente Actividad
+						Bundle b = new Bundle();
+						b.putSerializable(Props.Comun.AVENTURA, av);
+						inet.l().lanzaActivity(Props.Action.INGAMEHOST, b);
+						a.finish();//cerrara selecPista
 					} else if (inet.c().getRespuesta().equals("3")) {
 						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
