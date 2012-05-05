@@ -2,6 +2,8 @@
 package com.cinnamon.is.game;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -84,7 +86,11 @@ public class InGameAventura extends Activity implements OnClickListener {
 	public Conexion conexion;
 
 	public Launch l;
-
+	/** timer background **/
+	private Timer timer;
+	private int delay; // delay for 5 sec.
+	private int period; // repeat every sec.
+	
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,6 +141,9 @@ public class InGameAventura extends Activity implements OnClickListener {
 			String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 			Launch.lanzaAviso(dialogText, this);
 		}
+		delay = 2000;
+		period = 50000;
+		programarTimer();
 
 	}
 
@@ -336,5 +345,20 @@ public class InGameAventura extends Activity implements OnClickListener {
 
 		}
 	}
+	
+	public void programarTimer(){
+		timer = new Timer();
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+
+			public void run() {
+
+				Launch.lanzaAviso("PRUEBA TIMER", InGameAventura.this);
+
+			}
+
+			}, delay, period);
+
+		}
 
 }
