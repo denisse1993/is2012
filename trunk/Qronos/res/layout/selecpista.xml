@@ -14,7 +14,7 @@
         android:id="@+id/ll_action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="10"
         android:background="@drawable/actionbar"
         android:orientation="horizontal" >
 
@@ -60,7 +60,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_weight="45"
+        android:layout_weight="40"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -76,19 +76,18 @@
             <ImageButton
                 android:id="@+id/iBmj1"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
                 android:background="@drawable/ibmj1" />
 
             <EditText
                 android:id="@+id/eTpista1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.95"
+                android:layout_weight="0.7"
                 android:inputType="textMultiLine"
-                android:maxHeight="60dp"
                 android:maxLength="30"
-                android:minHeight="60dp"
+                android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
         </LinearLayout>
@@ -104,19 +103,18 @@
             <ImageButton
                 android:id="@+id/iBmj2"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
                 android:background="@drawable/ibmj2" />
 
             <EditText
                 android:id="@+id/eTpista2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95"
+                android:layout_weight="0.7"
                 android:inputType="textMultiLine"
-                android:maxHeight="60dp"
                 android:maxLength="30"
-                android:minHeight="60dp"
+                android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
         </LinearLayout>
@@ -132,19 +130,18 @@
             <ImageButton
                 android:id="@+id/iBmj3"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
                 android:background="@drawable/ibmj3" />
 
             <EditText
                 android:id="@+id/eTpista3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95"
+                android:layout_weight="0.7"
                 android:inputType="textMultiLine"
-                android:maxHeight="60dp"
                 android:maxLength="30"
-                android:minHeight="60dp"
+                android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
         </LinearLayout>
@@ -155,7 +152,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_weight="45"
+        android:layout_weight="40"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -171,19 +168,18 @@
             <ImageButton
                 android:id="@+id/iBmj4"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
-                android:background="@drawable/ibmj0" />
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:background="@drawable/ibmj4" />
 
             <EditText
                 android:id="@+id/eTpista4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95"
+                android:layout_weight="0.7"
                 android:inputType="textMultiLine"
-                android:maxHeight="60dp"
                 android:maxLength="30"
-                android:minHeight="60dp"
+                android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
         </LinearLayout>
@@ -199,19 +195,18 @@
             <ImageButton
                 android:id="@+id/iBmj5"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
                 android:background="@drawable/ibmj0" />
 
             <EditText
                 android:id="@+id/eTpista5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95"
+                android:layout_weight="0.7"
                 android:inputType="textMultiLine"
-                android:maxHeight="60dp"
                 android:maxLength="30"
-                android:minHeight="60dp"
+                android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
         </LinearLayout>
@@ -227,19 +222,18 @@
             <ImageButton
                 android:id="@+id/iBmj6"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
                 android:background="@drawable/ibmj0" />
 
             <EditText
                 android:id="@+id/eTpista6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.95"
+                android:layout_weight="0.7"
                 android:inputType="textMultiLine"
-                android:maxHeight="60dp"
                 android:maxLength="30"
-                android:minHeight="60dp"
+                android:maxWidth="40dp"
                 android:textSize="10dp" >
             </EditText>
         </LinearLayout>
@@ -252,13 +246,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:background="@drawable/bottom_bar_3"
+        android:clickable="true"
         android:orientation="horizontal"
-        android:weightSum="9" >
+        android:weightSum="3" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="4"
+            android:layout_weight="1.0"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -266,16 +261,16 @@
                 android:id="@+id/iBleft"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:paddingTop="15dip"
+                android:paddingTop="5dip"
                 android:src="@drawable/ic_menu_arrow_left" />
 
             <TextView
                 android:id="@+id/tVleft"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="Ir izq"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
@@ -286,7 +281,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="3"
+            android:layout_weight="1.2"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -294,16 +289,16 @@
                 android:id="@+id/iBright"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:paddingTop="15dip"
+                android:paddingTop="5dip"
                 android:src="@drawable/ic_menu_arrow_right" />
 
             <TextView
                 android:id="@+id/tVright"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="Ir derecha"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
@@ -314,7 +309,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="2"
+            android:layout_weight="0.8"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -322,16 +317,16 @@
                 android:id="@+id/iVDone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:paddingTop="15dip"
-                android:src="@drawable/ic_menu_checkmark" />
+                android:paddingTop="5dip"
+                android:src="@drawable/ic_menu_checkmark48" />
 
             <TextView
                 android:id="@+id/tVDone"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="Hecho!"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"

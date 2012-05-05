@@ -368,8 +368,10 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			break;
 		}
 		if (aventura.sizePista() == aventura.size()) {
+			if(!bDoneSelecPISTA.isEnabled()){
 			bDoneSelecPISTA.setEnabled(true);
 			l.lanzaToast(Props.Strings.PISTAS_COMPLETO);
+			}
 		} else
 			bDoneSelecPISTA.setEnabled(false);
 	}
