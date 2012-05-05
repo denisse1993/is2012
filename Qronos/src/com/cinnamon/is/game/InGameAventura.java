@@ -148,6 +148,7 @@ public class InGameAventura extends Activity implements OnClickListener {
 		}
 		start = 2000;
 		period = 50000;
+		currentNotif = 0;
 		programarTimer();
 
 	}
@@ -370,10 +371,13 @@ public class InGameAventura extends Activity implements OnClickListener {
 	final Activity a = this;
 	private Runnable mostrarMensaje = new Runnable() {
 		public void run() {
-			if (conex.getNotif(jugador.getNombre())
-					&& (currentNotif != Integer.parseInt(conex.getRespuesta()))){
-				Launch.lanzaAviso("Notificaciones pendientes",
-						"Click en Ranking para mas detalles", a);
+			if (conex.getNotif(jugador.getNombre())) {
+				int respuesta = Integer.parseInt(conex.getRespuesta());
+				if (currentNotif != respuesta) {
+					currentNotif = respuesta;
+					Launch.lanzaAviso("Notificaciones pendientes",
+							"Click en Ranking para mas detalles", a);
+				}
 			}
 		}
 	};
