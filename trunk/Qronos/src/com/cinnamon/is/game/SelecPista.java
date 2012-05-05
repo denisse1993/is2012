@@ -88,8 +88,6 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 		read = b.getBoolean(Props.Comun.READ, false);
 		l = new Launch(this);
 		c = new Conexion(this);
-		mDbHelper = new DbAdapter(this);
-		mDbHelper.open(false);
 		grupoMJ = 0;
 		inicializar();
 	}
@@ -97,7 +95,8 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mDbHelper.close();
+		if(mDbHelper.isOpen())
+			mDbHelper.close();
 	}
 
 	@Override
