@@ -501,4 +501,32 @@ public class Conexion {
 		}
 		return retorno;
 	}
+	
+	public boolean getNotif(final String user) {
+		// Vuelca toda la info de BD local en la BD web
+		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
+		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/refquest.php"); // server
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		pairs.add(new BasicNameValuePair("user", user));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				this.respuesta = EntityUtils.toString(rp.getEntity());
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
+				retorno = true;
+			} else {
+				retorno = false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = false;
+		}
+		return retorno;
+	}
 }
