@@ -129,7 +129,7 @@
         
          <activity
             android:label="@string/app_name"
-            android:name=".game.InGameServidor" 
+            android:name=".game.InGameHost" 
             android:screenOrientation="portrait" >
             
             <intent-filter >

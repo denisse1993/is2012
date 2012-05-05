@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
       <item
         android:id="@+id/bMenuReset"
-        android:icon="@drawable/ic_menu_del_arcade"
-        android:title="Resetear Puntuaciones">
-    </item>
+       
+        android:title="Resetear Puntuaciones"> 
+    </item><!-- android:icon="@drawable/ic_menu_del_arcade"-->
     <item
         android:id="@+id/bMenuCambiaUser"
-        android:icon="@drawable/ic_menu_change_user"
+       
         android:title="Cambiar Usuario">
-    </item>
+    </item><!-- android:icon="@drawable/ic_menu_change_user"-->
     <item
         android:id="@+id/bMenuSalir"
-        android:icon="@drawable/ic_menu_salir"
+       
         android:title="Salir del Juego">
-    </item>
+    </item><!-- android:icon="@drawable/ic_menu_salir"-->
 </menu>

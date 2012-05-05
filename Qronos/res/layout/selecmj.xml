@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llselecmj"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
     android:padding="4dp"
-    android:weightSum="10" >
+    android:weightSum="100" >
 
     <!-- BARRA SUPERIOR -->
 
     <LinearLayout
+        android:id="@+id/ll_action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="5"
+        android:background="@drawable/actionbar"
         android:orientation="horizontal" >
 
         <!-- PARTE IZQ -->
@@ -28,7 +31,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="@+string/helloSelecMJ" />
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingTop="17dp"
+                android:text="@+string/helloSelecMJ"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar" />
         </LinearLayout>
         <!-- PARTE DER -->
 
@@ -38,11 +46,11 @@
             android:gravity="right"
             android:orientation="horizontal" >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/iBinfoSelecMJ"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="50dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:paddingTop="15dp"
                 android:src="@drawable/ic_menu_info" />
         </LinearLayout>
     </LinearLayout>
@@ -51,8 +59,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:layout_weight="4"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="45"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -77,7 +85,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/starnull" />
+                android:src="@drawable/selec"
+                android:maxHeight="50dp" />
         </LinearLayout>
         <!-- MJ2 -->
 
@@ -131,7 +140,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="45"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -149,7 +159,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.95"
-                android:background="@drawable/ibmj0" />
+                android:background="@drawable/ibmj4" />
 
             <ImageView
                 android:id="@+id/iVsc4"
@@ -172,7 +182,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.95"
-                android:background="@drawable/ibmj0" />
+                android:background="@drawable/ibmj5" />
 
             <ImageView
                 android:id="@+id/iVsc5"
@@ -207,49 +217,102 @@
     </LinearLayout>
     <!-- BARRA INFERIOR -->
 
+
+    <!-- BARRA INFERIOR -->
+
     <LinearLayout
+        android:id="@+id/ll_arcade_bottom_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:orientation="horizontal" >
-
-        <!-- PARTE IZQ -->
+        android:layout_weight="10"
+        android:background="@drawable/bottom_bar_3"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:weightSum="9" >
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|bottom"
-            android:orientation="horizontal" >
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/iBleft"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="50dp"
+                android:layout_weight="0.95"
+                android:gravity="center"
+                
+                android:paddingTop="15dip"
                 android:src="@drawable/ic_menu_arrow_left" />
 
-            <ImageButton
-                android:id="@+id/iBright"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tVleft"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="50dp"
-                android:src="@drawable/ic_menu_arrow_right" />
+                android:layout_weight="0.05"
+                android:gravity="center"
+                android:text="Ir izq"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
         </LinearLayout>
-        <!-- PARTE DER -->
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right|bottom"
-            android:orientation="horizontal" >
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
-            <Button
-                android:id="@+id/bDoneSelecMJ"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/iBright"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Hecho!" />
+                android:layout_weight="0.95"
+                android:gravity="center"
+                android:paddingTop="15dip"
+                android:src="@drawable/ic_menu_arrow_right" />
+
+            <TextView
+                android:id="@+id/tVright"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:gravity="center"
+                android:text="Ir derecha"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <ImageView
+                android:id="@+id/iVDone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.95"
+                android:gravity="center"
+                android:paddingTop="15dip"
+                android:src="@drawable/ic_menu_checkmark" />
+
+            <TextView
+                android:id="@+id/tVDone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.05"
+                android:gravity="center"
+                android:text="Hecho!"
+                android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>
 
