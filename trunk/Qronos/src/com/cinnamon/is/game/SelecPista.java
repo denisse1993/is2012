@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,12 +38,12 @@ import com.cinnamon.is.comun.T;
  */
 public class SelecPista extends Activity implements Inet, OnClickListener {
 	// interfaz
-	private LinearLayout llselecpista;
-	private ImageButton iBinfo, iBleft, iBright;
+	private LinearLayout llselecpista,llArcadeActionBar, llArcadeBottomBar;
+	private ImageView iBinfo, iBleft, iBright;
 	private ImageButton[] iBmj;
 	private EditText[] eTpista;
 	private TextView tVhello;
-	private Button bDoneSelecPISTA;
+	private ImageView bDoneSelecPISTA;
 	/**
 	 * Indica grupo de mjs mostrado
 	 */
@@ -113,16 +114,18 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 	private void inicializar() {
 
 		// abre base de datos
-		// mDbHelper = new DbAdapter(this);
-		// mDbHelper.open(false);
+		mDbHelper = new DbAdapter(this);
+		mDbHelper.open(false);
 
 		// genericos
 		llselecpista = (LinearLayout) findViewById(R.id.llselecpista);
-		iBinfo = (ImageButton) findViewById(R.id.iBinfoSelecPISTA);
-		iBleft = (ImageButton) findViewById(R.id.iBleft);
-		iBright = (ImageButton) findViewById(R.id.iBright);
+		llArcadeActionBar = (LinearLayout) findViewById(R.id.ll_action_bar);
+		llArcadeBottomBar = (LinearLayout) findViewById(R.id.ll_arcade_bottom_bar);
+		iBinfo = (ImageView) findViewById(R.id.iBinfoSelecPISTA);
+		iBleft = (ImageView) findViewById(R.id.iBleft);
+		iBright = (ImageView) findViewById(R.id.iBright);
 		tVhello = (TextView) findViewById(R.id.tVhello);
-		bDoneSelecPISTA = (Button) findViewById(R.id.bDoneSelecPISTA);
+		bDoneSelecPISTA = (ImageView) findViewById(R.id.iVDone);
 		// establezco Listeners
 		// arcade.setOnTouchListener(this);
 		iBinfo.setOnClickListener(this);
@@ -130,6 +133,16 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 		iBright.setOnClickListener(this);
 		bDoneSelecPISTA.setOnClickListener(this);
 
+		// Opacidad
+		llselecpista.getBackground().setAlpha(75);
+		llArcadeActionBar.getBackground().setAlpha(175);
+		llArcadeBottomBar.getBackground().setAlpha(175);
+
+		iBinfo.setAlpha(150);
+		iBleft.setAlpha(150);
+		iBright.setAlpha(150);
+		bDoneSelecPISTA.setAlpha(150);
+		
 		// rellena texto de bienvenida
 		tVhello.setText(tVhello.getText() + " para " + aventura.getNombre()
 				+ "!");
@@ -270,7 +283,7 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 		case R.id.iBright:
 			habilitarGrupoMJ(grupoMJ + 1);
 			break;
-		case R.id.bDoneSelecPISTA:
+		case R.id.iVDone:
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.AVENTURA, aventura);
 			// actualizar en BD tabla quest

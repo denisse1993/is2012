@@ -90,7 +90,9 @@ public class EligeModoAventura extends Activity implements Inet,
 		launch = new Launch(this);
 
 		conexion = new Conexion(this);
-
+		mDbHelper = new DbAdapter(this);
+		mDbHelper.open(false);
+		
 		bCrear = (Button) findViewById(R.id.b_crear_aventura);
 		bCrear.setOnClickListener(this);
 
@@ -102,9 +104,6 @@ public class EligeModoAventura extends Activity implements Inet,
 
 		bUsar = (Button) findViewById(R.id.b_usar_aventura);
 		bUsar.setOnClickListener(this);
-
-		mDbHelper = new DbAdapter(this);
-		mDbHelper.open(false);
 
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
@@ -129,9 +128,6 @@ public class EligeModoAventura extends Activity implements Inet,
 			launch.lanzaDialogoEsperaGetQuestPass(a);
 			break;
 		case R.id.b_unirse_aventura:
-			if (creaJugadorLocalPquest()) {
-				getJugadorLocalPquest();
-			}
 			q = new UtilQR(this);
 			q.lanzarQR();
 			break;
@@ -232,7 +228,7 @@ public class EligeModoAventura extends Activity implements Inet,
 		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
 			// crear nuevo jugador
 			mDbHelper.createRowPquest(jugador.getNombre(), new int[] { 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, null);
+					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, a.getNombre());
 			esta = false;
 		}
 		return esta;
@@ -265,8 +261,12 @@ public class EligeModoAventura extends Activity implements Inet,
 					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE10),
 					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE11),
 					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE12) };
+			String name=mCursor.getString(DbAdapter.PQUEST_IDCOL_NAME);
+			int actual = mCursor.getInt(DbAdapter.PQUEST_IDCOL_ACTUAL);
 			stopManagingCursor(mCursor);
 			jugador.setScoreQuest(pquest);
+			jugador.setAventura(name);
+			jugador.setFase(actual);
 			mCursor.close();
 			esta = true;
 		}
@@ -278,11 +278,11 @@ public class EligeModoAventura extends Activity implements Inet,
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				mDbHelper.open(false);
-				mDbHelper.updateRowPQuest(jugador.getNombre(),
-						jugador.getScoreQuest(), jugador.getFase(), contents);
-				Aventura quest = new Aventura(contents, null);
-				launch.lanzaDialogoEsperaGetQuestUnirse(quest);
+				a = new Aventura(contents, null);
+				if (creaJugadorLocalPquest()) {
+					getJugadorLocalPquest();
+				}
+				launch.lanzaDialogoEsperaGetQuestUnirse(a);
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell
 			}

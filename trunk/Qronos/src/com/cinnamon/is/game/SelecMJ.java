@@ -32,12 +32,12 @@ import com.cinnamon.is.comun.Props;
  */
 public class SelecMJ extends Activity implements OnClickListener {
 	// interfaz
-	private LinearLayout llselecmj;
-	private ImageButton iBinfo, iBleft, iBright;
+	private LinearLayout llselecmj,llArcadeActionBar, llArcadeBottomBar;
+	private ImageView iBinfo, iBleft, iBright;
 	private ImageButton[] iBmj;
 	private ImageView[] iVselec;
 	private TextView tVhello;
-	private Button bDoneSelecMJ;
+	private ImageView bDoneSelecMJ;
 	/**
 	 * Indica grupo de mjs mostrado
 	 */
@@ -81,11 +81,13 @@ public class SelecMJ extends Activity implements OnClickListener {
 
 		// genericos
 		llselecmj = (LinearLayout) findViewById(R.id.llselecmj);
-		iBinfo = (ImageButton) findViewById(R.id.iBinfoSelecMJ);
-		iBleft = (ImageButton) findViewById(R.id.iBleft);
-		iBright = (ImageButton) findViewById(R.id.iBright);
+		llArcadeActionBar = (LinearLayout) findViewById(R.id.ll_action_bar);
+		llArcadeBottomBar = (LinearLayout) findViewById(R.id.ll_arcade_bottom_bar);
+		iBinfo = (ImageView) findViewById(R.id.iBinfoSelecMJ);
+		iBleft = (ImageView) findViewById(R.id.iBleft);
+		iBright = (ImageView) findViewById(R.id.iBright);
 		tVhello = (TextView) findViewById(R.id.tVhello);
-		bDoneSelecMJ = (Button) findViewById(R.id.bDoneSelecMJ);
+		bDoneSelecMJ = (ImageView) findViewById(R.id.iVDone);
 		// establezco Listeners
 		// arcade.setOnTouchListener(this);
 		iBinfo.setOnClickListener(this);
@@ -93,6 +95,16 @@ public class SelecMJ extends Activity implements OnClickListener {
 		iBright.setOnClickListener(this);
 		bDoneSelecMJ.setOnClickListener(this);
 
+		// Opacidad
+		llselecmj.getBackground().setAlpha(75);
+		llArcadeActionBar.getBackground().setAlpha(175);
+		llArcadeBottomBar.getBackground().setAlpha(175);
+
+		iBinfo.setAlpha(150);
+		iBleft.setAlpha(150);
+		iBright.setAlpha(150);
+		bDoneSelecMJ.setAlpha(150);
+		
 		// rellena texto de bienvenida
 		tVhello.setText(tVhello.getText() + " para " + aventura.getNombre()
 				+ "!");
@@ -203,7 +215,7 @@ public class SelecMJ extends Activity implements OnClickListener {
 		case R.id.iBright:
 			habilitarGrupoMJ(grupoMJ + 1);
 			break;
-		case R.id.bDoneSelecMJ:
+		case R.id.iVDone:
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.AVENTURA, aventura);
 			Props.Comun.ACTIVIDAD = SelecMJ.this;

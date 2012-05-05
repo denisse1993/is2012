@@ -274,7 +274,7 @@
                 android:src="@drawable/ic_menu_arrow_right" />
 
             <TextView
-                android:id="@+id/tVUpSc"
+                android:id="@+id/tVright"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
