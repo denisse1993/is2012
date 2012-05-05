@@ -360,6 +360,7 @@ public final class Props {
 		public static final String AVENTURA_UPDATED = "Aventura actualizada";
 		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
 		public static final String ERROR_JSON = "Error parseando informacion servidor";
+		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
 
 		private Strings() {
 		}

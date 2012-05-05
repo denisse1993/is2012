@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.UtilQR;
@@ -25,7 +25,7 @@ import com.cinnamon.is.comun.UtilQR;
  * @version 1.0 19.04.2012
  * 
  */
-public class InGameHost extends Activity implements OnClickListener {
+public class InGameHost extends Activity implements Inet, OnClickListener {
 
 	/**
 	 * Conexion de la actividad
@@ -85,11 +85,12 @@ public class InGameHost extends Activity implements OnClickListener {
 
 		// Launch
 		this.launch = new Launch(this);
+		conexion = new Conexion(this);
 
 		// Iniciar Interfaz
-		this.ivOpciones = (ImageButton) findViewById(R.id.iv_in_game_host_opciones);
-		this.ivRanking = (ImageButton) findViewById(R.id.iv_in_game_host_ranking);
-		this.ivInfo = (ImageButton) findViewById(R.id.iv_in_game_host_info);
+		this.ivOpciones = (ImageView) findViewById(R.id.iv_in_game_host_opciones);
+		this.ivRanking = (ImageView) findViewById(R.id.iv_in_game_host_ranking);
+		this.ivInfo = (ImageView) findViewById(R.id.iv_in_game_host_info);
 
 		this.ivQR = (ImageView) findViewById(R.id.iv_in_game_host_qr);
 		this.title = (TextView) findViewById(R.id.title_in_game_host);
@@ -121,7 +122,7 @@ public class InGameHost extends Activity implements OnClickListener {
 		// BBDD
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
-		
+
 	}
 
 	@Override
@@ -171,6 +172,16 @@ public class InGameHost extends Activity implements OnClickListener {
 			Launch.lanzaAviso("Info Aventura", Props.Strings.iHost, this);
 			break;
 		}
+	}
+
+	@Override
+	public Launch l() {
+		return launch;
+	}
+
+	@Override
+	public Conexion c() {
+		return conexion;
 	}
 
 }
