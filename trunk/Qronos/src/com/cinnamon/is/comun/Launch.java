@@ -414,12 +414,14 @@ public final class Launch {
 	 * @param context
 	 * @param title
 	 * @param modo
+	 *            0 Crear 1 Editar 2 Usar
 	 * @param launch
+	 * @param a
 	 */
-	public static void lanzaTextoDialogo(final Context context, final int modo,
-			final String title, final Launch launch) {
+	public void lanzaTextoDialogo(final Context context, final int modo,
+			final String title, final Launch launch, final Aventura a) {
 		TextDialog dialogo = new TextDialog(context, title, modo,
-				R.style.CenterDialog, launch);
+				R.style.CenterDialog, launch, a);
 		dialogo.show();
 	}
 
@@ -884,9 +886,10 @@ public final class Launch {
 						Bundle b = new Bundle();
 						b.putSerializable(Props.Comun.JSON, json);
 						inet.l().lanzaActivity(Props.Action.RANKING, b);
-					} else
+					} else {
 						inet.l()
 								.lanzaToast(Props.Strings.VER_RANKING_NOPLAYERS);
+					}
 				} else {
 					inet.l().lanzaToast(Props.Strings.VER_RANKING_ERROR);
 				}
