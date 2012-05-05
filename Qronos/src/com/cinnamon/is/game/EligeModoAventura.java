@@ -92,7 +92,7 @@ public class EligeModoAventura extends Activity implements Inet,
 		conexion = new Conexion(this);
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
-		
+
 		bCrear = (Button) findViewById(R.id.b_crear_aventura);
 		bCrear.setOnClickListener(this);
 
@@ -115,22 +115,25 @@ public class EligeModoAventura extends Activity implements Inet,
 		switch (vClicked = v.getId()) {
 		case R.id.b_crear_aventura:
 			// name y pass escritos de la aventura no existe ya en la BD
-			launch.lanzaDialogoEsperaCreaQuest(a);
+			// launch.lanzaDialogoEsperaCreaQuest(a);
+			launch.lanzaTextoDialogo(this, 0, "Nueva Aventura", launch, a);
 			break;
 		case R.id.b_editar_aventura:
 			// leer name y password check si existe y concuerda, descargar,
 			// rellenar y lanzar SELECMJ
-			launch.lanzaDialogoEsperaGetQuest(a);
+			// launch.lanzaDialogoEsperaGetQuest(a);
+			launch.lanzaTextoDialogo(this, 1, "Edita Aventura", launch, a);
 			break;
 		case R.id.b_usar_aventura:
 			// leer name, check si existe, descargar,rellenar y lanzar
 			// SelecPista en modo lectura
-			launch.lanzaDialogoEsperaGetQuestPass(a);
+			// launch.lanzaDialogoEsperaGetQuestPass(a);
+			launch.lanzaTextoDialogo(this, 2, "Utilizar Aventura", launch, a);
 			break;
 		case R.id.b_unirse_aventura:
-//			q = new UtilQR(this);
-//			q.lanzarQR();
-			//TODO a sustituir por lo de arriba, esto para pruebas
+			// q = new UtilQR(this);
+			// q.lanzarQR();
+			// TODO a sustituir por lo de arriba, esto para pruebas
 			if (creaJugadorLocalPquest()) {
 				getJugadorLocalPquest();
 			}
@@ -266,7 +269,7 @@ public class EligeModoAventura extends Activity implements Inet,
 					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE10),
 					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE11),
 					mCursor.getInt(DbAdapter.PQUEST_IDCOL_SCORE12) };
-			String name=mCursor.getString(DbAdapter.PQUEST_IDCOL_NAME);
+			String name = mCursor.getString(DbAdapter.PQUEST_IDCOL_NAME);
 			int actual = mCursor.getInt(DbAdapter.PQUEST_IDCOL_ACTUAL);
 			stopManagingCursor(mCursor);
 			jugador.setScoreQuest(pquest);
@@ -279,7 +282,8 @@ public class EligeModoAventura extends Activity implements Inet,
 	}
 
 	@Override
-	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	protected void onActivityResult(final int requestCode,
+			final int resultCode, final Intent data) {
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
