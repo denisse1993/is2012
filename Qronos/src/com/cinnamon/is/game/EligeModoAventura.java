@@ -128,8 +128,13 @@ public class EligeModoAventura extends Activity implements Inet,
 			launch.lanzaDialogoEsperaGetQuestPass(a);
 			break;
 		case R.id.b_unirse_aventura:
-			q = new UtilQR(this);
-			q.lanzarQR();
+//			q = new UtilQR(this);
+//			q.lanzarQR();
+			//TODO a sustituir por lo de arriba, esto para pruebas
+			if (creaJugadorLocalPquest()) {
+				getJugadorLocalPquest();
+			}
+			launch.lanzaDialogoEsperaGetQuestUnirse(a);
 			break;
 		}
 	}

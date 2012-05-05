@@ -96,6 +96,8 @@ public class InGameAventura extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ingame_aventura);
 
+		mDbHelper = new DbAdapter(this);
+		this.mDbHelper.open(false);
 		// Bundle
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
@@ -237,7 +239,6 @@ public class InGameAventura extends Activity implements OnClickListener {
 			}
 		} else if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras();
-			this.mDbHelper.open(false);
 			int score = b.getInt(Props.Comun.SCORE);
 			int fase = this.jugador.getFase();
 			boolean superado = b.getBoolean(Props.Comun.SUPERADO);
@@ -324,7 +325,6 @@ public class InGameAventura extends Activity implements OnClickListener {
 			case Props.Comun.cmj12:
 				break;
 			}
-			this.mDbHelper.close();
 			if (superado) {
 				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
 						"Puntuacion obtenida: " + score);
@@ -352,9 +352,7 @@ public class InGameAventura extends Activity implements OnClickListener {
 		timer.scheduleAtFixedRate(new TimerTask() {
 
 			public void run() {
-
 				Launch.lanzaAviso("PRUEBA TIMER", InGameAventura.this);
-
 			}
 
 			}, delay, period);

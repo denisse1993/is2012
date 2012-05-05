@@ -30,47 +30,47 @@ public class TextDialog extends Dialogos {
 
 	@Override
 	void init() {
-		setContentView(R.layout.dialog_texto);
-		this.bOk = (Button) findViewById(R.id.bOkTextDialog);
-		this.etTexto = (EditText) findViewById(R.id.etTextDialog);
-		this.etTexto = (EditText) findViewById(R.id.etPasswordTextDialog);
-		this.fondo = (LinearLayout) findViewById(R.id.llTextoDialog);
-
-		if (!this.modo) {
-			ViewGroup vg = (ViewGroup) (this.etPassword.getParent());
-			vg.removeView(this.etPassword);
-		}
-
-		this.bOk.setOnClickListener(this);
-
-		fondo.getBackground().setAlpha(45);
-		this.bOk.getBackground().setAlpha(45);
+//		setContentView(R.layout.dialog_texto);
+//		this.bOk = (Button) findViewById(R.id.bOkTextDialog);
+//		this.etTexto = (EditText) findViewById(R.id.etTextDialog);
+//		this.etTexto = (EditText) findViewById(R.id.etPasswordTextDialog);
+//		this.fondo = (LinearLayout) findViewById(R.id.llTextoDialog);
+//
+//		if (!this.modo) {
+//			ViewGroup vg = (ViewGroup) (this.etPassword.getParent());
+//			vg.removeView(this.etPassword);
+//		}
+//
+//		this.bOk.setOnClickListener(this);
+//
+//		fondo.getBackground().setAlpha(45);
+//		this.bOk.getBackground().setAlpha(45);
 	}
 
 	@Override
 	public void onClick(final View v) {
-		switch (v.getId()) {
-		case R.id.bOkTextDialog:
-			String nombre = etTexto.getText().toString();
-			String password = etPassword.getText().toString();
-			a = new Aventura(nombre, password);
-			switch (tipo) {
-			case 0:
-				this.dismiss();
-				launch.lanzaDialogoEsperaCreaQuest(a);
-				break;
-
-			case 1:
-				this.dismiss();
-				launch.lanzaDialogoEsperaGetQuest(a);
-				break;
-			case 2:
-				this.dismiss();
-				launch.lanzaDialogoEsperaGetQuestPass(a);
-				break;
-			}
-			break;
-		}
+//		switch (v.getId()) {
+//		case R.id.bOkTextDialog:
+//			String nombre = etTexto.getText().toString();
+//			String password = etPassword.getText().toString();
+//			a = new Aventura(nombre, password);
+//			switch (tipo) {
+//			case 0:
+//				this.dismiss();
+//				launch.lanzaDialogoEsperaCreaQuest(a);
+//				break;
+//
+//			case 1:
+//				this.dismiss();
+//				launch.lanzaDialogoEsperaGetQuest(a);
+//				break;
+//			case 2:
+//				this.dismiss();
+//				launch.lanzaDialogoEsperaGetQuestPass(a);
+//				break;
+//			}
+//			break;
+//		}
 	}
 
 }
