@@ -530,10 +530,15 @@ public class Arcade extends Activity implements View.OnClickListener,
 			iClicked = item.getItemId();
 			return true;
 		case R.id.bMenuCambiaUser:
-
+			Launch.lanzaConfirmacion("Estás seguro?",
+					"Volverás a la pantalla de login!",
+					this);
+			iClicked = item.getItemId();
 			return true;
 		case R.id.bMenuSalir:
-
+			Launch.lanzaConfirmacion("Estás seguro?",
+					"Boton a eliminar/inservible/desactivar sonido mejor",
+					this);
 			return true;
 
 		default:
