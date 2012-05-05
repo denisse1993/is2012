@@ -88,9 +88,12 @@ public class InGameAventura extends Activity implements OnClickListener {
 	public Launch l;
 	/** timer background **/
 	private Timer timer;
-	private int delay; // delay for 5 sec.
-	private int period; // repeat every sec.
-	
+	private int start; // start en X sec.
+	private int period; // se repite cada X sec.
+
+	/** Para saber cual ha sido la ultima notificacion **/
+	private int currentNotif;
+
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -143,7 +146,7 @@ public class InGameAventura extends Activity implements OnClickListener {
 			String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 			Launch.lanzaAviso(dialogText, this);
 		}
-		delay = 2000;
+		start = 2000;
 		period = 50000;
 		programarTimer();
 
@@ -345,18 +348,34 @@ public class InGameAventura extends Activity implements OnClickListener {
 
 		}
 	}
-	
-	public void programarTimer(){
+
+	public void programarTimer() {
 		timer = new Timer();
 
-		timer.scheduleAtFixedRate(new TimerTask() {
+		timer.schedule/* AtFixedRate */(new TimerTask() {
 
 			public void run() {
-				Launch.lanzaAviso("PRUEBA TIMER", InGameAventura.this);
+				funcionTimer();
 			}
 
-			}, delay, period);
+		}, start, period);
 
+	}
+
+	protected void funcionTimer() {
+		this.runOnUiThread(mostrarMensaje);
+
+	}
+
+	final Activity a = this;
+	private Runnable mostrarMensaje = new Runnable() {
+		public void run() {
+			if (conex.getNotif(jugador.getNombre())
+					&& (currentNotif != Integer.parseInt(conex.getRespuesta()))){
+				Launch.lanzaAviso("Notificaciones pendientes",
+						"Click en Ranking para mas detalles", a);
+			}
 		}
+	};
 
 }
