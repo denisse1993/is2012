@@ -14,7 +14,7 @@
         android:id="@+id/ll_action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="10"
         android:background="@drawable/actionbar"
         android:orientation="horizontal" >
 
@@ -60,7 +60,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_weight="45"
+        android:layout_weight="40"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -85,8 +85,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.05"
-                android:src="@drawable/selec"
-                android:maxHeight="50dp" />
+                android:maxHeight="50dp"
+                android:src="@drawable/selec" />
         </LinearLayout>
         <!-- MJ2 -->
 
@@ -141,7 +141,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_weight="45"
+        android:layout_weight="40"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -228,12 +228,12 @@
         android:background="@drawable/bottom_bar_3"
         android:clickable="true"
         android:orientation="horizontal"
-        android:weightSum="9" >
+        android:weightSum="3" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="4"
+            android:layout_weight="1.0"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -241,17 +241,16 @@
                 android:id="@+id/iBleft"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                
-                android:paddingTop="15dip"
+                android:paddingTop="5dip"
                 android:src="@drawable/ic_menu_arrow_left" />
 
             <TextView
                 android:id="@+id/tVleft"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="Ir izq"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
@@ -262,7 +261,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="3"
+            android:layout_weight="1.2"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -270,16 +269,16 @@
                 android:id="@+id/iBright"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:paddingTop="15dip"
+                android:paddingTop="5dip"
                 android:src="@drawable/ic_menu_arrow_right" />
 
             <TextView
                 android:id="@+id/tVright"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="Ir derecha"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
@@ -290,7 +289,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="2"
+            android:layout_weight="0.8"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -298,16 +297,16 @@
                 android:id="@+id/iVDone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.95"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:paddingTop="15dip"
-                android:src="@drawable/ic_menu_checkmark" />
+                android:paddingTop="5dip"
+                android:src="@drawable/ic_menu_checkmark48" />
 
             <TextView
                 android:id="@+id/tVDone"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.05"
+                android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="Hecho!"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
