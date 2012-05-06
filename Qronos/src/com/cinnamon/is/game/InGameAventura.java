@@ -239,7 +239,9 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 	protected void onActivityResult(final int requestCode,
 			final int resultCode, final Intent data) {
 		String contents = this.q.getRawQR(requestCode, resultCode, data);
-		int nMJ = Integer.parseInt(contents);
+		int nMJ = -5;// valor cualquiera no util
+		if (contents != null)
+			nMJ = Integer.parseInt(contents);
 		if (requestCode == UtilQR.REQUEST_CODE && nMJ == this.mjActual) {
 			if (resultCode == RESULT_OK) {
 				Launch.lanzaConfirmacion(this, nMJ, this.launch,
@@ -396,13 +398,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 
 	@Override
 	public Launch l() {
-		// TODO Auto-generated method stub
 		return l;
 	}
 
 	@Override
 	public Conexion c() {
-		// TODO Auto-generated method stub
 		return conexion;
 	}
 
