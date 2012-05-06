@@ -83,20 +83,9 @@ public class Game extends Minijuego {
 						if (!estanTodas()) {
 							// si es una letra nueva y no es la última
 							this.texto.setTextColor(Color.GREEN);
-							this.texto
-									.setText("¡BIEN! Acabas de encontrar una nueva letra, sigue leyendo códigos para conseguir el resto");
+							this.texto.setText("¡BIEN! Acabas de encontrar una nueva letra, sigue leyendo códigos para conseguir el resto");
 						}
 						if (estanTodas()) {
-							// si leemos la última letra que necesitábamos
-							//TODO Hay que hacerlo
-							//aqui tiene que finalizar(true)
-							//si hay algo que no pueda ser dscomponerlo
-							//puede que lanzando win for result
-							//luego en el onActivityResult 
-							// cojo el tiempo que me tiene que pasar Win(elapsed)
-							// y calculo la puntuacion
-							//hago el resto de finalizar(true)
-							//y al final returnActivity
 							Bundle b= new Bundle();
 							b.putLong("inicio", start);
 							Launch.lanzaActivity(this, Props.Action.MJ7W, b, 7);
@@ -107,7 +96,7 @@ public class Game extends Minijuego {
 						Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 						vibr.vibrate(500);
 						this.texto.setTextColor(Color.RED);
-						this.texto.setText("¡ERROR! Esta letra ya ha sido leída anteriormente.");
+						this.texto.setText("Esta letra ya ha sido leída anteriormente.");
 					}
 
 				}// if de si es una letra valida

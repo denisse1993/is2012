@@ -162,7 +162,8 @@
   <!--  Minijuegos -->
         <!--  MJ1 -->
         <activity android:name=".minijuegos.mj1.StartingMarcianos"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.cinnamon.is.minijuegos.MJ1" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -171,7 +172,8 @@
         
         <!--  MJ2 -->
         <activity android:name=".minijuegos.mj2.ToposMJ"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.cinnamon.is.minijuegos.MJ2" />
                 <category android:name="android.intent.category.DEFAULT" />
