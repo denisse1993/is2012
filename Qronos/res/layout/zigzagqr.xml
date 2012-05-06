@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Lee cada uno de los códigos QR lo más rapido que puedas, recuerda que debes leerlos en orden."
         android:gravity="center"
+        android:textColor="#FFFF00"
         android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     

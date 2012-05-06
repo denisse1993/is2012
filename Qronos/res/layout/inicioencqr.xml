@@ -12,6 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
+        android:textColor="#FFFF00"
         android:text="Encuentra este código QR en el montón de códigos lo antes posible."
         android:gravity="center"
         android:textStyle="bold"
