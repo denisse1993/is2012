@@ -14,6 +14,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
         android:layout_height="wrap_content"
+        android:textColor="#FFFF00"
         android:text="Lee los códigos QR en el orden correcto, recuerda que si te equivocas debes empezar de nuevo."
         android:gravity="center"
         android:textStyle="bold"

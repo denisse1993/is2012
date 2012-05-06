@@ -43,8 +43,7 @@ public class Game extends Minijuego {
 				try {
 					// QR.lanzarQR();
 					// lanza el scan del Barcode Scanner
-					Intent intent = new Intent(
-							"com.google.zxing.client.android.SCAN");
+					Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 					startActivityForResult(intent, 0);
 				} catch (ActivityNotFoundException e) {
@@ -64,6 +63,11 @@ public class Game extends Minijuego {
 				// Handle successful scan
 				// Si la lectura se realiza correctamente se llega aquií
 				// Si el código no es el código objetivo, seguir intentandolo
+			  if (contents.equals("objetivo")||contents.equals("objñ")||contents.equals("objsad")
+				  ||contents.equals("kasidaj")||contents.equals("objeti")||contents.equals("objetivoi")
+				  ||contents.equals("objetivp")||contents.equals("objetiva")||contents.equals("objetivas")
+				  ||contents.equals("odsfgvd")){
+				  
 				if (!contents.equals("objetivo")) {
 					texto.setText("¡MAL!\nEse no es el código que tienes que encontrar\n¡SIGUE BUSCANDO!");
 					Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -80,10 +84,16 @@ public class Game extends Minijuego {
 
 					finalizar(true);
 				}
-				// TODO Comprobar que el código QR sea de este juego
+			 }
+			  else{
+				  texto.setTextColor(Color.RED);
+				  texto.setText("El código QR que has leído no pertenece a este juego");
+			  }
+				// Comprobar que el código QR sea de este juego
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancel
 				// Si se cancela la lectura se llega aquí
+				texto.setTextColor(Color.RED);
 				texto.setText("Lee de nuevo el código QR");
 			}
 		}
