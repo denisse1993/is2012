@@ -109,13 +109,13 @@ public class AyudaDialog extends Dialogos {
 		this.tvDescripcion = (TextView) findViewById(R.id.TextViewDescriptionAyuda);
 
 		if (!this.modo) {
-			ViewGroup vg = (ViewGroup) (this.bEmpezar.getParent());
-			vg.removeView(this.bEmpezar);
+			ViewGroup vg = (ViewGroup) (this.bCancelar.getParent());
+			vg.removeView(this.bCancelar);
 		} else {
-			this.bEmpezar.setOnClickListener(this);
+			this.bCancelar.setOnClickListener(this);
 		}
 
-		this.bCancelar.setOnClickListener(this);
+		this.bEmpezar.setOnClickListener(this);
 		this.setTitle(this.title);
 		this.ivBanner.setBackgroundResource(this.image);
 		this.tvDescripcion.setText(this.descripction);
