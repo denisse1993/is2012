@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
+import com.cinnamon.is.comun.UtilJSON;
 import com.cinnamon.is.comun.UtilQR;
 import com.cinnamon.is.comun.dialog.Dialogos;
 
@@ -30,7 +32,7 @@ import com.cinnamon.is.comun.dialog.Dialogos;
  * @author CinnamonTeam
  * @version 1.0 18.04.2012
  */
-public class InGameAventura extends Activity implements OnClickListener {
+public class InGameAventura extends Activity implements OnClickListener, Inet {
 	/**
 	 * Conexion de la actividad
 	 */
@@ -63,10 +65,10 @@ public class InGameAventura extends Activity implements OnClickListener {
 	 */
 	private int vClicked;
 	/**
-	 * Utilidad para lanzar el Scanner QR
+	 * Utilidad para lanzar el Scanner QR y traducir la respuesta del server
 	 */
 	private UtilQR q;
-
+	private UtilJSON j;
 	/**
 	 * Interfaz
 	 */
@@ -150,6 +152,8 @@ public class InGameAventura extends Activity implements OnClickListener {
 		period = 50000;
 		currentNotif = 0;
 		programarTimer();
+		
+		j = new UtilJSON(this);
 
 	}
 
@@ -215,7 +219,8 @@ public class InGameAventura extends Activity implements OnClickListener {
 	public void onClick(final View v) {
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_ranking_ingame:
-			this.launch.lanzaDialogoGetPquest(quest.getNombre());
+			timer.cancel();
+			this.l.lanzaDialogoGetPquest(quest.getNombre());
 			break;
 		case R.id.iv_camara_ingame:
 			this.q = new UtilQR(this);
@@ -371,8 +376,8 @@ public class InGameAventura extends Activity implements OnClickListener {
 	final Activity a = this;
 	private Runnable mostrarMensaje = new Runnable() {
 		public void run() {
-			if (conex.getNotif(jugador.getNombre())) {
-				int respuesta = Integer.parseInt(conex.getRespuesta());
+			if (conexion.getNotif(jugador.getNombre())) {
+				int respuesta = Integer.parseInt(j.jsonToString(conexion.getRespuesta()));
 				if (currentNotif != respuesta) {
 					currentNotif = respuesta;
 					Launch.lanzaAviso("Notificaciones pendientes",
@@ -381,5 +386,17 @@ public class InGameAventura extends Activity implements OnClickListener {
 			}
 		}
 	};
+
+	@Override
+	public Launch l() {
+		// TODO Auto-generated method stub
+		return l;
+	}
+
+	@Override
+	public Conexion c() {
+		// TODO Auto-generated method stub
+		return conexion;
+	}
 
 }
