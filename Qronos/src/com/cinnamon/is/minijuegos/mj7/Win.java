@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 
 
@@ -18,6 +19,8 @@ public class Win extends Minijuego {
 	private EditText palabra;
 	private String pal;
 	private int tiempo;
+	private long total;
+	private long inicio;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,30 +29,39 @@ public class Win extends Minijuego {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.finletqr);
 
-		// pal="";
 		palabra = (EditText) findViewById(R.id.entry);
 		Comprueba = (Button) findViewById(R.id.Comprobar);
+		final Launch l=new Launch(this);
 		Comprueba.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 
-				//este texto es el que coge mal
 				pal = palabra.getText().toString();
 
-				// si la palabra es correcta lanzamos el Intent correcto
+				// si la palabra es correcta
 				if ((pal.equals("rapido")) || (pal.equals("Rapido"))
 						|| (pal.equals("rápido")) || (pal.equals("Rápido"))
 						|| (pal.equals("RAPIDO")) || (pal.equals("RÁPIDO"))) {
 
 					Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         			vibr.vibrate(300);
+        			
         			//poner aqui un mensaje que pueda leer el usuario con el tiempo
         			//que ha tardado
         			//texto.setTextColor(Color.rgb(0,221,0));
         			//texto.setText("¡BIEN!\nYa has conseguido el noveno código, ¡corre al último!");
-        			//TODO hay que acabar este método	
-					finalizar(true);
-        			
+        			//TODO hay que acabar este método
+        			//aqui solo hay que calcular elapsed
+        			//y pasarselo al Game
+        			Bundle bundle=new Bundle();
+        			bundle=getIntent().getExtras();
+        			inicio=bundle.getLong("inicio");
+        			long fin=System.nanoTime();
+        			total=fin-inicio;
+        			int puntuacion=calcularPuntuacion();
+        			Bundle b= new Bundle();
+					b.putInt("puntuacion", puntuacion);
+        			l.returnActivity(b, RESULT_OK);
 				} 
 
 			}
@@ -59,7 +71,7 @@ public class Win extends Minijuego {
 
 	protected int calcularPuntuacion() {
 		int score = MAX_SCORE;
-		tiempo = (int) (elapsed * tos);
+		tiempo = (int) (total * tos);
 		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
 		// se tarda en cada uno, o dejarlo para todos igual
 		if (tiempo < 60)// 60segundos
