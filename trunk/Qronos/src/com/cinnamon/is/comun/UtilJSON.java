@@ -219,4 +219,19 @@ public final class UtilJSON {
 		}
 		return retorno;
 	}
+	
+	public String jsonToString(final String jSON){
+		JSONArray jArray;
+		String notif = "";
+		try {
+			jArray = new JSONArray(jSON);
+			JSONObject json_data = null;
+			json_data = jArray.getJSONObject(0);
+			notif = json_data.getString("NOTIF");
+		}catch (Exception e) {
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
+			
+		}
+		return notif;
+	}
 }

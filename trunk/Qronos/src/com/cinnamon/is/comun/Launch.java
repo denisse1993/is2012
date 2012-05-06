@@ -25,6 +25,7 @@ import com.cinnamon.is.comun.dialog.TextDialog;
 import com.cinnamon.is.game.Arcade;
 import com.cinnamon.is.game.Aventura;
 import com.cinnamon.is.game.EligeModoAventura;
+import com.cinnamon.is.game.InGameAventura;
 import com.cinnamon.is.game.Jugador;
 import com.cinnamon.is.game.Login;
 
@@ -676,6 +677,7 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
 				ret[1] = inet.c().getPquest(qStr);
+				
 				break;
 			case 10:
 				// Get aventura
