@@ -1,5 +1,6 @@
 package com.cinnamon.is.minijuegos.mj7;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
@@ -21,6 +23,7 @@ public class Win extends Minijuego {
 	private int tiempo;
 	private long total;
 	private long inicio;
+	private TextView texto;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,14 @@ public class Win extends Minijuego {
 
 		palabra = (EditText) findViewById(R.id.entry);
 		Comprueba = (Button) findViewById(R.id.Comprobar);
+		texto = (TextView) findViewById(R.id.textViewWin);
 		final Launch l=new Launch(this);
 		Comprueba.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 
 				pal = palabra.getText().toString();
+				texto.setText("");
 
 				// si la palabra es correcta
 				if ((pal.equals("rapido")) || (pal.equals("Rapido"))
@@ -46,13 +51,6 @@ public class Win extends Minijuego {
 					Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         			vibr.vibrate(300);
         			
-        			//poner aqui un mensaje que pueda leer el usuario con el tiempo
-        			//que ha tardado
-        			//texto.setTextColor(Color.rgb(0,221,0));
-        			//texto.setText("¡BIEN!\nYa has conseguido el noveno código, ¡corre al último!");
-        			//TODO hay que acabar este método
-        			//aqui solo hay que calcular elapsed
-        			//y pasarselo al Game
         			Bundle bundle=new Bundle();
         			bundle=getIntent().getExtras();
         			inicio=bundle.getLong("inicio");
@@ -62,7 +60,11 @@ public class Win extends Minijuego {
         			Bundle b= new Bundle();
 					b.putInt("puntuacion", puntuacion);
         			l.returnActivity(b, RESULT_OK);
-				} 
+				}
+				else{
+					texto.setTextColor(Color.RED);
+					texto.setText("Esa no es la palabra que estamos buscando");
+				}
 
 			}
 		});
