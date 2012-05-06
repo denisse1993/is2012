@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
@@ -152,7 +153,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 		period = 50000;
 		currentNotif = 0;
 		programarTimer();
-		
+
 		j = new UtilJSON(this);
 
 	}
@@ -246,7 +247,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell
 			}
+		} else if (nMJ != this.mjActual) {
+			Toast.makeText(this, "C—digo QR err—neo", 3000);
+
 		} else if (resultCode == RESULT_OK) {
+
 			Bundle b = data.getExtras();
 			int score = b.getInt(Props.Comun.SCORE);
 			int fase = this.jugador.getFase();
@@ -360,6 +365,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 
 		timer.schedule/* AtFixedRate */(new TimerTask() {
 
+			@Override
 			public void run() {
 				funcionTimer();
 			}
@@ -374,10 +380,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 	}
 
 	final Activity a = this;
-	private Runnable mostrarMensaje = new Runnable() {
+	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
 			if (conexion.getNotif(jugador.getNombre())) {
-				int respuesta = Integer.parseInt(j.jsonToString(conexion.getRespuesta()));
+				int respuesta = Integer.parseInt(j.jsonToString(conexion
+						.getRespuesta()));
 				if (currentNotif != respuesta) {
 					currentNotif = respuesta;
 					Launch.lanzaAviso("Notificaciones pendientes",
