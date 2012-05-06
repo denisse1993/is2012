@@ -2,20 +2,21 @@ package com.cinnamon.is.minijuegos.mj7;
 
 import java.util.HashMap;
 
-import com.cinnamon.is.R;
-import com.cinnamon.is.comun.Launch;
-import com.cinnamon.is.comun.Minijuego;
-import com.cinnamon.is.comun.Props;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.comun.Props;
 
 //este Intent permite lanzar el lector de códigos QR (cambiar interfaz)
 
@@ -25,6 +26,7 @@ public class Game extends Minijuego {
 	private int todas;
 	private Button btnQR;
 	private TextView texto;
+	private long start;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class Game extends Minijuego {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.inicioletqr);
 
-		startTime();
+		start=System.nanoTime();
 
 		this.todas = 0;
 		this.leidas = new HashMap<String, Boolean>();
@@ -46,8 +48,7 @@ public class Game extends Minijuego {
 				try {
 
 					// lanzamos el lector del códigoQR
-					Intent intent = new Intent(
-							"com.google.zxing.client.android.SCAN");
+					Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 					startActivityForResult(intent, 0);
 				} catch (ActivityNotFoundException e) {
@@ -87,13 +88,18 @@ public class Game extends Minijuego {
 						}
 						if (estanTodas()) {
 							// si leemos la última letra que necesitábamos
-							// TODO Hay que hacerlo
-							Bundle b = new Bundle();
-							b.putLong("inicio", this.start);
-							Launch.lanzaActivity(this, Props.Action.MJ7W, b,
-									Props.Comun.cmj7);
-							// Launch.lanzaActivity(this, Props.Action.MJ7W, b);
-
+							//TODO Hay que hacerlo
+							//aqui tiene que finalizar(true)
+							//si hay algo que no pueda ser dscomponerlo
+							//puede que lanzando win for result
+							//luego en el onActivityResult 
+							// cojo el tiempo que me tiene que pasar Win(elapsed)
+							// y calculo la puntuacion
+							//hago el resto de finalizar(true)
+							//y al final returnActivity
+							Bundle b= new Bundle();
+							b.putLong("inicio", start);
+							Launch.lanzaActivity(this, Props.Action.MJ7W, b, 7);
 						}
 
 					} else {
@@ -101,8 +107,7 @@ public class Game extends Minijuego {
 						Vibrator vibr = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 						vibr.vibrate(500);
 						this.texto.setTextColor(Color.RED);
-						this.texto
-								.setText("¡ERROR! Esta letra ya ha sido leída anteriormente.");
+						this.texto.setText("¡ERROR! Esta letra ya ha sido leída anteriormente.");
 					}
 
 				}// if de si es una letra valida
@@ -114,8 +119,7 @@ public class Game extends Minijuego {
 						&& (!contents.equals("D")) && (!contents.equals("O"))) {
 
 					this.texto.setTextColor(Color.RED);
-					this.texto
-							.setText("¡ERROR! Esta letra no se corresponde con ninguno de los códigos que buscamos.");
+					this.texto.setText("El código QR que estás leyendo no pertenece a este juego.");
 				}// if de cuando no es ninguna
 
 			} else if (resultCode == RESULT_CANCELED) {
@@ -124,6 +128,17 @@ public class Game extends Minijuego {
 				this.texto.setText("Lee de nuevo el código QR");
 			}// resultcanceled
 		}// requestcode
+		if(requestCode== 7){ //Cuando ya se haya calculado la puntuación
+			//Hace lo mismo que finalizar(true)
+			if (resultCode == RESULT_OK){
+				this.superado = true;
+				int puntuacion=intent.getIntExtra("puntuacion", 0);
+				Bundle b = new Bundle();
+				b.putInt(Props.Comun.SCORE, puntuacion);
+				b.putBoolean(Props.Comun.SUPERADO, this.superado);
+				Launch.returnActivity(this, b, RESULT_OK);
+			}
+		}
 	}// fin del metodo
 
 	/******************************* METODOS AUXILIARES *********************************/
@@ -156,5 +171,7 @@ public class Game extends Minijuego {
 			return false;
 		}
 	}
+	
+
 
 }
