@@ -525,6 +525,7 @@ public class Conexion {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Launch.lanzaAviso("el usuario no tiene partidas asociadas  o error inet", activity);
 			retorno = false;
 		}
 		return retorno;
