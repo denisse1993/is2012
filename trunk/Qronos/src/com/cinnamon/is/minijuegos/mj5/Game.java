@@ -2,6 +2,8 @@ package com.cinnamon.is.minijuegos.mj5;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Minijuego;
+import com.cinnamon.is.comun.Props;
+
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,7 +45,7 @@ public class Game extends Minijuego {
 				try {
 					// QR.lanzarQR();
 					// lanza el scan del Barcode Scanner
-					Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+					Intent intent = new Intent(Props.Action.SCAN);
 					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 					startActivityForResult(intent, 0);
 				} catch (ActivityNotFoundException e) {

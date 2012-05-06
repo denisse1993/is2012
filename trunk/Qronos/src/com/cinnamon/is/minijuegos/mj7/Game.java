@@ -48,7 +48,7 @@ public class Game extends Minijuego {
 				try {
 
 					// lanzamos el lector del códigoQR
-					Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+					Intent intent = new Intent(Props.Action.SCAN);
 					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 					startActivityForResult(intent, 0);
 				} catch (ActivityNotFoundException e) {
