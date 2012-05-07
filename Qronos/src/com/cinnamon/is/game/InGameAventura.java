@@ -33,7 +33,8 @@ import com.cinnamon.is.comun.dialog.Dialogos;
  * @author CinnamonTeam
  * @version 1.0 18.04.2012
  */
-public class InGameAventura extends Activity implements OnClickListener, Inet {
+public class InGameAventura extends Activity implements OnClickListener, Inet,
+		DialogInterface.OnClickListener {
 	/**
 	 * Conexion de la actividad
 	 */
@@ -48,7 +49,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 	 * Jugador
 	 */
 	Jugador jugador;
-
+	int superados = 0;
 	/**
 	 * Lauch de la actividad
 	 */
@@ -96,6 +97,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 
 	/** Para saber cual ha sido la ultima notificacion **/
 	private int currentNotif;
+	private TextView textFinal;
+	
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -108,6 +111,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		this.quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
+		this.jugador.setAventura(quest.getNombre());
 
 		// FindViewByID
 		this.bOpciones = (ImageView) findViewById(R.id.iv_opciones_ingame);
@@ -142,6 +146,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 
 		// Generar Minijuegos
 		this.mjActual = generaMinijuego();
+		// this.mjActual = 1;
 		if (this.mjActual == -2) {
 			// TODO
 			// launch.lanzaActivity(Props.Action.ENDGAME);
@@ -149,13 +154,13 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 			Launch.lanzaAviso(dialogText, this);
 		}
-		start = 2000;
+		start = 10000;
 		period = 50000;
 		currentNotif = 0;
 		programarTimer();
 
 		j = new UtilJSON(this);
-
+		textFinal = (TextView) findViewById(R.id.tv_fin);
 	}
 
 	private int generaMinijuego() {
@@ -163,25 +168,34 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			return -1;
 		} else {
 			int n = this.quest.size();
-			if (n == this.jugador.getFase()) {
+			if (n == this.jugador.getFase() || superados == n) {
 				return -2;
 			} else {
 				Random rand = new Random();
 				int x;
-				// Peligro bucle infinito si no hemos marcado las fases
 				while (true) {
 					x = rand.nextInt(n);
 					if (!this.quest.getMinijuego(x).getSuperado()) {
 						return x;
 					}
 				}
+				// Peligro bucle infinito si no hemos marcado las fases
+				// siguienteMinijuego();
 			}
 		}
 	}
 
+	/*
+	 * private void siguienteMinijuego() { while (true) { x = rand.nextInt(n);
+	 * if (!this.quest.getMinijuego(x).getSuperado()) { return x; } }
+	 * 
+	 * }
+	 */
+
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
+		// super.onBackPressed();
+		timer.cancel();
 		this.aDactual = Launch
 				.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
 	}
@@ -199,7 +213,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 		if (!this.mDbHelper.isOpen()) {
 			this.mDbHelper.open(false);
 		}
-
+		programarTimer();
+		// l.lanzaAviso("prueba");
 	}
 
 	public void onClick(final DialogInterface dialog, final int boton) {
@@ -207,7 +222,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
-				this.launch.lanzaActivity(Props.Action.MAINMENU);
+				super.onBackPressed();
+				//this.l.lanzaActivity(Props.Action.MAINMENU);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -224,11 +240,15 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			this.l.lanzaDialogoGetPquest(quest.getNombre());
 			break;
 		case R.id.iv_camara_ingame:
+			timer.cancel();
 			this.q = new UtilQR(this);
 			this.q.lanzarQR();
 			break;
 		case R.id.iv_opciones_ingame:
-			this.launch.lanzaActivity(Props.Action.OPCIONES);
+			/*
+			 * timer.cancel(); Launch.lanzaActivity(this,
+			 * Props.Action.OPCIONES);
+			 */
 			break;
 		case R.id.iv_info_ingame:
 			Launch.lanzaAviso("Informaci—n Aventura", Props.Strings.iHost, this);
@@ -244,17 +264,18 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			nMJ = Integer.parseInt(contents);
 		if (requestCode == UtilQR.REQUEST_CODE && nMJ == this.mjActual) {
 			if (resultCode == RESULT_OK) {
-				Launch.lanzaConfirmacion(this, nMJ, this.launch,
+				Launch.lanzaConfirmacion(this, nMJ, this.l,
 						Dialogos.DIALOG_AVENTURA);
 			} else if (resultCode == RESULT_CANCELED) {
 				// Handle cancell
+			} else if (nMJ != this.mjActual) {
+				Toast.makeText(this, "Codigo erroneo, busca el correcto!!",
+						3000).show();
 			}
-		} else if (nMJ != this.mjActual) {
-			Toast.makeText(this, "C—digo QR err—neo", 3000);
 
 		} else if (resultCode == RESULT_OK) {
-
 			Bundle b = data.getExtras();
+			mDbHelper.open(false);
 			int score = b.getInt(Props.Comun.SCORE);
 			int fase = this.jugador.getFase();
 			boolean superado = b.getBoolean(Props.Comun.SUPERADO);
@@ -267,6 +288,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(0).setSuperado(true);
+					// subirScoreAventura();
 				}
 				break;
 			case Props.Comun.cmj2:
@@ -277,6 +300,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(1).setSuperado(true);
+					// subirScoreAventura();
 				}
 
 				break;
@@ -288,6 +313,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(2).setSuperado(true);
 				}
 				break;
 			case Props.Comun.cmj4:
@@ -298,6 +324,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(3).setSuperado(true);
 				}
 				break;
 			case Props.Comun.cmj5:
@@ -308,6 +335,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(4).setSuperado(true);
 				}
 				break;
 			case Props.Comun.cmj6:
@@ -318,6 +346,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(5).setSuperado(true);
 				}
 				break;
 			case Props.Comun.cmj7:
@@ -328,6 +357,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 					this.mDbHelper.updateRowPQuest(this.jugador.getNombre(),
 							this.jugador.getScoreQuest(),
 							this.jugador.getFase(), this.quest.getNombre());
+					this.quest.getMinijuego(6).setSuperado(true);
 				}
 				break;
 			case Props.Comun.cmj8:
@@ -344,22 +374,26 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 			if (superado) {
 				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
 						"Puntuacion obtenida: " + score);
-				this.launch.lanzaDialogoUpdatePquest(this.jugador);
+				this.l.lanzaDialogoUpdatePquest(this.jugador);
+				superados++;
+				this.mjActual = generaMinijuego();
 			} else {
 				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
 						"No has completado el MJ, no se guardara tu puntuacion.");
 			}
 
-			this.mjActual = generaMinijuego();
+			
+			//this.mjActual = 1;
 			if (this.mjActual == -2) {
 				// TODO
-				// launch.lanzaActivity(Props.Action.ENDGAME);
+				textFinal.setText("se acabó el juego para ti, espera a que terminen los demás");
 			} else if (this.mjActual != -1) {
 				String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 				Launch.lanzaAviso(dialogText, this);
 			}
 
 		}
+
 	}
 
 	public void programarTimer() {
@@ -367,7 +401,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 
 		timer.schedule/* AtFixedRate */(new TimerTask() {
 
-			@Override
 			public void run() {
 				funcionTimer();
 			}
@@ -382,7 +415,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 	}
 
 	final Activity a = this;
-	private final Runnable mostrarMensaje = new Runnable() {
+	private Runnable mostrarMensaje = new Runnable() {
 		public void run() {
 			if (conexion.getNotif(jugador.getNombre())) {
 				int respuesta = Integer.parseInt(j.jsonToString(conexion
@@ -398,12 +431,17 @@ public class InGameAventura extends Activity implements OnClickListener, Inet {
 
 	@Override
 	public Launch l() {
+		// TODO Auto-generated method stub
 		return l;
 	}
 
 	@Override
 	public Conexion c() {
+		// TODO Auto-generated method stub
 		return conexion;
 	}
 
+	public void subirScoreAventura() {
+		l.lanzaDialogoUpdatePquest(jugador);
+	}
 }
