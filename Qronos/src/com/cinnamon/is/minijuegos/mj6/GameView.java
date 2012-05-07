@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -36,6 +37,7 @@ public class GameView extends View {
 
 	private final int posicionZ_camara;
 	private final int posicionY_camara;
+	
 
 	/**
 	 * Vista pulsada en onClick para uso en dialog onclick
@@ -228,5 +230,6 @@ public class GameView extends View {
 		}
 		return false;
 	}
+
 
 }

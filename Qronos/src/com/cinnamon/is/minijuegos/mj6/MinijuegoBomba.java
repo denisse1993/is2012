@@ -20,6 +20,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.view.Display;
@@ -29,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MinijuegoBomba extends Minijuego implements SensorEventListener {
@@ -44,18 +46,32 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	protected boolean superado;
 	protected int modo = Dialogos.DIALOG_ARCADE;
 	private UtilQR q;
-
+	
+	/** PARA LA CUENTA ATRAS**/
+	private CuentaAtras cuenta;
+	private TextView text;
+	private long startTime = 10000;
+	private long interval = 1000;
+	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		/** contador **/
+		/*cuenta = new CuentaAtras(startTime, interval);
+		text= (TextView) findViewById(R.id.textVCuenta);
+		text.setText(text.getText() + String.valueOf(startTime));*/
+		/*****************                ******************/
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		vista = new GameView(this, display.getWidth(), display.getHeight(),
 				this);
+		//setContentView(R.layout.cuentaatrasbomba);
 		setContentView(vista);
 		sm = (SensorManager) getSystemService(SENSOR_SERVICE);
 		SensorOrientacion = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
+		//cuenta.start();
 	}
 
 	@Override
@@ -211,6 +227,28 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 			}
 		}
 
+	}
+	// cuenta atras inicial class
+	public class CuentaAtras extends CountDownTimer {
+
+		public CuentaAtras(long startTime, long intervalo) {
+			super(startTime, intervalo);
+		}
+
+		@Override
+		public void onFinish() {
+			text.setText("Time's up!");
+			/*timeElapsedView.setText("Time Elapsed: "
+					+ String.valueOf(startTime));*/
+		}
+
+		@Override
+		public void onTick(long millisRestantes) {
+			/*text.setText("Time remain:" + millisRestantes);
+			timeElapsed = startTime - millisRestantes;
+			timeElapsedView.setText("Time Elapsed: "
+					+ String.valueOf(timeElapsed));*/
+		}
 	}
 
 }
