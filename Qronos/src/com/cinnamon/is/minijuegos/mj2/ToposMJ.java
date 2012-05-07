@@ -228,6 +228,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		Bundle b = new Bundle();
 		b.putInt(Props.Comun.SCORE, puntuacion);
 		b.putBoolean(Props.Comun.SUPERADO, superado);
+		introTheme.stop();
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
 		// setResult(puntuacion);
