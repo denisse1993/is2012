@@ -83,4 +83,9 @@ public class T implements Serializable {
 		return this.idMj + " " + this.pista + " "
 				+ (this.superado ? "si" : "no");
 	}
+
+	public void setSuperado(boolean b) {
+		this.superado = b;
+		
+	}
 }
