@@ -50,6 +50,7 @@ public class Intro extends Activity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} finally {
+					finish();
 					Launch.lanzaActivity(Intro.this, Props.Action.INTRO2);
 				}
 			}
