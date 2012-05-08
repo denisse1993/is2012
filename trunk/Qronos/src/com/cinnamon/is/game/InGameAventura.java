@@ -192,13 +192,14 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		// super.onBackPressed();
 		timer.cancel();
 		this.aDactual = Launch
-				.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
+				.lanzaConfirmacion("Salir", "Desea Salir?", this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		this.mDbHelper.close();
+		timer.cancel();
 	}
 
 	@Override
