@@ -44,16 +44,22 @@ public class Opciones extends PreferenceActivity implements
 	 */
 	private DbAdapter mDbHelper;
 
+	/**
+	 * Para usar al pulsar el boton de atrás
+	 */
+	private String ACTION;
+
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.opciones);
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
+		this.ACTION = b.getString(Props.Comun.RETORNO);
 		// abre base de datos
 		this.mDbHelper = new DbAdapter(this);
 		this.mDbHelper.open(false);
-
+		
 		this.pLogin = findPreference("loginChange");
 		this.pLogin.setOnPreferenceClickListener(this);
 		this.pReset = findPreference("resetGame");
@@ -66,7 +72,7 @@ public class Opciones extends PreferenceActivity implements
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, this.jugador);
 		finish();
-		Launch.lanzaActivity(this, Props.Action.MAINMENU, b);
+		Launch.lanzaActivity(this, ACTION, b);
 	}
 
 	@Override
@@ -90,6 +96,5 @@ public class Opciones extends PreferenceActivity implements
 		this.jugador.resetArcade();
 		this.mDbHelper.updateRowParcade(this.jugador.getNombre(),
 				this.jugador.getScore());
-
 	}
 }

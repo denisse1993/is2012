@@ -12,7 +12,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -85,7 +87,18 @@ public class Arcade extends Activity implements View.OnClickListener,
 	 * Lanzador auxiliar
 	 */
 	public Launch l;
+	/**
+	 * Conexion
+	 */
 	public Conexion conexion;
+	/**
+	 * Usamos para indicar si el sonido se reproduce o no
+	 */
+	private boolean sonido;
+	/**
+	 * SharedPreferencias de la aplicacion
+	 */
+	private SharedPreferences getData;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -93,9 +106,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 		setContentView(R.layout.arcade);
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
-		// SharedPreferences getData = PreferenceManager
-		// .getDefaultSharedPreferences(getBaseContext());
-		// sonido = getData.getBoolean("cbSonido", true);
+		getData = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		sonido = getData.getBoolean(Props.Comun.CB_SONIDO, true);
 		grupoMJ = 0;
 		conexion = new Conexion(this);
 		l = new Launch(this);
@@ -121,7 +134,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 			final int resultCode, final Intent data) {
 		if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras();
-			mDbHelper.open(false);
+			if (!mDbHelper.isOpen())
+				mDbHelper.open(false);
 			int score = b.getInt(Props.Comun.SCORE);
 			boolean superado = b.getBoolean(Props.Comun.SUPERADO);
 			switch (requestCode) {
@@ -199,7 +213,8 @@ public class Arcade extends Activity implements View.OnClickListener,
 			case Props.Comun.cmj12:
 				break;
 			}
-			mDbHelper.close();
+			if (mDbHelper.isOpen())
+				mDbHelper.close();
 			if (superado) {
 				l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
 						"Puntuacion obtenida: " + score);
@@ -392,7 +407,28 @@ public class Arcade extends Activity implements View.OnClickListener,
 					Launch.lanzaAviso("Arcade Reseteado!", this);
 					actualizarDatos();
 					break;
-
+				case R.id.bMenuCambiaUser:
+					Props.Comun.ACTIVIDAD.finish();// cierar mainMenu
+					Props.Comun.ACTIVIDAD = null;
+					finish();
+					Launch.lanzaActivity(this, Props.Action.LOGIN);
+					break;
+				case R.id.bMenuSalir:
+					// Para que actue como salir usar estas 3 lineas
+					// Props.Comun.ACTIVIDAD.finish();
+					// Props.Comun.ACTIVIDAD=null;
+					// finish();
+					SharedPreferences.Editor editor = getData.edit();
+					if (sonido) {
+						sonido = false;
+						editor.putBoolean(Props.Comun.CB_SONIDO, sonido);
+						editor.commit();
+					} else {
+						sonido = true;
+						editor.putBoolean(Props.Comun.CB_SONIDO, sonido);
+						editor.commit();
+					}
+					break;
 				}
 			case -2:// no
 				dialog.cancel();
@@ -411,7 +447,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 			habilitarGrupoMJ(grupoMJ + 1);
 			break;
 		case R.id.iBinfoArcade:
-			Launch.lanzaAviso("Informaci—n de arcade", Props.Strings.iArcade,
+			Launch.lanzaAviso("Información de arcade", Props.Strings.iArcade,
 					this);
 			break;
 		case R.id.iBseeSc:
@@ -522,25 +558,20 @@ public class Arcade extends Activity implements View.OnClickListener,
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		// Handle item selection
-		switch (item.getItemId()) {
+		switch (iClicked = item.getItemId()) {
 		case R.id.bMenuReset:
-			Launch.lanzaConfirmacion("Estás seguro?",
+			Launch.lanzaConfirmacion("¿Estás seguro?",
 					"Confirma que quieres resetear todas tus puntuaciones!!",
 					this);
-			iClicked = item.getItemId();
 			return true;
 		case R.id.bMenuCambiaUser:
-			Launch.lanzaConfirmacion("Estás seguro?",
-					"Volverás a la pantalla de login!",
-					this);
-			iClicked = item.getItemId();
+			Launch.lanzaConfirmacion("¿Estás seguro?",
+					"Volverás a la pantalla de login!", this);
 			return true;
 		case R.id.bMenuSalir:
 			Launch.lanzaConfirmacion("Estás seguro?",
-					"Boton a eliminar/inservible/desactivar sonido mejor",
-					this);
+					sonido ? "¿Desactivar sonido?" : "¿Activar sonido?", this);
 			return true;
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}

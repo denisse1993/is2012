@@ -10,9 +10,11 @@ import com.cinnamon.is.comun.Props;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -22,6 +24,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 	GameView ourSurfaceView;
 	boolean vi;
 	private boolean yaFin;
+	SharedPreferences getData;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,43 +36,36 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		// lanzaExitDialog();
 
 		/** Inicia lo que antes era el boton EMPEZAR **/
-		
-		introTheme.setVolume(0.4f, 0.4f);
-		introTheme.start();
+		getData = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			introTheme.setVolume(0.4f, 0.4f);
+			introTheme.start();
+		}
 		setContentView(ourSurfaceView);
 	}
 
-/*	private void lanzarAvisoMJ(String texto, String title) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(title);
-		builder.setMessage(texto).setNegativeButton("Empezar",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						ourSurfaceView.finJuego = false;
-						ourSurfaceView.numTopos = 30;
-						introTheme.setVolume(0.4f, 0.4f);
-						introTheme.start();
-						setContentView(ourSurfaceView);
-						dialog.cancel();
-					}
-				});
-		builder.show();
-	}*/
+	/*
+	 * private void lanzarAvisoMJ(String texto, String title) {
+	 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	 * builder.setTitle(title);
+	 * builder.setMessage(texto).setNegativeButton("Empezar", new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int id) { ourSurfaceView.finJuego = false;
+	 * ourSurfaceView.numTopos = 30; introTheme.setVolume(0.4f, 0.4f);
+	 * introTheme.start(); setContentView(ourSurfaceView); dialog.cancel(); }
+	 * }); builder.show(); }
+	 */
 
-/*	private void lanzarAvisoMJ2(String texto, String title) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(title);
-		builder.setMessage(texto).setNegativeButton("Salir",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						ToposMJ.super.onBackPressed();
-					}
-				});
-		builder.show();
-	}
-
-*/
+	/*
+	 * private void lanzarAvisoMJ2(String texto, String title) {
+	 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	 * builder.setTitle(title);
+	 * builder.setMessage(texto).setNegativeButton("Salir", new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int id) { dialog.cancel(); ToposMJ.super.onBackPressed(); } });
+	 * builder.show(); }
+	 */
 	public void onHomePressed() {
 		onHomePressed();
 		ourSurfaceView.finJuego = true;
@@ -78,13 +74,14 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 
 	@Override
 	public void parar() {
-		//efec.pause();
-		//efec2.pause();
-		
-		introTheme.pause();
+		// efec.pause();
+		// efec2.pause();
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			introTheme.pause();
+		}
 		ourSurfaceView.loopStop();
 	}
-	
+
 	public void reiniciar() {
 		introTheme = MediaPlayer.create(ToposMJ.this, R.raw.musicatopo);
 		efec = MediaPlayer.create(ToposMJ.this, R.raw.bip);
@@ -93,7 +90,9 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		ourSurfaceView = new GameView(this, this);
 		ourSurfaceView.setOnTouchListener(this);
 		setContentView(ourSurfaceView);
-		introTheme.start();
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			introTheme.start();
+		}
 	}
 
 	public void terminar() {
@@ -103,7 +102,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 	public void pausar() {
 		this.onPause();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -123,31 +122,20 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 
 	}
 
-
-	/*private void lanzaExitDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("¿Quieres activar la vibración?")
-				.setCancelable(false)
-				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						vi = true;
-						dialog.cancel();
-						lanzarAvisoMJ(
-								"Aplasta todos los topos que puedas, algunos son más fuertes y no aplastes a los conejos.",
-								"QRonos Topos");
-					}
-				})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						vi = false;
-						dialog.cancel();
-						lanzarAvisoMJ(
-								"Aplasta todos los topos que puedas, algunos son más fuertes y no aplastes a los conejos.",
-								"QRonos Topos");
-					}
-				});
-		builder.show();
-	}*/
+	/*
+	 * private void lanzaExitDialog() { AlertDialog.Builder builder = new
+	 * AlertDialog.Builder(this);
+	 * builder.setMessage("¿Quieres activar la vibración?")
+	 * .setCancelable(false) .setPositiveButton("Sí", new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int id) { vi = true; dialog.cancel(); lanzarAvisoMJ(
+	 * "Aplasta todos los topos que puedas, algunos son más fuertes y no aplastes a los conejos."
+	 * , "QRonos Topos"); } }) .setNegativeButton("No", new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int id) { vi = false; dialog.cancel(); lanzarAvisoMJ(
+	 * "Aplasta todos los topos que puedas, algunos son más fuertes y no aplastes a los conejos."
+	 * , "QRonos Topos"); } }); builder.show(); }
+	 */
 
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
@@ -168,16 +156,20 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 					if (va.topoSanb == false) {
 						if (va.fuerte == 0) {
 							va.toposEliminados++;
-							efec.start();
+							if (getData.getBoolean(Props.Comun.CB_SONIDO, true))
+								efec.start();
 						} else if (va.fuerte == 1) {
 							va.toposEliminados += 2;
-							efec.start();
+							if (getData.getBoolean(Props.Comun.CB_SONIDO, true))
+								efec.start();
 						} else if (va.fuerte == 2) {
 							va.toposEliminados += 3;
-							efec.start();
+							if (getData.getBoolean(Props.Comun.CB_SONIDO, true))
+								efec.start();
 						} else {
 							va.toposEliminados -= 2;
-							efec2.start();
+							if (getData.getBoolean(Props.Comun.CB_SONIDO, true))
+								efec2.start();
 						}
 						va.cont = 2;
 						Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -197,11 +189,10 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			/*if (va.finJuego) {
-				this.onCreate(new Bundle());
-				va.finJuego = false;
-				va.numTopos = 50;
-			}*/
+			/*
+			 * if (va.finJuego) { this.onCreate(new Bundle()); va.finJuego =
+			 * false; va.numTopos = 50; }
+			 */
 
 			break;
 		}
@@ -211,9 +202,11 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 	public void resumir() {
 
 		onResume();
-		ourSurfaceView.reanudar();	
-		efec.start();
-		introTheme.start();
+		ourSurfaceView.reanudar();
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			efec.start();
+			introTheme.start();
+		}
 
 	}
 
@@ -228,7 +221,9 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		Bundle b = new Bundle();
 		b.putInt(Props.Comun.SCORE, puntuacion);
 		b.putBoolean(Props.Comun.SUPERADO, superado);
-		introTheme.stop();
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			introTheme.stop();
+		}
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
 		// setResult(puntuacion);
