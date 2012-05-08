@@ -46,32 +46,34 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	protected boolean superado;
 	protected int modo = Dialogos.DIALOG_ARCADE;
 	private UtilQR q;
-	
-	/** PARA LA CUENTA ATRAS**/
+
+	/** PARA LA CUENTA ATRAS **/
 	private CuentaAtras cuenta;
 	private TextView text;
-	private long startTime = 10000;
-	private long interval = 1000;
-	
+	private final long startTime = 10000;
+	private final long interval = 1000;
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/** contador **/
-		/*cuenta = new CuentaAtras(startTime, interval);
-		text= (TextView) findViewById(R.id.textVCuenta);
-		text.setText(text.getText() + String.valueOf(startTime));*/
-		/*****************                ******************/
+		/*
+		 * cuenta = new CuentaAtras(startTime, interval); text= (TextView)
+		 * findViewById(R.id.textVCuenta); text.setText(text.getText() +
+		 * String.valueOf(startTime));
+		 */
+
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		vista = new GameView(this, display.getWidth(), display.getHeight(),
 				this);
-		//setContentView(R.layout.cuentaatrasbomba);
+		// setContentView(R.layout.cuentaatrasbomba);
 		setContentView(vista);
 		sm = (SensorManager) getSystemService(SENSOR_SERVICE);
 		SensorOrientacion = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		
-		//cuenta.start();
+
+		// cuenta.start();
 	}
 
 	@Override
@@ -223,31 +225,37 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 				}
 			} else if (resultCode == RESULT_CANCELED) {
 				superado = false;
+				vista.setExplosion(true);
 				// Handle cancell
 			}
 		}
 
 	}
+
 	// cuenta atras inicial class
 	public class CuentaAtras extends CountDownTimer {
 
-		public CuentaAtras(long startTime, long intervalo) {
+		public CuentaAtras(final long startTime, final long intervalo) {
 			super(startTime, intervalo);
 		}
 
 		@Override
 		public void onFinish() {
 			text.setText("Time's up!");
-			/*timeElapsedView.setText("Time Elapsed: "
-					+ String.valueOf(startTime));*/
+			/*
+			 * timeElapsedView.setText("Time Elapsed: " +
+			 * String.valueOf(startTime));
+			 */
 		}
 
 		@Override
-		public void onTick(long millisRestantes) {
-			/*text.setText("Time remain:" + millisRestantes);
-			timeElapsed = startTime - millisRestantes;
-			timeElapsedView.setText("Time Elapsed: "
-					+ String.valueOf(timeElapsed));*/
+		public void onTick(final long millisRestantes) {
+			/*
+			 * text.setText("Time remain:" + millisRestantes); timeElapsed =
+			 * startTime - millisRestantes;
+			 * timeElapsedView.setText("Time Elapsed: " +
+			 * String.valueOf(timeElapsed));
+			 */
 		}
 	}
 
