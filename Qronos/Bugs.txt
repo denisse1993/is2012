@@ -1,0 +1,25 @@
+
+** Bugs **
+-Cambiar puntuaciones a la hora de fallar. Si fallas te pone ‘0’ aunque te lo vuelvas a	 pasar bien
+-Si se lee string de un qr peta al intentar leer un juego de la aventura (Solucionado)
+-Juego Lidia -> Quitar Teclado para comprobar
+	     -> Puntuaciones
+- Botón pista en botón info (Solucionado, ahora se toca la pantalla)
+- Bomba no funciona lanzar cámara(Solucionado)
+- Opciones petán (Solucionado)
+- Cambiar el texto “Error parseando información” (Cambiado)
+- Peta en segundo plano
+- Sonido sigue sonando después de salir (Solucionado)
+- Dialogo Texto(Edu)(Solucionado)
+- Al unirse aventura no se crea un nuevo pquest en el servidor
+
+** Sugerencias**
+- Colores notificaciones
+- Cuando alguien acaba primero se reduzca a la mitad las puntuaciones de los minijuegos   del resto de jugadores y así sucesivamente
+- Consumo bateria
+
+
+
+
+	
+
