@@ -98,7 +98,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	/** Para saber cual ha sido la ultima notificacion **/
 	private int currentNotif;
 	private TextView textFinal;
-	
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -160,7 +159,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		programarTimer();
 
 		j = new UtilJSON(this);
-		textFinal = (TextView) findViewById(R.id.tv_fin);
+		// textFinal = (TextView) findViewById(R.id.tv_fin);
 	}
 
 	private int generaMinijuego() {
@@ -223,7 +222,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			case -1:// yes
 				dialog.cancel();
 				super.onBackPressed();
-				//this.l.lanzaActivity(Props.Action.MAINMENU);
+				// this.l.lanzaActivity(Props.Action.MAINMENU);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -260,8 +259,14 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			final int resultCode, final Intent data) {
 		String contents = this.q.getRawQR(requestCode, resultCode, data);
 		int nMJ = -5;// valor cualquiera no util
-		if (contents != null)
-			nMJ = Integer.parseInt(contents);
+		if (contents != null) {
+			try {
+				nMJ = Integer.parseInt(contents);
+			} catch (NumberFormatException e) {
+				// Simplemente la capturamos para que no pete si no es un numero
+				// de mj valido
+			}
+		}
 		if (requestCode == UtilQR.REQUEST_CODE && nMJ == this.mjActual) {
 			if (resultCode == RESULT_OK) {
 				Launch.lanzaConfirmacion(this, nMJ, this.l,
@@ -382,11 +387,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 						"No has completado el MJ, no se guardara tu puntuacion.");
 			}
 
-			
-			//this.mjActual = 1;
+			// this.mjActual = 1;
 			if (this.mjActual == -2) {
 				// TODO
-				textFinal.setText("se acabó el juego para ti, espera a que terminen los demás");
+				textFinal
+						.setText("se acabó el juego para ti, espera a que terminen los demás");
 			} else if (this.mjActual != -1) {
 				String dialogText = this.quest.getMinijuego(this.mjActual).pista;
 				Launch.lanzaAviso(dialogText, this);
@@ -431,13 +436,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	public Launch l() {
-		// TODO Auto-generated method stub
 		return l;
 	}
 
 	@Override
 	public Conexion c() {
-		// TODO Auto-generated method stub
 		return conexion;
 	}
 
