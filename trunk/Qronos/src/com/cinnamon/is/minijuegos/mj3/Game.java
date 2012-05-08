@@ -230,7 +230,6 @@ public class Game extends Minijuego {
 					// que ha tardado
 					texto.setTextColor(Color.rgb(0, 221, 0));
 					texto.setText("¡BIEN!\nYa has conseguido el noveno código, ¡corre al último!");
-
 					finalizar(true);
 				}
 
