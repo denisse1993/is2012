@@ -271,6 +271,51 @@ public final class Launch {
 	/**
 	 * Lanza el Dialog con un texto y un titulo
 	 * 
+	 * @param title
+	 *            el titulo del dialog
+	 * @param texto
+	 *            el texto del dialog
+	 * @param idIcono
+	 *            el id del icono para el dialog
+	 * @return el alertdialog
+	 */
+	public AlertDialog lanzaAviso(final String title, 
+			final String texto,final int idIcono) {
+		return lanzaAviso(title, texto, idIcono, this.a);
+	}
+
+	/**
+	 * Lanza el Dialog con un texto y un titulo
+	 * 
+	 * @param title
+	 *            el titulo del dialog
+	 * @param texto
+	 *            el texto del dialog
+	 * @param idIcono
+	 *            el id del icono para el dialog
+	 * @param a
+	 *            la actividad de lanzamiento
+	 * @return el alertdialog
+	 */
+	public static AlertDialog lanzaAviso(final String title,
+			final String texto, final int idIcono, final Activity a) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+		builder.setTitle(title);
+		builder.setIcon(idIcono);
+		builder.setMessage(texto).setNegativeButton("Cerrar",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int id) {
+						dialog.cancel();
+					}
+				});
+		return builder.show();
+	}
+
+	/**
+	 * Lanza el Dialog con un texto y un titulo
+	 * 
 	 * @param texto
 	 *            el texto del dialog
 	 * @return el alertdialog
@@ -677,7 +722,7 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
 				ret[1] = inet.c().getPquest(qStr);
-				
+
 				break;
 			case 10:
 				// Get aventura

@@ -217,10 +217,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 				mDbHelper.close();
 			if (superado) {
 				l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
-						"Puntuacion obtenida: " + score);
+						"Puntuacion obtenida: " + score,
+						R.drawable.ic_dialog_checkmark_24);
 			} else {
-				l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
-						"No has completado el MJ, no se guardara tu puntuacion.");
+				l.lanzaAviso(
+						Props.Strings.RESULTADO_MJ_INCOMPLETO,
+						"No has completado el MJ, no se guardara tu puntuacion.",
+						R.drawable.ic_dialog_delete_24);
 			}
 
 		}
@@ -569,7 +572,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 					"Volverás a la pantalla de login!", this);
 			return true;
 		case R.id.bMenuSalir:
-			Launch.lanzaConfirmacion("Estás seguro?",
+			Launch.lanzaConfirmacion("¿Estás seguro?",
 					sonido ? "¿Desactivar sonido?" : "¿Activar sonido?", this);
 			return true;
 		default:
