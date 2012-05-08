@@ -11,7 +11,8 @@
 - Peta en segundo plano
 - Sonido sigue sonando después de salir (Solucionado)
 - Dialogo Texto(Edu)(Solucionado)
-- Al unirse aventura no se crea un nuevo pquest en el servidor
+
+
 
 ** Sugerencias**
 - Colores notificaciones
