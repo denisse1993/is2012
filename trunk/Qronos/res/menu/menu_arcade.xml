@@ -4,13 +4,12 @@
 		android:icon="@drawable/ic_menu_del_arcade"
 		android:title="Resetear Puntuaciones">
 	</item>
-	-->
 	<item android:id="@+id/bMenuCambiaUser" 
 		android:icon="@drawable/ic_menu_change_user"
 		android:title="Cambiar Usuario">
 	</item>
 	<item android:id="@+id/bMenuSalir" 
-	android:icon="@drawable/ic_menu_del_arcade"
-		android:title="Salir del Juego">
+	android:icon="@drawable/ic_menu_sound_48"
+		android:title="Cambiar Sonido">
 	</item>
 </menu>

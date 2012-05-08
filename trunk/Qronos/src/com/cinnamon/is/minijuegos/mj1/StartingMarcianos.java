@@ -5,7 +5,9 @@ import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 public class StartingMarcianos extends Minijuego {
 	GameView game;
@@ -23,9 +25,9 @@ public class StartingMarcianos extends Minijuego {
 	 */
 
 	public void reiniciar() {
-		/*Intent intent = getIntent();
-		finish();
-		startActivity(intent);*/
+		/*
+		 * Intent intent = getIntent(); finish(); startActivity(intent);
+		 */
 		game = new GameView(this, this);
 		setContentView(game);
 	}
@@ -42,7 +44,10 @@ public class StartingMarcianos extends Minijuego {
 	public void resumir() {
 		onResume();
 		game.reanudar();
-		game.musicaOn();
+		SharedPreferences getData = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true))
+			game.musicaOn();
 	}
 
 	@Override
@@ -84,7 +89,11 @@ public class StartingMarcianos extends Minijuego {
 
 	@Override
 	public void parar() {
-		game.musicaOff();
+		SharedPreferences getData = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			game.musicaOff();
+		}
 		game.loopStop();
 	}
 

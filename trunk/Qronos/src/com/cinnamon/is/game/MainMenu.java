@@ -58,15 +58,17 @@ public class MainMenu extends Activity implements OnClickListener {
 	 */
 	private Launch l;
 
+	SharedPreferences getData;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
-		SharedPreferences getData = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-		sonido = getData.getBoolean("cbSonido", true);
+		getData = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		sonido = getData.getBoolean(Props.Comun.CB_SONIDO, true);
 		l = new Launch(this);
 		inicializar();
 	}
@@ -75,11 +77,19 @@ public class MainMenu extends Activity implements OnClickListener {
 	protected void onPause() {
 		super.onPause();
 		mDbHelper.close();
+		if (sonido)
+			onClose();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		sonido = getData.getBoolean(Props.Comun.CB_SONIDO, true);
+		if (sonido) {
+			menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
+			menuTheme.start();
+		}
+
 		if (!mDbHelper.isOpen())
 			mDbHelper.open(false);
 	}
@@ -93,18 +103,22 @@ public class MainMenu extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		if (sonido)
+			onClose();
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		switch (v.getId()) {
 		case R.id.bArcade:
-			menuTheme.release();
-			MediaPlayer openingTheme = MediaPlayer.create(MainMenu.this,
-					R.raw.opening);
-			if (sonido)
+			if (sonido) {
+				MediaPlayer openingTheme = MediaPlayer.create(MainMenu.this,
+						R.raw.opening);
 				openingTheme.start();
+			}
 			if (creaJugadorLocalArcade())
 				getJugadorLocalArcade();
+			Props.Comun.ACTIVIDAD = MainMenu.this;
 			l.lanzaActivity(Props.Action.ARCADE, b);
+			// openingTheme.release();
 			break;
 		case R.id.bAventura:
 			l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA, b);
@@ -113,17 +127,14 @@ public class MainMenu extends Activity implements OnClickListener {
 			// l.lanzaActivity(Props.Action.SELECMJ, b);
 			break;
 		case R.id.bOpciones:
-			l.lanzaActivity(Props.Action.INGAME, b);
-			// Intent iOpciones = new Intent(Props.Action.OPCIONES);
-			// iOpciones.putExtra(Props.Comun.J, jugador);
-			// startActivity(iOpciones);
+			b.putString(Props.Comun.RETORNO, Props.Action.MAINMENU);
+			l.lanzaActivity(Props.Action.OPCIONES, b);
+			// l.lanzaActivity(Props.Action.INGAME, b);
 			break;
 		case R.id.bSalir:
 			finish();
-			l.lanzaActivity(Props.Action.OPCIONES, b);
 			break;
 		}
-		onClose();
 	}
 
 	/**
@@ -134,9 +145,9 @@ public class MainMenu extends Activity implements OnClickListener {
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 
-		menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
-		if (sonido)
-			menuTheme.start();
+		// menuTheme = MediaPlayer.create(MainMenu.this, R.raw.menu);
+		// if (sonido)
+		// menuTheme.start();
 
 		bArcade = (Button) findViewById(R.id.bArcade);
 		bOpciones = (Button) findViewById(R.id.bOpciones);

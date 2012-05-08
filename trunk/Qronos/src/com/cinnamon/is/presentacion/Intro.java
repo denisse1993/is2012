@@ -9,8 +9,10 @@
 package com.cinnamon.is.presentacion;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
@@ -33,8 +35,13 @@ public class Intro extends Activity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intro);
+
 		introTheme = MediaPlayer.create(Intro.this, R.raw.hearthbeat_sound);
-		introTheme.start();
+		SharedPreferences getData = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			introTheme.start();
+		}
 		Thread timer = new Thread() {
 			@Override
 			public void run() {

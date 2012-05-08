@@ -1,9 +1,12 @@
 package com.cinnamon.is.minijuegos.mj1;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Props;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.preference.PreferenceManager;
 
 public class GameLoop extends Thread {
 	static final long FPS = 10;
@@ -11,41 +14,42 @@ public class GameLoop extends Thread {
 	private boolean running;
 	private StartingMarcianos activity;
 	private boolean paused = false;
-	//private Object pauseLock = new Object();
+
+	// private Object pauseLock = new Object();
 
 	public GameLoop(GameView view, StartingMarcianos padre) {
 		this.view = view;
 		this.activity = padre;
 	}
-	
-	public synchronized void stopLoop(){
+
+	public synchronized void stopLoop() {
 		this.running = false;
-		if(paused){
+		if (paused) {
 			resumeLoop();
 		}
 	}
-	
-	public synchronized void pauseLoop(){
-		if(paused){
+
+	public synchronized void pauseLoop() {
+		if (paused) {
 			return;
 		}
-		
+
 		paused = true;
 	}
-	
-	public synchronized void resumeLoop(){
-		
-		if(!paused){
+
+	public synchronized void resumeLoop() {
+
+		if (!paused) {
 			return;
 		}
-		
+
 		this.notify();
 		paused = false;
 	}
-	
-	private synchronized void checkPaused(){
-		if(paused){
-			
+
+	private synchronized void checkPaused() {
+		if (paused) {
+
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
@@ -54,7 +58,7 @@ public class GameLoop extends Thread {
 			}
 		}
 	}
-	
+
 	public void run() {
 		long ticksPS = 1000 / FPS;
 		long startTime;
@@ -72,15 +76,20 @@ public class GameLoop extends Thread {
 			crearMarcianolili--;
 			crearMarcianoOgro--;
 			velocidad--;
-			
+
 			checkPaused();
-			
+
 			if (this.view.getBomba().getEstado() == true) {
 				bomba--;
 			}
 			try {
 				if (this.view.getNumVidas() <= 0) {
-					this.view.musicaOff();
+					SharedPreferences getData = PreferenceManager
+							.getDefaultSharedPreferences(activity
+									.getApplicationContext());
+					if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+						this.view.musicaOff();
+					}
 					running = false;
 					activity.onStop();
 					activity.finalizar(true);

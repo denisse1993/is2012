@@ -274,10 +274,20 @@ public final class Props {
 		public static final String MODO = "modo";
 
 		/**
+		 * Usar al lanzar opciones, pasandole el ACTION que usara para volver, a
+		 * la actividad que lo llamo
+		 */
+		public static String RETORNO = "retorno";
+		
+		/**
 		 * Para guardar una referencia a una actividad concreta
 		 */
 		public static Activity ACTIVIDAD = null;
 
+		/**
+		 * Para obtener el estado del sonido
+		 */
+		public static final String CB_SONIDO = "cbSonido";
 		/**
 		 * String para usar cuando se quiera pasar la aventura entre actividades
 		 */
@@ -359,7 +369,7 @@ public final class Props {
 		public static final String AVENTURA_YA_EXISTE = "Ya existe aventura con ese nombre";
 		public static final String AVENTURA_UPDATED = "Aventura actualizada";
 		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
-		public static final String ERROR_JSON = "Error parseando informacion servidor";
+		public static final String ERROR_JSON = "Error obteniendo la informacion del servidor";
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
 
 		private Strings() {

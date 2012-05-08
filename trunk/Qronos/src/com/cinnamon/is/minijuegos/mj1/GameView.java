@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Props;
 
 import android.R.color;
 import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -24,7 +27,7 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
 
 public class GameView extends SurfaceView {
-	 GameLoop loop;
+	GameLoop loop;
 	private SurfaceHolder holder;
 	private Marcianos marciano;
 	private ArrayList<Marcianos> marcianosList = new ArrayList<Marcianos>();
@@ -96,8 +99,11 @@ public class GameView extends SurfaceView {
 		this.loop.pauseLoop();
 	}
 
+	Context contexto;
+
 	public GameView(Context context, StartingMarcianos ac) {
 		super(context);
+		contexto = context;
 		activity = ac;
 		loop = new GameLoop(this, ac);
 		holder = getHolder();
@@ -132,12 +138,16 @@ public class GameView extends SurfaceView {
 		});
 	}
 
-
 	private void temazo(int resource) {
-		music = MediaPlayer.create(getContext(), resource);
-		music.setVolume(1000, 1000);
-		music.start();
-		music.setLooping(true);
+
+		SharedPreferences getData = PreferenceManager
+				.getDefaultSharedPreferences(contexto.getApplicationContext());
+		if (getData.getBoolean(Props.Comun.CB_SONIDO, true)) {
+			music = MediaPlayer.create(getContext(), resource);
+			music.setVolume(1000, 1000);
+			music.start();
+			music.setLooping(true);
+		}
 	}
 
 	public void crearVida(int resource) {
@@ -265,7 +275,7 @@ public class GameView extends SurfaceView {
 		}
 		for (int i = 0; i < marcianosList.size(); i++) {
 			if (marcianosList.get(i).isClick(event.getX(), event.getY())) {
-				
+
 				if (marcianosList.get(i).getTipo() == 1) {
 					crearSangreMarciano(R.drawable.greenblood, marcianosList
 							.get(i).getX(), marcianosList.get(i).getY());
@@ -311,10 +321,9 @@ public class GameView extends SurfaceView {
 
 	public void reanudar() {
 		loop.resumeLoop();
-		//loop.setRunning(true);
-		//loop.start();
-		//loop.run();
-		
+		// loop.setRunning(true);
+		// loop.start();
+		// loop.run();
 
 	}
 
