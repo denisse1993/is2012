@@ -52,8 +52,8 @@ public final class UtilQR {
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		Bundle b = new Bundle();
 		b.putBoolean(Props.Comun.CAMARABOMBA, true);
-		Launch.lanzaActivity(this.activity, Props.Comun.CAMARABOMBA, b,
-				REQUEST_CODE);
+		intentScan.putExtras(b);
+		this.activity.startActivityForResult(intentScan, REQUEST_CODE);
 	}
 
 	/**
