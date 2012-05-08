@@ -117,7 +117,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		this.bCamara = (ImageView) findViewById(R.id.iv_camara_ingame);
 		this.bRanking = (ImageView) findViewById(R.id.iv_ranking_ingame);
 
-		llInGame = (LinearLayout) findViewById(R.id.ll_ingame);
+		llInGame = (LinearLayout) findViewById(R.id.ll_medio_ingame);
 		llInGameActionBar = (LinearLayout) findViewById(R.id.ll_ingame_action_bar);
 		llInGameBottomBar = (LinearLayout) findViewById(R.id.ll_ingame_bottom_bar);
 
@@ -126,7 +126,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		title.setText(quest.getNombre());
 
 		// Opacidad
-		llInGame.getBackground().setAlpha(75);
 		llInGameActionBar.getBackground().setAlpha(175);
 		llInGameBottomBar.getBackground().setAlpha(175);
 
@@ -138,6 +137,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		this.bOpciones.setOnClickListener(this);
 		this.bCamara.setOnClickListener(this);
 		this.bRanking.setOnClickListener(this);
+		this.llInGame.setOnClickListener(this);
 
 		// Conexion
 		this.conexion = new Conexion(this);
@@ -145,13 +145,9 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 		// Generar Minijuegos
 		this.mjActual = generaMinijuego();
-		// this.mjActual = 1;
 		if (this.mjActual == -2) {
 			// TODO
 			// launch.lanzaActivity(Props.Action.ENDGAME);
-		} else if (this.mjActual != -1) {
-			String dialogText = this.quest.getMinijuego(this.mjActual).pista;
-			Launch.lanzaAviso(dialogText, this);
 		}
 		start = 10000;
 		period = 50000;
@@ -250,7 +246,12 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			 */
 			break;
 		case R.id.iv_info_ingame:
+
 			Launch.lanzaAviso("Informaci—n Aventura", Props.Strings.iHost, this);
+
+		case R.id.ll_medio_ingame:
+			this.l.lanzaAviso("Pista",
+					this.quest.getMinijuego(this.mjActual).pista);
 		}
 	}
 
@@ -406,6 +407,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 		timer.schedule/* AtFixedRate */(new TimerTask() {
 
+			@Override
 			public void run() {
 				funcionTimer();
 			}
@@ -420,7 +422,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	}
 
 	final Activity a = this;
-	private Runnable mostrarMensaje = new Runnable() {
+	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
 			if (conexion.getNotif(jugador.getNombre())) {
 				int respuesta = Integer.parseInt(j.jsonToString(conexion
