@@ -27,7 +27,7 @@ public class TextDialog extends Dialogos {
 			final int _modo, final int _theme, final Launch _launch,
 			final Aventura _a) {
 		super(_context, _title, _modo, _theme);
-		this.a = _a;
+		a = _a;
 		this.launch = _launch;
 		this.tipo = _modo;
 		init();
