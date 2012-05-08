@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -127,6 +129,12 @@ public final class CaptureActivity extends Activity implements
 	private HistoryManager historyManager;
 	private InactivityTimer inactivityTimer;
 	private BeepManager beepManager;
+
+	// TODO
+	/** timer background **/
+	private Timer timer;
+	private int start; // start en X sec.
+	private int period; // se repite cada X sec.
 
 	private final DialogInterface.OnClickListener aboutListener = new DialogInterface.OnClickListener() {
 		@Override
@@ -283,20 +291,11 @@ public final class CaptureActivity extends Activity implements
 
 			characterSet = intent.getStringExtra(Intents.Scan.CHARACTER_SET);
 
+			// TODO
 			if (limiteTiempo) {
-				Thread t = new Thread() {
-					@Override
-					public void run() {
-						try {
-							sleep(10000);// 3650
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						} finally {
-							finish();
-						}
-					}
-				};
-				t.run();
+				start = 10000;
+				period = 50000;
+				programarTimer();
 			}
 
 		}
@@ -312,6 +311,32 @@ public final class CaptureActivity extends Activity implements
 			}
 		}
 		return false;
+	}
+
+	// TODO
+	public void programarTimer() {
+		timer = new Timer();
+
+		timer.schedule/* AtFixedRate */(new TimerTask() {
+
+			@Override
+			public void run() {
+				funcionTimer();
+			}
+
+		}, start, period);
+
+	}
+
+	protected void funcionTimer() {
+		final Activity a = this;
+		Runnable cerrarCamara = new Runnable() {
+			public void run() {
+				a.finish();
+			}
+		};
+		this.runOnUiThread(cerrarCamara);
+
 	}
 
 	@Override
