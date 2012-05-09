@@ -12,7 +12,11 @@ public class Ranking extends Activity {
 
 	private String JSON;
 
-	private String arcade;
+	/**
+	 * Tendra la información del jugador que viene desde arcade
+	 */
+	// es una apaño para no tener que cambiar todo el codigo
+	private Jugador arcadeData;
 
 	private Jugador jugador;
 
@@ -27,14 +31,14 @@ public class Ranking extends Activity {
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		JSON = b.getString(Props.Comun.JSON);
-		arcade = b.getString(Props.Comun.ARCADE);
+		arcadeData = (Jugador) b.getSerializable(Props.Comun.ARCADE_DATA);
 		tvTitulo = (TextView) findViewById(R.id.textViewTitulo);
 		utilj = new UtilJSON(this);
 
 		if (jugador == null) {
-			if (arcade != null) {
+			if (arcadeData != null) {
 				tvTitulo.setText("Ranking Arcade");
-				utilj.rankingOnlineArcade(JSON,5);
+				utilj.rankingOnlineArcade(JSON, 5, arcadeData);
 			} else {
 				tvTitulo.setText("Ranking Aventura");
 				utilj.rankingOnlineAventura(JSON);
@@ -48,7 +52,7 @@ public class Ranking extends Activity {
 	 */
 	private void rankingLocal() {
 		int[] a = jugador.getScore();
-		String suma = "";
+		String suma = String.valueOf(jugador.getScoreTotal());
 		setFila(1, jugador.getNombre(), String.valueOf(a[0]),
 				String.valueOf(a[1]), String.valueOf(a[2]),
 				String.valueOf(a[3]), String.valueOf(a[4]),
