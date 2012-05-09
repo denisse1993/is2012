@@ -293,6 +293,15 @@ public final class Props {
 		 * String para usar cuando se quiera pasar la aventura entre actividades
 		 */
 		public static final String CAMARABOMBA = "camara_bomba";
+		/**
+		 * Constantes para limitar longitudes de strings
+		 */
+		public static final int MAX_CHAR_NICK = 11;
+		public static final int MAX_CHAR_PASS = 11; // se encrypta md5 en el
+													// server long = 32
+		public static final int MAX_CHAR_PISTA = 30;
+		public static final int MAX_CHAR_NAVENTURA = 20;
+		public static final int MAX_CHAR_PAVENTURA = 11;
 
 		private Comun() {
 		}
@@ -372,6 +381,18 @@ public final class Props {
 		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
 		public static final String ERROR_JSON = "Error obteniendo la informacion del servidor";
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
+		
+		/** 
+		 * Avisos para longitudes incorrectas. Se puede simplificar si la long es la misma
+		 */
+		public static final String LONGITUD_NICK = "La longitud del nick debe ser menor que"
+				+ (Props.Comun.MAX_CHAR_NICK + 1);
+		public static final String LONGITUD_PASS = "La longitud de la contrasena debe ser menor que"
+				+ (Props.Comun.MAX_CHAR_PASS + 1);
+		public static final String LONGITUD_NICK_PASS = "La longitud del contrasena debe ser <"
+				+ (Props.Comun.MAX_CHAR_PASS + 1)
+				+ "y de la contrasena<"
+				+ (Props.Comun.MAX_CHAR_PASS + 1);
 
 		private Strings() {
 		}
