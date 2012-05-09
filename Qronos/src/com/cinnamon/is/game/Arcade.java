@@ -455,11 +455,11 @@ public class Arcade extends Activity implements View.OnClickListener,
 			break;
 		case R.id.iBseeSc:
 			if (Props.Comun.ONLINE) {
-				l.lanzaDialogoEsperaVerRankingArcade();
+				l.lanzaDialogoEsperaVerRankingArcade(jugador);
 			} else {
 				Bundle b = new Bundle();
 				b.putSerializable(Props.Comun.JUGADOR, jugador);
-				b.putSerializable(Props.Comun.ARCADE, "Arcade");
+				b.putSerializable(Props.Comun.ARCADE_DATA, "Arcade");
 				l.lanzaActivity(Props.Action.RANKING, b);
 			}
 

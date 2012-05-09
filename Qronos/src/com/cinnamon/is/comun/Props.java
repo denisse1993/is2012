@@ -260,9 +260,10 @@ public final class Props {
 		public static final String JSON = "json";
 
 		/**
-		 * Para indicar que viene del arcade
+		 * Para indicar que viene del arcade, contiene la informacion del
+		 * jugador
 		 */
-		public static final String ARCADE = "arcade";
+		public static final String ARCADE_DATA = "arcade";
 
 		/**
 		 * Para abrir selecPista en modo lectura
@@ -278,7 +279,7 @@ public final class Props {
 		 * la actividad que lo llamo
 		 */
 		public static String RETORNO = "retorno";
-		
+
 		/**
 		 * Para guardar una referencia a una actividad concreta
 		 */

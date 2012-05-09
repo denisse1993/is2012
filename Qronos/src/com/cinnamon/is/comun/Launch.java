@@ -279,8 +279,8 @@ public final class Launch {
 	 *            el id del icono para el dialog
 	 * @return el alertdialog
 	 */
-	public AlertDialog lanzaAviso(final String title, 
-			final String texto,final int idIcono) {
+	public AlertDialog lanzaAviso(final String title, final String texto,
+			final int idIcono) {
 		return lanzaAviso(title, texto, idIcono, this.a);
 	}
 
@@ -520,9 +520,9 @@ public final class Launch {
 	 * Sirve para ver ranking arcade online (tabla arcade)
 	 * 
 	 */
-	public void lanzaDialogoEsperaVerRankingArcade() { //
+	public void lanzaDialogoEsperaVerRankingArcade(Jugador jugador) { //
 		// valor 4 activa ver ranking online
-		new ConexionServerTask().execute(new Object[] { 4 });
+		new ConexionServerTask().execute(new Object[] { 4,jugador });
 	}
 
 	/**
@@ -684,6 +684,7 @@ public final class Launch {
 			case 4:
 				// Ver ranking arcade
 				Arcade seeRanking = (Arcade) Launch.this.a;
+				ret[2] = (Jugador) datos[1];
 				ret[1] = seeRanking.conexion.dameOnlineArcade();
 				break;
 			case 5:
@@ -745,6 +746,7 @@ public final class Launch {
 			boolean conex;
 			UtilJSON u;
 			Aventura av;
+			Jugador jugador;
 			switch (tarea) {
 			case 0:
 				// login
@@ -831,12 +833,13 @@ public final class Launch {
 			case 4:
 				// Ver ranking arcade
 				conex = (Boolean) result[1];
+				jugador = (Jugador) result[2];
 				Arcade seeRanking = (Arcade) Launch.this.a;
 				if (conex) {
 					String json = seeRanking.conexion.getRespuesta();
 					Bundle b = new Bundle();
 					b.putSerializable(Props.Comun.JSON, json);
-					b.putSerializable(Props.Comun.ARCADE, "Arcade");
+					b.putSerializable(Props.Comun.ARCADE_DATA, jugador);
 					seeRanking.l.lanzaActivity(Props.Action.RANKING, b);
 				} else {
 					seeRanking.l.lanzaToast(Props.Strings.VER_RANKING_ERROR);
@@ -944,9 +947,7 @@ public final class Launch {
 			case 10:
 				// Obtener Aventura
 				conex = (Boolean) result[1];
-				inet = (Inet) Launch.this.a;// TODO la k lo use tiene k
-				// implementar la interfaz Inet para k esto no pete y pueda usar
-				// los metodos l() y c(),
+				inet = (Inet) Launch.this.a;
 				if (conex) {
 					String aventura = inet.c().getRespuesta();
 					if (aventura.equals("3")) {

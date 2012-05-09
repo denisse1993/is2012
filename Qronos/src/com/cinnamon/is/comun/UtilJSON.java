@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 
 import com.cinnamon.is.game.Aventura;
+import com.cinnamon.is.game.Jugador;
 import com.cinnamon.is.game.Ranking;
 
 /**
@@ -150,7 +151,7 @@ public final class UtilJSON {
 		try {
 			jArray = new JSONArray(jSON);
 			JSONObject json_data = null;
-			for (int i = 0; i < jArray.length(); i++) {
+			for (int i = 0; i < 5; i++) {
 				int j = i + 1;
 				json_data = jArray.getJSONObject(i);
 				nick = json_data.getString("NICK");
@@ -181,10 +182,22 @@ public final class UtilJSON {
 		return retorno;
 	}
 
-	public boolean rankingOnlineArcade(final String jSON, final int limite) {
+	/**
+	 * Rellena el layout de ranking con el string jSON
+	 * 
+	 * @param jSON
+	 *            a parsear, contiene la info de la tabla arcade en formato json
+	 * @param limite
+	 *            debe ser entre 0 y 5 inclusive
+	 * @param jugador
+	 *            el jugador que ha lanzado el ranking
+	 * @return si ha sido correcto o no
+	 */
+	public boolean rankingOnlineArcade(final String jSON, final int limite,
+			Jugador jugador) {
 		boolean retorno;
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
-
+		boolean entre5primeros = false;
 		JSONArray jArray;
 		try {
 			jArray = new JSONArray(jSON);
@@ -206,8 +219,21 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
+				if (nick == jugador.getNombre())
+					entre5primeros = true;
 				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
 						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
+			}
+			if (!entre5primeros) {
+				int[] b = jugador.getScore();
+				String suma = String.valueOf(jugador.getScoreTotal());
+				((Ranking) this.a).setFila(5, jugador.getNombre(),
+						String.valueOf(b[0]), String.valueOf(b[1]),
+						String.valueOf(b[2]), String.valueOf(b[3]),
+						String.valueOf(b[4]), String.valueOf(b[5]),
+						String.valueOf(b[6]), String.valueOf(b[7]),
+						String.valueOf(b[8]), String.valueOf(b[9]),
+						String.valueOf(b[10]), String.valueOf(b[11]), suma);
 			}
 			retorno = true;
 		} catch (JSONException e1) {
@@ -219,8 +245,8 @@ public final class UtilJSON {
 		}
 		return retorno;
 	}
-	
-	public String jsonToString(final String jSON){
+
+	public String jsonToString(final String jSON) {
 		JSONArray jArray;
 		String notif = "";
 		try {
@@ -228,9 +254,9 @@ public final class UtilJSON {
 			JSONObject json_data = null;
 			json_data = jArray.getJSONObject(0);
 			notif = json_data.getString("NOTIF");
-		}catch (Exception e) {
+		} catch (Exception e) {
 			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
-			
+
 		}
 		return notif;
 	}
