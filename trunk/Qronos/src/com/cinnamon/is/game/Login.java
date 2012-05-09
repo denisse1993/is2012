@@ -38,7 +38,7 @@ import com.cinnamon.is.comun.Props.Enum.Tabla;
  * @author Cinnamon Team
  * @version 1.1 24.11.2011
  */
-public class Login extends Activity implements Inet,OnClickListener {
+public class Login extends Activity implements Inet, OnClickListener {
 
 	/**
 	 * Adaptador para conectar con la BD
@@ -177,7 +177,16 @@ public class Login extends Activity implements Inet,OnClickListener {
 				l.lanzaDialogoEsperaLogin(nombre, passMD5);
 				break;
 			case R.id.bRegister:
-				l.lanzaDialogoEsperaRegister(nombre, passMD5);
+				if ((nombre.length() > Props.Comun.MAX_CHAR_NICK)
+						&& (pass.length() > Props.Comun.MAX_CHAR_PASS)) {
+					l.lanzaToast(Props.Strings.LONGITUD_NICK_PASS);
+				} else if (nombre.length() > Props.Comun.MAX_CHAR_NICK) {
+					l.lanzaToast(Props.Strings.LONGITUD_NICK);
+				} else if (pass.length() > Props.Comun.MAX_CHAR_PASS) {
+					l.lanzaToast(Props.Strings.LONGITUD_PASS);
+				} else {
+					l.lanzaDialogoEsperaRegister(nombre, passMD5);
+				}
 				break;
 			}
 		} else
