@@ -2,42 +2,104 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-	android:background="@drawable/logo">
+    android:orientation="vertical"
+    android:weightSum="5" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="99dp"
+        android:orientation="vertical" >
 
-    
+    </LinearLayout>
 
-        <EditText android:id="@+id/etUsername" android:nextFocusUp="@+id/bLogin"
-                android:nextFocusDown="@+id/etPassword" android:hint="Usuario"
-                android:inputType="textNoSuggestions" android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        <EditText android:id="@+id/etPassword" android:hint="Contraseña"
-                android:inputType="textPassword" android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
 
-        <LinearLayout android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:orientation="vertical">
-                <CheckBox android:id="@+id/cbRememberLogin" android:text=" Recordarme"
-                        android:textColor="#888888" android:textSize="16sp"
-                        android:layout_centerVertical="true" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                <CheckBox android:id="@+id/cbAutoLogin" android:text="Entrar automáticamente"
-                        android:textColor="#888888" android:textSize="16sp"
-                        android:layout_centerVertical="true" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:checked="false"
-                        android:enabled="false" />
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Usuario"
+            android:inputType="textNoSuggestions"
+            android:nextFocusDown="@+id/etPassword"
+            android:nextFocusUp="@+id/bLogin" />
 
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword" />
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/cbRememberLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text=" Recordarme"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="16sp" />
+
+            <CheckBox
+                android:id="@+id/cbAutoLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:checked="false"
+                android:enabled="false"
+                android:text="Entrar automáticamente"
+                android:textColor="@color/azul_action_bar"
+                android:textSize="16sp" />
         </LinearLayout>
-        <Button android:text="Login" android:id="@+id/bLogin"
-                android:nextFocusUp="@+id/cbRememberLogin" android:nextFocusDown="@+id/Username"
-                android:textSize="20sp" android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></Button>
-        
-        <Button android:text="Registrarse" android:id="@+id/bRegister"
-                android:nextFocusUp="@+id/cbRememberLogin" android:nextFocusDown="@+id/Username"
-                android:textSize="20sp" android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></Button>
 
+        <Button
+            android:id="@+id/bLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:textColor="@drawable/button_text"
+            android:nextFocusDown="@+id/Username"
+            android:nextFocusUp="@+id/cbRememberLogin"
+            android:paddingBottom="10dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:paddingTop="10dp"
+            android:text="Login"
+            android:textSize="20sp" >
+        </Button>
+
+        <Button
+            android:id="@+id/bRegister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:textColor="@drawable/button_text"
+            android:nextFocusDown="@+id/Username"
+            android:nextFocusUp="@+id/cbRememberLogin"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            android:text="Registrarse"
+            android:textSize="20sp" >
+        </Button>
+    </LinearLayout>
+    
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+    </LinearLayout>
 
 </LinearLayout>

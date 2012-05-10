@@ -2,7 +2,7 @@
 // Universidad Complutense de Madrid
 // Ingenieria Informática
 //
-// PROYECTO: TuringApp
+// PROYECTO: Qronos
 // ASIGNATURA : Ingeniería del Software
 //
 package com.cinnamon.is.comun;

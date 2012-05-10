@@ -1,43 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:id="@+id/ll_arcade"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:weightSum="100" >
 
-    <Button
-        android:id="@+id/b_crear_aventura"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-   	android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="@string/bCrearAventura" />
-    
-     <Button
-        android:id="@+id/b_editar_aventura"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        
-        android:gravity="center"
-        android:text="@string/bEditarAventura" />
-     
-      <Button
-        android:id="@+id/b_usar_aventura"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        
-        android:gravity="center"
-        android:text="@string/bUsarAventura" />
+    <!-- BARRA SUPERIOR -->
 
-    <Button
-        android:id="@+id/b_unirse_aventura"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_action_bar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="@string/bUnirseAventura" />
+        android:layout_weight="1"
+        android:background="@drawable/actionbar"
+        android:orientation="horizontal" >
+
+        <!-- PARTE IZQ -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tVhello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingTop="17dp"
+                android:text="@+string/aventura"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="@color/azul_action_bar" />
+        </LinearLayout>
+        <!-- PARTE DER -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/iBinfoArcade"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:paddingTop="15dp"
+                android:src="@drawable/ic_menu_info" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_weight="99"
+        android:orientation="vertical"
+        android:paddingTop="70dp" >
+
+        <Button
+            android:id="@+id/bCrearAventura"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:paddingTop="10dp"
+            android:text="@string/bCrearAventura"
+            android:textColor="@drawable/button_text"
+            android:textSize="14sp" >
+        </Button>
+
+        <Button
+            android:id="@+id/bEditarAventura"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:paddingTop="10dp"
+            android:text="@string/bEditarAventura"
+            android:textColor="@drawable/button_text"
+            android:textSize="14sp" >
+        </Button>
+
+        <Button
+            android:id="@+id/bUsarAventura"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:paddingTop="10dp"
+            android:text="@string/bUsarAventura"
+            android:textColor="@drawable/button_text"
+            android:textSize="14sp" >
+        </Button>
+
+        <Button
+            android:id="@+id/bUnirseAventura"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:paddingTop="10dp"
+            android:text="@string/bUnirseAventura"
+            android:textColor="@drawable/button_text"
+            android:textSize="14sp" >
+        </Button>
+    </LinearLayout>
 
 </LinearLayout>

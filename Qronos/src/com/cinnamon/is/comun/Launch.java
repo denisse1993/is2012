@@ -519,10 +519,12 @@ public final class Launch {
 	/**
 	 * Sirve para ver ranking arcade online (tabla arcade)
 	 * 
+	 * @param jugador
+	 * 
 	 */
-	public void lanzaDialogoEsperaVerRankingArcade(Jugador jugador) { //
+	public void lanzaDialogoEsperaVerRankingArcade(final Jugador jugador) { //
 		// valor 4 activa ver ranking online
-		new ConexionServerTask().execute(new Object[] { 4,jugador });
+		new ConexionServerTask().execute(new Object[] { 4, jugador });
 	}
 
 	/**
@@ -684,7 +686,7 @@ public final class Launch {
 			case 4:
 				// Ver ranking arcade
 				Arcade seeRanking = (Arcade) Launch.this.a;
-				ret[2] = (Jugador) datos[1];
+				ret[2] = datos[1];
 				ret[1] = seeRanking.conexion.dameOnlineArcade();
 				break;
 			case 5:
