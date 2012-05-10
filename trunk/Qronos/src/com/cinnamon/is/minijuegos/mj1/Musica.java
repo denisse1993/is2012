@@ -1,4 +1,4 @@
-package com.cinnamon.is.minijuegos.mj1;
+/*package com.cinnamon.is.minijuegos.mj1;
 
 public class Musica extends Thread {
 	private GameView view;
@@ -10,3 +10,4 @@ public class Musica extends Thread {
 		//
 	}
 }
+*/
