@@ -45,7 +45,15 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal" >
-
+			
+            <ImageView
+                android:paddingTop="15dp"
+                android:id="@+id/iBinfoConexionAv"
+                android:layout_width="36dp"               
+                android:layout_height="36dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_conexion_on_24" />
+            
             <ImageView
                 android:id="@+id/iv_info_ingame"
                 android:layout_width="36dp"
