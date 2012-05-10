@@ -43,6 +43,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	// interfaz
 	private LinearLayout llArcade, llArcadeActionBar, llArcadeBottomBar;
 	private ImageView iVinfo;
+	private ImageView iVconexion;
 	private ImageView iBseeSc, iBright, iBleft, iBupSc;
 	private ImageButton[] iBmj;
 	private ImageView[] iVsc;
@@ -124,6 +125,11 @@ public class Arcade extends Activity implements View.OnClickListener,
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (Props.Comun.ONLINE) {
+			iVconexion.setImageResource(R.drawable.ic_conexion_on_24);
+		} else {
+			iVconexion.setImageResource(R.drawable.ic_conexion_off_24);
+		}
 		if (!mDbHelper.isOpen()) {
 			mDbHelper.open(false);
 		}
@@ -246,6 +252,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		llArcadeActionBar = (LinearLayout) findViewById(R.id.ll_action_bar);
 		llArcadeBottomBar = (LinearLayout) findViewById(R.id.ll_arcade_bottom_bar);
 		iVinfo = (ImageView) findViewById(R.id.iBinfoArcade);
+		iVconexion = (ImageView) findViewById(R.id.iBinfoConexion);
 		iBupSc = (ImageView) findViewById(R.id.iBupSc);
 		iBseeSc = (ImageView) findViewById(R.id.iBseeSc);
 		iBleft = (ImageView) findViewById(R.id.iBleft);
@@ -269,6 +276,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		iBleft.setOnClickListener(this);
 		iBright.setOnClickListener(this);
 		iBupSc.setOnClickListener(this);
+		iVconexion.setOnClickListener(this);
 		if (Props.Comun.ONLINE) {
 			iBseeSc.setOnClickListener(this);
 		} else {
@@ -369,14 +377,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 	private void subirScores() {
 		l.lanzaDialogoEsperaUpdateScoreArcade(jugador.getNombre(),
 				jugador.getScore());
-		// try {
-		//
-		// // conexion.updateArcade(arraySc, jugador.getNombre());
-		// } catch (ClientProtocolException e) {
-		// e.printStackTrace();
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+		
 	}
 
 	public void onClick(final DialogInterface dialog, final int boton) {
@@ -467,6 +468,14 @@ public class Arcade extends Activity implements View.OnClickListener,
 		case R.id.iBupSc:
 			Launch.lanzaConfirmacion("Confirmaci—n para subir puntuaciones de "
 					+ jugador.getNombre(), Props.Strings.upSc, this);
+			break;
+
+		case R.id.iBinfoConexion:
+			if (Props.Comun.ONLINE){
+				Launch.lanzaToast(this, "Modo de juego ONLINE");
+			}else{
+				Launch.lanzaToast(this, "Modo de juego OFFLINE");
+			}
 			break;
 		// Botones de mjs
 		case R.id.iBmj1:
