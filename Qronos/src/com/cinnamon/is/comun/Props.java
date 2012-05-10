@@ -338,7 +338,11 @@ public final class Props {
 		 * Info de subida al servidor
 		 */
 		public static final String upSc = "¿Deseas subir tus puntuaciones al servidor online?";
-
+		/**
+		 * Info estado de la conexion
+		 */
+		public static final String IONLINE = "Dispones de cobertura de red Movil/WIFI";
+		public static final String IOFFLINE = "No dispones de cobertura de red Movil/WIFI";
 		/**
 		 * Informacion de actividades
 		 */
@@ -381,9 +385,10 @@ public final class Props {
 		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
 		public static final String ERROR_JSON = "Error obteniendo la informacion del servidor";
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
-		
-		/** 
-		 * Avisos para longitudes incorrectas. Se puede simplificar si la long es la misma
+
+		/**
+		 * Avisos para longitudes incorrectas. Se puede simplificar si la long
+		 * es la misma
 		 */
 		public static final String LONGITUD_NICK = "La longitud del nick debe ser menor que"
 				+ (Props.Comun.MAX_CHAR_NICK + 1);
