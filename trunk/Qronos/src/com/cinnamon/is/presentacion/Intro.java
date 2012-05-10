@@ -46,12 +46,12 @@ public class Intro extends Activity {
 			@Override
 			public void run() {
 				try {
-					sleep(0);// 3650
+					sleep(2000);// 3650
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} finally {
 					finish();
-					Launch.lanzaActivity(Intro.this, Props.Action.INTRO2);
+					Launch.lanzaActivity(Intro.this, Props.Action.LOGIN);
 				}
 			}
 		};

@@ -61,7 +61,7 @@ public class MainMenu extends Activity implements OnClickListener {
 	SharedPreferences getData;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		Bundle b = getIntent().getExtras();
@@ -77,8 +77,9 @@ public class MainMenu extends Activity implements OnClickListener {
 	protected void onPause() {
 		super.onPause();
 		mDbHelper.close();
-		if (sonido)
+		if (sonido) {
 			onClose();
+		}
 	}
 
 	@Override
@@ -90,8 +91,9 @@ public class MainMenu extends Activity implements OnClickListener {
 			menuTheme.start();
 		}
 
-		if (!mDbHelper.isOpen())
+		if (!mDbHelper.isOpen()) {
 			mDbHelper.open(false);
+		}
 	}
 
 	/**
@@ -102,9 +104,10 @@ public class MainMenu extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
-		if (sonido)
+	public void onClick(final View v) {
+		if (sonido) {
 			onClose();
+		}
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		switch (v.getId()) {
@@ -114,8 +117,9 @@ public class MainMenu extends Activity implements OnClickListener {
 						R.raw.opening);
 				openingTheme.start();
 			}
-			if (creaJugadorLocalArcade())
+			if (creaJugadorLocalArcade()) {
 				getJugadorLocalArcade();
+			}
 			Props.Comun.ACTIVIDAD = MainMenu.this;
 			l.lanzaActivity(Props.Action.ARCADE, b);
 			// openingTheme.release();
@@ -128,6 +132,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			break;
 		case R.id.bOpciones:
 			b.putString(Props.Comun.RETORNO, Props.Action.MAINMENU);
+			finish();
 			l.lanzaActivity(Props.Action.OPCIONES, b);
 			// l.lanzaActivity(Props.Action.INGAME, b);
 			break;
@@ -154,11 +159,13 @@ public class MainMenu extends Activity implements OnClickListener {
 		bAventura = (Button) findViewById(R.id.bAventura);
 		bSalir = (Button) findViewById(R.id.bSalir);
 
+		// Listeners
 		bArcade.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
-		if (Props.Comun.ONLINE)
+
+		if (Props.Comun.ONLINE) {
 			bAventura.setOnClickListener(this);
-		else {
+		} else {
 			bAventura.setOnClickListener(null);
 			// cambiar color,ocultar,etc
 		}

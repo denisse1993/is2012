@@ -93,16 +93,16 @@ public class EligeModoAventura extends Activity implements Inet,
 		mDbHelper = new DbAdapter(this);
 		mDbHelper.open(false);
 
-		bCrear = (Button) findViewById(R.id.b_crear_aventura);
+		bCrear = (Button) findViewById(R.id.bCrearAventura);
 		bCrear.setOnClickListener(this);
 
-		bUnirse = (Button) findViewById(R.id.b_unirse_aventura);
+		bUnirse = (Button) findViewById(R.id.bUnirseAventura);
 		bUnirse.setOnClickListener(this);
 
-		bEditar = (Button) findViewById(R.id.b_editar_aventura);
+		bEditar = (Button) findViewById(R.id.bEditarAventura);
 		bEditar.setOnClickListener(this);
 
-		bUsar = (Button) findViewById(R.id.b_usar_aventura);
+		bUsar = (Button) findViewById(R.id.bUsarAventura);
 		bUsar.setOnClickListener(this);
 
 		Bundle b = getIntent().getExtras();
@@ -113,24 +113,24 @@ public class EligeModoAventura extends Activity implements Inet,
 	public void onClick(final View v) {
 		a = new Aventura(nameQuest, passQuest);
 		switch (vClicked = v.getId()) {
-		case R.id.b_crear_aventura:
+		case R.id.bCrearAventura:
 			// name y pass escritos de la aventura no existe ya en la BD
 			// launch.lanzaDialogoEsperaCreaQuest(a);
 			launch.lanzaTextoDialogo(this, 0, "Nueva Aventura", launch, a);
 			break;
-		case R.id.b_editar_aventura:
+		case R.id.bEditarAventura:
 			// leer name y password check si existe y concuerda, descargar,
 			// rellenar y lanzar SELECMJ
 			// launch.lanzaDialogoEsperaGetQuest(a);
 			launch.lanzaTextoDialogo(this, 1, "Edita Aventura", launch, a);
 			break;
-		case R.id.b_usar_aventura:
+		case R.id.bUsarAventura:
 			// leer name, check si existe, descargar,rellenar y lanzar
 			// SelecPista en modo lectura
 			// launch.lanzaDialogoEsperaGetQuestPass(a);
 			launch.lanzaTextoDialogo(this, 2, "Utilizar Aventura", launch, a);
 			break;
-		case R.id.b_unirse_aventura:
+		case R.id.bUnirseAventura:
 			// q = new UtilQR(this);
 			// q.lanzarQR();
 			// TODO a sustituir por lo de arriba, esto para pruebas

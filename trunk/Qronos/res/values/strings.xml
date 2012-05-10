@@ -17,7 +17,10 @@
     <!-- MJ1 -->
     <string name="Presentation">Aqui va una presentacion del juego wapa wapa con su musiquita tipica de minijuego de marcianitos</string>
     <string name="killthemall">KILL THEM ALL</string>
-    <string name="bRenaudar">Renaudar</string>
+    <string name="bArcade">Arcade</string>
+    <string name="bAventura">Aventura</string>
+    <string name="bOpciones">Opciones</string>
+    <string name="bReanudar">Reanudar</string>
     <string name="bRestart">Reiniciar</string>
     <string name="bSalir">Salir</string>
     <string name="bStart">Empezar</string>
