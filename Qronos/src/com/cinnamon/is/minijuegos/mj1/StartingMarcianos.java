@@ -3,8 +3,6 @@ package com.cinnamon.is.minijuegos.mj1;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;

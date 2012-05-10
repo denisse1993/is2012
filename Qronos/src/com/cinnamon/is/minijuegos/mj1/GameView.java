@@ -2,15 +2,9 @@ package com.cinnamon.is.minijuegos.mj1;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Props;
-
-import android.R.color;
-import android.R.integer;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,8 +13,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
-import android.view.Display;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -34,12 +26,8 @@ public class GameView extends SurfaceView {
 	private ArrayList<SangreMarciano> listaSangre = new ArrayList<SangreMarciano>();
 	private ArrayList<Explosion> listaExplosion = new ArrayList<Explosion>();
 	private int numeroVidas;
-	// private Fondo fondo;//no tiene por que ser una clase(mirar)
-	private int screenWidth;// ancho pantalla
-	private int screenHeight;// altura pantalla
 	private Bitmap fondo;
 	private Cupula cupula;
-	private boolean finJuego;
 	private int posVidas;
 	private Bitmap vida;
 	private SangreMarciano blood;
@@ -47,10 +35,10 @@ public class GameView extends SurfaceView {
 	private int velocidad;
 	private MediaPlayer music;
 	private Integer marcianosEliminados;
-	private StartingMarcianos activity;
-	private Thread timer;
 	private Explosion bomba;
 	private int posBomba;
+	private Context contexto;
+	private StartingMarcianos activity;
 
 	// Setters y getters
 	public int getNumVidas() {
@@ -87,7 +75,7 @@ public class GameView extends SurfaceView {
 	}
 
 	public void anadirBomba(int x, int y) {
-		crearBomba(R.drawable.bomba1, posBomba, 0);
+		crearBomba(R.drawable.img_mj1_bomba1, posBomba, 0);
 		listaExplosion.add(bomba);
 	}
 
@@ -99,12 +87,10 @@ public class GameView extends SurfaceView {
 		this.loop.pauseLoop();
 	}
 
-	Context contexto;
-
 	public GameView(Context context, StartingMarcianos ac) {
 		super(context);
 		contexto = context;
-		activity = ac;
+		this.setActivity(ac);
 		loop = new GameLoop(this, ac);
 		holder = getHolder();
 		numeroVidas = 3;
@@ -116,22 +102,20 @@ public class GameView extends SurfaceView {
 
 			public void surfaceChanged(SurfaceHolder holder, int format,
 					int width, int height) {
-				// TODO Auto-generated method stub
 
 			}
 
 			public void surfaceCreated(SurfaceHolder holder) {
-				temazo(R.raw.music);
-				crearBomba(R.drawable.bomba1, posBomba, 0);
-				crearFondo(R.drawable.espacio4);
-				crearVida(R.drawable.vidas);
-				crearCupula(R.drawable.cupulacristal);
+				temazo(R.raw.sound_mj1);
+				crearBomba(R.drawable.img_mj1_bomba1, posBomba, 0);
+				crearFondo(R.drawable.img_mj1_fondo);
+				crearVida(R.drawable.img_mj1_vida);
+				crearCupula(R.drawable.img_mj1_cupula1);
 				loop.start();
 
 			}
 
 			public void surfaceDestroyed(SurfaceHolder holder) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -254,22 +238,24 @@ public class GameView extends SurfaceView {
 			for (int n = marcianosList.size() - 1; n >= 0; n--) {
 				int s = marcianosList.get(n).getTipo();
 				if (s == 1) {
-					crearSangreMarciano(R.drawable.greenblood, marcianosList
-							.get(n).getX(), marcianosList.get(n).getY());
+					crearSangreMarciano(R.drawable.img_mj1_sangre1,
+							marcianosList.get(n).getX(), marcianosList.get(n)
+									.getY());
 				}
 				if (s == 2) {
-					crearSangreMarciano(R.drawable.sangrelili, marcianosList
-							.get(n).getX(), marcianosList.get(n).getY());
+					crearSangreMarciano(R.drawable.img_mj1_sangre2,
+							marcianosList.get(n).getX(), marcianosList.get(n)
+									.getY());
 				}
 				if (s == 3) {
-					crearSangreMarciano(R.drawable.redblood,
+					crearSangreMarciano(R.drawable.img_mj1_sangre2,
 							marcianosList.get(n).getX(), marcianosList.get(n)
 									.getY());
 				}
 				marcianosList.remove(n);
 				marcianosEliminados++;
 			}
-			crearBomba(R.drawable.bomba2, posBomba, 0);
+			crearBomba(R.drawable.img_mj1_bomba2, posBomba, 0);
 			bomba.cambiarEstado(true);
 
 		}
@@ -277,8 +263,9 @@ public class GameView extends SurfaceView {
 			if (marcianosList.get(i).isClick(event.getX(), event.getY())) {
 
 				if (marcianosList.get(i).getTipo() == 1) {
-					crearSangreMarciano(R.drawable.greenblood, marcianosList
-							.get(i).getX(), marcianosList.get(i).getY());
+					crearSangreMarciano(R.drawable.img_mj1_sangre1,
+							marcianosList.get(i).getX(), marcianosList.get(i)
+									.getY());
 					marcianosList.remove(i);
 					marcianosEliminados++;
 
@@ -287,7 +274,7 @@ public class GameView extends SurfaceView {
 				else if (marcianosList.get(i).getTipo() == 2) {
 					int v = marcianosList.get(i).getVidasMarciano();
 					if (v == 3) {
-						crearSangreMarciano(R.drawable.sangrelili,
+						crearSangreMarciano(R.drawable.img_mj1_sangre2,
 								marcianosList.get(i).getX(),
 								marcianosList.get(i).getY());
 						marcianosList.remove(i);
@@ -298,8 +285,9 @@ public class GameView extends SurfaceView {
 				} else if (marcianosList.get(i).getTipo() == 3) {
 					int v2 = marcianosList.get(i).getVidasMarciano();
 					if (v2 == 0) {
-						crearSangreMarciano(R.drawable.redblood, marcianosList
-								.get(i).getX(), marcianosList.get(i).getY());
+						crearSangreMarciano(R.drawable.img_mj1_sangre3,
+								marcianosList.get(i).getX(),
+								marcianosList.get(i).getY());
 						marcianosList.remove(i);
 						marcianosEliminados++;
 
@@ -309,8 +297,6 @@ public class GameView extends SurfaceView {
 				}
 			}
 		}
-		// Comprobar si se ha pulsado algun marcianito,si asi ha sido
-		// eliminarlo
 
 		return super.onTouchEvent(event);
 	}
@@ -321,10 +307,22 @@ public class GameView extends SurfaceView {
 
 	public void reanudar() {
 		loop.resumeLoop();
-		// loop.setRunning(true);
-		// loop.start();
-		// loop.run();
 
+	}
+
+	/**
+	 * @return the activity
+	 */
+	public StartingMarcianos getActivity() {
+		return activity;
+	}
+
+	/**
+	 * @param activity
+	 *            the activity to set
+	 */
+	public void setActivity(StartingMarcianos activity) {
+		this.activity = activity;
 	}
 
 }

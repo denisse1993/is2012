@@ -2,8 +2,6 @@ package com.cinnamon.is.minijuegos.mj1;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Props;
-
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.preference.PreferenceManager;
@@ -53,7 +51,6 @@ public class GameLoop extends Thread {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -98,25 +95,25 @@ public class GameLoop extends Thread {
 				if (bomba == 0) {
 
 					bomba = 300;
-					this.view.crearBomba(R.drawable.bomba1, 120, 0);
+					this.view.crearBomba(R.drawable.img_mj1_bomba1, 120, 0);
 				}
 				if (this.view.getNumVidas() == 2) {
-					this.view.crearCupula(R.drawable.cupularota1);
+					this.view.crearCupula(R.drawable.img_mj1_cupula1);
 				}
 				if (this.view.getNumVidas() == 1) {
-					this.view.crearCupula(R.drawable.cupularota2);
+					this.view.crearCupula(R.drawable.img_mj1_cupula2);
 				}
 				if (crearMarciano == 0) {
 					crearMarciano = 10;
-					view.crearMarciano(R.drawable.marcianoprueba1, 1);
+					view.crearMarciano(R.drawable.img_mj1_marciano1, 1);
 				}
 				if (crearMarcianolili == 0) {
 					crearMarcianolili = 33;
-					view.crearMarciano(R.drawable.marcianolili, 2);
+					view.crearMarciano(R.drawable.img_mj1_marciano2, 2);
 				}
 				if (crearMarcianoOgro == 0) {
 					crearMarcianoOgro = 57;
-					view.crearMarciano(R.drawable.marcianoogro, 3);
+					view.crearMarciano(R.drawable.img_mj1_marciano3, 3);
 				}
 				if (velocidad == 0) {
 					velocidad = 100;
