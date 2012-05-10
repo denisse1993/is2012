@@ -7,8 +7,10 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,7 +77,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	 * Interfaz
 	 */
 	private LinearLayout llInGame, llInGameActionBar, llInGameBottomBar;
-	private ImageView bOpciones, bCamara, bRanking;
+	private ImageView bOpciones, bCamara, bRanking, iVinfoConexion;
 	private TextView title;
 
 	/**
@@ -113,6 +115,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		this.jugador.setAventura(quest.getNombre());
 
 		// FindViewByID
+		this.iVinfoConexion = (ImageView) findViewById(R.id.iBinfoConexionAv);
 		this.bOpciones = (ImageView) findViewById(R.id.iv_opciones_ingame);
 		this.bCamara = (ImageView) findViewById(R.id.iv_camara_ingame);
 		this.bRanking = (ImageView) findViewById(R.id.iv_ranking_ingame);
@@ -138,6 +141,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		this.bCamara.setOnClickListener(this);
 		this.bRanking.setOnClickListener(this);
 		this.llInGame.setOnClickListener(this);
+		this.iVinfoConexion.setOnClickListener(this);
 
 		// Conexion
 		this.conexion = new Conexion(this);
@@ -150,7 +154,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			// launch.lanzaActivity(Props.Action.ENDGAME);
 		}
 		start = 10000;
-		period = 50000;
+		period = 10000;
 		currentNotif = 0;
 		programarTimer();
 
@@ -191,8 +195,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	public void onBackPressed() {
 		// super.onBackPressed();
 		timer.cancel();
-		this.aDactual = Launch
-				.lanzaConfirmacion("Salir", "Desea Salir?", this);
+		this.aDactual = Launch.lanzaConfirmacion("Salir", "Desea Salir?", this);
 	}
 
 	@Override
@@ -249,10 +252,19 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		case R.id.iv_info_ingame:
 
 			Launch.lanzaAviso("Informaci—n Aventura", Props.Strings.iHost, this);
-
+			break;
 		case R.id.ll_medio_ingame:
 			this.l.lanzaAviso("Pista",
 					this.quest.getMinijuego(this.mjActual).pista);
+			break;
+		case R.id.iBinfoConexionAv:
+			if (checkConexion()){
+				this.l.lanzaAviso("Disponibilidad de red", Props.Strings.IONLINE, R.id.iBinfoConexionAv);
+			}else{
+				this.l.lanzaAviso("Disponibilidad de red", Props.Strings.IOFFLINE, R.id.iBinfoConexionAv);
+			}
+			break;
+			
 		}
 	}
 
@@ -425,11 +437,13 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	final Activity a = this;
 	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
+			checkConexion();
 			if (conexion.getNotif(jugador.getNombre())) {
 				int respuesta = Integer.parseInt(j.jsonToString(conexion
 						.getRespuesta()));
 				if (currentNotif != respuesta) {
 					currentNotif = respuesta;
+
 					Launch.lanzaAviso("Notificaciones pendientes",
 							"Click en Ranking para mas detalles", a);
 				}
@@ -449,5 +463,19 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	public void subirScoreAventura() {
 		l.lanzaDialogoUpdatePquest(jugador);
+	}
+
+	public boolean checkConexion() {
+		final ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (conMgr.getActiveNetworkInfo() != null
+				&& conMgr.getActiveNetworkInfo().isAvailable()
+				&& conMgr.getActiveNetworkInfo().isConnected()) {
+			iVinfoConexion.setImageResource(R.drawable.ic_conexion_on_24);
+			return true;
+		} else {
+
+			iVinfoConexion.setImageResource(R.drawable.ic_conexion_off_24);
+			return false;
+		}
 	}
 }
