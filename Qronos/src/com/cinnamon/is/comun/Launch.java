@@ -676,7 +676,7 @@ public final class Launch {
 				Arcade upScore = (Arcade) Launch.this.a;
 				nick = (String) datos[1];
 				int[] b = (int[]) datos[2];
-				ret[1] = upScore.conexion.updateArcade(b, nick);
+				ret[1] = upScore.conexion.updateArcade(b, nick,"token");
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
@@ -684,7 +684,7 @@ public final class Launch {
 				Aventura quest = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest.getMJArrayString(),
 						quest.getPistasArrayString(), quest.getNombre(),
-						quest.getPass(), false);
+						quest.getPass(), false, "jugador iniciado","token");
 				break;
 			case 4:
 				// Ver ranking arcade
@@ -705,7 +705,7 @@ public final class Launch {
 				Aventura quest2 = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
-						quest2.getPass(), true);
+						quest2.getPass(), true,"jugador iniciado","sutoken");
 				ret[2] = quest2;
 				break;
 			case 7:
@@ -721,7 +721,7 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getAventura(), j.getFase());
+						j.getNombre(), j.getAventura(), j.getFase(),"token");
 				break;
 			case 9:
 				// Ver ranking pquest
