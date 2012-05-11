@@ -438,7 +438,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
 			checkConexion();
-			if (conexion.getNotif(jugador.getNombre())) {
+			if (conexion.getNotif(jugador.getNombre(),"token")) {
 				int respuesta = Integer.parseInt(j.jsonToString(conexion
 						.getRespuesta()));
 				if (currentNotif != respuesta) {
@@ -470,11 +470,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		if (conMgr.getActiveNetworkInfo() != null
 				&& conMgr.getActiveNetworkInfo().isAvailable()
 				&& conMgr.getActiveNetworkInfo().isConnected()) {
-			iVinfoConexion.setImageResource(R.drawable.ic_conexion_on_24);
+			//iVinfoConexion.setImageResource(R.drawable.ic_conexion_on_24);
 			return true;
 		} else {
 
-			iVinfoConexion.setImageResource(R.drawable.ic_conexion_off_24);
+			//iVinfoConexion.setImageResource(R.drawable.ic_conexion_off_24);
 			return false;
 		}
 	}
