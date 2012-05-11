@@ -320,7 +320,7 @@
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:paddingTop="5dip"
-                android:src="@drawable/ic_menu_checkmark" />
+                android:src="@drawable/ic_menu_checkmark_48" />
 
             <TextView
                 android:id="@+id/tVDone"
