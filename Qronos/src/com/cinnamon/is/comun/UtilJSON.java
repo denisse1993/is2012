@@ -44,6 +44,10 @@ public final class UtilJSON {
 	}
 
 	/**
+	 *  
+	 */
+
+	/**
 	 * @param json
 	 *            la info con la aventura
 	 * @param av
@@ -246,6 +250,12 @@ public final class UtilJSON {
 		return retorno;
 	}
 
+	/**
+	 * Devuelve decodificado el json para NOTIFICACIONES
+	 * 
+	 * @param jSON
+	 * @return
+	 */
 	public String jsonToString(final String jSON) {
 		JSONArray jArray;
 		String notif = "";
@@ -259,5 +269,36 @@ public final class UtilJSON {
 
 		}
 		return notif;
+	}
+
+	/**
+	 * Devuelve decodificado Json para el login Para no cambiar el codigo en
+	 * conexion solo devuelvo el valor de retorno de la llamada y me guardo el
+	 * token en esta funcion
+	 * 
+	 * @param jSON
+	 * @return
+	 */
+	public String jsonLogin(final String jSON) {
+		JSONArray jArray;
+		String token = "";
+		String valorLlamada = "";
+		
+		try {
+			jArray = new JSONArray(jSON);
+			JSONObject json_data = null;
+			json_data = jArray.getJSONObject(0);
+			valorLlamada = json_data.getString("CODE");
+			token = json_data.getString("SD");
+			// TODO
+			// jugador.guardatoken(token) // o guardo en db del user // o shared
+			// prefs
+			
+
+		} catch (Exception e) {
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
+			
+		}
+		return valorLlamada;
 	}
 }

@@ -635,7 +635,10 @@ public final class Launch {
 				pass = (String) datos[2];
 				// hace login y obtiene return
 				ret[1] = loginA.conexion.login(nick, pass);
-				String respuestaSave = loginA.conexion.getRespuesta();
+				//ahora decodifico la respuesta obtengo token y evaluo
+				u = new UtilJSON(Launch.this.a);
+				String respuestaSave = u.jsonLogin(loginA.conexion.getRespuesta());
+				
 				if (respuestaSave.equals("3")) {
 					// TODO Desactivado Solo permitimos registro con inet previo
 					// devuelve Usuario Inexistente, comprobar que existe en la
