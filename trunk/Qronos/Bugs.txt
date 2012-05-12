@@ -2,12 +2,7 @@
 ** Bugs **
 -Cambiar puntuaciones a la hora de fallar. Si fallas te pone â€˜0â€™ aunque te lo vuelvas a	 pasar bien
 -Si se lee string de un qr peta al intentar leer un juego de la aventura (Solucionado)
--Juego Lidia -> Quitar Teclado para comprobar(En teoria, Solucionado)
-			El codigo es este, por si hace falta ponerlo en algun sitio mas
-			//para esconder el teclado al darle a Comprobar
-				 EditText text = (EditText)findViewById(R.id.textViewWin);
-			     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-			     imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+-Juego Lidia -> Quitar Teclado para comprobar(Solucionado)
 	     -> Puntuaciones (Solucionado)
 - BotÃ³n pista en botÃ³n info (Solucionado, ahora se toca la pantalla)
 - Bomba no funciona lanzar cÃ¡mara(Solucionado)

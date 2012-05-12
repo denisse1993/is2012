@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 //import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -171,6 +173,10 @@ public class Login extends Activity implements Inet, OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+	//para esconder el teclado al darle a Login
+		EditText text = (EditText)findViewById(R.id.etPassword);
+	    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+	    imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
 		if (preparaLogin()) {
 			switch (v.getId()) {
 			case R.id.bLogin:
