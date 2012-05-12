@@ -285,8 +285,7 @@ public class Game extends Minijuego {
 	protected int calcularPuntuacion() {
 		int score = MAX_SCORE;
 		tiempo = (int) (elapsed * tos);
-		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
-		// se tarda en cada uno, o dejarlo para todos igual
+		
 		if (tiempo < 40) {
 			return score;
 		} else if (tiempo >= 40 && tiempo < 50) {
