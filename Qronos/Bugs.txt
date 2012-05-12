@@ -1,22 +1,27 @@
 
 ** Bugs **
--Cambiar puntuaciones a la hora de fallar. Si fallas te pone ‘0’ aunque te lo vuelvas a	 pasar bien
+-Cambiar puntuaciones a la hora de fallar. Si fallas te pone â€˜0â€™ aunque te lo vuelvas a	 pasar bien
 -Si se lee string de un qr peta al intentar leer un juego de la aventura (Solucionado)
--Juego Lidia -> Quitar Teclado para comprobar
-	     -> Puntuaciones
-- Botón pista en botón info (Solucionado, ahora se toca la pantalla)
-- Bomba no funciona lanzar cámara(Solucionado)
-- Opciones petán (Solucionado)
-- Cambiar el texto “Error parseando información” (Cambiado)
+-Juego Lidia -> Quitar Teclado para comprobar(En teoria, Solucionado)
+			El codigo es este, por si hace falta ponerlo en algun sitio mas
+			//para esconder el teclado al darle a Comprobar
+				 EditText text = (EditText)findViewById(R.id.textViewWin);
+			     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			     imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+	     -> Puntuaciones (Solucionado)
+- BotÃ³n pista en botÃ³n info (Solucionado, ahora se toca la pantalla)
+- Bomba no funciona lanzar cÃ¡mara(Solucionado)
+- Opciones petÃ¡n (Solucionado)
+- Cambiar el texto â€œError parseando informaciÃ³nâ€� (Cambiado)
 - Peta en segundo plano
-- Sonido sigue sonando después de salir (Solucionado)
+- Sonido sigue sonando despuÃ©s de salir (Solucionado)
 - Dialogo Texto(Edu)(Solucionado)
 
 
 
 ** Sugerencias**
 - Colores notificaciones
-- Cuando alguien acaba primero se reduzca a la mitad las puntuaciones de los minijuegos   del resto de jugadores y así sucesivamente
+- Cuando alguien acaba primero se reduzca a la mitad las puntuaciones de los minijuegos   del resto de jugadores y asÃ­ sucesivamente
 - Consumo bateria
 
 

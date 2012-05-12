@@ -20,10 +20,11 @@ public class Game extends Minijuego {
 	private Button btnQR;
 	private TextView texto;
 	// private UtilQR QR;
-	private int tiempo;
+	//private int tiempo;
 	// para saber hasta donde lleva leídos en orden (0-5)
 	private int cuentaValida;
 	private boolean ordenCorrecto = false;
+	private int fallos;
 
 	/**
 	 * @param savedInstanceState
@@ -35,8 +36,8 @@ public class Game extends Minijuego {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.layout_mj4_iniciocadqr);
 
-		startTime();
-
+		//startTime();
+		fallos=0;
 		texto = (TextView) findViewById(R.id.textView);
 		btnQR = (Button) findViewById(R.id.leer);
 		// QR= new UtilQR(this);
@@ -81,6 +82,7 @@ public class Game extends Minijuego {
 						vibr.vibrate(300);
 					} else {
 						cuentaValida = 0;
+						fallos++;
 						texto.setTextColor(Color.rgb(221, 0, 0));
 						texto.setText("¡MAL!\nEse no es el orden correcto, vuelve a empezar");
 					}
@@ -94,6 +96,7 @@ public class Game extends Minijuego {
 						vibr.vibrate(300);
 					} else {
 						cuentaValida = 0;
+						fallos++;
 						texto.setTextColor(Color.rgb(221, 0, 0));
 						texto.setText("¡MAL!\nEse no es el orden correcto, vuelve a empezar");
 					}
@@ -107,6 +110,7 @@ public class Game extends Minijuego {
 						vibr.vibrate(300);
 					} else {
 						cuentaValida = 0;
+						fallos++;
 						texto.setTextColor(Color.rgb(221, 0, 0));
 						texto.setText("¡MAL!\nEse no es el orden correcto, vuelve a empezar");
 					}
@@ -120,6 +124,7 @@ public class Game extends Minijuego {
 						vibr.vibrate(300);
 					} else {
 						cuentaValida = 0;
+						fallos++;
 						texto.setTextColor(Color.rgb(221, 0, 0));
 						texto.setText("¡MAL!\nEse no es el orden correcto, vuelve a empezar");
 					}
@@ -133,6 +138,7 @@ public class Game extends Minijuego {
 
 					} else {
 						cuentaValida = 0;
+						fallos++;
 						texto.setTextColor(Color.rgb(221, 0, 0));
 						texto.setText("¡MAL!\nEse no es el orden correcto, vuelve a empezar");
 					}
@@ -186,7 +192,7 @@ public class Game extends Minijuego {
 	}
 
 	@Override
-	protected int calcularPuntuacion() {
+/*	protected int calcularPuntuacion() {
 		int score = MAX_SCORE;
 		tiempo = (int) (elapsed * tos);
 		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
@@ -200,6 +206,25 @@ public class Game extends Minijuego {
 		} else if (tiempo >= 60 && tiempo < 75) {
 			return score - 600;
 		} else if (tiempo >= 90 && tiempo < 105) {
+			return score - 800;
+		} else {
+			return 0;
+		}
+	} */
+	protected int calcularPuntuacion() {
+		int score = MAX_SCORE;
+		//tiempo = (int) (elapsed * tos);
+		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
+		// se tarda en cada uno, o dejarlo para todos igual
+		if (fallos==0) {
+			return score;
+		} else if (fallos >= 1 && fallos < 3) {
+			return score - 200;
+		} else if (fallos >= 3 && fallos < 6) {
+			return score - 400;
+		} else if (fallos >= 6 && fallos < 10) {
+			return score - 600;
+		} else if (fallos >= 10 && fallos < 12) {
 			return score - 800;
 		} else {
 			return 0;
