@@ -83,7 +83,7 @@ public class Game extends Minijuego {
 						if (!estanTodas()) {
 							// si es una letra nueva y no es la última
 							this.texto.setTextColor(Color.GREEN);
-							this.texto.setText("¡BIEN! Acabas de encontrar una nueva letra, sigue leyendo códigos para conseguir el resto");
+							this.texto.setText("¡BIEN! Acabas de encontrar una nueva letra ("+contents+"), sigue leyendo códigos para conseguir el resto");
 						}
 						if (estanTodas()) {
 							Bundle b= new Bundle();
