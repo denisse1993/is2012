@@ -105,17 +105,16 @@ public class Game extends Minijuego {
 	protected int calcularPuntuacion() {
 		int score = MAX_SCORE;
 		tiempo = (int) (elapsed * tos);
-		// tiempos de prueba para probar la aplicacion, habría que mirar cuando
-		// se tarda en cada uno, o dejarlo para todos igual
-		if (tiempo < 20) {
+		//25 segundos para 1000 puntos, con 10 segundos de aumento
+		if (tiempo < 25) {
 			return score;
-		} else if (tiempo >= 20 && tiempo < 30) {
+		} else if (tiempo >= 25 && tiempo < 35) {
 			return score - 200;
-		} else if (tiempo >= 30 && tiempo < 40) {
+		} else if (tiempo >= 35 && tiempo < 45) {
 			return score - 400;
-		} else if (tiempo >= 40 && tiempo < 50) {
+		} else if (tiempo >= 45 && tiempo < 55) {
 			return score - 600;
-		} else if (tiempo >= 50 && tiempo < 60) {
+		} else if (tiempo >= 55 && tiempo < 65) {
 			return score - 800;
 		} else {
 			return 0;
