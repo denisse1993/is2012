@@ -30,7 +30,7 @@ public class Win extends Minijuego {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.finletqr);
+		setContentView(R.layout.layout_mj7_finletqr);
 
 		palabra = (EditText) findViewById(R.id.entry);
 		Comprueba = (Button) findViewById(R.id.Comprobar);

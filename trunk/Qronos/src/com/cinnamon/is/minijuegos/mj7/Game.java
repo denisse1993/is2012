@@ -32,7 +32,7 @@ public class Game extends Minijuego {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.inicioletqr);
+		setContentView(R.layout.layout_mj7_inicioletqr);
 
 		start=System.nanoTime();
 
