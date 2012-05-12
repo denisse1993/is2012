@@ -19,6 +19,12 @@ import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
 
 //este Intent permite lanzar el lector de códigos QR (cambiar interfaz)
+/**
+ * Minijuego Letras QR
+ * 
+ * @author Cinnamon Team
+ * @version 1.0 24.11.2011
+ */
 
 public class Game extends Minijuego {
 

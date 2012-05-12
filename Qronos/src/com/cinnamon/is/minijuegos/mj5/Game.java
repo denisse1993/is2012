@@ -15,6 +15,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Minijuego Encuentra QR
+ * 
+ * @author Cinnamon Team
+ * @version 1.0 24.11.2011
+ */
 public class Game extends Minijuego {
 
 	private Button btnQR;

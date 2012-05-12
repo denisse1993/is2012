@@ -14,7 +14,12 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
+/**
+ * Minijuego cadena QR
+ * 
+ * @author Cinnamon Team
+ * @version 1.0 24.11.2011
+ */
 public class Game extends Minijuego {
 
 	private Button btnQR;
@@ -26,10 +31,7 @@ public class Game extends Minijuego {
 	private boolean ordenCorrecto = false;
 	private int fallos;
 
-	/**
-	 * @param savedInstanceState
-	 * @param args
-	 */
+	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

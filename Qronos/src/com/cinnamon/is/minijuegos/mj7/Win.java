@@ -16,7 +16,12 @@ import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Minijuego;
 
-
+/**
+ * Minijuego Letras QR
+ * 
+ * @author Cinnamon Team
+ * @version 1.0 24.11.2011
+ */
 public class Win extends Minijuego {
 
 	private Button Comprueba;
