@@ -116,19 +116,22 @@ public class EligeModoAventura extends Activity implements Inet,
 		case R.id.bCrearAventura:
 			// name y pass escritos de la aventura no existe ya en la BD
 			// launch.lanzaDialogoEsperaCreaQuest(a);
-			launch.lanzaTextoDialogo(this, 0, "Nueva Aventura", launch, a);
+			launch.lanzaTextoDialogo(this, 0, "Nueva Aventura", launch, a,
+					jugador.getNombre());
 			break;
 		case R.id.bEditarAventura:
 			// leer name y password check si existe y concuerda, descargar,
 			// rellenar y lanzar SELECMJ
 			// launch.lanzaDialogoEsperaGetQuest(a);
-			launch.lanzaTextoDialogo(this, 1, "Edita Aventura", launch, a);
+			launch.lanzaTextoDialogo(this, 1, "Edita Aventura", launch, a,
+					jugador.getNombre());
 			break;
 		case R.id.bUsarAventura:
 			// leer name, check si existe, descargar,rellenar y lanzar
 			// SelecPista en modo lectura
 			// launch.lanzaDialogoEsperaGetQuestPass(a);
-			launch.lanzaTextoDialogo(this, 2, "Utilizar Aventura", launch, a);
+			launch.lanzaTextoDialogo(this, 2, "Utilizar Aventura", launch, a,
+					jugador.getNombre());
 			break;
 		case R.id.bUnirseAventura:
 			// q = new UtilQR(this);
