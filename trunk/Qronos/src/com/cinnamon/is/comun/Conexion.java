@@ -188,7 +188,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Este metodo no se usa no?
+	 * 
 	 * @param idMJ
 	 *            ID del minijuego
 	 * @param nick
@@ -276,7 +276,7 @@ public class Conexion {
 		return decodedByte;
 	}
 
-	public boolean updateArcade(final int[] arraySc, final String nick, final String token) {
+	public boolean updateArcade(final int[] arraySc, final String nick, String token) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -293,8 +293,8 @@ public class Conexion {
 			i++;
 		}
 		pairs.add(new BasicNameValuePair("user", nick));
-		//pairs.add(new BasicNameValuePair("token", token));
-		
+		pairs.add(new BasicNameValuePair("token", token));
+		// pairs.add(new BasicNameValuePair("puntuacion", score));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -515,7 +515,7 @@ public class Conexion {
 				"http://cinnamon.webatu.com/refquest.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("user", user));
-		//pairs.add(new BasicNameValuePair("token", token));
+		pairs.add(new BasicNameValuePair("token", token));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
