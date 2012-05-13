@@ -351,7 +351,7 @@ public class Conexion {
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
 		pairs.add(new BasicNameValuePair("pass", passAventura));
-		//pairs.add(new BasicNameValuePair("token", token));
+		
 		int i = 0;
 		while (i < 12) {
 			int code = i + 1;
@@ -361,6 +361,8 @@ public class Conexion {
 			pairs.add(new BasicNameValuePair("pista" + code, pi));
 			i++;
 		}
+		pairs.add(new BasicNameValuePair("user",nick));
+		pairs.add(new BasicNameValuePair("token", token));
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
