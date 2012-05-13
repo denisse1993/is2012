@@ -649,9 +649,11 @@ public final class Launch {
 					// si no existe crearlo cogiendo sus datos de la bd online
 					if (!loginA.loginLocal()) {
 						u = new UtilJSON(Launch.this.a);
+						//String s = u.jsonToStringLogin(respuestaSave);
+						
 						//TODO
-						//convierte la respuesta save codificada en json a string normal y
-						//se guarda en respuesta save
+						//este es el token
+						//guardo el string respuestaSave en las prefs
 						
 						loginA.conexion.dameOnlineArcade();
 						String json = loginA.conexion.getRespuesta();
