@@ -730,6 +730,7 @@ public final class Launch {
 				// Get aventura con pass
 				inet = (Inet) Launch.this.a;
 				av = (Aventura) datos[1];
+				av.setPass(null);
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(),
 						av.getPass());
