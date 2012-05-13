@@ -22,14 +22,16 @@ public class TextDialog extends Dialogos {
 	Aventura a;
 	Launch launch;
 	int tipo;
+	String nombreJugador;
 
 	public TextDialog(final Context _context, final String _title,
 			final int _modo, final int _theme, final Launch _launch,
-			final Aventura _a) {
+			final Aventura _a, String jugadorQueLaCrea) {
 		super(_context, _title, _modo, _theme);
 		a = _a;
 		this.launch = _launch;
 		this.tipo = _modo;
+		this.nombreJugador=jugadorQueLaCrea;
 		init();
 	}
 
@@ -67,7 +69,7 @@ public class TextDialog extends Dialogos {
 			switch (tipo) {
 			case 0:
 				this.dismiss();
-				launch.lanzaDialogoEsperaCreaQuest(a);
+				launch.lanzaDialogoEsperaCreaQuest(a,nombreJugador);
 				break;
 
 			case 1:
