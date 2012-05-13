@@ -70,7 +70,7 @@ public class Login extends Activity implements Inet, OnClickListener {
 	private EditText etPassword;
 	private Button bLogin;
 	private Button bRegister;
-	private SharedPreferences prefs;
+	public static SharedPreferences prefs;
 	private CheckBox cbRemember;
 	Bitmap uploadIMG;
 	// Interfaz antigua
