@@ -80,7 +80,6 @@ public class GameView extends SurfaceView {
 
 			public void surfaceDestroyed(SurfaceHolder holder) {
 				finJuego = true;
-				loop.stop();
 
 			}
 

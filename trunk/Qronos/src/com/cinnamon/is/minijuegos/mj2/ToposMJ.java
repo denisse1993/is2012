@@ -45,27 +45,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 		setContentView(ourSurfaceView);
 	}
 
-	/*
-	 * private void lanzarAvisoMJ(String texto, String title) {
-	 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	 * builder.setTitle(title);
-	 * builder.setMessage(texto).setNegativeButton("Empezar", new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int id) { ourSurfaceView.finJuego = false;
-	 * ourSurfaceView.numTopos = 30; introTheme.setVolume(0.4f, 0.4f);
-	 * introTheme.start(); setContentView(ourSurfaceView); dialog.cancel(); }
-	 * }); builder.show(); }
-	 */
 
-	/*
-	 * private void lanzarAvisoMJ2(String texto, String title) {
-	 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	 * builder.setTitle(title);
-	 * builder.setMessage(texto).setNegativeButton("Salir", new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int id) { dialog.cancel(); ToposMJ.super.onBackPressed(); } });
-	 * builder.show(); }
-	 */
 	public void onHomePressed() {
 		onHomePressed();
 		ourSurfaceView.finJuego = true;
@@ -122,20 +102,7 @@ public class ToposMJ extends Minijuego implements OnTouchListener {
 
 	}
 
-	/*
-	 * private void lanzaExitDialog() { AlertDialog.Builder builder = new
-	 * AlertDialog.Builder(this);
-	 * builder.setMessage("¿Quieres activar la vibración?")
-	 * .setCancelable(false) .setPositiveButton("Sí", new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int id) { vi = true; dialog.cancel(); lanzarAvisoMJ(
-	 * "Aplasta todos los topos que puedas, algunos son más fuertes y no aplastes a los conejos."
-	 * , "QRonos Topos"); } }) .setNegativeButton("No", new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int id) { vi = false; dialog.cancel(); lanzarAvisoMJ(
-	 * "Aplasta todos los topos que puedas, algunos son más fuertes y no aplastes a los conejos."
-	 * , "QRonos Topos"); } }); builder.show(); }
-	 */
+
 
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
