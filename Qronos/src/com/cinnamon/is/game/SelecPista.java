@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,12 +39,13 @@ import com.cinnamon.is.comun.T;
  */
 public class SelecPista extends Activity implements Inet, OnClickListener {
 	// interfaz
-	private LinearLayout llselecpista,llArcadeActionBar, llArcadeBottomBar;
+	private LinearLayout llselecpista, llArcadeActionBar, llArcadeBottomBar;
 	private ImageView iBinfo, iBleft, iBright;
 	private ImageButton[] iBmj;
 	private EditText[] eTpista;
 	private TextView tVhello;
 	private ImageView bDoneSelecPISTA;
+	private Jugador j;
 	/**
 	 * Indica grupo de mjs mostrado
 	 */
@@ -80,13 +82,15 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 	private boolean read;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.selecpista);
 		Bundle b = getIntent().getExtras();
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
+		j = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		read = b.getBoolean(Props.Comun.READ, false);
-		l = new Launch(this);
+		l = new Launch(this,
+				PreferenceManager.getDefaultSharedPreferences(this));
 		c = new Conexion(this);
 		grupoMJ = 0;
 		inicializar();
@@ -95,16 +99,18 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(mDbHelper.isOpen())
+		if (mDbHelper.isOpen()) {
 			mDbHelper.close();
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		habilitarGrupoMJ(0);
-		if (!mDbHelper.isOpen())
+		if (!mDbHelper.isOpen()) {
 			mDbHelper.open(false);
+		}
 	}
 
 	/**
@@ -141,7 +147,7 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 		iBleft.setAlpha(150);
 		iBright.setAlpha(150);
 		bDoneSelecPISTA.setAlpha(150);
-		
+
 		// rellena texto de bienvenida
 		tVhello.setText(tVhello.getText() + " para " + aventura.getNombre()
 				+ "!");
@@ -157,10 +163,11 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 		}
 		habilitarGrupoMJ(0);
 		if (!read) {
-			if (aventura.size() == aventura.sizePista())
+			if (aventura.size() == aventura.sizePista()) {
 				bDoneSelecPISTA.setEnabled(true);
-			else
+			} else {
 				bDoneSelecPISTA.setEnabled(false);
+			}
 		} else {
 			bDoneSelecPISTA.setEnabled(true);
 		}
@@ -172,7 +179,7 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 	 * @param actual
 	 *            el grupo a activar
 	 */
-	private void habilitarGrupoMJ(int actual) {
+	private void habilitarGrupoMJ(final int actual) {
 		grupoMJ = actual;
 		Iterator<T> it = aventura.iterator();
 		switch (grupoMJ) {
@@ -215,8 +222,9 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			break;
 		case 1:
 			// desplazo hasta sexto mj, se podria acceder directamente pero pss
-			for (int c = 0; c < 6; c++)
+			for (int c = 0; c < 6; c++) {
 				it.next();
+			}
 
 			for (int i = 0; i < Props.Comun.MAX_MJ_P; i++) {
 				if (it.hasNext()) {
@@ -259,19 +267,21 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 				.setMessage("Aviso: Se resetearán las pistas no guardadas")
 				.setCancelable(false)
 				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+					public void onClick(final DialogInterface dialog,
+							final int id) {
 						SelecPista.this.finish();
 					}
 				})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+					public void onClick(final DialogInterface dialog,
+							final int id) {
 						dialog.cancel();
 					}
 				});
 		builder.show();
 	}
 
-	public void onClick(View v) {
+	public void onClick(final View v) {
 		// habilita acabar
 		String pista = null;
 		switch (v.getId()) {
@@ -289,7 +299,7 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			mDbHelper.updateRowQuest(aventura.getNombre(), null,
 					aventura.getMJArrayInteger(),
 					aventura.getPistasArrayString());
-	//TODO		//l.lanzaDialogoEsperaUpdateQuest(aventura);
+			l.lanzaDialogoEsperaUpdateQuest(aventura, j.getNombre());
 			break;
 		case R.id.iBinfoSelecPISTA:
 			Launch.lanzaAviso("Información", Props.Strings.iSelecPISTA, this);
@@ -368,12 +378,13 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			break;
 		}
 		if (aventura.sizePista() == aventura.size()) {
-			if(!bDoneSelecPISTA.isEnabled()){
-			bDoneSelecPISTA.setEnabled(true);
-			l.lanzaToast(Props.Strings.PISTAS_COMPLETO);
+			if (!bDoneSelecPISTA.isEnabled()) {
+				bDoneSelecPISTA.setEnabled(true);
+				l.lanzaToast(Props.Strings.PISTAS_COMPLETO);
 			}
-		} else
+		} else {
 			bDoneSelecPISTA.setEnabled(false);
+		}
 	}
 
 	// TODO ontouch desactivado

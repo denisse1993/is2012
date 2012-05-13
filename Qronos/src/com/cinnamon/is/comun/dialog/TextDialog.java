@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.game.Aventura;
+import com.cinnamon.is.game.Jugador;
 
 public class TextDialog extends Dialogos {
 
@@ -19,19 +20,19 @@ public class TextDialog extends Dialogos {
 	TextView tvPassword;
 	LinearLayout fondo;
 
+	String nick;
 	Aventura a;
 	Launch launch;
 	int tipo;
-	String nombreJugador;
 
 	public TextDialog(final Context _context, final String _title,
 			final int _modo, final int _theme, final Launch _launch,
-			final Aventura _a, String jugadorQueLaCrea) {
+			final Aventura _a, final String _nick) {
 		super(_context, _title, _modo, _theme);
-		a = _a;
+		this.a = _a;
+		this.nick = _nick;
 		this.launch = _launch;
 		this.tipo = _modo;
-		this.nombreJugador=jugadorQueLaCrea;
 		init();
 	}
 
@@ -69,12 +70,12 @@ public class TextDialog extends Dialogos {
 			switch (tipo) {
 			case 0:
 				this.dismiss();
-				launch.lanzaDialogoEsperaCreaQuest(a,nombreJugador);
+				launch.lanzaDialogoEsperaCreaQuest(a, nick);
 				break;
 
 			case 1:
 				this.dismiss();
-				launch.lanzaDialogoEsperaGetQuest(a);
+				launch.lanzaDialogoEsperaGetQuest(a, nick);
 				break;
 			case 2:
 				this.dismiss();
@@ -84,5 +85,4 @@ public class TextDialog extends Dialogos {
 			break;
 		}
 	}
-
 }

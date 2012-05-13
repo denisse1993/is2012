@@ -8,11 +8,15 @@
 
 package com.cinnamon.is.game;
 
+import java.util.prefs.Preferences;
+
 import com.cinnamon.is.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -87,7 +91,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.elige_modo_aventura);
-		launch = new Launch(this);
+		launch = new Launch(this,PreferenceManager.getDefaultSharedPreferences(this););
 
 		conexion = new Conexion(this);
 		mDbHelper = new DbAdapter(this);
@@ -151,6 +155,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	public void lanzaSelecMJ() {
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.AVENTURA, a);
+		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		Launch.lanzaActivity(this, Props.Action.SELECMJ, b);
 		finish();
 	}

@@ -293,6 +293,12 @@ public final class Props {
 		 * String para usar cuando se quiera pasar la aventura entre actividades
 		 */
 		public static final String CAMARABOMBA = "camara_bomba";
+
+		/**
+		 * String para la key de token en SharedPreferences
+		 */
+		public static final String TOKEN = "token";
+
 		/**
 		 * Constantes para limitar longitudes de strings
 		 */

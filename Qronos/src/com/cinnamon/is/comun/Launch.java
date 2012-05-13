@@ -12,13 +12,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
-
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.dialog.AyudaDialog;
@@ -27,7 +27,6 @@ import com.cinnamon.is.comun.dialog.TextDialog;
 import com.cinnamon.is.game.Arcade;
 import com.cinnamon.is.game.Aventura;
 import com.cinnamon.is.game.EligeModoAventura;
-import com.cinnamon.is.game.InGameAventura;
 import com.cinnamon.is.game.Jugador;
 import com.cinnamon.is.game.Login;
 
@@ -50,6 +49,11 @@ public final class Launch {
 	// private static boolean yes;
 
 	/**
+	 * Preferencias
+	 **/
+	SharedPreferences prefs;
+
+	/**
 	 * Metodo constructor
 	 * 
 	 * @param activity
@@ -57,6 +61,22 @@ public final class Launch {
 	 */
 	public Launch(final Activity activity) {
 		this.a = activity;
+		/*
+		 * this.conexion =new Conexion(a); esto era para no tener que pasarle
+		 * CONEXION al lanzaDialogoEspera
+		 */
+	}
+
+	/**
+	 * Metodo constructor con preferencias
+	 * 
+	 * @param activity
+	 *            la actividad padre
+	 * @param preferencias
+	 */
+	public Launch(final Activity activity, final SharedPreferences preferencias) {
+		this.a = activity;
+		this.prefs = preferencias;
 		/*
 		 * this.conexion =new Conexion(a); esto era para no tener que pasarle
 		 * CONEXION al lanzaDialogoEspera
@@ -465,14 +485,16 @@ public final class Launch {
 	 *            0 Crear 1 Editar 2 Usar
 	 * @param launch
 	 * @param a
+	 * @param nick
+	 * @param j
 	 */
 	public void lanzaTextoDialogo(final Context context, final int modo,
-			final String title, final Launch launch, final Aventura a, String nombre) {
+			final String title, final Launch launch, final Aventura a,
+			final String nick) {
 		TextDialog dialogo = new TextDialog(context, title, modo,
-				R.style.CenterDialog, launch, a,nombre);
+				R.style.CenterDialog, launch, a, nick);
 		dialogo.show();
 	}
-
 
 	/**
 	 * Sirve para loguear un jugador
@@ -513,8 +535,9 @@ public final class Launch {
 	 * Sirve para subir una aventura al servidor (tabla quest)
 	 * 
 	 * @param a1
+	 * @param nick
 	 */
-	public void lanzaDialogoEsperaCreaQuest(final Aventura a1,final String nick) { //
+	public void lanzaDialogoEsperaCreaQuest(final Aventura a1, final String nick) { //
 		// valor 3 activa crear aventura
 		new ConexionServerTask().execute(new Object[] { 3, a1, nick });
 	}
@@ -534,22 +557,24 @@ public final class Launch {
 	 * Sirve para obtener una aventura (tabla quest)
 	 * 
 	 * @param av
+	 * @param nick
 	 * 
 	 */
-	public void lanzaDialogoEsperaGetQuest(final Aventura av) { //
+	public void lanzaDialogoEsperaGetQuest(final Aventura av, final String nick) { //
 		// valor 5 activa get aventura
-		new ConexionServerTask().execute(new Object[] { 5, av });
+		new ConexionServerTask().execute(new Object[] { 5, av, nick });
 	}
 
 	/**
 	 * Sirve para actualizar una aventura (tabla quest)
 	 * 
 	 * @param av
+	 * @param nick
 	 * 
 	 */
-	public void lanzaDialogoEsperaUpdateQuest(final Aventura av,String nickJugador) { //
+	public void lanzaDialogoEsperaUpdateQuest(final Aventura av, final String nick) { //
 		// valor 6 activa update aventura
-		new ConexionServerTask().execute(new Object[] { 6, av, nickJugador });
+		new ConexionServerTask().execute(new Object[] { 6, av });
 	}
 
 	/**
@@ -612,7 +637,7 @@ public final class Launch {
 			AsyncTask<Object, Boolean, Object[]> {
 
 		private ProgressDialog dialog;
-		
+
 		@Override
 		protected void onPreExecute() {
 			this.dialog = ProgressDialog.show(Launch.this.a, "Conectando...",
@@ -645,28 +670,29 @@ public final class Launch {
 					// BDlocal, y entonces registras online directametne
 					// if (loginA.loginLocal())
 					// loginA.conexion.register(nick, pass);
-				}else if (respuestaSave.equals("2")){
-					//nose
-				} else if (respuestaSave!= "") {
-					SharedPreferences.Editor editor = Login.prefs.edit();
-					
-					editor.putString("token", respuestaSave);
-						
-					editor.commit();
+				} else if (respuestaSave.equals("2")) {
+					// nose
+				} else if (respuestaSave != "") {
 					// esta en la bd online, comprobar si existe en bd local,
 					// si no existe crearlo cogiendo sus datos de la bd online
 					if (!loginA.loginLocal()) {
 						u = new UtilJSON(Launch.this.a);
-						//String s = u.jsonToStringLogin(respuestaSave);
-						
-						//TODO
-						//este es el token
-						//guardo el string respuestaSave en las prefs
-						
-						/////////////////////////////////
+						// String s = u.jsonToStringLogin(respuestaSave);
+
+						// TODO
+						// este es el token
+						// guardo el string respuestaSave en las prefs
+
+						/*
+						 * SharedPreferences prefs = PreferenceManager
+						 * .getDefaultSharedPreferences(this);
+						 * SharedPreferences.Editor editor = prefs.edit();
+						 * editor.putString("token", "");
+						 */
+
 						loginA.conexion.dameOnlineArcade();
 						String json = loginA.conexion.getRespuesta();
-						
+
 						int[] d = u.verSiJugadorExisteArcade(json,
 								loginA.nombre);
 						if (d != null) {
@@ -691,17 +717,17 @@ public final class Launch {
 				Arcade upScore = (Arcade) Launch.this.a;
 				nick = (String) datos[1];
 				int[] b = (int[]) datos[2];
-				String s = Login.prefs.getString("token", "");
-				ret[1] = upScore.conexion.updateArcade(b, nick,s);
+				ret[1] = upScore.conexion.updateArcade(b, nick,
+						prefs.getString(Props.Comun.TOKEN, ""));
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
 				inet = (Inet) Launch.this.a;
 				Aventura quest = (Aventura) datos[1];
-				String creadorAventura = (String) datos[2];
 				ret[1] = inet.c().creaOnlineAventura(quest.getMJArrayString(),
 						quest.getPistasArrayString(), quest.getNombre(),
-						quest.getPass(), false,creadorAventura,Login.prefs.getString("token", ""));
+						quest.getPass(), false, (String) ret[2],
+						prefs.getString(Props.Comun.TOKEN, ""));
 				break;
 			case 4:
 				// Ver ranking arcade
@@ -720,10 +746,10 @@ public final class Launch {
 				// Update Aventura (tabla quest)
 				inet = (Inet) Launch.this.a;
 				Aventura quest2 = (Aventura) datos[1];
-				String nombreJugador = (String) datos[3];
 				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
-						quest2.getPass(), true, nombreJugador, Login.prefs.getString("token", ""));
+						quest2.getPass(), true, (String) ret[2],
+						prefs.getString(Props.Comun.TOKEN, ""));
 				ret[2] = quest2;
 				break;
 			case 7:
@@ -739,7 +765,8 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getAventura(), j.getFase(),Login.prefs.getString("token", ""));
+						j.getNombre(), j.getAventura(), j.getFase(),
+						prefs.getString(Props.Comun.TOKEN, ""));
 				break;
 			case 9:
 				// Ver ranking pquest
@@ -792,8 +819,7 @@ public final class Launch {
 					} else if (respuestaSave.equals("4")) {
 						login.l.lanzaToast(Props.Strings.USER_UPDATE);
 						login.lanzaMenuPrincipal();
-					}
-					else {
+					} else {
 						login.l.lanzaToast(Props.Strings.LOGIN_OK);
 						if (login.loginLocal()) {
 							login.lanzaMenuPrincipal();
@@ -992,7 +1018,5 @@ public final class Launch {
 			}
 		}
 	}
-
-
 
 }
