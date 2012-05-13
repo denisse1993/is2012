@@ -635,23 +635,27 @@ public final class Launch {
 				pass = (String) datos[2];
 				// hace login y obtiene return
 				ret[1] = loginA.conexion.login(nick, pass);
-				//ahora decodifico la respuesta obtengo token y evaluo
-				u = new UtilJSON(Launch.this.a);
-				String respuestaSave = u.jsonLogin(loginA.conexion.getRespuesta());
-				
+				String respuestaSave = loginA.conexion.getRespuesta();
 				if (respuestaSave.equals("3")) {
 					// TODO Desactivado Solo permitimos registro con inet previo
 					// devuelve Usuario Inexistente, comprobar que existe en la
 					// BDlocal, y entonces registras online directametne
 					// if (loginA.loginLocal())
 					// loginA.conexion.register(nick, pass);
-				} else if (respuestaSave.equals("1")) {
+				}else if (respuestaSave.equals("2")){
+					//nose
+				} else if (respuestaSave!= "") {
 					// esta en la bd online, comprobar si existe en bd local,
 					// si no existe crearlo cogiendo sus datos de la bd online
 					if (!loginA.loginLocal()) {
+						u = new UtilJSON(Launch.this.a);
+						//TODO
+						//convierte la respuesta save codificada en json a string normal y
+						//se guarda en respuesta save
+						
 						loginA.conexion.dameOnlineArcade();
 						String json = loginA.conexion.getRespuesta();
-						u = new UtilJSON(Launch.this.a);
+						
 						int[] d = u.verSiJugadorExisteArcade(json,
 								loginA.nombre);
 						if (d != null) {
@@ -676,7 +680,7 @@ public final class Launch {
 				Arcade upScore = (Arcade) Launch.this.a;
 				nick = (String) datos[1];
 				int[] b = (int[]) datos[2];
-				ret[1] = upScore.conexion.updateArcade(b, nick,"token");
+				ret[1] = upScore.conexion.updateArcade(b, nick);
 				break;
 			case 3:
 				// Upload Aventura (tabla quest)
@@ -684,7 +688,7 @@ public final class Launch {
 				Aventura quest = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest.getMJArrayString(),
 						quest.getPistasArrayString(), quest.getNombre(),
-						quest.getPass(), false, "jugador iniciado","token");
+						quest.getPass(), false);
 				break;
 			case 4:
 				// Ver ranking arcade
@@ -705,7 +709,7 @@ public final class Launch {
 				Aventura quest2 = (Aventura) datos[1];
 				ret[1] = inet.c().creaOnlineAventura(quest2.getMJArrayString(),
 						quest2.getPistasArrayString(), quest2.getNombre(),
-						quest2.getPass(), true,"jugador iniciado","sutoken");
+						quest2.getPass(), true);
 				ret[2] = quest2;
 				break;
 			case 7:
@@ -721,7 +725,7 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getAventura(), j.getFase(),"token");
+						j.getNombre(), j.getAventura(), j.getFase());
 				break;
 			case 9:
 				// Ver ranking pquest
@@ -767,18 +771,19 @@ public final class Launch {
 						login.l.lanzaToast(Props.Strings.USER_PASS_MAL);
 					}
 				} else {
-					if (respuestaSave.equals("1")) {
-						login.l.lanzaToast(Props.Strings.LOGIN_OK);
-						if (login.loginLocal()) {
-							login.lanzaMenuPrincipal();
-						}
-					} else if (respuestaSave.equals("2")) {
+					if (respuestaSave.equals("2")) {
 						login.l.lanzaToast(Props.Strings.PASS_ERROR);
 					} else if (respuestaSave.equals("3")) {
 						login.l.lanzaToast(Props.Strings.USER_INET_NO_EXISTE);
 					} else if (respuestaSave.equals("4")) {
 						login.l.lanzaToast(Props.Strings.USER_UPDATE);
 						login.lanzaMenuPrincipal();
+					}
+					else {
+						login.l.lanzaToast(Props.Strings.LOGIN_OK);
+						if (login.loginLocal()) {
+							login.lanzaMenuPrincipal();
+						}
 					}
 				}
 				break;
