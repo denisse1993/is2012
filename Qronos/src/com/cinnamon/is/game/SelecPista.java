@@ -289,7 +289,7 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			mDbHelper.updateRowQuest(aventura.getNombre(), null,
 					aventura.getMJArrayInteger(),
 					aventura.getPistasArrayString());
-			l.lanzaDialogoEsperaUpdateQuest(aventura);
+	//TODO		//l.lanzaDialogoEsperaUpdateQuest(aventura);
 			break;
 		case R.id.iBinfoSelecPISTA:
 			Launch.lanzaAviso("Información", Props.Strings.iSelecPISTA, this);
