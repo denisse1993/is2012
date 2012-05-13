@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -145,7 +146,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 		// Conexion
 		this.conexion = new Conexion(this);
-		this.l = new Launch(this);
+		this.l = new Launch(this,
+				PreferenceManager.getDefaultSharedPreferences(this));
 
 		// Generar Minijuegos
 		this.mjActual = generaMinijuego();
@@ -258,13 +260,15 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 					this.quest.getMinijuego(this.mjActual).pista);
 			break;
 		case R.id.iBinfoConexionAv:
-			if (checkConexion()){
-				this.l.lanzaAviso("Disponibilidad de red", Props.Strings.IONLINE, R.id.iBinfoConexionAv);
-			}else{
-				this.l.lanzaAviso("Disponibilidad de red", Props.Strings.IOFFLINE, R.id.iBinfoConexionAv);
+			if (checkConexion()) {
+				this.l.lanzaAviso("Disponibilidad de red",
+						Props.Strings.IONLINE, R.id.iBinfoConexionAv);
+			} else {
+				this.l.lanzaAviso("Disponibilidad de red",
+						Props.Strings.IOFFLINE, R.id.iBinfoConexionAv);
 			}
 			break;
-			
+
 		}
 	}
 
@@ -438,7 +442,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
 			checkConexion();
-			if (conexion.getNotif(jugador.getNombre(), Login.prefs.getString("token", "")) ) {
+			if (conexion.getNotif(jugador.getNombre(),
+					Login.prefs.getString("token", ""))) {
 				int respuesta = Integer.parseInt(j.jsonToString(conexion
 						.getRespuesta()));
 				if (currentNotif != respuesta) {
