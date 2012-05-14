@@ -159,7 +159,7 @@ public final class Props {
 		public static final int[] iDiVmj = { R.drawable.ibmj1,
 				R.drawable.ibmj2, R.drawable.ibmj3, R.drawable.ibmj4,
 				R.drawable.ibmj5, R.drawable.ibmj6, R.drawable.ibmj7,
-				R.drawable.ibmj1, R.drawable.ibmj0, R.drawable.ibmj0,
+				R.drawable.ibmj8, R.drawable.ibmj0, R.drawable.ibmj0,
 				R.drawable.ibmj0, R.drawable.ibmj0 };
 
 		/**

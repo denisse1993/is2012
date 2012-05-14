@@ -110,10 +110,10 @@ public class UltimatePuzzleActivity extends Minijuego implements OnTouchListener
 		int[] comprobar= new int[9];
 		for (int i=0; i<9; i++) comprobar[i]=-1;
 		//ponRandom(tabla, 9, comprobar);
-	//	ponRandomSol(tabla);
+		ponRandomSol(tabla);
 		//este comentario de debajo pone todas las piezas ordenadas sin el random
 		//no borrar, puede ser útil
-		int m=0;
+		/*int m=0;
 		for (int i=0;i<3;i++){
 			for (int j=0;j<3;j++){
 					tabla[i][j]=pic[m];
@@ -121,7 +121,7 @@ public class UltimatePuzzleActivity extends Minijuego implements OnTouchListener
 				}
 		}
 		
-		
+		*/
 		x=y=0; 
 			
 		setContentView(ourSurfaceView);
