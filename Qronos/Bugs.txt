@@ -12,6 +12,7 @@
 - Sonido sigue sonando despuÃ©s de salir (Solucionado)
 - Dialogo Texto(Edu)(Solucionado)
 - Peta el login
+- El texto del dialog que se lanza antes de lanzar un minijuego en Arcade no se lee
 
 
 

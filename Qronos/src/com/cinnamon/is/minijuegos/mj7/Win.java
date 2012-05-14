@@ -47,7 +47,7 @@ public class Win extends Minijuego {
 
 			public void onClick(View v) {
 				//para esconder el teclado al darle a Comprobar
-				 EditText text = (EditText)findViewById(R.id.textViewWin);
+				 EditText text = (EditText)findViewById(R.id.entry);
 			     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 			     imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
 			     
