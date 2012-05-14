@@ -136,6 +136,10 @@ public class MainMenu extends Activity implements OnClickListener {
 			l.lanzaActivity(Props.Action.OPCIONES, b);
 			// l.lanzaActivity(Props.Action.INGAME, b);
 			break;
+
+		case R.id.ibInfoMain:
+			Launch.lanzaAviso("Información", Props.Strings.iMain, this);
+			break;
 		case R.id.bSalir:
 			finish();
 			break;

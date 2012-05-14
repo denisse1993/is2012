@@ -270,8 +270,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			 */
 			break;
 		case R.id.iv_info_ingame:
-
-			Launch.lanzaAviso("Informaci—n Aventura", Props.Strings.iHost, this);
+			Launch.lanzaAviso("Información", Props.Strings.iInGame, this);
 			break;
 		case R.id.ll_medio_ingame:
 			this.l.lanzaAviso("Pista",
