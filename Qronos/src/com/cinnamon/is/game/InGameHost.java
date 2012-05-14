@@ -157,6 +157,10 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 		if (this.aDactual == dialog) {
 			switch (boton) {
 			case -1:// yes
+				if (Props.Comun.ACTIVIDAD != null) {
+					Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+					Props.Comun.ACTIVIDAD = null;// resetea
+				}
 				dialog.cancel();
 				finish();
 				Bundle b = new Bundle();

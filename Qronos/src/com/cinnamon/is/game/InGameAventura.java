@@ -241,6 +241,10 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		if (this.aDactual == dialog) {
 			switch (boton) {
 			case -1:// yes
+				if (Props.Comun.ACTIVIDAD != null) {
+					Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+					Props.Comun.ACTIVIDAD = null;// resetea
+				}
 				dialog.cancel();
 				finish();
 				Bundle b = new Bundle();
