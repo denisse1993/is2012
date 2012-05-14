@@ -48,14 +48,14 @@ public class TextDialog extends Dialogos {
 			ViewGroup vg = (ViewGroup) (this.etPassword.getParent());
 			vg.removeView(this.etPassword);
 			vg = (ViewGroup) (this.tvPassword.getParent());
-			vg.removeView(this.etPassword);
+			vg.removeView(this.tvPassword);
 		}
 
 		this.bOk.setOnClickListener(this);
 		this.setTitle(title);
 
-		fondo.getBackground().setAlpha(45);
-		this.bOk.getBackground().setAlpha(45);
+		fondo.getBackground().setAlpha(145);
+		// this.bOk.getBackground().setAlpha(145);
 	}
 
 	@Override
