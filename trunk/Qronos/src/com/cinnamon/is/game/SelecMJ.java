@@ -11,10 +11,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +30,7 @@ import com.cinnamon.is.comun.Props;
  */
 public class SelecMJ extends Activity implements OnClickListener {
 	// interfaz
-	private LinearLayout llselecmj,llArcadeActionBar, llArcadeBottomBar;
+	private LinearLayout llselecmj, llArcadeActionBar, llArcadeBottomBar;
 	private ImageView iBinfo, iBleft, iBright;
 	private ImageButton[] iBmj;
 	private ImageView[] iVselec;
@@ -53,12 +51,18 @@ public class SelecMJ extends Activity implements OnClickListener {
 	 */
 	private Aventura aventura;
 
+	/**
+	 * Jugador
+	 */
+	Jugador jugador;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.selecmj);
 		Bundle b = getIntent().getExtras();
 		aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
+		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 
 		grupoMJ = 0;
 		inicializar();
@@ -104,7 +108,7 @@ public class SelecMJ extends Activity implements OnClickListener {
 		iBleft.setAlpha(150);
 		iBright.setAlpha(150);
 		bDoneSelecMJ.setAlpha(150);
-		
+
 		// rellena texto de bienvenida
 		tVhello.setText(tVhello.getText() + " para " + aventura.getNombre()
 				+ "!");
@@ -119,10 +123,11 @@ public class SelecMJ extends Activity implements OnClickListener {
 			iVselec[i] = (ImageView) findViewById(Props.Comun.iDiVsC[i]);
 		}
 		habilitarGrupoMJ(0);
-		if (aventura.size() > 0)
+		if (aventura.size() > 0) {
 			bDoneSelecMJ.setEnabled(true);
-		else
+		} else {
 			bDoneSelecMJ.setEnabled(false);
+		}
 	}
 
 	/**
@@ -131,7 +136,7 @@ public class SelecMJ extends Activity implements OnClickListener {
 	 * @param actual
 	 *            el grupo a activar
 	 */
-	private void habilitarGrupoMJ(int actual) {
+	private void habilitarGrupoMJ(final int actual) {
 		grupoMJ = actual;
 		switch (grupoMJ) {
 		case 0:
@@ -140,10 +145,11 @@ public class SelecMJ extends Activity implements OnClickListener {
 				iBmj[i].setBackgroundResource(Props.Comun.iDiVmj[i]);
 				if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
 					iBmj[i].setOnClickListener(this);
-					if (aventura.existe(Props.Comun.CMJ[i]))
+					if (aventura.existe(Props.Comun.CMJ[i])) {
 						iVselec[i].setImageResource(Props.Comun.iDiVselec[1]);
-					else
+					} else {
 						iVselec[i].setImageResource(Props.Comun.iDiVselec[0]);
+					}
 				} else {
 					iBmj[i].setOnClickListener(null);
 					iVselec[i].setImageResource(Props.Comun.iDiVselec[2]);
@@ -161,16 +167,18 @@ public class SelecMJ extends Activity implements OnClickListener {
 				iBmj[j].setBackgroundResource(Props.Comun.iDiVmj[i]);
 				if (Props.Comun.bHabilitado(Props.Comun.iDiVmj[i])) {
 					iBmj[j].setOnClickListener(this);
-					if (aventura.existe(Props.Comun.CMJ[i]))
+					if (aventura.existe(Props.Comun.CMJ[i])) {
 						iVselec[j].setImageResource(Props.Comun.iDiVselec[1]);
-					else
+					} else {
 						iVselec[j].setImageResource(Props.Comun.iDiVselec[0]);
+					}
 				} else {
 					iBmj[j].setOnClickListener(null);
 					iVselec[j].setImageResource(Props.Comun.iDiVselec[2]);
 				}
-				if (j < 6)
+				if (j < 6) {
 					j++;
+				}
 			}
 			// habilito transicion izquierda
 			iBleft.setEnabled(true);
@@ -194,19 +202,19 @@ public class SelecMJ extends Activity implements OnClickListener {
 				.setMessage("Aviso: Se resetearán los Minijuegos")
 				.setCancelable(false)
 				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+					public void onClick(final DialogInterface dialog, final int id) {
 						SelecMJ.this.finish();
 					}
 				})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+					public void onClick(final DialogInterface dialog, final int id) {
 						dialog.cancel();
 					}
 				});
 		builder.show();
 	}
 
-	public void onClick(View v) {
+	public void onClick(final View v) {
 		switch (v.getId()) {
 		// Botones
 		case R.id.iBleft:
@@ -218,6 +226,7 @@ public class SelecMJ extends Activity implements OnClickListener {
 		case R.id.iVDone:
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.AVENTURA, aventura);
+			b.putSerializable(Props.Comun.JUGADOR, jugador);
 			Props.Comun.ACTIVIDAD = SelecMJ.this;
 			Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
 			break;
@@ -341,10 +350,11 @@ public class SelecMJ extends Activity implements OnClickListener {
 			break;
 		}
 		// habilita acabar
-		if (aventura.size() == 0)
+		if (aventura.size() == 0) {
 			bDoneSelecMJ.setEnabled(false);
-		else
+		} else {
 			bDoneSelecMJ.setEnabled(true);
+		}
 	}
 
 	// TODO ontouch desactivado

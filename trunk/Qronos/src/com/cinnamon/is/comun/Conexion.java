@@ -47,7 +47,7 @@ public class Conexion {
 	 */
 	public Conexion(final Activity _activity) {
 		this.activity = _activity;
-		this.respuesta="";
+		this.respuesta = "";
 	}
 
 	/**
@@ -276,7 +276,8 @@ public class Conexion {
 		return decodedByte;
 	}
 
-	public boolean updateArcade(final int[] arraySc, final String nick, String token) {
+	public boolean updateArcade(final int[] arraySc, final String nick,
+			final String token) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -330,13 +331,16 @@ public class Conexion {
 	 * @param nombreAventura
 	 * @param passAventura
 	 * @param update
+	 * @param nick
+	 * @param token
 	 * 
 	 * @return boolean
 	 */
 	public boolean creaOnlineAventura(final String[] mj, final String[] pista,
 			final String nombreAventura, final String passAventura,
 			final boolean update, final String nick, final String token) {
-		//se deberia tambien comprobar el usuario que crea la aventura, sino el token no tiene sentido
+		// se deberia tambien comprobar el usuario que crea la aventura, sino el
+		// token no tiene sentido
 		boolean retorno;
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
@@ -351,7 +355,7 @@ public class Conexion {
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("nombre", nombreAventura));
 		pairs.add(new BasicNameValuePair("pass", passAventura));
-		
+
 		int i = 0;
 		while (i < 12) {
 			int code = i + 1;
@@ -361,7 +365,7 @@ public class Conexion {
 			pairs.add(new BasicNameValuePair("pista" + code, pi));
 			i++;
 		}
-		pairs.add(new BasicNameValuePair("user",nick));
+		pairs.add(new BasicNameValuePair("user", nick));
 		pairs.add(new BasicNameValuePair("token", token));
 
 		try {
@@ -433,6 +437,7 @@ public class Conexion {
 	 * @param nick
 	 * @param quest
 	 * @param actual
+	 * @param token
 	 * @return conexion o no
 	 */
 	public boolean updatePquest(final int[] arraySc, final String nick,
@@ -455,7 +460,7 @@ public class Conexion {
 		pairs.add(new BasicNameValuePair("user", nick));
 		pairs.add(new BasicNameValuePair("quest", quest));
 		pairs.add(new BasicNameValuePair("actual", String.valueOf(actual)));
-		//pairs.add(new BasicNameValuePair("token", token));
+		// pairs.add(new BasicNameValuePair("token", token));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -507,14 +512,13 @@ public class Conexion {
 		}
 		return retorno;
 	}
-	
+
 	public boolean getNotif(final String user, final String token) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
-		HttpPost post = new HttpPost(
-				"http://cinnamon.webatu.com/refquest.php"); // server
+		HttpPost post = new HttpPost("http://cinnamon.webatu.com/refquest.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("user", user));
 		pairs.add(new BasicNameValuePair("token", token));
@@ -532,7 +536,9 @@ public class Conexion {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Launch.lanzaAviso("el usuario no tiene partidas asociadas  o error inet", activity);
+			Launch.lanzaAviso(
+					"el usuario no tiene partidas asociadas  o error inet",
+					activity);
 			retorno = false;
 		}
 		return retorno;
