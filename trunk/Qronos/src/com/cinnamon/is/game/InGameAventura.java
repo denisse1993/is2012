@@ -200,6 +200,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	protected void onPause() {
+		muereteCabron = true;
 		timer.cancel();
 		timer = null;
 		super.onPause();
@@ -207,8 +208,23 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	}
 
+	protected void pararTimer() {
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					this.finalize();
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
 	@Override
 	protected void onResume() {
+		muereteCabron = false;
 
 		super.onResume();
 		if (!this.mDbHelper.isOpen()) {
@@ -441,26 +457,29 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	}
 
 	final Activity a = this;
+	boolean muereteCabron = false;
 	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
-			checkConexion();
+			if (!muereteCabron) {
+				checkConexion();
 
-			if (conexion.getNotif(jugador.getNombre(),
-					Login.prefs.getString(Props.Comun.TOKEN, ""))) {
-				String s = j.jsonToString(conexion.getRespuesta());
-				int respuesta;
-				if (s.equals("")) {
-					respuesta = 0;
-				} else {
-					respuesta = Integer.parseInt(s);
+				if (conexion.getNotif(jugador.getNombre(),
+						Login.prefs.getString(Props.Comun.TOKEN, ""))) {
+					String s = j.jsonToString(conexion.getRespuesta());
+					int respuesta;
+					if (s.equals("")) {
+						respuesta = 0;
+					} else {
+						respuesta = Integer.parseInt(s);
+					}
+					if (currentNotif != respuesta) {
+						currentNotif = respuesta;
+
+						Launch.lanzaAviso("Notificaciones pendientes",
+								"Click en Ranking para mas detalles", a);
+					}
+
 				}
-				if (currentNotif != respuesta) {
-					currentNotif = respuesta;
-
-					Launch.lanzaAviso("Notificaciones pendientes",
-							"Click en Ranking para mas detalles", a);
-				}
-
 			}
 		}
 	};
