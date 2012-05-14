@@ -63,6 +63,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		 * String.valueOf(startTime));
 		 */
 
+		Toast.makeText(this, "Coloca el movil en posici—n vertical", 4000);
+
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		vista = new GameView(this, display.getWidth(), display.getHeight(),
