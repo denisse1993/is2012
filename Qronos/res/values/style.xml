@@ -3,11 +3,12 @@
 
     <style name="CenterDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowTitleStyle">@style/CenterDialogTitle</item>
-        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:background">@drawable/actionbar</item>
     </style>
 
     <style name="CenterDialogTitle" parent="@android:style/TextAppearance.DialogWindowTitle">
         <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/azul_action_bar</item>
     </style>
 
     <style name="DialogWindowTitle">

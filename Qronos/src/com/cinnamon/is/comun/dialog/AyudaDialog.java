@@ -119,9 +119,9 @@ public class AyudaDialog extends Dialogos {
 		this.setTitle(this.title);
 		this.ivBanner.setBackgroundResource(this.image);
 		this.tvDescripcion.setText(this.descripction);
-		fondo.getBackground().setAlpha(45);
-		this.bEmpezar.getBackground().setAlpha(45);
-		this.bCancelar.getBackground().setAlpha(45);
+		fondo.getBackground().setAlpha(145);
+		// this.bEmpezar.getBackground().setAlpha(45);
+		// this.bCancelar.getBackground().setAlpha(45);
 	}
 
 	/**
