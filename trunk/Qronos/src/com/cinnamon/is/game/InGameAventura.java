@@ -200,9 +200,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	protected void onPause() {
+		timer.cancel();
+		timer = null;
 		super.onPause();
 		this.mDbHelper.close();
-		timer.cancel();
+
 	}
 
 	@Override
@@ -221,7 +223,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
-				timer.cancel();
 				finish();
 				Bundle b = new Bundle();
 				b.putSerializable(Props.Comun.JUGADOR, jugador);
@@ -445,7 +446,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			checkConexion();
 
 			if (conexion.getNotif(jugador.getNombre(),
-					Login.prefs.getString("token", ""))) {
+					Login.prefs.getString(Props.Comun.TOKEN, ""))) {
 				String s = j.jsonToString(conexion.getRespuesta());
 				int respuesta;
 				if (s.equals("")) {

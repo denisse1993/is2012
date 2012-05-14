@@ -74,6 +74,11 @@ public class InGameHost extends Activity implements Inet, OnClickListener {
 	 */
 	public Conexion conexion;
 
+	/**
+	 * Jugador
+	 */
+	Jugador jugador;
+
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,6 +86,7 @@ public class InGameHost extends Activity implements Inet, OnClickListener {
 
 		// Bundle
 		Bundle bundle = getIntent().getExtras();
+		this.jugador = (Jugador) bundle.getSerializable(Props.Comun.JUGADOR);
 		this.quest = (Aventura) bundle.getSerializable(Props.Comun.AVENTURA);
 
 		// Launch
@@ -127,7 +133,7 @@ public class InGameHost extends Activity implements Inet, OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
+		// super.onBackPressed();
 		this.aDactual = Launch
 				.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
 	}
@@ -151,7 +157,10 @@ public class InGameHost extends Activity implements Inet, OnClickListener {
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
-				this.launch.lanzaActivity(Props.Action.MAINMENU);
+				finish();
+				Bundle b = new Bundle();
+				b.putSerializable(Props.Comun.JUGADOR, jugador);
+				this.launch.lanzaActivity(Props.Action.MAINMENU, b);
 				break;
 			case -2:// no
 				dialog.cancel();

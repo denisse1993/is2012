@@ -29,6 +29,7 @@ import com.cinnamon.is.game.EligeModoAventura;
 import com.cinnamon.is.game.InGameAventura;
 import com.cinnamon.is.game.Jugador;
 import com.cinnamon.is.game.Login;
+import com.cinnamon.is.game.SelecPista;
 
 /**
  * <p>
@@ -562,7 +563,8 @@ public final class Launch {
 	 * @param nick
 	 * 
 	 */
-	public void lanzaDialogoEsperaGetQuestPass(final Aventura av, final String nick) { //
+	public void lanzaDialogoEsperaGetQuestPass(final Aventura av,
+			final String nick) { //
 		// valor 7 activa get aventura con pass
 		new ConexionServerTask().execute(new Object[] { 7, av, nick });
 	}
@@ -910,10 +912,8 @@ public final class Launch {
 							Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
 							Props.Comun.ACTIVIDAD = null;// resetea
 						}
-						Bundle b = new Bundle();
-						b.putSerializable(Props.Comun.AVENTURA, av);
-						inet.l().lanzaActivity(Props.Action.INGAMEHOST, b);
-						a.finish();// cerrara selecPista
+						SelecPista selecp = (SelecPista) Launch.this.a;
+						selecp.lanzaInGameHost();
 					} else if (inet.c().getRespuesta().equals("3")) {
 						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}

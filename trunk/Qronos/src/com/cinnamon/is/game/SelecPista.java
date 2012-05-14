@@ -265,12 +265,14 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 				.setMessage("Aviso: Se resetearán las pistas no guardadas")
 				.setCancelable(false)
 				.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
+					public void onClick(final DialogInterface dialog,
+							final int id) {
 						SelecPista.this.finish();
 					}
 				})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
+					public void onClick(final DialogInterface dialog,
+							final int id) {
 						dialog.cancel();
 					}
 				});
@@ -422,5 +424,16 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 	@Override
 	public Conexion c() {
 		return c;
+	}
+
+	/**
+	 * Abre el selecPISTA modo lectura
+	 */
+	public void lanzaInGameHost() {
+		Bundle b = new Bundle();
+		b.putSerializable(Props.Comun.AVENTURA, aventura);
+		b.putSerializable(Props.Comun.JUGADOR, j);
+		Launch.lanzaActivity(this, Props.Action.INGAMEHOST, b);
+		finish();
 	}
 }
