@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lee los códigos QR para encontrar las letras y luego unelas para formar una palabra"
+        android:text="Lee los códigos QR para encontrar las letras y luego únelas para formar una palabra"
         android:textStyle="bold"
         android:gravity="center" 
         android:textAppearance="?android:attr/textAppearanceLarge" 
@@ -47,6 +47,30 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="#dd0000"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+     
+     <TextView
+        android:id="@+id/textViewLE"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="Letras Encontradas"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#0000ee"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+   
+     <TextView
+        android:id="@+id/tvLetras"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#0000ee"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 

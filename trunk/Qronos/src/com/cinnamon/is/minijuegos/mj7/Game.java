@@ -33,6 +33,7 @@ public class Game extends Minijuego {
 	private Button btnQR;
 	private TextView texto;
 	private long start;
+	private TextView tvLetras;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class Game extends Minijuego {
 		this.leidas = new HashMap<String, Boolean>();
 		this.texto = (TextView) findViewById(R.id.textView);
 		this.btnQR = (Button) findViewById(R.id.leer);
+		tvLetras=(TextView) findViewById(R.id.tvLetras);
 		this.btnQR.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -89,6 +91,7 @@ public class Game extends Minijuego {
 						if (!estanTodas()) {
 							// si es una letra nueva y no es la última
 							this.texto.setTextColor(Color.GREEN);
+							tvLetras.append(contents+" ");
 							this.texto.setText("¡BIEN! Acabas de encontrar una nueva letra ("+contents+"), sigue leyendo códigos para conseguir el resto");
 						}
 						if (estanTodas()) {
