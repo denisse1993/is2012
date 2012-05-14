@@ -250,6 +250,17 @@
             </intent-filter>
         </activity>
         
+        <!--  MJ8 -->   
+          
+          <activity
+            android:label="@string/app_name"
+            android:name=".minijuegos.mj8.UltimatePuzzleActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.cinnamon.is.minijuegos.MJ8" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
         <!-- Activity del zXing para CaptureActivity -->
         <activity

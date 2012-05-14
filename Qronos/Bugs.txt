@@ -11,8 +11,10 @@
 - Peta en segundo plano
 - Sonido sigue sonando despuÃ©s de salir (Solucionado)
 - Dialogo Texto(Edu)(Solucionado)
-- Peta el login
+- Peta el login(solucionado)
 - El texto del dialog que se lanza antes de lanzar un minijuego en Arcade no se lee
+- Al subir las puntuaciones al ranking de arcade se ha copiado el valor de mj1 a mj11
+	(despues de introducir mj8)
 
 
 
