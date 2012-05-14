@@ -37,7 +37,6 @@ public class GameView extends View {
 
 	private final int posicionZ_camara;
 	private final int posicionY_camara;
-	
 
 	/**
 	 * Vista pulsada en onClick para uso en dialog onclick
@@ -162,6 +161,7 @@ public class GameView extends View {
 
 		} else {
 			canvas.drawBitmap(boom, 0, 0, paint);
+			score = 0;
 			a.finalizar(true);
 			// ///
 			/*
@@ -230,6 +230,5 @@ public class GameView extends View {
 		}
 		return false;
 	}
-
 
 }
