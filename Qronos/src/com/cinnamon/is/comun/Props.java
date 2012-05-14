@@ -352,10 +352,16 @@ public final class Props {
 		/**
 		 * Informacion de actividades
 		 */
+		public static final String iMain = "Arcade: Juega en modo un jugador.\nAventura: Crea o œnete a una aventura";
 		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor.\nToca el icono de estadisticas para ver las estadisticas.\nToca los iconos de las flechas para cambiar la lista de MJ.";
 		public static final String iSelecMJ = "Toca en la imagen para agregar el mj asociado a la lista de MJ.\nToca los iconos de las flechas para cambiar la lista de MJ.";
 		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nPara confirmar la pista, pincha en la imagen del MJ.\nToca los iconos de las flechas para cambiar la lista de MJ";
-		public static final String iHost = "Comparte el código QR generado a los jugadores de la Aventura";
+		public static final String iHost = "Comparte el código QR generado con los jugadores de la Aventura";
+		public static final String iInGame = "Encuentra el c—digo QR asociado a la pista para lanzar el minijuego";
+		public static final String iElige = "Crear: Establece una nueva aventura|"
+				+ "\nEditar: cambia alguna aventura ya creada"
+				+ "\nUsar: utiliza una aventura existente"
+				+ "\nUnirse: unete a una aventura y empieza a jugar!";
 
 		/**
 		 * Para uso en avisos
