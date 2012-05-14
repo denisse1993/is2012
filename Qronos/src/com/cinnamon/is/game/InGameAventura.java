@@ -194,7 +194,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	@Override
 	public void onBackPressed() {
 		// super.onBackPressed();
-		timer.cancel();
+
 		this.aDactual = Launch.lanzaConfirmacion("Salir", "Desea Salir?", this);
 	}
 
@@ -221,8 +221,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			switch (boton) {
 			case -1:// yes
 				dialog.cancel();
-				super.onBackPressed();
-				// this.l.lanzaActivity(Props.Action.MAINMENU);
+				timer.cancel();
+				finish();
+				Bundle b = new Bundle();
+				b.putSerializable(Props.Comun.JUGADOR, jugador);
+				this.l.lanzaActivity(Props.Action.MAINMENU, b);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -258,13 +261,15 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 					this.quest.getMinijuego(this.mjActual).pista);
 			break;
 		case R.id.iBinfoConexionAv:
-			if (checkConexion()){
-				this.l.lanzaAviso("Disponibilidad de red", Props.Strings.IONLINE, R.id.iBinfoConexionAv);
-			}else{
-				this.l.lanzaAviso("Disponibilidad de red", Props.Strings.IOFFLINE, R.id.iBinfoConexionAv);
+			if (checkConexion()) {
+				this.l.lanzaAviso("Disponibilidad de red",
+						Props.Strings.IONLINE, R.id.iBinfoConexionAv);
+			} else {
+				this.l.lanzaAviso("Disponibilidad de red",
+						Props.Strings.IOFFLINE, R.id.iBinfoConexionAv);
 			}
 			break;
-			
+
 		}
 	}
 
@@ -438,15 +443,23 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	private final Runnable mostrarMensaje = new Runnable() {
 		public void run() {
 			checkConexion();
-			if (conexion.getNotif(jugador.getNombre(), Login.prefs.getString("token", "")) ) {
-				int respuesta = Integer.parseInt(j.jsonToString(conexion
-						.getRespuesta()));
+
+			if (conexion.getNotif(jugador.getNombre(),
+					Login.prefs.getString("token", ""))) {
+				String s = j.jsonToString(conexion.getRespuesta());
+				int respuesta;
+				if (s.equals("")) {
+					respuesta = 0;
+				} else {
+					respuesta = Integer.parseInt(s);
+				}
 				if (currentNotif != respuesta) {
 					currentNotif = respuesta;
 
 					Launch.lanzaAviso("Notificaciones pendientes",
 							"Click en Ranking para mas detalles", a);
 				}
+
 			}
 		}
 	};
