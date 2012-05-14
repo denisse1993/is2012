@@ -70,15 +70,18 @@ public class TextDialog extends Dialogos {
 			case 0:
 				this.dismiss();
 				launch.lanzaDialogoEsperaCreaQuest(a, nombreJugador);
+				// this.launch.finalizaActivity();
 				break;
 
 			case 1:
 				this.dismiss();
 				launch.lanzaDialogoEsperaGetQuest(a);
+				// this.launch.finalizaActivity();
 				break;
 			case 2:
 				this.dismiss();
 				launch.lanzaDialogoEsperaGetQuestPass(a, nombreJugador);
+				// this.launch.finalizaActivity();
 				break;
 			}
 			break;

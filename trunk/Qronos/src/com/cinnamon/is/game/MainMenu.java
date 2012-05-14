@@ -128,10 +128,8 @@ public class MainMenu extends Activity implements OnClickListener {
 			// openingTheme.release();
 			break;
 		case R.id.bAventura:
+			Props.Comun.ACTIVIDAD = MainMenu.this;
 			l.lanzaActivity(Props.Action.ELIGEMODOAVENTURA, b);
-			// b.putSerializable(Props.Comun.AVENTURA, new Aventura("aventura",
-			// "aventura"));
-			// l.lanzaActivity(Props.Action.SELECMJ, b);
 			break;
 		case R.id.bOpciones:
 			b.putString(Props.Comun.RETORNO, Props.Action.MAINMENU);
