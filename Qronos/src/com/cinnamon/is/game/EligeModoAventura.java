@@ -8,7 +8,6 @@
 
 package com.cinnamon.is.game;
 
-import com.cinnamon.is.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,13 +15,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
+import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
-import com.cinnamon.is.comun.UtilQR;
 import com.cinnamon.is.comun.Props.Enum.Tabla;
+import com.cinnamon.is.comun.UtilQR;
 
 /**
  * Activity que nos da a elegir entre Crear nuestra propia aventura o Unirnos a
@@ -38,6 +41,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	 * Botones del view
 	 */
 	Button bCrear, bUnirse, bEditar, bUsar;
+	ImageView ivInfo;
 
 	/**
 	 * Vista pulsada en onClick para uso en dialog onclick
@@ -105,6 +109,9 @@ public class EligeModoAventura extends Activity implements Inet,
 		bUsar = (Button) findViewById(R.id.bUsarAventura);
 		bUsar.setOnClickListener(this);
 
+		ivInfo = (ImageView) findViewById(R.id.ivInfoElige);
+		ivInfo.setOnClickListener(this);
+
 		Bundle b = getIntent().getExtras();
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 	}
@@ -142,7 +149,7 @@ public class EligeModoAventura extends Activity implements Inet,
 			}
 			launch.lanzaDialogoEsperaGetQuestUnirse(a);
 			break;
-		case R.id.ibInfoElige:
+		case R.id.ivInfoElige:
 			Launch.lanzaAviso("Información", Props.Strings.iElige, this);
 			break;
 		}

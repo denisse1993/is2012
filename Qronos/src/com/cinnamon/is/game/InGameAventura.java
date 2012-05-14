@@ -79,6 +79,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	private LinearLayout llInGame, llInGameActionBar, llInGameBottomBar;
 	private ImageView bOpciones, bCamara, bRanking, iVinfoConexion;
 	private TextView title;
+	ImageView ivInfo;
 
 	/**
 	 * Minijuego Actual -1 NO existe la aventura -2 Todos los minijuegos han
@@ -119,6 +120,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		this.bOpciones = (ImageView) findViewById(R.id.iv_opciones_ingame);
 		this.bCamara = (ImageView) findViewById(R.id.iv_camara_ingame);
 		this.bRanking = (ImageView) findViewById(R.id.iv_ranking_ingame);
+		this.ivInfo = (ImageView) findViewById(R.id.iv_info_ingame);
 
 		llInGame = (LinearLayout) findViewById(R.id.ll_medio_ingame);
 		llInGameActionBar = (LinearLayout) findViewById(R.id.ll_ingame_action_bar);
@@ -142,6 +144,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		this.bRanking.setOnClickListener(this);
 		this.llInGame.setOnClickListener(this);
 		this.iVinfoConexion.setOnClickListener(this);
+		this.ivInfo.setOnClickListener(this);
 
 		// Conexion
 		this.conexion = new Conexion(this);
