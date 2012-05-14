@@ -151,6 +151,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	public void lanzaSelecMJ() {
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.AVENTURA, a);
+		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		Launch.lanzaActivity(this, Props.Action.SELECMJ, b);
 		finish();
 	}
@@ -161,6 +162,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	public void lanzaSelecPISTA() {
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.AVENTURA, a);
+		b.putSerializable(Props.Comun.JUGADOR, jugador);
 		b.putBoolean(Props.Comun.READ, true);
 		Launch.lanzaActivity(this, Props.Action.SELECPISTA, b);
 		finish();
