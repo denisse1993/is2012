@@ -294,6 +294,11 @@ public final class Props {
 		 */
 		public static final String CAMARABOMBA = "camara_bomba";
 		/**
+		 * String para cuando se quiera usar tokens
+		 */
+		public static final String TOKEN = "token";
+
+		/**
 		 * Constantes para limitar longitudes de strings
 		 */
 		public static final int MAX_CHAR_NICK = 11;
