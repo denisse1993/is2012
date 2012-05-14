@@ -142,6 +142,9 @@ public class EligeModoAventura extends Activity implements Inet,
 			}
 			launch.lanzaDialogoEsperaGetQuestUnirse(a);
 			break;
+		case R.id.ibInfoElige:
+			Launch.lanzaAviso("Información", Props.Strings.iElige, this);
+			break;
 		}
 	}
 

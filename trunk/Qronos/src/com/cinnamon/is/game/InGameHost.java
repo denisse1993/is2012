@@ -25,7 +25,8 @@ import com.cinnamon.is.comun.UtilQR;
  * @version 1.0 19.04.2012
  * 
  */
-public class InGameHost extends Activity implements Inet, OnClickListener {
+public class InGameHost extends Activity implements Inet, OnClickListener,
+		DialogInterface.OnClickListener {
 
 	/**
 	 * Conexion de la actividad
