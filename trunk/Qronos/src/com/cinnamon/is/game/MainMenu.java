@@ -16,6 +16,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.DbAdapter;
@@ -33,6 +35,7 @@ public class MainMenu extends Activity implements OnClickListener {
 
 	// interfaz
 	private Button bArcade, bOpciones, bAventura, bSalir;
+	private ImageView ivInfo;
 
 	/**
 	 * Adaptador para conectar con la BD
@@ -137,7 +140,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			// l.lanzaActivity(Props.Action.INGAME, b);
 			break;
 
-		case R.id.ibInfoMain:
+		case R.id.ivInfoMain:
 			Launch.lanzaAviso("Información", Props.Strings.iMain, this);
 			break;
 		case R.id.bSalir:
@@ -162,10 +165,12 @@ public class MainMenu extends Activity implements OnClickListener {
 		bOpciones = (Button) findViewById(R.id.bOpciones);
 		bAventura = (Button) findViewById(R.id.bAventura);
 		bSalir = (Button) findViewById(R.id.bSalir);
+		ivInfo = (ImageView) findViewById(R.id.ivInfoMain);
 
 		// Listeners
 		bArcade.setOnClickListener(this);
 		bOpciones.setOnClickListener(this);
+		ivInfo.setOnClickListener(this);
 
 		if (Props.Comun.ONLINE) {
 			bAventura.setOnClickListener(this);

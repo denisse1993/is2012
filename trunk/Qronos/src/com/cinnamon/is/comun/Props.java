@@ -358,7 +358,7 @@ public final class Props {
 		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nPara confirmar la pista, pincha en la imagen del MJ.\nToca los iconos de las flechas para cambiar la lista de MJ";
 		public static final String iHost = "Comparte el código QR generado con los jugadores de la Aventura";
 		public static final String iInGame = "Encuentra el c—digo QR asociado a la pista para lanzar el minijuego";
-		public static final String iElige = "Crear: Establece una nueva aventura|"
+		public static final String iElige = "Crear: Establece una nueva aventura"
 				+ "\nEditar: cambia alguna aventura ya creada"
 				+ "\nUsar: utiliza una aventura existente"
 				+ "\nUnirse: unete a una aventura y empieza a jugar!";
