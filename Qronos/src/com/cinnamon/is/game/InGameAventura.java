@@ -113,7 +113,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		this.quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
-		this.jugador.setAventura(quest.getNombre());
+		//this.jugador.setHost(quest.getNombre());
 
 		// FindViewByID
 		this.iVinfoConexion = (ImageView) findViewById(R.id.iBinfoConexionAv);
@@ -263,7 +263,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_ranking_ingame:
 			timer.cancel();
-			this.l.lanzaDialogoGetPquest(quest.getNombre());
+			this.l.lanzaDialogoGetPquest(jugador.getHost());//TODO antes quest.getNombre()
 			break;
 		case R.id.iv_camara_ingame:
 			timer.cancel();
@@ -271,10 +271,17 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			this.q.lanzarQR();
 			break;
 		case R.id.iv_opciones_ingame:
-			/*
-			 * timer.cancel(); Launch.lanzaActivity(this,
-			 * Props.Action.OPCIONES);
-			 */
+			if (Props.Comun.ACTIVIDAD != null) {
+				Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+				Props.Comun.ACTIVIDAD = null;// resetea
+			}
+			timer.cancel();
+			Bundle b = new Bundle();
+			b.putSerializable(Props.Comun.AVENTURA, quest);
+			b.putSerializable(Props.Comun.JUGADOR, jugador);
+			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEAVENTURA);
+			finish();
+			launch.lanzaActivity(Props.Action.OPCIONES, b);
 			break;
 		case R.id.iv_info_ingame:
 			Launch.lanzaAviso("Información", Props.Strings.iInGame, this);

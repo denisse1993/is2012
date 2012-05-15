@@ -13,6 +13,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.game.Aventura;
 import com.cinnamon.is.game.Jugador;
 
 /**
@@ -29,6 +30,11 @@ public class Opciones extends PreferenceActivity implements
 	 * Jugador actual del juego
 	 */
 	private Jugador jugador;
+	
+	/**
+	 * Aventura actual del juego
+	 */
+	private Aventura aventura;
 	/**
 	 * Preference para la opcion de cambiar de usuario
 	 */
@@ -55,6 +61,7 @@ public class Opciones extends PreferenceActivity implements
 		addPreferencesFromResource(R.xml.opciones);
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
+		this.aventura = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
 		this.ACTION = b.getString(Props.Comun.RETORNO);
 		// abre base de datos
 		this.mDbHelper = new DbAdapter(this);
@@ -71,6 +78,8 @@ public class Opciones extends PreferenceActivity implements
 		this.mDbHelper.close();
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, this.jugador);
+		if(aventura!=null)
+			b.putSerializable(Props.Comun.AVENTURA, this.aventura);
 		finish();
 		Launch.lanzaActivity(this, ACTION, b);
 	}

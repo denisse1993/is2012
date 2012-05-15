@@ -8,6 +8,8 @@
 
 package com.cinnamon.is.game;
 
+import java.util.StringTokenizer;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -86,6 +88,10 @@ public class EligeModoAventura extends Activity implements Inet,
 	 * Aventura inicial
 	 */
 	private Aventura a;
+	/**
+	 * Nombre del host, usado para funcion unirsePartida
+	 */
+	private String nameHost;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -144,9 +150,12 @@ public class EligeModoAventura extends Activity implements Inet,
 			// q = new UtilQR(this);
 			// q.lanzarQR();
 			// TODO a sustituir por lo de arriba, esto para pruebas
+			nameHost="host";//esto y nameAventura se leera del QR
+			jugador.setHost(nameHost);
 			if (creaJugadorLocalPquest()) {
 				getJugadorLocalPquest();
 			}
+			
 			launch.lanzaDialogoEsperaGetQuestUnirse(a);
 			break;
 		case R.id.ivInfoElige:
@@ -251,7 +260,7 @@ public class EligeModoAventura extends Activity implements Inet,
 		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
 			// crear nuevo jugador
 			mDbHelper.createRowPquest(jugador.getNombre(), new int[] { 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, a.getNombre());
+					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, nameHost);//TODO antes a.getNombre()
 			esta = false;
 		}
 		return esta;
@@ -288,7 +297,7 @@ public class EligeModoAventura extends Activity implements Inet,
 			int actual = mCursor.getInt(DbAdapter.PQUEST_IDCOL_ACTUAL);
 			stopManagingCursor(mCursor);
 			jugador.setScoreQuest(pquest);
-			jugador.setAventura(name);
+			jugador.setHost(name);
 			jugador.setFase(actual);
 			mCursor.close();
 			esta = true;
@@ -302,7 +311,11 @@ public class EligeModoAventura extends Activity implements Inet,
 		String contents = q.getRawQR(requestCode, resultCode, data);
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				a = new Aventura(contents, null);
+				StringTokenizer st = new StringTokenizer(contents,";");
+				String nameQuest=st.nextToken();
+				nameHost=st.nextToken();
+				jugador.setHost(nameHost);
+				a = new Aventura(nameQuest, null);
 				if (creaJugadorLocalPquest()) {
 					getJugadorLocalPquest();
 				}

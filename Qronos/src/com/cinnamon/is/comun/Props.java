@@ -397,6 +397,8 @@ public final class Props {
 		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
 		public static final String ERROR_JSON = "Error obteniendo la informacion del servidor";
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
+		public static final String PARTIDA_RESETEADA = "Partida reseteada correctamente";
+		public static final String PARTIDA_RESETEADA_ERROR = "Problema al resetear la partida en el servidor";
 
 		/**
 		 * Avisos para longitudes incorrectas. Se puede simplificar si la long
