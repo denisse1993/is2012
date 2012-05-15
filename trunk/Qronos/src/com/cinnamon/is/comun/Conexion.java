@@ -19,6 +19,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.cinnamon.is.game.Jugador;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -460,7 +462,7 @@ public class Conexion {
 		pairs.add(new BasicNameValuePair("user", nick));
 		pairs.add(new BasicNameValuePair("quest", quest));
 		pairs.add(new BasicNameValuePair("actual", String.valueOf(actual)));
-		// pairs.add(new BasicNameValuePair("token", token));
+		pairs.add(new BasicNameValuePair("token", token));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -565,7 +567,7 @@ public class Conexion {
 
 		pairs.add(new BasicNameValuePair("user", nick));
 		pairs.add(new BasicNameValuePair("quest", quest));
-		// pairs.add(new BasicNameValuePair("token", token));
+		pairs.add(new BasicNameValuePair("token", token));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -584,4 +586,37 @@ public class Conexion {
 		}
 		return retorno;
 	}
+	
+	 /**
+	 * 
+	 * @param nombre
+	 *           el nombre del jugador a obtener
+	 * @return boolean
+	 * 
+	 */
+	public boolean dameJugadorPquest(final String nombre) {
+		boolean retorno;
+		HttpClient hc = new DefaultHttpClient();
+		HttpPost post;
+		// HttpPost post = new HttpPost("http://10.0.2.2/arcade.php");
+		post = new HttpPost("http://cinnamon.webatu.com/damejugadorpquest.php"); // server
+		
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		pairs.add(new BasicNameValuePair("nombre", nombre));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				this.respuesta = EntityUtils.toString(rp.getEntity());
+				retorno = true;
+			} else {
+				retorno = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = false;
+		}
+		return retorno;
+	}
+
 }

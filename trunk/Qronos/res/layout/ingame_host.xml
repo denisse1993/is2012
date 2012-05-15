@@ -101,14 +101,14 @@
                 android:paddingBottom="2dip"
                 android:paddingRight="5dp"
                 android:paddingTop="15dip"
-                android:src="@drawable/ic_menu_gear" />
+                android:src="@drawable/ic_menu_del_arcade" />
 
             <TextView
                 android:id="@+id/tVleft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Opciones"
+                android:text="Reset Partida"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
                 android:textColor="@color/azul_action_bar"
                 android:textSize="11sp" />

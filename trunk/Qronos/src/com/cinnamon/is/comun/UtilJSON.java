@@ -143,15 +143,62 @@ public final class UtilJSON {
 		return d;
 	}
 
+	/**
+	 * @param json
+	 *            la info de la tabla pquest online
+	 * @param Jugador
+	 *            del jugador a comprobar
+	 * @return true o false segun existe o no
+	 */
+	public boolean getPquestJugadorSiExiste(String json, Jugador jug) {
+		String n;
+		boolean retorno = false;
+		int[] d = new int[Props.Comun.MAX_MJ];
+		JSONArray jArray;
+		try {
+			jArray = new JSONArray(json);
+			JSONObject json_data = null;
+			for (int i = 0; i < jArray.length(); i++) {
+				json_data = jArray.getJSONObject(i);
+				n = json_data.getString("NICK");
+				if (n.equals(jug.getNombre())) {// mismo nombre
+					retorno = true;
+					for (int j = 0; j < d.length; j++) {
+						int code = j + 1;
+						d[j] = Integer.parseInt(json_data
+								.getString("MJ" + code));
+					}
+					int actual = Integer
+							.parseInt(json_data.getString("ACTUAL"));
+					String host = json_data.getString("QUEST");
+					jug.setScoreQuest(d);
+					jug.setFase(actual);
+					// Nos quedamos con el host que se haya leido del qr
+					// por eso se comenta esta linea, en principio el host que
+					// se leyera aqui estaria vacio, por defecto
+					// jug.setHost(host);
+					break;
+				}
+			}
+		} catch (JSONException e1) {
+			retorno = false;
+		} catch (ParseException e1) {
+			retorno = false;
+		}
+		return retorno;
+	}
+
 	public boolean rankingOnlineAventura(final String jSON) {
 		boolean retorno;
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
 
 		JSONArray jArray;
 		try {
+
 			jArray = new JSONArray(jSON);
 			JSONObject json_data = null;
-			for (int i = 0; i < 5; i++) {
+			int limite = jArray.length() < 5 ? jArray.length() : 5;
+			for (int i = 0; i < limite; i++) {
 				int j = i + 1;
 				json_data = jArray.getJSONObject(i);
 				nick = json_data.getString("NICK");
@@ -260,7 +307,7 @@ public final class UtilJSON {
 		}
 		return notif;
 	}
-	
+
 	public String jsonToStringLogin(final String jSON) {
 		JSONArray jArray;
 		String notif = "";

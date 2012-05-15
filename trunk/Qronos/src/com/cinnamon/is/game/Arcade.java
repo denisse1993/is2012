@@ -421,6 +421,9 @@ public class Arcade extends Activity implements View.OnClickListener,
 				case R.id.bMenuCambiaUser:
 					Props.Comun.ACTIVIDAD.finish();// cierar mainMenu
 					Props.Comun.ACTIVIDAD = null;
+					SharedPreferences.Editor e = getData.edit();
+					e.putBoolean(Props.Comun.CB_LOGIN_AUTO, false);
+					e.commit();
 					finish();
 					Launch.lanzaActivity(this, Props.Action.LOGIN);
 					break;

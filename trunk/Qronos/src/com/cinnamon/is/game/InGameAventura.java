@@ -52,10 +52,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	 */
 	Jugador jugador;
 	int superados = 0;
-	/**
-	 * Lauch de la actividad
-	 */
-	public Launch launch;
 
 	/**
 	 * DbAdapter para interaccionar con la base de datos
@@ -163,6 +159,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 		j = new UtilJSON(this);
 		// textFinal = (TextView) findViewById(R.id.tv_fin);
+		this.l.lanzaDialogoUpdatePquest(this.jugador);//sube jugador para actualizar valor de host
 	}
 
 	private int generaMinijuego() {
@@ -263,7 +260,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_ranking_ingame:
 			timer.cancel();
-			this.l.lanzaDialogoGetPquest(jugador.getHost());//TODO antes quest.getNombre()
+			this.l.lanzaDialogoGetPquest(jugador.getHost());//antes quest.getNombre()
 			break;
 		case R.id.iv_camara_ingame:
 			timer.cancel();
@@ -281,7 +278,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			b.putSerializable(Props.Comun.JUGADOR, jugador);
 			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEAVENTURA);
 			finish();
-			launch.lanzaActivity(Props.Action.OPCIONES, b);
+			l.lanzaActivity(Props.Action.OPCIONES, b);
 			break;
 		case R.id.iv_info_ingame:
 			Launch.lanzaAviso("Información", Props.Strings.iInGame, this);

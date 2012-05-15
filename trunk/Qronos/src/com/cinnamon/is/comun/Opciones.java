@@ -7,8 +7,10 @@
 //
 package com.cinnamon.is.comun;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 
@@ -30,7 +32,7 @@ public class Opciones extends PreferenceActivity implements
 	 * Jugador actual del juego
 	 */
 	private Jugador jugador;
-	
+
 	/**
 	 * Aventura actual del juego
 	 */
@@ -66,7 +68,7 @@ public class Opciones extends PreferenceActivity implements
 		// abre base de datos
 		this.mDbHelper = new DbAdapter(this);
 		this.mDbHelper.open(false);
-		
+
 		this.pLogin = findPreference("loginChange");
 		this.pLogin.setOnPreferenceClickListener(this);
 		this.pReset = findPreference("resetGame");
@@ -78,7 +80,7 @@ public class Opciones extends PreferenceActivity implements
 		this.mDbHelper.close();
 		Bundle b = new Bundle();
 		b.putSerializable(Props.Comun.JUGADOR, this.jugador);
-		if(aventura!=null)
+		if (aventura != null)
 			b.putSerializable(Props.Comun.AVENTURA, this.aventura);
 		finish();
 		Launch.lanzaActivity(this, ACTION, b);
@@ -88,6 +90,12 @@ public class Opciones extends PreferenceActivity implements
 	public boolean onPreferenceClick(final Preference preference) {
 		String key = preference.getKey();
 		if (key.equals(this.pLogin.getKey())) {
+			//Desactiva autologeo
+			SharedPreferences prefsGlobal = PreferenceManager
+					.getDefaultSharedPreferences(getApplicationContext());
+			SharedPreferences.Editor e = prefsGlobal.edit();
+			e.putBoolean(Props.Comun.CB_LOGIN_AUTO, false);
+			e.commit();
 			this.mDbHelper.close();
 			finish();
 			Launch.lanzaActivity(this, Props.Action.LOGIN);
