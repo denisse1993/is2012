@@ -161,6 +161,7 @@ public class GameView extends View {
 
 		} else {
 			canvas.drawBitmap(boom, 0, 0, paint);
+			// TODO 2¼Cambio
 			score = 0;
 			a.finalizar(true);
 			// ///
