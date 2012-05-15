@@ -184,16 +184,18 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 			this.launch.lanzaDialogoGetPquest(jugador.getNombre());
 			break;
 		case R.id.iv_in_game_host_opciones:
-			if (Props.Comun.ACTIVIDAD != null) {
-				Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
-				Props.Comun.ACTIVIDAD = null;// resetea
-			}
-			Bundle b = new Bundle();
-			b.putSerializable(Props.Comun.AVENTURA, quest);
-			b.putSerializable(Props.Comun.JUGADOR, jugador);
-			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEHOST);
-			finish();
-			launch.lanzaActivity(Props.Action.OPCIONES, b);
+			//para lanzar opciones
+//			if (Props.Comun.ACTIVIDAD != null) {
+//				Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+//				Props.Comun.ACTIVIDAD = null;// resetea
+//			}
+//			Bundle b = new Bundle();
+//			b.putSerializable(Props.Comun.AVENTURA, quest);
+//			b.putSerializable(Props.Comun.JUGADOR, jugador);
+//			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEHOST);
+//			finish();
+//			launch.lanzaActivity(Props.Action.OPCIONES, b);
+			launch.lanzaDialogoEsperaResetPquest(jugador.getNombre(), jugador.getNombre());
 			break;
 		case R.id.iv_in_game_host_info:
 			Launch.lanzaAviso("Info Aventura", Props.Strings.iHost, this);

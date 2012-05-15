@@ -71,7 +71,9 @@ public class Login extends Activity implements Inet, OnClickListener {
 	private Button bLogin;
 	private Button bRegister;
 	public static SharedPreferences prefs;
+	private SharedPreferences prefsGlobal;
 	private CheckBox cbRemember;
+	private CheckBox cbDirecto;
 	Bitmap uploadIMG;
 	// Interfaz antigua
 	// private Button bArrancar;
@@ -110,6 +112,7 @@ public class Login extends Activity implements Inet, OnClickListener {
 		bLogin = (Button) findViewById(R.id.bLogin);
 		bRegister = (Button) findViewById(R.id.bRegister);
 		cbRemember = (CheckBox) this.findViewById(R.id.cbRememberLogin);
+		cbDirecto = (CheckBox) this.findViewById(R.id.cbAutoLogin);
 		uploadIMG = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ibmj0);
 
@@ -143,13 +146,26 @@ public class Login extends Activity implements Inet, OnClickListener {
 		}
 
 		// Pondra "" y false si no se ha guardado el prefs
-		etUsername.setText(nombre);// TODO
+		etUsername.setText(nombre);
 		etPassword.setText(pass);// pone pass
 		if (prefs.getString("checked", "no").equals("yes"))
 			cbRemember.setChecked(true);
 		else
 			cbRemember.setChecked(false);
 
+		// Obtiene configuracion global de opciones, para evitar que siempre se
+		// inicie autologin
+		prefsGlobal = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		if (!prefsGlobal.getBoolean(Props.Comun.CB_LOGIN_AUTO, false)) {
+			cbDirecto.setChecked(false);
+		} else {
+			cbDirecto.setChecked(true);
+			if (preparaLogin())
+				l.lanzaDialogoEsperaLogin(nombre, passMD5);
+			else
+				l.lanzaToast(Props.Strings.CAMPOS_VACIOS);
+		}
 	}
 
 	@Override
@@ -173,10 +189,10 @@ public class Login extends Activity implements Inet, OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-	//para esconder el teclado al darle a Login
-		EditText text = (EditText)findViewById(R.id.etPassword);
-	    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-	    imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+		// para esconder el teclado al darle a Login
+		EditText text = (EditText) findViewById(R.id.etPassword);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
 		if (preparaLogin()) {
 			switch (v.getId()) {
 			case R.id.bLogin:
@@ -219,6 +235,17 @@ public class Login extends Activity implements Inet, OnClickListener {
 			// Si esta activo las guarda
 			SharedPreferences.Editor editor = prefs.edit();
 			if (cbRemember.isChecked()) {
+				if (cbDirecto.isChecked()) {
+					editor.putString("directo", "yes");
+					SharedPreferences.Editor e = prefsGlobal.edit();
+					e.putBoolean(Props.Comun.CB_LOGIN_AUTO, true);
+					e.commit();
+				} else {
+					editor.putString("directo", "no");
+					SharedPreferences.Editor e = prefsGlobal.edit();
+					e.putBoolean(Props.Comun.CB_LOGIN_AUTO, false);
+					e.commit();
+				}
 				editor.putString("user", nombre);
 				editor.putString("pass", pass);
 				editor.putString("checked", "yes");
@@ -228,6 +255,7 @@ public class Login extends Activity implements Inet, OnClickListener {
 				editor.commit();
 			}
 		}
+
 		return bien;
 	}
 

@@ -8,6 +8,11 @@
             android:key="cbSonido"
             android:summary="Activar o desactivar sonido"
             android:title="Sonido" />
+         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="cbLoginAuto"
+            android:summary="Activar o desactivar login auto"
+            android:title="Login" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Utilidades" >

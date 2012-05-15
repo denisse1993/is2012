@@ -54,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:checked="false"
-                android:enabled="false"
                 android:text="Entrar automáticamente"
                 android:textColor="@color/azul_action_bar"
                 android:textSize="16sp" />

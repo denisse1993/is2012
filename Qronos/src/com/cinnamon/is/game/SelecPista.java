@@ -291,13 +291,19 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			habilitarGrupoMJ(grupoMJ + 1);
 			break;
 		case R.id.iVDone:
-			Bundle b = new Bundle();
-			b.putSerializable(Props.Comun.AVENTURA, aventura);
 			// actualizar en BD tabla quest
 			mDbHelper.updateRowQuest(aventura.getNombre(), null,
 					aventura.getMJArrayInteger(),
 					aventura.getPistasArrayString());
-			l.lanzaDialogoEsperaUpdateQuest(aventura, j.getNombre());
+			if (!read)
+				l.lanzaDialogoEsperaUpdateQuest(aventura, j.getNombre());
+			else {
+				if (Props.Comun.ACTIVIDAD != null) {
+					Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+					Props.Comun.ACTIVIDAD = null;// resetea
+				}
+				lanzaInGameHost();
+			}
 			break;
 		case R.id.iBinfoSelecPISTA:
 			Launch.lanzaAviso("Información", Props.Strings.iSelecPISTA, this);

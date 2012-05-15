@@ -620,6 +620,18 @@ public final class Launch {
 	}
 
 	/**
+	 * Sirve para obtener una jugador de la tabla pquest, usando su nombre
+	 * 
+	 * @param j
+	 *            el jugador
+	 * 
+	 */
+	public void lanzaDialogoEsperaGetJugadorPquest(final Jugador j) { //
+		// valor 12 activa get aventura para unirse a partida
+		new ConexionServerTask().execute(new Object[] { 12, j });
+	}
+
+	/**
 	 * <p>
 	 * Clase asincrona para realizar conexiones con el server
 	 * </p>
@@ -772,9 +784,9 @@ public final class Launch {
 				// Ver ranking pquest
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
-				Object[] tmp=inet.c().getPquest(qStr);
-				ret[1] = tmp[0];//boolean
-				ret[2]= tmp[1];//string
+				Object[] tmp = inet.c().getPquest(qStr);
+				ret[1] = tmp[0];// boolean
+				ret[2] = tmp[1];// string
 				break;
 			case 10:
 				// Get aventura
@@ -791,6 +803,13 @@ public final class Launch {
 				String diferenciadorPartida = (String) datos[2];
 				ret[1] = inet.c().resetPquest(nombreHost, diferenciadorPartida,
 						Login.prefs.getString("token", ""));
+				break;
+			case 12:
+				// Get jugador Pquest (tabla pquest)
+				// A partir de su nombre
+				inet = (Inet) Launch.this.a;
+				ret[2] = j = (Jugador) datos[1];
+				ret[1] = inet.c().dameJugadorPquest(j.getNombre());
 				break;
 			}
 
@@ -990,7 +1009,7 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				if (conex) {
 					String json = (String) result[2];
-					if (json != null&!json.equals("null")) {
+					if (json != null & !json.equals("null")) {
 						Bundle b = new Bundle();
 						b.putSerializable(Props.Comun.JSON, json);
 						inet.l().lanzaActivity(Props.Action.RANKING, b);
@@ -1033,7 +1052,33 @@ public final class Launch {
 					inet.l().lanzaToast(Props.Strings.PARTIDA_RESETEADA_ERROR);
 				}
 				break;
+			case 12:
+				// Obtener Jugador de pquest
+				conex = (Boolean) result[1];
+				inet = (Inet) Launch.this.a;
+				if (conex) {
+					String pquest = inet.c().getRespuesta();
+					if (pquest.equals("3")) {
+						inet.l().lanzaToast(Props.Strings.USER_INET_NO_EXISTE);
+					} else {
+						jugador = (Jugador) result[2];
+						u = new UtilJSON(Launch.this.a);
+						if (u.getPquestJugadorSiExiste(pquest, jugador)) {
+							inet.l().lanzaToast(
+									Props.Strings.USER_UPDATE_PQUEST);
+							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
+							eli.creaJugadorLocalPquestActualizado();
+							// una vez obtiene jugador actualizado, lanza para
+							// unirse a la aventura
+							inet.l().lanzaDialogoEsperaGetQuestUnirse(eli.a);
+						}
+					}
+				} else {
+					inet.l().lanzaToast(Props.Strings.USER_UPDATE_PQUEST_ERROR);
+				}
+				break;
 			}
+
 		}
 	}
 

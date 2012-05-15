@@ -290,6 +290,10 @@ public final class Props {
 		 */
 		public static final String CB_SONIDO = "cbSonido";
 		/**
+		 * Para obtener el estado del autoLogin global
+		 */
+		public static final String CB_LOGIN_AUTO = "cbLoginAuto";
+		/**
 		 * String para usar cuando se quiera pasar la aventura entre actividades
 		 */
 		public static final String CAMARABOMBA = "camara_bomba";
@@ -352,16 +356,13 @@ public final class Props {
 		/**
 		 * Informacion de actividades
 		 */
-		public static final String iMain = "Arcade: Juega en modo un jugador.\nAventura: Crea o œnete a una aventura";
-		public static final String iArcade = "Toca en la imagen para lanzar el mj asociado.\nToca el icono de la flecha para subir tus puntuaciones al servidor.\nToca el icono de estadisticas para ver las estadisticas.\nToca los iconos de las flechas para cambiar la lista de MJ.";
-		public static final String iSelecMJ = "Toca en la imagen para agregar el mj asociado a la lista de MJ.\nToca los iconos de las flechas para cambiar la lista de MJ.";
-		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nPara confirmar la pista, pincha en la imagen del MJ.\nToca los iconos de las flechas para cambiar la lista de MJ";
+		public static final String iMain = "Arcade: Juega en modo un jugador.\nAventura: Crea o únete a una aventura";
+		public static final String iArcade = "Pulsa en la imagen para lanzar el mj asociado.\nPulsa el icono de la flecha para subir tus puntuaciones al servidor.\nPulsa el icono de estadisticas para ver las estadisticas.\nPulsa los iconos de las flechas para cambiar la lista de MJ.";
+		public static final String iSelecMJ = "Pulsa en la imagen para agregar el mj asociado a la lista de MJ.\nPulsa los iconos de las flechas para cambiar la lista de MJ.";
+		public static final String iSelecPISTA = "Escribe la pista asociada a cada MJ.\nPara confirmar la pista, pincha en la imagen del MJ.\nPulsa los iconos de las flechas para cambiar la lista de MJ";
 		public static final String iHost = "Comparte el código QR generado con los jugadores de la Aventura";
-		public static final String iInGame = "Encuentra el c—digo QR asociado a la pista para lanzar el minijuego";
-		public static final String iElige = "Crear: Establece una nueva aventura"
-				+ "\nEditar: cambia alguna aventura ya creada"
-				+ "\nUsar: utiliza una aventura existente"
-				+ "\nUnirse: unete a una aventura y empieza a jugar!";
+		public static final String iInGame = "Encuentra el código QR asociado a la pista para lanzar el minijuego";
+		public static final String iElige = "Crear: Establece una nueva aventura.\nEditar: cambia alguna aventura ya creada.\nUsar: utiliza una aventura existente.\nUnirse: unete a una aventura y empieza a jugar!";
 
 		/**
 		 * Para uso en avisos
@@ -379,7 +380,7 @@ public final class Props {
 		public static final String PASS_ERROR = "Password incorrecta";
 		public static final String PISTA_MOD = "Pista modificada!";
 		public static final String PISTAS_COMPLETO = "Asignadas todas las pistas";
-		public static final String SCORE_SUBIDA = "Puntuacion subida al servidor";
+		public static final String SCORE_SUBIDA = "Datos jugador en aventura subidos al servidor";
 		public static final String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
 		public static final String AVENTURA_SUBIDA = "Aventura subida al servidor";
 		public static final String AVENTURA_SUBIDA_ERROR = "Problema al subir la aventura al servidor";
@@ -399,6 +400,8 @@ public final class Props {
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
 		public static final String PARTIDA_RESETEADA = "Partida reseteada correctamente";
 		public static final String PARTIDA_RESETEADA_ERROR = "Problema al resetear la partida en el servidor";
+		public static final String USER_UPDATE_PQUEST = "Datos aventura usuario actualizado desde online";
+		public static final String USER_UPDATE_PQUEST_ERROR = "Problema al obtener el usuario de aventura actualizado";
 
 		/**
 		 * Avisos para longitudes incorrectas. Se puede simplificar si la long
