@@ -16,7 +16,7 @@ import com.cinnamon.is.comun.Props;
  * poder ser pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.3 26.04.2012
+ * @version 1.4 15.05.2012
  */
 public class Jugador implements Serializable {
 
@@ -26,9 +26,9 @@ public class Jugador implements Serializable {
 	private String nombre;
 
 	/**
-	 * Nombre de la aventura a la que esta jugando el jugador
+	 * Nombre del host que ha iniciado la aventura, se usara para diferenciar al obtener ranking
 	 */
-	private String aventura;
+	private String host;
 
 	/**
 	 * Pass del jugador
@@ -53,7 +53,7 @@ public class Jugador implements Serializable {
 	/**
 	 * ID para la serializacion
 	 */
-	private static final long serialVersionUID = 3L;
+	private static final long serialVersionUID = 4L;
 
 	/**
 	 * Genera un jugador por parametros
@@ -68,17 +68,17 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 * @param faseActual
 	 *            del jugador
-	 * @param aventura
-	 *            nombre de la aventura
+	 * @param host
+	 *            nombre del creador de partida
 	 */
 	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest,
-			int faseActual, String aventura) {
+			int faseActual, String host) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.score = score;
 		this.scoreQuest = scoreQuest;
 		this.faseActual = faseActual;
-		this.aventura = aventura;
+		this.host = host;
 	}
 
 	/**
@@ -123,52 +123,6 @@ public class Jugador implements Serializable {
 	public Jugador(String nombre, String pass) {
 		this(nombre, pass, new int[Props.Comun.MAX_MJ],
 				new int[Props.Comun.MAX_MJ], 0, null);
-	}
-
-	/**
-	 * Metodo que actualiza la fase superada
-	 * 
-	 * @param fase
-	 *            la fase superada
-	 */
-	public void superaFase(int fase) {
-		modificaFase(fase, 1);
-	}
-
-	/**
-	 * Metodo que pone la fase actual
-	 * 
-	 * @param fase
-	 *            la fase actual
-	 */
-	public void actualFase(int fase) {
-		modificaFase(fase, 2);
-	}
-
-	/**
-	 * Metodo que modifica la fase <code>fase</code> poniendola a
-	 * <code>estado</code>
-	 * 
-	 * @param fase
-	 *            la fase a modificar
-	 * @param estado
-	 *            el nuevo estado de la fase
-	 */
-	private void modificaFase(int fase, int estado) {
-		switch (fase) {
-		case 1:
-			fase = estado;
-			break;
-		case 2:
-			fase = estado;
-			break;
-		case 3:
-			fase = estado;
-			break;
-		case 4:
-			fase = estado;
-			break;
-		}
 	}
 
 	/**
@@ -246,12 +200,12 @@ public class Jugador implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getAventura() {
-		return aventura;
+	public String getHost() {
+		return host;
 	}
 
-	public void setAventura(String aventura) {
-		this.aventura = aventura;
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 	public void setPass(String pass) {
@@ -298,7 +252,7 @@ public class Jugador implements Serializable {
 		sb.append("]");
 		sbQ.setLength(sb.length() - 1);
 		sbQ.append("]");
-		return nombre + " " + faseActual + "\nScore Arcade: " + sb.toString()
+		return nombre + " " + faseActual+" "+host + "\nScore Arcade: " + sb.toString()
 				+ "\nScore Quest: " + sbQ.toString();
 	}
 }

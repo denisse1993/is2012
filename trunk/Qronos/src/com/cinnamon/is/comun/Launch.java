@@ -584,6 +584,9 @@ public final class Launch {
 	 * Sirve para obtener las puntuaciones de pquest en base a quest
 	 * 
 	 * @param quest
+	 *            el diferenciador para obtener puntuaciones, antes era el
+	 *            nombre aventura, ahora sera el nombre del host, para evitar
+	 *            que se bajen puntuaciones de aventuras de otras partidas
 	 * 
 	 */
 	public void lanzaDialogoGetPquest(final String quest) { //
@@ -600,6 +603,20 @@ public final class Launch {
 	public void lanzaDialogoEsperaGetQuestUnirse(final Aventura av) { //
 		// valor 10 activa get aventura para unirse a partida
 		new ConexionServerTask().execute(new Object[] { 10, av });
+	}
+
+	/**
+	 * Sirve para resetear una partida (tabla quest),
+	 * 
+	 * @param nombreHost
+	 * @param diferenciadorPartida
+	 * 
+	 */
+	public void lanzaDialogoEsperaResetPquest(String nombreHost,
+			String diferenciadorPartida) { //
+		// valor 11 activa get aventura para unirse a partida
+		new ConexionServerTask().execute(new Object[] { 11, nombreHost,
+				diferenciadorPartida });
 	}
 
 	/**
@@ -748,15 +765,16 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getAventura(), j.getFase(),
+						j.getNombre(), j.getHost(), j.getFase(),
 						Login.prefs.getString("token", ""));
 				break;
 			case 9:
 				// Ver ranking pquest
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
-				ret[1] = inet.c().getPquest(qStr);
-
+				Object[] tmp=inet.c().getPquest(qStr);
+				ret[1] = tmp[0];//boolean
+				ret[2]= tmp[1];//string
 				break;
 			case 10:
 				// Get aventura
@@ -764,6 +782,15 @@ public final class Launch {
 				av = (Aventura) datos[1];
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(), null);
+				break;
+			case 11:
+				// Reset Pquest (tabla pquest)
+				// Diferenciador partida sera el nombre del host
+				inet = (Inet) Launch.this.a;
+				String nombreHost = (String) datos[1];
+				String diferenciadorPartida = (String) datos[2];
+				ret[1] = inet.c().resetPquest(nombreHost, diferenciadorPartida,
+						Login.prefs.getString("token", ""));
 				break;
 			}
 
@@ -962,8 +989,8 @@ public final class Launch {
 				conex = (Boolean) result[1];
 				inet = (Inet) Launch.this.a;
 				if (conex) {
-					String json = inet.c().getRespuesta();
-					if (json != null) {
+					String json = (String) result[2];
+					if (json != null&!json.equals("null")) {
 						Bundle b = new Bundle();
 						b.putSerializable(Props.Comun.JSON, json);
 						inet.l().lanzaActivity(Props.Action.RANKING, b);
@@ -994,6 +1021,16 @@ public final class Launch {
 					}
 				} else {
 					inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA_ERROR);
+				}
+				break;
+			case 11:
+				// Upload Score pquest
+				inet = (Inet) Launch.this.a;
+				conex = (Boolean) result[1];
+				if (conex) {
+					inet.l().lanzaToast(Props.Strings.PARTIDA_RESETEADA);
+				} else {
+					inet.l().lanzaToast(Props.Strings.PARTIDA_RESETEADA_ERROR);
 				}
 				break;
 			}

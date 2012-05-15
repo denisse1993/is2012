@@ -123,8 +123,10 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 		this.title.setText(quest.getNombre());
 
 		// QR
+		//Contiene nombreAventura y nombreHost
 		this.q = new UtilQR(this);
-		Bitmap b = this.q.getQR(this.quest.getNombre());
+		String infoQR=this.quest.getNombre()+";"+this.jugador.getNombre();
+		Bitmap b = this.q.getQR(infoQR);
 		this.ivQR.setImageBitmap(b);
 		// BBDD
 		mDbHelper = new DbAdapter(this);
@@ -178,10 +180,21 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 	public void onClick(final View v) {
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_in_game_host_ranking:
-			this.launch.lanzaDialogoGetPquest(quest.getNombre());
+			//TODO ANTES this.launch.lanzaDialogoGetPquest(quest.getNombre());
+			this.launch.lanzaDialogoGetPquest(jugador.getNombre());
 			break;
 		case R.id.iv_in_game_host_opciones:
-			this.launch.lanzaActivity(Props.Action.OPCIONES);
+			if (Props.Comun.ACTIVIDAD != null) {
+				Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+				Props.Comun.ACTIVIDAD = null;// resetea
+			}
+			Bundle b = new Bundle();
+			b.putSerializable(Props.Comun.AVENTURA, quest);
+			b.putSerializable(Props.Comun.JUGADOR, jugador);
+			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEHOST);
+			finish();
+			launch.lanzaActivity(Props.Action.OPCIONES, b);
+			break;
 		case R.id.iv_in_game_host_info:
 			Launch.lanzaAviso("Info Aventura", Props.Strings.iHost, this);
 			break;

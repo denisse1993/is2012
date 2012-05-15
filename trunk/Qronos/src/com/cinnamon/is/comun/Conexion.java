@@ -485,7 +485,8 @@ public class Conexion {
 	 * @param quest
 	 * @return conexion o no
 	 */
-	public boolean getPquest(final String quest) {
+	public Object[] getPquest(String quest) {
+		Object[] ret = new Object[2];
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -498,7 +499,8 @@ public class Conexion {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
 			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				this.respuesta = EntityUtils.toString(rp.getEntity());
+				ret[1]= this.respuesta = EntityUtils.toString(rp.getEntity());
+				
 				// Toast.makeText(activity.getApplicationContext(), str,
 				// Toast.LENGTH_SHORT).show();
 				retorno = true;
@@ -509,8 +511,8 @@ public class Conexion {
 		} catch (Exception e) {
 			e.printStackTrace();
 			retorno = false;
-		}
-		return retorno;
+		}ret[0]=retorno;
+		return ret;
 	}
 
 	public boolean getNotif(final String user, final String token) {
@@ -539,6 +541,45 @@ public class Conexion {
 			Launch.lanzaAviso(
 					"el usuario no tiene partidas asociadas  o error inet",
 					activity);
+			retorno = false;
+		}
+		return retorno;
+	}
+	
+	/**
+	 * @param nick
+	 * @param quest
+	 * @param token
+	 * @return conexion o no
+	 */
+	public boolean resetPquest(final String nick,
+			final String quest, final String token) {
+		// Vuelca toda la info de BD local en la BD web
+		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
+		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/resetpquest.php"); // server
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		int i = 0;
+
+		pairs.add(new BasicNameValuePair("user", nick));
+		pairs.add(new BasicNameValuePair("quest", quest));
+		// pairs.add(new BasicNameValuePair("token", token));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				this.respuesta = EntityUtils.toString(rp.getEntity());
+				// Toast.makeText(activity.getApplicationContext(), str,
+				// Toast.LENGTH_SHORT).show();
+				retorno = true;
+			} else {
+				retorno = false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 			retorno = false;
 		}
 		return retorno;
