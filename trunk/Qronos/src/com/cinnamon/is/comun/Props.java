@@ -218,8 +218,6 @@ public final class Props {
 		 * Array de String para guardar la ruta de los minijuegos, se usa para
 		 * comprobar que el minijuego que se va a lanzar es correcto
 		 * </p>
-		 * <code><pre>
-		 * </pre></code>
 		 */
 		public static final String[] mjRuta = { "MJ1", "MJ2", "MJ3", "MJ4",
 				"MJ5", "MJ6", "MJ7", "MJ8", "MJ9", "MJ10", "MJ11", "MJ12" };
@@ -294,7 +292,7 @@ public final class Props {
 		 */
 		public static final String CB_LOGIN_AUTO = "cbLoginAuto";
 		/**
-		 * String para usar cuando se quiera pasar la aventura entre actividades
+		 * String para usar cuando se usa la bomba en zxing
 		 */
 		public static final String CAMARABOMBA = "camara_bomba";
 		/**
