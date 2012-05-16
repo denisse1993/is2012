@@ -902,7 +902,7 @@ public final class Launch {
 						eli.lanzaSelecMJ();
 					} else if (inet.c().getRespuesta().equals("2")) {
 						inet.l().lanzaToast(Props.Strings.AVENTURA_YA_EXISTE);
-					} else if (inet.c().getRespuesta().equals("3")) {
+					} else if (inet.c().getRespuesta().equals("5")) {
 						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
 				} else {
@@ -960,7 +960,7 @@ public final class Launch {
 						}
 						SelecPista selecp = (SelecPista) Launch.this.a;
 						selecp.lanzaInGameHost();
-					} else if (inet.c().getRespuesta().equals("3")) {
+					} else if (inet.c().getRespuesta().equals("5")) {
 						inet.l().lanzaToast(Props.Strings.DB_ABRIR_ERROR);
 					}
 				} else {
