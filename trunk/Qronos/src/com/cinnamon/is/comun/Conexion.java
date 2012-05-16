@@ -448,9 +448,8 @@ public class Conexion {
 	 *            array 12 casillas con puntuaciones
 	 * @param nick
 	 *            el nombre del jugador actual
-	 * @param host
-	 *            diferenciador para la tabla pquest, sera el nombre del host
-	 *            que ha iniciado la partida
+	 * @param diferenciador
+	 *            diferenciador para la tabla pquest,nombreAventura;nombreHost
 	 * @param actual
 	 *            minijuego actual
 	 * @param token
@@ -458,7 +457,7 @@ public class Conexion {
 	 * @return conexion o no
 	 */
 	public boolean updatePquest(final int[] arraySc, final String nick,
-			final String host, final int actual, final String token) {
+			final String diferenciador, final int actual, final String token) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
 		boolean retorno;
@@ -475,7 +474,7 @@ public class Conexion {
 			i++;
 		}
 		pairs.add(new BasicNameValuePair("user", nick));
-		pairs.add(new BasicNameValuePair("quest", host));
+		pairs.add(new BasicNameValuePair("quest", diferenciador));
 		pairs.add(new BasicNameValuePair("actual", String.valueOf(actual)));
 		pairs.add(new BasicNameValuePair("token", token));
 		try {
@@ -497,13 +496,13 @@ public class Conexion {
 
 	/**
 	 * Obtiene de la tabla pquest los jugadores cuya partida coincida con el
-	 * nombre del host que la ha creado
+	 * diferenciador
 	 * 
-	 * @param host
-	 *            el nombre del creador de la partida
+	 * @param diferenciador
+	 *            nombreAventura;nombrehost
 	 * @return conexion o no
 	 */
-	public Object[] getPquest(String host) {
+	public Object[] getPquest(String diferenciador) {
 		Object[] ret = new Object[2];
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
@@ -512,7 +511,7 @@ public class Conexion {
 		HttpPost post = new HttpPost(
 				"http://cinnamon.webatu.com/damepquest.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		pairs.add(new BasicNameValuePair("quest", host));
+		pairs.add(new BasicNameValuePair("quest", diferenciador));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse rp = hc.execute(post);
@@ -575,14 +574,13 @@ public class Conexion {
 	 * 
 	 * @param nick
 	 *            del usuario que ha lanzado el metodo
-	 * @param host
-	 *            creador de la partida (en principio el mismo que lanza el
-	 *            metodo)
+	 * @param diferenciador
+	 *            nombreAventura;nombreHost
 	 * @param token
 	 *            unico que identifica al usuario
 	 * @return conexion o no
 	 */
-	public boolean resetPquest(final String nick, final String host,
+	public boolean resetPquest(final String nick, final String diferenciador,
 			final String token) {
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();
@@ -593,7 +591,7 @@ public class Conexion {
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
 		pairs.add(new BasicNameValuePair("user", nick));
-		pairs.add(new BasicNameValuePair("quest", host));
+		pairs.add(new BasicNameValuePair("quest", diferenciador));
 		pairs.add(new BasicNameValuePair("token", token));
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));

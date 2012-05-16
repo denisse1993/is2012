@@ -570,7 +570,7 @@ public final class Launch {
 	}
 
 	/**
-	 * Sirve para subir puntuaciones de pquest
+	 * Sirve para subir puntuaciones de un jugador de pquest
 	 * 
 	 * @param j
 	 * 
@@ -583,15 +583,15 @@ public final class Launch {
 	/**
 	 * Sirve para obtener las puntuaciones de pquest en base a quest
 	 * 
-	 * @param quest
-	 *            el diferenciador para obtener puntuaciones, antes era el
-	 *            nombre aventura, ahora sera el nombre del host, para evitar
-	 *            que se bajen puntuaciones de aventuras de otras partidas
+	 * @param diferenciador
+	 *            el diferenciador para obtener puntuaciones,se usa
+	 *            nombreAventura;nombreHost para evitar que se bajen
+	 *            puntuaciones de aventuras de otras partidas
 	 * 
 	 */
-	public void lanzaDialogoGetPquest(final String quest) { //
+	public void lanzaDialogoEsperaGetPquest(final String diferenciador) { //
 		// valor 9 activa getPquest
-		new ConexionServerTask().execute(new Object[] { 9, quest });
+		new ConexionServerTask().execute(new Object[] { 9, diferenciador });
 	}
 
 	/**
@@ -606,29 +606,47 @@ public final class Launch {
 	}
 
 	/**
-	 * Sirve para resetear una partida (tabla quest),
+	 * Sirve para resetear una partida (tabla pquest)
 	 * 
-	 * @param nombreHost
+	 * @param user
 	 * @param diferenciadorPartida
 	 * 
 	 */
-	public void lanzaDialogoEsperaResetPquest(String nombreHost,
+	public void lanzaDialogoEsperaResetPquest(String user,
 			String diferenciadorPartida) { //
-		// valor 11 activa get aventura para unirse a partida
-		new ConexionServerTask().execute(new Object[] { 11, nombreHost,
+		// valor 11 activa reseteo de partida
+		new ConexionServerTask().execute(new Object[] { 11, user,
 				diferenciadorPartida });
 	}
 
 	/**
 	 * Sirve para obtener una jugador de la tabla pquest, usando su nombre
+	 * Resetea en caso de que se trate de otra partida (nombre de host no
+	 * coincida). Despues lanza getaventuraunirse o case 13
 	 * 
 	 * @param j
 	 *            el jugador
 	 * 
 	 */
 	public void lanzaDialogoEsperaGetJugadorPquest(final Jugador j) { //
-		// valor 12 activa get aventura para unirse a partida
+		// valor 12 activa get jugador desde tabla pquest
 		new ConexionServerTask().execute(new Object[] { 12, j });
+	}
+
+	/**
+	 * Hace lo mismo que getPquest case 8 pero lanzando el get aventura en el
+	 * onpostExecute
+	 * 
+	 * @param j
+	 *            el jugador
+	 * 
+	 * @param av
+	 *            la aventura a pasar al dialog case 10
+	 */
+	private void lanzaDialogoEsperaUpdateJugadorPquestLanzaGetQuestUnirse(
+			Jugador j, Aventura av) { //
+		// valor 13 activa este launch (nombre guapo guapo)
+		new ConexionServerTask().execute(new Object[] { 13, j, av });
 	}
 
 	/**
@@ -767,7 +785,6 @@ public final class Launch {
 				// Get aventura con pass
 				inet = (Inet) Launch.this.a;
 				av = (Aventura) datos[1];
-				av.setPass(null);
 				ret[2] = av;
 				ret[1] = inet.c().dameOnlineAventura(av.getNombre(),
 						av.getPass());
@@ -777,7 +794,7 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				Jugador j = (Jugador) datos[1];
 				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getHost(), j.getFase(),
+						j.getNombre(), j.getDiferenciador(), j.getFase(),
 						Login.prefs.getString("token", ""));
 				break;
 			case 9:
@@ -810,6 +827,16 @@ public final class Launch {
 				inet = (Inet) Launch.this.a;
 				ret[2] = j = (Jugador) datos[1];
 				ret[1] = inet.c().dameJugadorPquest(j.getNombre());
+				break;
+			case 13:
+				// Get jugador Pquest (tabla pquest) y get aventura lanzando
+				// ingame aventura
+				inet = (Inet) Launch.this.a;
+				j = (Jugador) datos[1];
+				ret[2] = (Aventura) datos[2];
+				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
+						j.getNombre(), j.getDiferenciador(), j.getFase(),
+						Login.prefs.getString("token", ""));
 				break;
 			}
 
@@ -939,7 +966,7 @@ public final class Launch {
 							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
 							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 							eli.creaAventuraLocalActualizada();
-							eli.lanzaSelecMJ();
+							eli.lanzaSelecPISTA();
 						}
 					}
 				} else {
@@ -986,7 +1013,7 @@ public final class Launch {
 							inet.l().lanzaToast(Props.Strings.AVENTURA_BAJADA);
 							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 							eli.creaAventuraLocalActualizada();
-							eli.lanzaSelecPISTA();
+							eli.lanzaSelecMJ();
 						}
 					}
 				} else {
@@ -1063,18 +1090,43 @@ public final class Launch {
 					} else {
 						jugador = (Jugador) result[2];
 						u = new UtilJSON(Launch.this.a);
-						if (u.getPquestJugadorSiExiste(pquest, jugador)) {
+						Boolean[] b = u.getPquestJugadorSiExiste(pquest, jugador);
+						if (b[0]) {
 							inet.l().lanzaToast(
 									Props.Strings.USER_UPDATE_PQUEST);
 							EligeModoAventura eli = (EligeModoAventura) Launch.this.a;
 							eli.creaJugadorLocalPquestActualizado();
-							// una vez obtiene jugador actualizado, lanza para
-							// unirse a la aventura
-							inet.l().lanzaDialogoEsperaGetQuestUnirse(eli.a);
+							// una vez obtiene jugador actualizado que reseteara
+							// o no en funcion de si es la misma partida, lo
+							// sube al servidor solo en caso de que se trate de
+							// otra
+							// partida, para actualizar la info
+							if (b[1]) {
+								inet.l()
+										.lanzaDialogoEsperaUpdateJugadorPquestLanzaGetQuestUnirse(
+												jugador, eli.a);
+							} else {
+								inet.l()
+										.lanzaDialogoEsperaGetQuestUnirse(eli.a);
+							}
+
 						}
 					}
 				} else {
 					inet.l().lanzaToast(Props.Strings.USER_UPDATE_PQUEST_ERROR);
+				}
+				break;
+			case 13:
+				// Upload Score pquest y lanza getQuestUnirse
+				inet = (Inet) Launch.this.a;
+				conex = (Boolean) result[1];
+				av = (Aventura) result[2];
+				if (conex) {
+					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA);
+					inet.l().lanzaDialogoEsperaGetQuestUnirse(av);
+
+				} else {
+					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA_ERROR);
 				}
 				break;
 			}

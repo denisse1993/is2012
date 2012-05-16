@@ -123,9 +123,12 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 		this.title.setText(quest.getNombre());
 
 		// QR
-		//Contiene nombreAventura y nombreHost
+		// Contiene nombreAventura y nombreHost
 		this.q = new UtilQR(this);
-		String infoQR=this.quest.getNombre()+";"+this.jugador.getNombre();
+		jugador.setDiferenciador(this.quest.getNombre() + ";"
+				+ this.jugador.getNombre());
+
+		String infoQR = jugador.getDiferenciador();
 		Bitmap b = this.q.getQR(infoQR);
 		this.ivQR.setImageBitmap(b);
 		// BBDD
@@ -138,7 +141,7 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 	public void onBackPressed() {
 		// super.onBackPressed();
 		this.aDactual = Launch
-				.lanzaConfirmacion("Salir", "ÀDesea Salir?", this);
+				.lanzaConfirmacion("Salir", "¿Desea Salir?", this);
 	}
 
 	@Override
@@ -165,9 +168,10 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 				}
 				dialog.cancel();
 				finish();
-				Bundle b = new Bundle();
-				b.putSerializable(Props.Comun.JUGADOR, jugador);
-				this.launch.lanzaActivity(Props.Action.MAINMENU, b);
+				//No necesita esto de abajo porque se queda abierto el mainmenu
+				//Bundle b = new Bundle();
+				//b.putSerializable(Props.Comun.JUGADOR, jugador);
+				//this.launch.lanzaActivity(Props.Action.MAINMENU, b);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -180,22 +184,23 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 	public void onClick(final View v) {
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_in_game_host_ranking:
-			//TODO ANTES this.launch.lanzaDialogoGetPquest(quest.getNombre());
-			this.launch.lanzaDialogoGetPquest(jugador.getNombre());
+			// TODO ANTES this.launch.lanzaDialogoGetPquest(quest.getNombre());
+			this.launch.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador());
 			break;
 		case R.id.iv_in_game_host_opciones:
-			//para lanzar opciones
-//			if (Props.Comun.ACTIVIDAD != null) {
-//				Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
-//				Props.Comun.ACTIVIDAD = null;// resetea
-//			}
-//			Bundle b = new Bundle();
-//			b.putSerializable(Props.Comun.AVENTURA, quest);
-//			b.putSerializable(Props.Comun.JUGADOR, jugador);
-//			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEHOST);
-//			finish();
-//			launch.lanzaActivity(Props.Action.OPCIONES, b);
-			launch.lanzaDialogoEsperaResetPquest(jugador.getNombre(), jugador.getNombre());
+			// para lanzar opciones
+			// if (Props.Comun.ACTIVIDAD != null) {
+			// Props.Comun.ACTIVIDAD.finish();// cierra SelecMJ
+			// Props.Comun.ACTIVIDAD = null;// resetea
+			// }
+			// Bundle b = new Bundle();
+			// b.putSerializable(Props.Comun.AVENTURA, quest);
+			// b.putSerializable(Props.Comun.JUGADOR, jugador);
+			// b.putString(Props.Comun.RETORNO, Props.Action.INGAMEHOST);
+			// finish();
+			// launch.lanzaActivity(Props.Action.OPCIONES, b);
+			launch.lanzaDialogoEsperaResetPquest(jugador.getNombre(),
+					jugador.getDiferenciador());
 			break;
 		case R.id.iv_in_game_host_info:
 			Launch.lanzaAviso("Info Aventura", Props.Strings.iHost, this);
