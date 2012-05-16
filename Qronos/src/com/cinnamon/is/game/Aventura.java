@@ -44,6 +44,10 @@ public class Aventura implements Serializable {
 	private ArrayList<T> minijuegos;
 
 	/**
+	 * Guarda el numero de mj superados
+	 */
+	public int superados;
+	/**
 	 * Crea una aventura con parametros
 	 * 
 	 * @param nombre
@@ -52,12 +56,15 @@ public class Aventura implements Serializable {
 	 *            de la aventura
 	 * @param minijuegos
 	 *            lista minijuegos
+	 *            	  @param superados
+	 *            numero de superados
 	 */
 	public Aventura(final String nombre, final String pass,
-			final ArrayList<T> minijuegos) {
+			final ArrayList<T> minijuegos,int superados) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
+		this.superados=superados;
 	}
 
 	/**
@@ -69,7 +76,7 @@ public class Aventura implements Serializable {
 	 *            de la aventura
 	 */
 	public Aventura(final String nombre, final String pass) {
-		this(nombre, pass, new ArrayList<T>(Props.Comun.MAX_MJ));
+		this(nombre, pass, new ArrayList<T>(Props.Comun.MAX_MJ),0);
 	}
 
 	/**
@@ -247,109 +254,6 @@ public class Aventura implements Serializable {
 		return a;
 	}
 
-	// /**
-	// * Guarda la clave de minijuego y la pista asociada
-	// */
-	// private HashMap<Integer, String> minijuegos;
-	// /**
-	// * Crea una aventura con parametros
-	// *
-	// * @param nombre
-	// * de la aventura
-	// * @param pass
-	// * de la aventura
-	// * @param minijuegos
-	// * lista minijuegos
-	// */
-	// public Aventura(String nombre, String pass,
-	// HashMap<Integer, String> minijuegos) {
-	//
-	// this.nombre = nombre;
-	// this.pass = pass;
-	// this.minijuegos = minijuegos;
-	// }
-	//
-	// /**
-	// * Crea una aventura con la lista de mj vacia
-	// *
-	// * @param nombre
-	// * de la aventura
-	// * @param pass
-	// * de la aventura
-	// */
-	// public Aventura(String nombre, String pass) {
-	// this(nombre, pass, new HashMap<Integer, String>());
-	// }
-	//
-	// /**
-	// * Introduce un minijuego en la aventura
-	// *
-	// * @param mj
-	// * la key de minijuego
-	// * @param pista
-	// * la pista asociada
-	// * @return null si no existe o la pista anterior
-	// */
-	// public String addMJ(int mj, String pista) {
-	// return minijuegos.put(mj, pista);
-	// }
-	//
-	// /**
-	// * Borra un minijuego en la aventura
-	// *
-	// * @param mj
-	// * la key de minijuego
-	// * @return null si no existe o la pista asociada
-	// */
-	// public String delMJ(Integer mj) {
-	// return minijuegos.remove(mj);
-	// }
-	//
-	// /**
-	// * @return un iterador sobre las claves
-	// */
-	// public Iterator<Integer> keys() {
-	// return minijuegos.keySet().iterator();
-	// }
-	//
-	// /**
-	// * Comprueba si el mj ha sido add
-	// *
-	// * @param la
-	// * key del mj
-	// * @return si esta o no
-	// */
-	// public boolean existe(Integer mj) {
-	// return minijuegos.containsKey(mj);
-	// }
-	//
-	// /**
-	// * @return el numero de minijuegos add
-	// */
-	// public int size() {
-	// return minijuegos.size();
-	// }
-	//
-	// /**
-	// * @return el numero de pistas add
-	// */
-	// public int sizePista() {
-	// int i = 0;
-	// Iterator<String> it = minijuegos.values().iterator();
-	// while (it.hasNext())
-	// if (it.next() != null)
-	// i++;
-	// return i;
-	// }
-	//
-	// public HashMap<Integer, String> getMinijuegos() {
-	// return minijuegos;
-	// }
-	//
-	// public void setMinijuegos(HashMap<Integer, String> minijuegos) {
-	// this.minijuegos = minijuegos;
-	// }
-
 	// getters and setters
 
 	public ArrayList<T> getMinijuegos() {
@@ -395,5 +299,15 @@ public class Aventura implements Serializable {
 
 	public void setPass(final String pass) {
 		this.pass = pass;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer("[");
+		for (T mj : minijuegos)
+			sb.append(mj + ",");
+		sb.setLength(sb.length() - 1);
+		sb.append("]");
+		return nombre + " " + pass + "\nMinijuegos: " + sb.toString();
 	}
 }

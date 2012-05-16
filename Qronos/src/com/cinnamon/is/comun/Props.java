@@ -398,7 +398,7 @@ public final class Props {
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
 		public static final String PARTIDA_RESETEADA = "Partida reseteada correctamente";
 		public static final String PARTIDA_RESETEADA_ERROR = "Problema al resetear la partida en el servidor";
-		public static final String USER_UPDATE_PQUEST = "Datos aventura usuario actualizado desde online";
+		public static final String USER_UPDATE_PQUEST = "Datos aventura usuario actualizados";
 		public static final String USER_UPDATE_PQUEST_ERROR = "Problema al obtener el usuario de aventura actualizado";
 
 		/**

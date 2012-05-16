@@ -51,7 +51,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	 * Jugador
 	 */
 	Jugador jugador;
-	int superados = 0;
+	// int superados = 0;Lo metio en aventura
 
 	/**
 	 * DbAdapter para interaccionar con la base de datos
@@ -109,7 +109,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		this.quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
-		//this.jugador.setHost(quest.getNombre());
+		// this.jugador.setHost(quest.getNombre());
 
 		// FindViewByID
 		this.iVinfoConexion = (ImageView) findViewById(R.id.iBinfoConexionAv);
@@ -159,7 +159,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 		j = new UtilJSON(this);
 		// textFinal = (TextView) findViewById(R.id.tv_fin);
-		this.l.lanzaDialogoUpdatePquest(this.jugador);//sube jugador para actualizar valor de host
+
 	}
 
 	private int generaMinijuego() {
@@ -167,7 +167,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			return -1;
 		} else {
 			int n = this.quest.size();
-			if (n == this.jugador.getFase() || superados == n) {
+			if (n == this.jugador.getFase() || this.quest.superados == n) {
 				return -2;
 			} else {
 				Random rand = new Random();
@@ -195,7 +195,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	public void onBackPressed() {
 		// super.onBackPressed();
 
-		this.aDactual = Launch.lanzaConfirmacion("Salir", "Desea Salir?", this);
+		this.aDactual = Launch.lanzaConfirmacion("Salir", "¿Desea Salir?", this);
 	}
 
 	@Override
@@ -260,7 +260,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_ranking_ingame:
 			timer.cancel();
-			this.l.lanzaDialogoGetPquest(jugador.getHost());//antes quest.getNombre()
+			this.l.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador());// antes
+																			// quest.getNombre()
 			break;
 		case R.id.iv_camara_ingame:
 			timer.cancel();
@@ -426,7 +427,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
 						"Puntuacion obtenida: " + score);
 				this.l.lanzaDialogoUpdatePquest(this.jugador);
-				superados++;
+				// superados++;
+				this.quest.superados++;
 				this.mjActual = generaMinijuego();
 			} else {
 				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,

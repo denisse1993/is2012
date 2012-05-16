@@ -292,7 +292,7 @@ public class SelecPista extends Activity implements Inet, OnClickListener {
 			break;
 		case R.id.iVDone:
 			// actualizar en BD tabla quest
-			mDbHelper.updateRowQuest(aventura.getNombre(), null,
+			mDbHelper.updateRowQuest(aventura.getNombre(), aventura.getPass(),
 					aventura.getMJArrayInteger(),
 					aventura.getPistasArrayString());
 			if (!read)

@@ -335,7 +335,7 @@ public class SelecMJ extends Activity implements OnClickListener {
 					aventura.addMJ(Props.Comun.CMJ[5]);
 					iVselec[5].setImageResource(Props.Comun.iDiVselec[1]);
 				} else {
-					aventura.delMJ(Props.Comun.CMJ[0]);
+					aventura.delMJ(Props.Comun.CMJ[5]);
 					iVselec[5].setImageResource(Props.Comun.iDiVselec[0]);
 				}
 			} else if (grupoMJ == 1) {

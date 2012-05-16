@@ -150,9 +150,10 @@ public final class UtilJSON {
 	 *            del jugador a comprobar
 	 * @return true o false segun existe o no
 	 */
-	public boolean getPquestJugadorSiExiste(String json, Jugador jug) {
+	public Boolean[] getPquestJugadorSiExiste(String json, Jugador jug) {
 		String n;
 		boolean retorno = false;
+		boolean uploadServer=false;
 		int[] d = new int[Props.Comun.MAX_MJ];
 		JSONArray jArray;
 		try {
@@ -163,29 +164,36 @@ public final class UtilJSON {
 				n = json_data.getString("NICK");
 				if (n.equals(jug.getNombre())) {// mismo nombre
 					retorno = true;
-					for (int j = 0; j < d.length; j++) {
-						int code = j + 1;
-						d[j] = Integer.parseInt(json_data
-								.getString("MJ" + code));
+					// Se comprueba que la partida(aventura;host) que se esta
+					// actualizando, sea
+					// la misma que la que se va a lanzar en ese momento
+					String dif = json_data.getString("QUEST");
+					if (jug.getDiferenciador().equals(dif)) {
+						for (int j = 0; j < d.length; j++) {
+							int code = j + 1;
+							d[j] = Integer.parseInt(json_data.getString("MJ"
+									+ code));
+						}
+						int actual = Integer.parseInt(json_data
+								.getString("ACTUAL"));
+						jug.setScoreQuest(d);
+						jug.setFase(actual);
+						uploadServer=false;
+					} else {
+						uploadServer=true;
+						jug.resetQuest();
 					}
-					int actual = Integer
-							.parseInt(json_data.getString("ACTUAL"));
-					String host = json_data.getString("QUEST");
-					jug.setScoreQuest(d);
-					jug.setFase(actual);
-					// Nos quedamos con el host que se haya leido del qr
-					// por eso se comenta esta linea, en principio el host que
-					// se leyera aqui estaria vacio, por defecto
-					// jug.setHost(host);
 					break;
 				}
 			}
 		} catch (JSONException e1) {
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		} catch (ParseException e1) {
+			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		}
-		return retorno;
+		return new Boolean[]{retorno,uploadServer};
 	}
 
 	public boolean rankingOnlineAventura(final String jSON) {

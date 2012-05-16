@@ -73,7 +73,7 @@ public class EligeModoAventura extends Activity implements Inet,
 	/**
 	 * Nombre de la aventura
 	 */
-	private final String nameQuest = "quest";
+	private String nameQuest = "quest";
 	/**
 	 * Pass de la aventura
 	 */
@@ -124,7 +124,8 @@ public class EligeModoAventura extends Activity implements Inet,
 
 	@Override
 	public void onClick(final View v) {
-		a = new Aventura(nameQuest, passQuest);
+		a = new Aventura(nameQuest, passQuest);//solo para guardar ref
+		//a = new Aventura(null, null);//solo para crearlo y tener ref
 		switch (vClicked = v.getId()) {
 		case R.id.bCrearAventura:
 			// name y pass escritos de la aventura no existe ya en la BD
@@ -147,18 +148,16 @@ public class EligeModoAventura extends Activity implements Inet,
 					jugador.getNombre());
 			break;
 		case R.id.bUnirseAventura:
-			//lanzo qr para leer quest y host,
-			//en el onactivityResult
-			//con esos datos lanzo getJugadorPquest para obtener el jugador actualizao de la BD online, por si se ha caido o algo asi
-			//despues lanzo el obtener aventura desde dentro del pquest, para obtener la aventura
+			// lanzo qr para leer quest y host,
+			// en el onactivityResult lanzoDialogo obtenerJugadorPquest, en
+			// funcion de si es misma partida o no, actualiza o resetea, y lanza
+			// updatePquest o directamente getAventura
 			// q = new UtilQR(this);
 			// q.lanzarQR();
 			// TODO a sustituir por lo de arriba, esto para pruebas
-			
 			nameHost = "host";// esto y nameAventura se leera del QR
-			jugador.setHost(nameHost);
+			jugador.setDiferenciador(nameQuest + ";" + nameHost);
 			launch.lanzaDialogoEsperaGetJugadorPquest(jugador);
-			
 			break;
 		case R.id.ivInfoElige:
 			Launch.lanzaAviso("Información", Props.Strings.iElige, this);
@@ -262,7 +261,7 @@ public class EligeModoAventura extends Activity implements Inet,
 		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
 			// crear nuevo jugador
 			mDbHelper.createRowPquest(jugador.getNombre(), new int[] { 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, nameHost);
+					0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, nameQuest + ";" + nameHost);
 			esta = false;
 		}
 		return esta;
@@ -279,11 +278,13 @@ public class EligeModoAventura extends Activity implements Inet,
 		if (!mDbHelper.existsRow(jugador.getNombre(), Tabla.pquest)) {
 			// crear nuevo jugador
 			mDbHelper.createRowPquest(jugador.getNombre(),
-					jugador.getScoreQuest(), jugador.getFase(), nameHost);
+					jugador.getScoreQuest(), jugador.getFase(), nameQuest + ";"
+							+ nameHost);
 			esta = false;
 		} else {
 			mDbHelper.updateRowPQuest(jugador.getNombre(),
-					jugador.getScoreQuest(), jugador.getFase(), nameHost);
+					jugador.getScoreQuest(), jugador.getFase(), nameQuest + ";"
+							+ nameHost);
 		}
 		return esta;
 	}
@@ -319,7 +320,7 @@ public class EligeModoAventura extends Activity implements Inet,
 			int actual = mCursor.getInt(DbAdapter.PQUEST_IDCOL_ACTUAL);
 			stopManagingCursor(mCursor);
 			jugador.setScoreQuest(pquest);
-			jugador.setHost(name);
+			jugador.setDiferenciador(name);
 			jugador.setFase(actual);
 			mCursor.close();
 			esta = true;
@@ -334,9 +335,9 @@ public class EligeModoAventura extends Activity implements Inet,
 		if (requestCode == UtilQR.REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				StringTokenizer st = new StringTokenizer(contents, ";");
-				String nameQuest = st.nextToken();
+				nameQuest = st.nextToken();
 				nameHost = st.nextToken();
-				jugador.setHost(nameHost);
+				jugador.setDiferenciador(nameQuest + ";" + nameHost);
 				a = new Aventura(nameQuest, null);
 				launch.lanzaDialogoEsperaGetJugadorPquest(jugador);
 			} else if (resultCode == RESULT_CANCELED) {

@@ -16,7 +16,7 @@ import com.cinnamon.is.comun.Props;
  * poder ser pasada en un intent entre activities
  * 
  * @author Cinnamon Team
- * @version 1.4 15.05.2012
+ * @version 1.5 15.05.2012
  */
 public class Jugador implements Serializable {
 
@@ -26,9 +26,14 @@ public class Jugador implements Serializable {
 	private String nombre;
 
 	/**
-	 * Nombre del host que ha iniciado la aventura, se usara para diferenciar al obtener ranking
+	 * Nombre de la aventura y del host que la ha creado. Es asi para permitir
+	 * diferenciar una partida concreta en la tabla pquest, que la conforman un
+	 * nombre aventura y el host.
+	 * <p>
+	 * Formato: aventura;host
+	 * </p>
 	 */
-	private String host;
+	private String diferenciador;
 
 	/**
 	 * Pass del jugador
@@ -53,7 +58,7 @@ public class Jugador implements Serializable {
 	/**
 	 * ID para la serializacion
 	 */
-	private static final long serialVersionUID = 4L;
+	private static final long serialVersionUID = 5L;
 
 	/**
 	 * Genera un jugador por parametros
@@ -68,17 +73,17 @@ public class Jugador implements Serializable {
 	 *            del jugador
 	 * @param faseActual
 	 *            del jugador
-	 * @param host
+	 * @param diferenciador
 	 *            nombre del creador de partida
 	 */
 	public Jugador(String nombre, String pass, int[] score, int[] scoreQuest,
-			int faseActual, String host) {
+			int faseActual, String diferenciador) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.score = score;
 		this.scoreQuest = scoreQuest;
 		this.faseActual = faseActual;
-		this.host = host;
+		this.diferenciador = diferenciador;
 	}
 
 	/**
@@ -200,12 +205,12 @@ public class Jugador implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getHost() {
-		return host;
+	public String getDiferenciador() {
+		return diferenciador;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
+	public void setDiferenciador(String host) {
+		this.diferenciador = host;
 	}
 
 	public void setPass(String pass) {
@@ -232,14 +237,14 @@ public class Jugador implements Serializable {
 		this.scoreQuest = scoreQuest;
 	}
 
-	public int getFase(){
+	public int getFase() {
 		return this.faseActual;
 	}
-	
-	public void setFase(int fase){
+
+	public void setFase(int fase) {
 		this.faseActual = fase;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("[");
@@ -252,7 +257,8 @@ public class Jugador implements Serializable {
 		sb.append("]");
 		sbQ.setLength(sb.length() - 1);
 		sbQ.append("]");
-		return nombre + " " + faseActual+" "+host + "\nScore Arcade: " + sb.toString()
-				+ "\nScore Quest: " + sbQ.toString();
+		return nombre + " " + faseActual + " " + diferenciador
+				+ "\nScore Arcade: " + sb.toString() + "\nScore Quest: "
+				+ sbQ.toString();
 	}
 }
