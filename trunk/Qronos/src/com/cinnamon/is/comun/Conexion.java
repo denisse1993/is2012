@@ -232,6 +232,7 @@ public class Conexion {
 	 * @param imagen
 	 *            Imagen a subir
 	 * @return True exito
+	 * @throws IOException
 	 */
 	public boolean uploadImage(final int imagen) throws IOException {
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
@@ -502,7 +503,7 @@ public class Conexion {
 	 *            nombreAventura;nombrehost
 	 * @return conexion o no
 	 */
-	public Object[] getPquest(String diferenciador) {
+	public Object[] getPquest(final String diferenciador) {
 		Object[] ret = new Object[2];
 		// Vuelca toda la info de BD local en la BD web
 		HttpClient hc = new DefaultHttpClient();

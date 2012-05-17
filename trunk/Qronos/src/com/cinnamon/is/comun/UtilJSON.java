@@ -146,14 +146,15 @@ public final class UtilJSON {
 	/**
 	 * @param json
 	 *            la info de la tabla pquest online
-	 * @param Jugador
+	 * @param jug
 	 *            del jugador a comprobar
 	 * @return true o false segun existe o no
 	 */
-	public Boolean[] getPquestJugadorSiExiste(String json, Jugador jug) {
+	public Boolean[] getPquestJugadorSiExiste(final String json,
+			final Jugador jug) {
 		String n;
 		boolean retorno = false;
-		boolean uploadServer=false;
+		boolean uploadServer = false;
 		int[] d = new int[Props.Comun.MAX_MJ];
 		JSONArray jArray;
 		try {
@@ -178,9 +179,9 @@ public final class UtilJSON {
 								.getString("ACTUAL"));
 						jug.setScoreQuest(d);
 						jug.setFase(actual);
-						uploadServer=false;
+						uploadServer = false;
 					} else {
-						uploadServer=true;
+						uploadServer = true;
 						jug.resetQuest();
 					}
 					break;
@@ -193,7 +194,7 @@ public final class UtilJSON {
 			Launch.lanzaToast(this.a, Props.Strings.ERROR_JSON);
 			retorno = false;
 		}
-		return new Boolean[]{retorno,uploadServer};
+		return new Boolean[] { retorno, uploadServer };
 	}
 
 	public boolean rankingOnlineAventura(final String jSON) {
@@ -249,7 +250,7 @@ public final class UtilJSON {
 	 * @return si ha sido correcto o no
 	 */
 	public boolean rankingOnlineArcade(final String jSON, final int limite,
-			Jugador jugador) {
+			final Jugador jugador) {
 		boolean retorno;
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
 		boolean entre5primeros = false;
@@ -274,8 +275,9 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
-				if (nick == jugador.getNombre())
+				if (nick == jugador.getNombre()) {
 					entre5primeros = true;
+				}
 				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
 						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
 			}
