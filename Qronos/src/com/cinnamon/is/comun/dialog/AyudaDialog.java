@@ -47,6 +47,7 @@ public class AyudaDialog extends Dialogos {
 	Button bCancelar;
 	ImageView ivBanner;
 	TextView tvDescripcion;
+	LinearLayout llCancelar;
 
 	/**
 	 * Constructora
@@ -105,12 +106,16 @@ public class AyudaDialog extends Dialogos {
 		this.bEmpezar = (Button) findViewById(R.id.ButtonStartAyuda);
 		this.bCancelar = (Button) findViewById(R.id.ButtonCancelAyuda);
 		LinearLayout fondo = (LinearLayout) findViewById(R.id.LinearLayoutMainAyuda);
+		llCancelar = (LinearLayout) findViewById(R.id.llCancelarDialog);
 		this.ivBanner = (ImageView) findViewById(R.id.ImageViewBannerAyuda);
 		this.tvDescripcion = (TextView) findViewById(R.id.TextViewDescriptionAyuda);
 
 		if (!this.modo) {
 			ViewGroup vg = (ViewGroup) (this.bCancelar.getParent());
 			vg.removeView(this.bCancelar);
+			vg = (ViewGroup) (this.llCancelar.getParent());
+			vg.removeView(this.llCancelar);
+
 		} else {
 			this.bCancelar.setOnClickListener(this);
 		}

@@ -112,7 +112,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 		// Actualiza mjs superados en base a puntuacion que tenga en cada uno
 		this.quest.setSuperadosIfScoreNo0(jugador.getScoreQuest());
-		
+
 		// FindViewByID
 		this.iVinfoConexion = (ImageView) findViewById(R.id.iBinfoConexionAv);
 		this.bOpciones = (ImageView) findViewById(R.id.iv_opciones_ingame);
@@ -294,10 +294,10 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		case R.id.iBinfoConexionAv:
 			if (checkConexion()) {
 				this.l.lanzaAviso("Disponibilidad de red",
-						Props.Strings.IONLINE, R.id.iBinfoConexionAv);
+						Props.Strings.IONLINE);
 			} else {
 				this.l.lanzaAviso("Disponibilidad de red",
-						Props.Strings.IOFFLINE, R.id.iBinfoConexionAv);
+						Props.Strings.IOFFLINE);
 			}
 			break;
 
@@ -443,9 +443,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 				// TODO
 				textFinal
 						.setText("se acabó el juego para ti, espera a que terminen los demás");
-			} else if (this.mjActual != -1) {
-				String dialogText = this.quest.getMinijuego(this.mjActual).pista;
-				Launch.lanzaAviso(dialogText, this);
 			}
 
 		}
