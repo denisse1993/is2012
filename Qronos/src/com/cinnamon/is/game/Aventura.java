@@ -47,6 +47,7 @@ public class Aventura implements Serializable {
 	 * Guarda el numero de mj superados
 	 */
 	public int superados;
+
 	/**
 	 * Crea una aventura con parametros
 	 * 
@@ -56,15 +57,15 @@ public class Aventura implements Serializable {
 	 *            de la aventura
 	 * @param minijuegos
 	 *            lista minijuegos
-	 *            	  @param superados
+	 * @param superados
 	 *            numero de superados
 	 */
 	public Aventura(final String nombre, final String pass,
-			final ArrayList<T> minijuegos,int superados) {
+			final ArrayList<T> minijuegos, int superados) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
-		this.superados=superados;
+		this.superados = superados;
 	}
 
 	/**
@@ -76,7 +77,7 @@ public class Aventura implements Serializable {
 	 *            de la aventura
 	 */
 	public Aventura(final String nombre, final String pass) {
-		this(nombre, pass, new ArrayList<T>(Props.Comun.MAX_MJ),0);
+		this(nombre, pass, new ArrayList<T>(Props.Comun.MAX_MJ), 0);
 	}
 
 	/**
@@ -283,6 +284,22 @@ public class Aventura implements Serializable {
 				minijuegos.add(new T(a, pistas[i], false));
 			}
 		}
+	}
+
+	/**
+	 * Pone el minijuego idMj a superado si la puntuacion que se encuentra en
+	 * idMj-1 es mayor que 0, es decir, si el minijuego se ha jugado y se ha
+	 * superado, e incrementa el numero de superados
+	 * 
+	 * @param scoreQuest
+	 *            las puntuaciones de un jugador en la aventura
+	 */
+	public void setSuperadosIfScoreNo0(int[] scoreQuest) {
+		for (T mj : minijuegos)
+			if (scoreQuest[mj.idMj - 1] > 0) {
+				mj.setSuperado(true);
+				superados++;
+			}
 	}
 
 	public String getNombre() {

@@ -163,7 +163,7 @@ public class GameView extends View {
 			canvas.drawBitmap(boom, 0, 0, paint);
 			// TODO 2¼Cambio
 			score = 0;
-			a.finalizar(true);
+			a.finalizar(false);
 			// ///
 			/*
 			 * btnQR=(Button) findViewById(R.id.leer); //QR= new UtilQR(this);
