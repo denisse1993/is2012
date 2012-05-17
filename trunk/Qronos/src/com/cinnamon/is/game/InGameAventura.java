@@ -109,8 +109,10 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		this.quest = (Aventura) b.getSerializable(Props.Comun.AVENTURA);
-		// this.jugador.setHost(quest.getNombre());
 
+		// Actualiza mjs superados en base a puntuacion que tenga en cada uno
+		this.quest.setSuperadosIfScoreNo0(jugador.getScoreQuest());
+		
 		// FindViewByID
 		this.iVinfoConexion = (ImageView) findViewById(R.id.iBinfoConexionAv);
 		this.bOpciones = (ImageView) findViewById(R.id.iv_opciones_ingame);
@@ -195,7 +197,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	public void onBackPressed() {
 		// super.onBackPressed();
 
-		this.aDactual = Launch.lanzaConfirmacion("Salir", "¿Desea Salir?", this);
+		this.aDactual = Launch
+				.lanzaConfirmacion("Salir", "¿Desea Salir?", this);
 	}
 
 	@Override
