@@ -264,6 +264,11 @@ public final class Props {
 		public static final String ARCADE_DATA = "arcade";
 
 		/**
+		 * Para indicar que viene del aventura, contiene la informacion del
+		 * jugador
+		 */
+		public static String AVENTURA_DATA="jAventura";
+		/**
 		 * Para abrir selecPista en modo lectura
 		 */
 		public static final String READ = "read";
@@ -282,6 +287,7 @@ public final class Props {
 		 * Para guardar una referencia a una actividad concreta
 		 */
 		public static Activity ACTIVIDAD = null;
+
 		/**
 		 * Para usar cuado el ranking lo lance el admin
 		 */

@@ -17,6 +17,12 @@ public class Ranking extends Activity {
 	 */
 	// es una apaño para no tener que cambiar todo el codigo
 	private Jugador arcadeData;
+	
+	/**
+	 * Tendra la información del jugador que viene desde aventura
+	 */
+	// otro apaño
+	private Jugador aventuraData;
 
 	private Jugador jugador;
 
@@ -32,6 +38,7 @@ public class Ranking extends Activity {
 		jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
 		JSON = b.getString(Props.Comun.JSON);
 		arcadeData = (Jugador) b.getSerializable(Props.Comun.ARCADE_DATA);
+		aventuraData = (Jugador) b.getSerializable(Props.Comun.AVENTURA_DATA);
 		tvTitulo = (TextView) findViewById(R.id.textViewTitulo);
 		utilj = new UtilJSON(this);
 		boolean admin = b.getBoolean(Props.Comun.ADMIN, false);
@@ -42,7 +49,7 @@ public class Ranking extends Activity {
 				utilj.rankingOnlineArcade(JSON, 5, arcadeData);
 			} else {
 				tvTitulo.setText("Ranking Aventura");
-				utilj.rankingOnlineAventura(JSON, jugador, admin);
+				utilj.rankingOnlineAventura(JSON, aventuraData, admin);
 			}
 		} else {
 			rankingLocal();

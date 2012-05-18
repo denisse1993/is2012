@@ -206,8 +206,10 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	@Override
 	protected void onPause() {
 		// muereteCabron = true;
-		timer.cancel();
-		timer = null;
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
 		super.onPause();
 		this.mDbHelper.close();
 
@@ -266,8 +268,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		case R.id.iv_ranking_ingame:
 			timer.cancel();
 			this.l.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador(),
-					false);// antes
-			// quest.getNombre()
+					false, jugador);
 			break;
 		case R.id.iv_camara_ingame:
 			timer.cancel();
