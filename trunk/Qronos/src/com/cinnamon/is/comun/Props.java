@@ -388,7 +388,7 @@ public final class Props {
 		public static final String PASS_ERROR = "Password incorrecta";
 		public static final String PISTA_MOD = "Pista modificada!";
 		public static final String PISTAS_COMPLETO = "Asignadas todas las pistas";
-		public static final String SCORE_SUBIDA = "Datos jugador en aventura subidos al servidor";
+		public static final String SCORE_SUBIDA = "Datos jugador subidos al servidor";
 		public static final String SCORE_SUBIDA_ERROR = "Problema al subir la puntuacion al servidor";
 		public static final String AVENTURA_SUBIDA = "Aventura subida al servidor";
 		public static final String AVENTURA_SUBIDA_ERROR = "Problema al subir la aventura al servidor";
@@ -403,7 +403,7 @@ public final class Props {
 		public static final String USER_UPDATE = "Usuario Actualizado desde Online";
 		public static final String AVENTURA_YA_EXISTE = "Ya existe aventura con ese nombre";
 		public static final String AVENTURA_UPDATED = "Aventura actualizada";
-		public static final String AVENTURA_UPDATED_ERROR = "Aventura actualizada";
+		public static final String AVENTURA_UPDATED_ERROR = "Problema al actualizar aventura";
 		public static final String ERROR_JSON = "Error obteniendo la informacion del servidor";
 		public static final String VER_RANKING_NOPLAYERS = "No jugadores en la aventura";
 		public static final String PARTIDA_RESETEADA = "Partida reseteada correctamente";

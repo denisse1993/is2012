@@ -127,9 +127,13 @@ public class Arcade extends Activity implements View.OnClickListener,
 		super.onResume();
 		if (Props.Comun.ONLINE) {
 			iVconexion.setImageResource(R.drawable.ic_conexion_on_24);
+			iBseeSc.setOnClickListener(this);
 		} else {
 			iVconexion.setImageResource(R.drawable.ic_conexion_off_24);
+			// deshabilitar,cambiar color, etc
+			iBseeSc.setOnClickListener(null);
 		}
+		
 		if (!mDbHelper.isOpen()) {
 			mDbHelper.open(false);
 		}
@@ -284,13 +288,7 @@ public class Arcade extends Activity implements View.OnClickListener,
 		iBright.setOnClickListener(this);
 		iBupSc.setOnClickListener(this);
 		iVconexion.setOnClickListener(this);
-		if (Props.Comun.ONLINE) {
-			iBseeSc.setOnClickListener(this);
-		} else {
-			// deshabilitar,cambiar color, etc
-			iBseeSc.setOnClickListener(null);
-
-		}
+		
 		// rellena texto de bienvenida
 		tVhello.setText(tVhello.getText() + " " + jugador.getNombre() + "!"
 				+ "\nPuntuacion total: " + jugador.getScoreTotal());
