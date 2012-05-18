@@ -168,10 +168,10 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 				}
 				dialog.cancel();
 				finish();
-				//No necesita esto de abajo porque se queda abierto el mainmenu
-				//Bundle b = new Bundle();
-				//b.putSerializable(Props.Comun.JUGADOR, jugador);
-				//this.launch.lanzaActivity(Props.Action.MAINMENU, b);
+				// No necesita esto de abajo porque se queda abierto el mainmenu
+				// Bundle b = new Bundle();
+				// b.putSerializable(Props.Comun.JUGADOR, jugador);
+				// this.launch.lanzaActivity(Props.Action.MAINMENU, b);
 				break;
 			case -2:// no
 				dialog.cancel();
@@ -185,7 +185,8 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_in_game_host_ranking:
 			// TODO ANTES this.launch.lanzaDialogoGetPquest(quest.getNombre());
-			this.launch.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador());
+			this.launch.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador(),
+					true);
 			break;
 		case R.id.iv_in_game_host_opciones:
 			// para lanzar opciones

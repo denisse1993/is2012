@@ -159,7 +159,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		start = 10000;
 		period = 10000;
 		currentNotif = 0;
-		//programarTimer();
+		// programarTimer();
 		hiloBackground();
 		j = new UtilJSON(this);
 		// textFinal = (TextView) findViewById(R.id.tv_fin);
@@ -205,7 +205,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	protected void onPause() {
-		//muereteCabron = true;
+		// muereteCabron = true;
 		timer.cancel();
 		timer = null;
 		super.onPause();
@@ -229,13 +229,13 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	protected void onResume() {
-		//muereteCabron = false;
+		// muereteCabron = false;
 
 		super.onResume();
 		if (!this.mDbHelper.isOpen()) {
 			this.mDbHelper.open(false);
 		}
-		//programarTimer();
+		// programarTimer();
 		// l.lanzaAviso("prueba");
 	}
 
@@ -265,8 +265,9 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		switch (this.vClicked = v.getId()) {
 		case R.id.iv_ranking_ingame:
 			timer.cancel();
-			this.l.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador());// antes
-																			// quest.getNombre()
+			this.l.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador(),
+					false);// antes
+			// quest.getNombre()
 			break;
 		case R.id.iv_camara_ingame:
 			timer.cancel();
@@ -450,54 +451,39 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		}
 
 	}
-/***
-	public void programarTimer() {
-		timer = new Timer();
 
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				funcionTimer();
-			}
-
-		}, start, period);
-
-	}
-
-	protected void funcionTimer() {
-		this.runOnUiThread(mostrarMensaje);
-
-	}
-
-	final Activity a = this;
-	boolean muereteCabron = false;
-	private final Runnable mostrarMensaje = new Runnable() {
-		public void run() {
-			if (!muereteCabron) {
-				checkConexion();
-
-				if (conexion.getNotif(jugador.getNombre(),
-						Login.prefs.getString(Props.Comun.TOKEN, ""))) {
-					String s = j.jsonToString(conexion.getRespuesta());
-					int respuesta;
-					if (s.equals("")) {
-						respuesta = 0;
-					} else {
-						respuesta = Integer.parseInt(s);
-					}
-					if (currentNotif != respuesta) {
-						currentNotif = respuesta;
-
-						Launch.lanzaAviso("Notificaciones pendientes",
-								"Click en Ranking para mas detalles", a);
-					}
-
-				}
-			}
-		}
-	};
-**/
+	/***
+	 * public void programarTimer() { timer = new Timer();
+	 * 
+	 * timer.schedule(new TimerTask() {
+	 * 
+	 * @Override public void run() { funcionTimer(); }
+	 * 
+	 *           }, start, period);
+	 * 
+	 *           }
+	 * 
+	 *           protected void funcionTimer() {
+	 *           this.runOnUiThread(mostrarMensaje);
+	 * 
+	 *           }
+	 * 
+	 *           final Activity a = this; boolean muereteCabron = false; private
+	 *           final Runnable mostrarMensaje = new Runnable() { public void
+	 *           run() { if (!muereteCabron) { checkConexion();
+	 * 
+	 *           if (conexion.getNotif(jugador.getNombre(),
+	 *           Login.prefs.getString(Props.Comun.TOKEN, ""))) { String s =
+	 *           j.jsonToString(conexion.getRespuesta()); int respuesta; if
+	 *           (s.equals("")) { respuesta = 0; } else { respuesta =
+	 *           Integer.parseInt(s); } if (currentNotif != respuesta) {
+	 *           currentNotif = respuesta;
+	 * 
+	 *           Launch.lanzaAviso("Notificaciones pendientes",
+	 *           "Click en Ranking para mas detalles", a); }
+	 * 
+	 *           } } } };
+	 **/
 	@Override
 	public Launch l() {
 		return l;
@@ -525,45 +511,42 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			return false;
 		}
 	}
-	
-	
-	
-	 public void hiloBackground() {
-	    TimerTask asyncTask;
-	    final InGameAventura a = this;
-	    final Handler handler = new Handler();
-	    timer = new Timer();
 
+	public void hiloBackground() {
+		TimerTask asyncTask;
+		final InGameAventura a = this;
+		final Handler handler = new Handler();
+		timer = new Timer();
 
-	            asyncTask = new TimerTask() {
+		asyncTask = new TimerTask() {
 
-	                @Override
-	                public void run() {
-	                    // TODO Auto-generated method stub
-	                    handler.post(new Runnable() {
-	                        public void run() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				handler.post(new Runnable() {
+					public void run() {
 
-	                            try {
-	                              l.lanzaGetNotificaciones(jugador.getNombre(), currentNotif,a);
+						try {
+							l.lanzaGetNotificaciones(jugador.getNombre(),
+									currentNotif, a);
 
+						} catch (Exception e) {
+							l.lanzaToast("ERROR HILO NOTIF");
 
-	                            } catch (Exception e) {
-	                                l.lanzaToast("ERROR HILO NOTIF");
+						}
 
+					}
+				});
 
-	                            }
+			}
 
-	                        }
-	                    });
+		};
 
-	                }
+		timer.schedule(asyncTask, 0, 5000);// esta puesto cada 5 secs
 
-	            };
+	}
 
-	            timer.schedule(asyncTask, 0,5000);//esta puesto cada 5 secs
-
-	        }
-	 public void setNotif(int i){
-		 currentNotif = i;
-	 }
+	public void setNotif(final int i) {
+		currentNotif = i;
+	}
 }

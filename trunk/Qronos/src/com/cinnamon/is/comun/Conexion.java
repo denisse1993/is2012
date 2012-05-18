@@ -19,6 +19,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.cinnamon.is.game.Login;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -589,6 +591,49 @@ public class Conexion {
 		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
 		HttpPost post = new HttpPost(
 				"http://cinnamon.webatu.com/resetpquest.php"); // server
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+
+		pairs.add(new BasicNameValuePair("user", nick));
+		pairs.add(new BasicNameValuePair("quest", diferenciador));
+		pairs.add(new BasicNameValuePair("token", token));
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse rp = hc.execute(post);
+			if (rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				this.respuesta = EntityUtils.toString(rp.getEntity());
+				retorno = true;
+			} else {
+				retorno = false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			retorno = false;
+		}
+		return retorno;
+	}
+
+	/**
+	 * Resetea los datos de los jugadores que esten en la partida que coincida
+	 * con el nombre del host
+	 * 
+	 * @param nick
+	 *            del usuario que ha lanzado el metodo
+	 * @param diferenciador
+	 *            nombreAventura;nombreHost
+	 * @param token
+	 *            unico que identifica al usuario
+	 * @return conexion o no
+	 */
+	public boolean resetJugadorPquest(final String nick,
+			final String diferenciador, final String token) {
+
+		// Vuelca toda la info de BD local en la BD web
+		HttpClient hc = new DefaultHttpClient();
+		boolean retorno;
+		// HttpPost post = new HttpPost("http://10.0.2.2/register.php");
+		HttpPost post = new HttpPost(
+				"http://cinnamon.webatu.com/resetplayerpquest.php"); // server
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
 		pairs.add(new BasicNameValuePair("user", nick));

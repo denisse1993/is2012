@@ -25,7 +25,7 @@ public class Ranking extends Activity {
 	private UtilJSON utilj;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ranking);
 		Bundle b = getIntent().getExtras();
@@ -34,6 +34,7 @@ public class Ranking extends Activity {
 		arcadeData = (Jugador) b.getSerializable(Props.Comun.ARCADE_DATA);
 		tvTitulo = (TextView) findViewById(R.id.textViewTitulo);
 		utilj = new UtilJSON(this);
+		boolean admin = b.getBoolean(Props.Comun.ADMIN, false);
 
 		if (jugador == null) {
 			if (arcadeData != null) {
@@ -41,10 +42,11 @@ public class Ranking extends Activity {
 				utilj.rankingOnlineArcade(JSON, 5, arcadeData);
 			} else {
 				tvTitulo.setText("Ranking Aventura");
-				utilj.rankingOnlineAventura(JSON);
+				utilj.rankingOnlineAventura(JSON, jugador, admin);
 			}
-		} else
+		} else {
 			rankingLocal();
+		}
 	}
 
 	/**
@@ -62,9 +64,11 @@ public class Ranking extends Activity {
 				String.valueOf(a[11]), suma);
 	}
 
-	public void setFila(int i, String nick, String mj1, String mj2, String mj3,
-			String mj4, String mj5, String mj6, String mj7, String mj8,
-			String mj9, String mj10, String mj11, String mj12, String total) {
+	public void setFila(final int i, final String nick, final String mj1,
+			final String mj2, final String mj3, final String mj4,
+			final String mj5, final String mj6, final String mj7,
+			final String mj8, final String mj9, final String mj10,
+			final String mj11, final String mj12, final String total) {
 		if (i == 1) {
 			TextView text0 = (TextView) findViewById(R.id.textView0);
 			text0.setText(nick);

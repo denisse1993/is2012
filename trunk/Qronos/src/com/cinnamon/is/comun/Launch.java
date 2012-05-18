@@ -587,11 +587,16 @@ public final class Launch {
 	 *            el diferenciador para obtener puntuaciones,se usa
 	 *            nombreAventura;nombreHost para evitar que se bajen
 	 *            puntuaciones de aventuras de otras partidas
+	 * @param admin
+	 *            si lo lanza el admin o un jugador
+	 * 
 	 * 
 	 */
-	public void lanzaDialogoEsperaGetPquest(final String diferenciador) { //
+	public void lanzaDialogoEsperaGetPquest(final String diferenciador,
+			final boolean admin) { //
 		// valor 9 activa getPquest
-		new ConexionServerTask().execute(new Object[] { 9, diferenciador });
+		new ConexionServerTask()
+				.execute(new Object[] { 9, diferenciador, admin });
 	}
 
 	/**
@@ -612,8 +617,8 @@ public final class Launch {
 	 * @param diferenciadorPartida
 	 * 
 	 */
-	public void lanzaDialogoEsperaResetPquest(String user,
-			String diferenciadorPartida) { //
+	public void lanzaDialogoEsperaResetPquest(final String user,
+			final String diferenciadorPartida) { //
 		// valor 11 activa reseteo de partida
 		new ConexionServerTask().execute(new Object[] { 11, user,
 				diferenciadorPartida });
@@ -643,8 +648,8 @@ public final class Launch {
 	 * @param av
 	 *            la aventura a pasar al dialog case 10
 	 */
-	private void lanzaDialogoEsperaUpdateJugadorPquestLanzaGetQuestUnirse(
-			Jugador j, Aventura av) { //
+	private void lanzaDialogoEsperaResetJugadorPquestLanzaGetQuestUnirse(
+			final Jugador j, final Aventura av) { //
 		// valor 13 activa este launch (nombre guapo guapo)
 		new ConexionServerTask().execute(new Object[] { 13, j, av });
 	}
@@ -652,12 +657,15 @@ public final class Launch {
 	/**
 	 * lanza el get notif
 	 * 
+	 * @param name
+	 * @param current
+	 * 
 	 * @param a
 	 * @param j
 	 * @param token
 	 */
-	public void lanzaGetNotificaciones(String name, int current,
-			InGameAventura a) {
+	public void lanzaGetNotificaciones(final String name, final int current,
+			final InGameAventura a) {
 		ConexionServerTask c = new ConexionServerTask();
 		c.setLanzaDialogo(false);
 		c.execute(new Object[] { 14, name, current, a });
@@ -682,7 +690,7 @@ public final class Launch {
 		private ProgressDialog dialog;
 		private boolean lanzarDialog = true;
 
-		public void setLanzaDialogo(boolean b) {
+		public void setLanzaDialogo(final boolean b) {
 			lanzarDialog = b;
 		}
 
@@ -692,7 +700,7 @@ public final class Launch {
 				this.dialog = ProgressDialog.show(Launch.this.a,
 						"Conectando...", "Por favor, espera...", true, true);
 			}
-			
+
 		}
 
 		@Override
@@ -824,6 +832,7 @@ public final class Launch {
 				// Ver ranking pquest
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
+				ret[3] = datos[2];// si es admin o no
 				Object[] tmp = inet.c().getPquest(qStr);
 				ret[1] = tmp[0];// boolean
 				ret[2] = tmp[1];// string
@@ -852,13 +861,13 @@ public final class Launch {
 				ret[1] = inet.c().dameJugadorPquest(j.getNombre());
 				break;
 			case 13:
-				// Get jugador Pquest (tabla pquest) y get aventura lanzando
+				// Update jugador Pquest (tabla pquest) y get aventura lanzando
 				// ingame aventura
 				inet = (Inet) Launch.this.a;
 				j = (Jugador) datos[1];
-				ret[2] = (Aventura) datos[2];
-				ret[1] = inet.c().updatePquest(j.getScoreQuest(),
-						j.getNombre(), j.getDiferenciador(), j.getFase(),
+				ret[2] = datos[2];
+				ret[1] = inet.c().resetJugadorPquest(j.getNombre(),
+						j.getDiferenciador(),
 						Login.prefs.getString("token", ""));
 				break;
 			case 14:
@@ -868,7 +877,7 @@ public final class Launch {
 				ret[2] = datos[2];
 				ret[1] = inet.c().getNotif(nick,
 						Login.prefs.getString("token", ""));
-				
+
 				break;
 			}
 
@@ -877,7 +886,9 @@ public final class Launch {
 
 		@Override
 		protected void onPostExecute(final Object[] result) {
-			if (lanzarDialog) this.dialog.dismiss();
+			if (lanzarDialog) {
+				this.dialog.dismiss();
+			}
 			lanzarDialog = true;
 			int tarea = (Integer) result[0];
 			String respuestaSave;
@@ -927,13 +938,12 @@ public final class Launch {
 					if (respuestaSave.equals("1")) {
 						// TODO solo registra offline si ha registrado online
 						register.l.lanzaToast(Props.Strings.USER_CREADO_ONLINE);
-						if (!register.creaJugadorLocal()) {
-							register.lanzaMenuPrincipal();
-							// else if (!Props.Comun.ONLINE) {
-							// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
-							// login.l.lanzaToast(Props.Strings.USER_CREADO);
-							// }
-						}
+						register.creaJugadorLocal();
+						register.lanzaMenuPrincipal();
+						// else if (!Props.Comun.ONLINE) {
+						// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
+						// login.l.lanzaToast(Props.Strings.USER_CREADO);
+						// }
 					} else if (respuestaSave.equals("2")) {
 						register.l
 								.lanzaToast(Props.Strings.USER_YA_EXISTE_ONLINE);
@@ -1068,10 +1078,12 @@ public final class Launch {
 				conex = (Boolean) result[1];
 				inet = (Inet) Launch.this.a;
 				if (conex) {
+					boolean admin = (Boolean) result[3];
 					String json = (String) result[2];
 					if (json != null & !json.equals("null")) {
 						Bundle b = new Bundle();
 						b.putSerializable(Props.Comun.JSON, json);
+						b.putSerializable(Props.Comun.ADMIN, admin);
 						inet.l().lanzaActivity(Props.Action.RANKING, b);
 					} else {
 						inet.l()
@@ -1137,7 +1149,7 @@ public final class Launch {
 							// partida, para actualizar la info
 							if (b[1]) {
 								inet.l()
-										.lanzaDialogoEsperaUpdateJugadorPquestLanzaGetQuestUnirse(
+										.lanzaDialogoEsperaResetJugadorPquestLanzaGetQuestUnirse(
 												jugador, eli.a);
 							} else {
 								inet.l()
@@ -1170,7 +1182,8 @@ public final class Launch {
 				InGameAventura juego = (InGameAventura) result[3];
 				UtilJSON uj = new UtilJSON(juego);
 				if (conex) {
-					int notif = Integer.parseInt(uj.jsonToString(inet.c().getRespuesta()));
+					int notif = Integer.parseInt(uj.jsonToString(inet.c()
+							.getRespuesta()));
 					if (current != notif) {
 						juego.setNotif(notif);
 						inet.l()
