@@ -282,6 +282,10 @@ public final class Props {
 		 * Para guardar una referencia a una actividad concreta
 		 */
 		public static Activity ACTIVIDAD = null;
+		/**
+		 * Para usar cuado el ranking lo lance el admin
+		 */
+		public static final String ADMIN = "admin";
 
 		/**
 		 * Para obtener el estado del sonido

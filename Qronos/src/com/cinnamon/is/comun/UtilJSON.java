@@ -197,10 +197,11 @@ public final class UtilJSON {
 		return new Boolean[] { retorno, uploadServer };
 	}
 
-	public boolean rankingOnlineAventura(final String jSON) {
+	public boolean rankingOnlineAventura(final String jSON,
+			final Jugador jugador, final boolean admin) {
 		boolean retorno;
 		String nick, mj1, mj2, mj3, mj4, mj5, mj6, mj7, mj8, mj9, mj10, mj11, mj12, total;
-
+		boolean entre5primeros = false;
 		JSONArray jArray;
 		try {
 
@@ -224,8 +225,22 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
+				if (nick == jugador.getNombre()) {
+					entre5primeros = true;
+				}
 				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
 						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
+			}
+			if (!entre5primeros && !admin) {
+				int[] b = jugador.getScore();
+				String suma = String.valueOf(jugador.getScoreTotal());
+				((Ranking) this.a).setFila(0, jugador.getNombre(),
+						String.valueOf(b[0]), String.valueOf(b[1]),
+						String.valueOf(b[2]), String.valueOf(b[3]),
+						String.valueOf(b[4]), String.valueOf(b[5]),
+						String.valueOf(b[6]), String.valueOf(b[7]),
+						String.valueOf(b[8]), String.valueOf(b[9]),
+						String.valueOf(b[10]), String.valueOf(b[11]), suma);
 			}
 			retorno = true;
 		} catch (JSONException e1) {
@@ -284,7 +299,7 @@ public final class UtilJSON {
 			if (!entre5primeros) {
 				int[] b = jugador.getScore();
 				String suma = String.valueOf(jugador.getScoreTotal());
-				((Ranking) this.a).setFila(5, jugador.getNombre(),
+				((Ranking) this.a).setFila(0, jugador.getNombre(),
 						String.valueOf(b[0]), String.valueOf(b[1]),
 						String.valueOf(b[2]), String.valueOf(b[3]),
 						String.valueOf(b[4]), String.valueOf(b[5]),
