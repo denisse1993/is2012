@@ -650,6 +650,21 @@ public final class Launch {
 	}
 
 	/**
+	 * lanza el get notif
+	 * 
+	 * @param a
+	 * @param j
+	 * @param token
+	 */
+	public void lanzaGetNotificaciones(String name, int current,
+			InGameAventura a) {
+		ConexionServerTask c = new ConexionServerTask();
+		c.setLanzaDialogo(false);
+		c.execute(new Object[] { 14, name, current, a });
+
+	}
+
+	/**
 	 * <p>
 	 * Clase asincrona para realizar conexiones con el server
 	 * </p>
@@ -665,11 +680,19 @@ public final class Launch {
 			AsyncTask<Object, Boolean, Object[]> {
 
 		private ProgressDialog dialog;
+		private boolean lanzarDialog = true;
+
+		public void setLanzaDialogo(boolean b) {
+			lanzarDialog = b;
+		}
 
 		@Override
 		protected void onPreExecute() {
-			this.dialog = ProgressDialog.show(Launch.this.a, "Conectando...",
-					"Por favor, espera...", true, true);
+			if (lanzarDialog) {
+				this.dialog = ProgressDialog.show(Launch.this.a,
+						"Conectando...", "Por favor, espera...", true, true);
+			}
+			
 		}
 
 		@Override
@@ -678,7 +701,7 @@ public final class Launch {
 			UtilJSON u;
 			Inet inet;
 			Aventura av;
-			Object[] ret = new Object[3];
+			Object[] ret = new Object[4];
 			// tarea a realizar
 			int tarea = (Integer) datos[0];
 			// rellena tarea
@@ -838,6 +861,15 @@ public final class Launch {
 						j.getNombre(), j.getDiferenciador(), j.getFase(),
 						Login.prefs.getString("token", ""));
 				break;
+			case 14:
+				inet = (Inet) Launch.this.a;
+				nick = (String) datos[1];
+				ret[3] = datos[3];
+				ret[2] = datos[2];
+				ret[1] = inet.c().getNotif(nick,
+						Login.prefs.getString("token", ""));
+				
+				break;
 			}
 
 			return ret;
@@ -845,7 +877,8 @@ public final class Launch {
 
 		@Override
 		protected void onPostExecute(final Object[] result) {
-			this.dialog.dismiss();
+			if (lanzarDialog) this.dialog.dismiss();
+			lanzarDialog = true;
 			int tarea = (Integer) result[0];
 			String respuestaSave;
 			Inet inet;
@@ -1090,7 +1123,8 @@ public final class Launch {
 					} else {
 						jugador = (Jugador) result[2];
 						u = new UtilJSON(Launch.this.a);
-						Boolean[] b = u.getPquestJugadorSiExiste(pquest, jugador);
+						Boolean[] b = u.getPquestJugadorSiExiste(pquest,
+								jugador);
 						if (b[0]) {
 							inet.l().lanzaToast(
 									Props.Strings.USER_UPDATE_PQUEST);
@@ -1127,6 +1161,26 @@ public final class Launch {
 
 				} else {
 					inet.l().lanzaToast(Props.Strings.SCORE_SUBIDA_ERROR);
+				}
+				break;
+			case 14:
+				inet = (Inet) Launch.this.a;
+				conex = (Boolean) result[1];
+				int current = (Integer) result[2];
+				InGameAventura juego = (InGameAventura) result[3];
+				UtilJSON uj = new UtilJSON(juego);
+				if (conex) {
+					int notif = Integer.parseInt(uj.jsonToString(inet.c().getRespuesta()));
+					if (current != notif) {
+						juego.setNotif(notif);
+						inet.l()
+								.lanzaAviso(
+										"Un usuario actualizo su puntuacion",
+										"Haz click sobre ranking para informacion actualizada");
+					}
+
+				} else {
+					inet.l().lanzaToast("error conexion actualizando notifs");
 				}
 				break;
 			}
