@@ -593,10 +593,10 @@ public final class Launch {
 	 * 
 	 */
 	public void lanzaDialogoEsperaGetPquest(final String diferenciador,
-			final boolean admin) { //
+			final boolean admin,Jugador jug) { //
 		// valor 9 activa getPquest
 		new ConexionServerTask()
-				.execute(new Object[] { 9, diferenciador, admin });
+				.execute(new Object[] { 9, diferenciador, admin,jug });
 	}
 
 	/**
@@ -709,7 +709,7 @@ public final class Launch {
 			UtilJSON u;
 			Inet inet;
 			Aventura av;
-			Object[] ret = new Object[4];
+			Object[] ret = new Object[5];
 			// tarea a realizar
 			int tarea = (Integer) datos[0];
 			// rellena tarea
@@ -832,6 +832,7 @@ public final class Launch {
 				// Ver ranking pquest
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
+				ret[4]=datos[3];//el jugador
 				ret[3] = datos[2];// si es admin o no
 				Object[] tmp = inet.c().getPquest(qStr);
 				ret[1] = tmp[0];// boolean
@@ -1078,12 +1079,14 @@ public final class Launch {
 				conex = (Boolean) result[1];
 				inet = (Inet) Launch.this.a;
 				if (conex) {
+					jugador = (Jugador) result[4];
 					boolean admin = (Boolean) result[3];
 					String json = (String) result[2];
 					if (json != null & !json.equals("null")) {
 						Bundle b = new Bundle();
 						b.putSerializable(Props.Comun.JSON, json);
-						b.putSerializable(Props.Comun.ADMIN, admin);
+						b.putSerializable(Props.Comun.AVENTURA_DATA, jugador);
+						b.putBoolean(Props.Comun.ADMIN, admin);
 						inet.l().lanzaActivity(Props.Action.RANKING, b);
 					} else {
 						inet.l()

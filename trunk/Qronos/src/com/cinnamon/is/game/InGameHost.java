@@ -186,7 +186,7 @@ public class InGameHost extends Activity implements Inet, OnClickListener,
 		case R.id.iv_in_game_host_ranking:
 			// TODO ANTES this.launch.lanzaDialogoGetPquest(quest.getNombre());
 			this.launch.lanzaDialogoEsperaGetPquest(jugador.getDiferenciador(),
-					true);
+					true,jugador);
 			break;
 		case R.id.iv_in_game_host_opciones:
 			// para lanzar opciones

@@ -225,16 +225,22 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
-				if (nick == jugador.getNombre()) {
+				if (nick.equals(jugador.getNombre())) {
 					entre5primeros = true;
 				}
 				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
 						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
 			}
 			if (!entre5primeros && !admin) {
+				int pos = 0;
+				for (int i = 0; i < jArray.length(); i++) {
+					if (jArray.getJSONObject(i).getString("NICK")
+							.equals(jugador.getNombre()))
+						pos = i;
+				}
 				int[] b = jugador.getScore();
 				String suma = String.valueOf(jugador.getScoreTotal());
-				((Ranking) this.a).setFila(0, jugador.getNombre(),
+				((Ranking) this.a).setFila(pos, jugador.getNombre(),
 						String.valueOf(b[0]), String.valueOf(b[1]),
 						String.valueOf(b[2]), String.valueOf(b[3]),
 						String.valueOf(b[4]), String.valueOf(b[5]),
@@ -290,16 +296,22 @@ public final class UtilJSON {
 				mj11 = json_data.getString("MJ11");
 				mj12 = json_data.getString("MJ12");
 				total = json_data.getString("TOTAL");
-				if (nick == jugador.getNombre()) {
+				if (nick.equals(jugador.getNombre())) {
 					entre5primeros = true;
 				}
 				((Ranking) this.a).setFila(j, nick, mj1, mj2, mj3, mj4, mj5,
 						mj6, mj7, mj8, mj9, mj10, mj11, mj12, total);
 			}
 			if (!entre5primeros) {
+				int pos = 0;
+				for (int i = 0; i < jArray.length(); i++) {
+					if (jArray.getJSONObject(i).getString("NICK")
+							.equals(jugador.getNombre()))
+						pos = i;
+				}
 				int[] b = jugador.getScore();
 				String suma = String.valueOf(jugador.getScoreTotal());
-				((Ranking) this.a).setFila(0, jugador.getNombre(),
+				((Ranking) this.a).setFila(pos, jugador.getNombre(),
 						String.valueOf(b[0]), String.valueOf(b[1]),
 						String.valueOf(b[2]), String.valueOf(b[3]),
 						String.valueOf(b[4]), String.valueOf(b[5]),
