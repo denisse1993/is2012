@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
 import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
+import com.cinnamon.is.comun.Launch.ConexionServerTask;
 import com.cinnamon.is.comun.Props;
 import com.cinnamon.is.comun.UtilJSON;
 import com.cinnamon.is.comun.UtilQR;
@@ -157,8 +159,8 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		start = 10000;
 		period = 10000;
 		currentNotif = 0;
-		programarTimer();
-
+		//programarTimer();
+		hiloBackground();
 		j = new UtilJSON(this);
 		// textFinal = (TextView) findViewById(R.id.tv_fin);
 
@@ -203,7 +205,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	protected void onPause() {
-		muereteCabron = true;
+		//muereteCabron = true;
 		timer.cancel();
 		timer = null;
 		super.onPause();
@@ -227,13 +229,13 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	@Override
 	protected void onResume() {
-		muereteCabron = false;
+		//muereteCabron = false;
 
 		super.onResume();
 		if (!this.mDbHelper.isOpen()) {
 			this.mDbHelper.open(false);
 		}
-		programarTimer();
+		//programarTimer();
 		// l.lanzaAviso("prueba");
 	}
 
@@ -448,11 +450,11 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		}
 
 	}
-
+/***
 	public void programarTimer() {
 		timer = new Timer();
 
-		timer.schedule/* AtFixedRate */(new TimerTask() {
+		timer.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
@@ -495,7 +497,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			}
 		}
 	};
-
+**/
 	@Override
 	public Launch l() {
 		return l;
@@ -523,4 +525,45 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			return false;
 		}
 	}
+	
+	
+	
+	 public void hiloBackground() {
+	    TimerTask asyncTask;
+	    final InGameAventura a = this;
+	    final Handler handler = new Handler();
+	    timer = new Timer();
+
+
+	            asyncTask = new TimerTask() {
+
+	                @Override
+	                public void run() {
+	                    // TODO Auto-generated method stub
+	                    handler.post(new Runnable() {
+	                        public void run() {
+
+	                            try {
+	                              l.lanzaGetNotificaciones(jugador.getNombre(), currentNotif,a);
+
+
+	                            } catch (Exception e) {
+	                                l.lanzaToast("ERROR HILO NOTIF");
+
+
+	                            }
+
+	                        }
+	                    });
+
+	                }
+
+	            };
+
+	            timer.schedule(asyncTask, 0,5000);//esta puesto cada 5 secs
+
+	        }
+	 public void setNotif(int i){
+		 currentNotif = i;
+	 }
 }
