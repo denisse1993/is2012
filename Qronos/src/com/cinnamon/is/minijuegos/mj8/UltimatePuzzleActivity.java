@@ -7,7 +7,6 @@ import java.util.Random;
 import com.cinnamon.is.R;
 import com.cinnamon.is.comun.Minijuego;
 import com.cinnamon.is.comun.Props;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
