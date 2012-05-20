@@ -463,38 +463,6 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 	}
 
-	/***
-	 * public void programarTimer() { timer = new Timer();
-	 * 
-	 * timer.schedule(new TimerTask() {
-	 * 
-	 * @Override public void run() { funcionTimer(); }
-	 * 
-	 *           }, start, period);
-	 * 
-	 *           }
-	 * 
-	 *           protected void funcionTimer() {
-	 *           this.runOnUiThread(mostrarMensaje);
-	 * 
-	 *           }
-	 * 
-	 *           final Activity a = this; boolean muereteCabron = false; private
-	 *           final Runnable mostrarMensaje = new Runnable() { public void
-	 *           run() { if (!muereteCabron) { checkConexion();
-	 * 
-	 *           if (conexion.getNotif(jugador.getNombre(),
-	 *           Login.prefs.getString(Props.Comun.TOKEN, ""))) { String s =
-	 *           j.jsonToString(conexion.getRespuesta()); int respuesta; if
-	 *           (s.equals("")) { respuesta = 0; } else { respuesta =
-	 *           Integer.parseInt(s); } if (currentNotif != respuesta) {
-	 *           currentNotif = respuesta;
-	 * 
-	 *           Launch.lanzaAviso("Notificaciones pendientes",
-	 *           "Click en Ranking para mas detalles", a); }
-	 * 
-	 *           } } } };
-	 **/
 	@Override
 	public Launch l() {
 		return l;
