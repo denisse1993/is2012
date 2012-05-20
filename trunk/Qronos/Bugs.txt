@@ -12,10 +12,11 @@
 - Sonido sigue sonando despuÃ©s de salir (Solucionado)
 - Dialogo Texto(Edu)(Solucionado)
 - Peta el login(solucionado)
-El texto del dialog que se lanza antes de lanzar un minijuego en Arcade no se lee(Solucionado)
+- El texto del dialog que se lanza antes de lanzar un minijuego en Arcade no se lee(Solucionado)
 - Al subir las puntuaciones al ranking de arcade se ha copiado el valor de mj1 a mj11
 	(despues de introducir mj8)
-
+-Registrarse se mete en el juego sin tener token (SOLUCIONADO)
+-IngameAventura peta Ranking->Opciones->PLOF (SOLUCIONADO)
 
 
 ** Sugerencias**
