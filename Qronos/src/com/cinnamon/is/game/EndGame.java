@@ -11,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinnamon.is.R;
+import com.cinnamon.is.comun.Conexion;
 import com.cinnamon.is.comun.DbAdapter;
+import com.cinnamon.is.comun.Inet;
 import com.cinnamon.is.comun.Launch;
 import com.cinnamon.is.comun.Props;
 
-public class EndGame extends Activity implements OnClickListener,
+public class EndGame extends Activity implements OnClickListener, Inet,
 		DialogInterface.OnClickListener {
 
 	/**
@@ -44,9 +46,10 @@ public class EndGame extends Activity implements OnClickListener,
 	private TextView title;
 
 	/**
-	 * Launch
+	 * Launch y conexion
 	 */
-	Launch l;
+	private Launch l;
+	private Conexion conexion;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class EndGame extends Activity implements OnClickListener,
 		this.bExit.setOnClickListener(this);
 
 		this.l = new Launch(this);
-
+		this.conexion = new Conexion(this);
 	}
 
 	@Override
@@ -139,6 +142,18 @@ public class EndGame extends Activity implements OnClickListener,
 				break;
 			}
 		}
+	}
+
+	@Override
+	public Launch l() {
+
+		return l;
+	}
+
+	@Override
+	public Conexion c() {
+
+		return conexion;
 	}
 
 }
