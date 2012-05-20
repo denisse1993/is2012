@@ -290,7 +290,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			b.putSerializable(Props.Comun.AVENTURA, quest);
 			b.putSerializable(Props.Comun.JUGADOR, jugador);
 			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEAVENTURA);
-			finish();
+			Props.Comun.ACTIVIDAD = this;
 			l.lanzaActivity(Props.Action.OPCIONES, b);
 			break;
 		case R.id.iv_info_ingame:
