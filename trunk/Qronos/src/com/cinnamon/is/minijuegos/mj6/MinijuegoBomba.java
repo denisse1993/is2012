@@ -63,7 +63,8 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		 * String.valueOf(startTime));
 		 */
 		// TODO 1¼ Cambio
-		Toast.makeText(this, "Coloca el movil en posici—n vertical", 4000);
+		Toast.makeText(this, "Coloca el movil en posici—n vertical", 4000)
+				.show();
 		//
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
@@ -194,6 +195,9 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 	public void finalizar(final boolean s) {
 		// Para tiempo
 		superado = s;
+		if (s) {
+			setResult(vista.getScore());
+		}
 		// Creo el bundle con la info usando strings genericos de clase
 		// Props.Comun
 		Bundle b = new Bundle();
@@ -202,9 +206,6 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 		// Devuelvo resultado a actividad padre
 		Launch.returnActivity(this, b, RESULT_OK);
 
-		if (s) {
-			setResult(vista.getScore());
-		}
 		this.finish();
 	}
 
@@ -223,7 +224,7 @@ public class MinijuegoBomba extends Minijuego implements SensorEventListener {
 					superado = true;
 					finalizar(superado);
 					Toast.makeText(this, "Enhorabuena te has pasado el juego",
-							5);
+							5).show();
 				}
 			} else if (resultCode == RESULT_CANCELED) {
 				superado = false;

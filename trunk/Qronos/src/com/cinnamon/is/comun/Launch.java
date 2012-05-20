@@ -589,14 +589,15 @@ public final class Launch {
 	 *            puntuaciones de aventuras de otras partidas
 	 * @param admin
 	 *            si lo lanza el admin o un jugador
+	 * @param jug
 	 * 
 	 * 
 	 */
 	public void lanzaDialogoEsperaGetPquest(final String diferenciador,
-			final boolean admin,Jugador jug) { //
+			final boolean admin, final Jugador jug) { //
 		// valor 9 activa getPquest
-		new ConexionServerTask()
-				.execute(new Object[] { 9, diferenciador, admin,jug });
+		new ConexionServerTask().execute(new Object[] { 9, diferenciador,
+				admin, jug });
 	}
 
 	/**
@@ -834,7 +835,7 @@ public final class Launch {
 				// Ver ranking pquest
 				inet = (Inet) Launch.this.a;
 				qStr = (String) datos[1];
-				ret[4]=datos[3];//el jugador
+				ret[4] = datos[3];// el jugador
 				ret[3] = datos[2];// si es admin o no
 				Object[] tmp = inet.c().getPquest(qStr);
 				ret[1] = tmp[0];// boolean
@@ -945,7 +946,7 @@ public final class Launch {
 						String nick = (String) result[3];
 						String pass = (String) result[4];
 						register.l.lanzaDialogoEsperaLogin(nick, pass);
-						//register.lanzaMenuPrincipal();
+						// register.lanzaMenuPrincipal();
 						// else if (!Props.Comun.ONLINE) {
 						// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
 						// login.l.lanzaToast(Props.Strings.USER_CREADO);

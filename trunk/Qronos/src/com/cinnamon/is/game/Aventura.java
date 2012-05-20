@@ -61,7 +61,7 @@ public class Aventura implements Serializable {
 	 *            numero de superados
 	 */
 	public Aventura(final String nombre, final String pass,
-			final ArrayList<T> minijuegos, int superados) {
+			final ArrayList<T> minijuegos, final int superados) {
 		this.nombre = nombre;
 		this.pass = pass;
 		this.minijuegos = minijuegos;
@@ -294,12 +294,13 @@ public class Aventura implements Serializable {
 	 * @param scoreQuest
 	 *            las puntuaciones de un jugador en la aventura
 	 */
-	public void setSuperadosIfScoreNo0(int[] scoreQuest) {
-		for (T mj : minijuegos)
+	public void setSuperadosIfScoreNo0(final int[] scoreQuest) {
+		for (T mj : minijuegos) {
 			if (scoreQuest[mj.idMj - 1] > 0) {
 				mj.setSuperado(true);
 				superados++;
 			}
+		}
 	}
 
 	public String getNombre() {
@@ -321,8 +322,9 @@ public class Aventura implements Serializable {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("[");
-		for (T mj : minijuegos)
+		for (T mj : minijuegos) {
 			sb.append(mj + ",");
+		}
 		sb.setLength(sb.length() - 1);
 		sb.append("]");
 		return nombre + " " + pass + "\nMinijuegos: " + sb.toString();
