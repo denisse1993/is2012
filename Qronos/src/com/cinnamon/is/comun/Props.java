@@ -57,6 +57,8 @@ public final class Props {
 
 		public static final String INGAMEHOST = "com.cinnamon.is.game.INGAMEHOST";
 
+		public static final String ENDGAME = "com.cinnamon.is.game.ENDGAME";
+
 		// intents de zXing
 		public static final String SCAN = "com.cinnamon.is.SCAN";
 
@@ -267,7 +269,7 @@ public final class Props {
 		 * Para indicar que viene del aventura, contiene la informacion del
 		 * jugador
 		 */
-		public static String AVENTURA_DATA="jAventura";
+		public static String AVENTURA_DATA = "jAventura";
 		/**
 		 * Para abrir selecPista en modo lectura
 		 */
@@ -371,6 +373,7 @@ public final class Props {
 		public static final String iHost = "Comparte el código QR generado con los jugadores de la Aventura";
 		public static final String iInGame = "Encuentra el código QR asociado a la pista para lanzar el minijuego";
 		public static final String iElige = "Crear: Establece una nueva aventura.\nEditar: cambia alguna aventura ya creada.\nUsar: utiliza una aventura existente.\nUnirse: unete a una aventura y empieza a jugar!";
+		public static final String iEndGame = "ÁHas finalizado la aventura!\nTu puntuaci—n es: ";
 
 		/**
 		 * Para uso en avisos

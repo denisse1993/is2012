@@ -153,16 +153,21 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		// Generar Minijuegos
 		this.mjActual = generaMinijuego();
 		if (this.mjActual == -2) {
-			// TODO
-			// launch.lanzaActivity(Props.Action.ENDGAME);
+			if (Props.Comun.ACTIVIDAD != null) {
+				Props.Comun.ACTIVIDAD.finish();
+				Props.Comun.ACTIVIDAD = null;// resetea
+			}
+			b = new Bundle();
+			b.putSerializable(Props.Comun.JUGADOR, jugador);
+			l.lanzaActivity(Props.Action.ENDGAME, b);
+			this.finish();
 		}
 		start = 10000;
 		period = 10000;
 		currentNotif = 0;
 		// programarTimer();
-		hiloBackground();
+
 		j = new UtilJSON(this);
-		// textFinal = (TextView) findViewById(R.id.tv_fin);
 
 	}
 
@@ -232,7 +237,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 	@Override
 	protected void onResume() {
 		// muereteCabron = false;
-
+		hiloBackground();
 		super.onResume();
 		if (!this.mDbHelper.isOpen()) {
 			this.mDbHelper.open(false);
@@ -444,9 +449,14 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 
 			// this.mjActual = 1;
 			if (this.mjActual == -2) {
-				// TODO
-				textFinal
-						.setText("se acabó el juego para ti, espera a que terminen los demás");
+				if (Props.Comun.ACTIVIDAD != null) {
+					Props.Comun.ACTIVIDAD.finish();
+					Props.Comun.ACTIVIDAD = null;// resetea
+				}
+				b = new Bundle();
+				b.putSerializable(Props.Comun.JUGADOR, jugador);
+				l.lanzaActivity(Props.Action.ENDGAME, b);
+				this.finish();
 			}
 
 		}
