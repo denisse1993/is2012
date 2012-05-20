@@ -709,7 +709,7 @@ public final class Launch {
 			UtilJSON u;
 			Inet inet;
 			Aventura av;
-			Object[] ret = new Object[5];
+			Object[] ret = new Object[6];
 			// tarea a realizar
 			int tarea = (Integer) datos[0];
 			// rellena tarea
@@ -769,6 +769,8 @@ public final class Launch {
 				// hace registro y obtiene return
 				ret[1] = register.conexion.register(nick, pass);
 				ret[2] = register.conexion.getRespuesta();
+				ret[3] = datos[1];
+				ret[4] = datos[2];
 				break;
 			case 2:
 				// Upload Score Arcade
@@ -940,7 +942,10 @@ public final class Launch {
 						// TODO solo registra offline si ha registrado online
 						register.l.lanzaToast(Props.Strings.USER_CREADO_ONLINE);
 						register.creaJugadorLocal();
-						register.lanzaMenuPrincipal();
+						String nick = (String) result[3];
+						String pass = (String) result[4];
+						register.l.lanzaDialogoEsperaLogin(nick, pass);
+						//register.lanzaMenuPrincipal();
 						// else if (!Props.Comun.ONLINE) {
 						// register.l.lanzaToast(Props.Strings.USER_YA_EXISTE);
 						// login.l.lanzaToast(Props.Strings.USER_CREADO);
