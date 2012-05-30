@@ -31,11 +31,6 @@ public class EndGame extends Activity implements OnClickListener, Inet,
 	Jugador jugador;
 	// int superados = 0;Lo metio en aventura
 
-	/**
-	 * DbAdapter para interaccionar con la base de datos
-	 */
-	private DbAdapter mDbHelper;
-
 	private AlertDialog aDactual;
 
 	/**
@@ -56,8 +51,6 @@ public class EndGame extends Activity implements OnClickListener, Inet,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.end_game);
 
-		mDbHelper = new DbAdapter(this);
-		this.mDbHelper.open(false);
 		// Bundle
 		Bundle b = getIntent().getExtras();
 		this.jugador = (Jugador) b.getSerializable(Props.Comun.JUGADOR);
@@ -89,6 +82,8 @@ public class EndGame extends Activity implements OnClickListener, Inet,
 
 		this.l = new Launch(this);
 		this.conexion = new Conexion(this);
+
+		this.l.lanzaDialogoUpdatePquest(this.jugador);
 	}
 
 	@Override
@@ -115,12 +110,6 @@ public class EndGame extends Activity implements OnClickListener, Inet,
 	public void onBackPressed() {
 		this.aDactual = Launch
 				.lanzaConfirmacion("Salir", "¿Desea Salir?", this);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		this.mDbHelper.close();
 	}
 
 	public void onClick(final DialogInterface dialog, final int boton) {

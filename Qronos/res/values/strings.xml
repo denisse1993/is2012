@@ -2,7 +2,7 @@
 <resources>
 
     <string name="inicio">Toque la pantalla para continuar</string>
-    <string name="app_name">Qronos</string>
+    <string name="app_name">YinQRonos</string>
     <string name="arcade">Arcade</string>
     <string name="aventura">Aventura</string>
     <string name="opciones">Opciones</string>
