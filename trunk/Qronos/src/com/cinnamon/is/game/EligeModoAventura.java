@@ -124,8 +124,8 @@ public class EligeModoAventura extends Activity implements Inet,
 
 	@Override
 	public void onClick(final View v) {
-		a = new Aventura(nameQuest, passQuest);//solo para guardar ref
-		//a = new Aventura(null, null);//solo para crearlo y tener ref
+		a = new Aventura(nameQuest, passQuest);// solo para guardar ref
+		// a = new Aventura(null, null);//solo para crearlo y tener ref
 		switch (vClicked = v.getId()) {
 		case R.id.bCrearAventura:
 			// name y pass escritos de la aventura no existe ya en la BD
@@ -152,12 +152,14 @@ public class EligeModoAventura extends Activity implements Inet,
 			// en el onactivityResult lanzoDialogo obtenerJugadorPquest, en
 			// funcion de si es misma partida o no, actualiza o resetea, y lanza
 			// updatePquest o directamente getAventura
-			// q = new UtilQR(this);
-			// q.lanzarQR();
+			q = new UtilQR(this);
+			q.lanzarQR();
 			// TODO a sustituir por lo de arriba, esto para pruebas
-			nameHost = "host";// esto y nameAventura se leera del QR
-			jugador.setDiferenciador(nameQuest + ";" + nameHost);
-			launch.lanzaDialogoEsperaGetJugadorPquest(jugador);
+			/*
+			 * nameHost = "host";// esto y nameAventura se leera del QR
+			 * jugador.setDiferenciador(nameQuest + ";" + nameHost);
+			 * launch.lanzaDialogoEsperaGetJugadorPquest(jugador);
+			 */
 			break;
 		case R.id.ivInfoElige:
 			Launch.lanzaAviso("Información", Props.Strings.iElige, this);

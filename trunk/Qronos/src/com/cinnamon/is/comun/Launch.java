@@ -1191,14 +1191,22 @@ public final class Launch {
 				InGameAventura juego = (InGameAventura) result[3];
 				UtilJSON uj = new UtilJSON(juego);
 				if (conex) {
-					int notif = Integer.parseInt(uj.jsonToString(inet.c()
-							.getRespuesta()));
-					if (current != notif) {
-						juego.setNotif(notif);
-						inet.l()
-								.lanzaAviso(
-										"Un usuario actualizo su puntuacion",
-										"Haz click sobre ranking para informacion actualizada");
+					int notif = 0;
+					try {
+						notif = Integer.parseInt(uj.jsonToString(inet.c()
+								.getRespuesta()));
+					} catch (NumberFormatException e) {
+						// Simplemente la capturamos para que no pete si no es
+						// un numero
+						// de mj valido
+					} finally {
+						if (current != notif) {
+							juego.setNotif(notif);
+							inet.l()
+									.lanzaAviso(
+											"Un usuario actualizo su puntuacion",
+											"Haz click sobre ranking para informacion actualizada");
+						}
 					}
 
 				} else {

@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Reset Partida"
+                android:text="Salir del Juego"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
                 android:textColor="@color/azul_action_bar"
                 android:textSize="11sp" />

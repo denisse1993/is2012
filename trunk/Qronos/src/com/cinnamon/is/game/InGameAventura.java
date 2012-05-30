@@ -149,6 +149,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 		// Conexion
 		this.conexion = new Conexion(this);
 		this.l = new Launch(this);
+		this.q = new UtilQR(this);
 
 		// Generar Minijuegos
 		this.mjActual = generaMinijuego();
@@ -159,6 +160,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			}
 			b = new Bundle();
 			b.putSerializable(Props.Comun.JUGADOR, jugador);
+			finish();
 			l.lanzaActivity(Props.Action.ENDGAME, b);
 			this.finish();
 		}
@@ -289,8 +291,7 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 			Bundle b = new Bundle();
 			b.putSerializable(Props.Comun.AVENTURA, quest);
 			b.putSerializable(Props.Comun.JUGADOR, jugador);
-			b.putString(Props.Comun.RETORNO, Props.Action.INGAMEAVENTURA);
-			Props.Comun.ACTIVIDAD = this;
+			finish();
 			l.lanzaActivity(Props.Action.OPCIONES, b);
 			break;
 		case R.id.iv_info_ingame:
@@ -436,28 +437,30 @@ public class InGameAventura extends Activity implements OnClickListener, Inet,
 				break;
 			}
 			if (superado) {
-				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
-						"Puntuacion obtenida: " + score);
-				this.l.lanzaDialogoUpdatePquest(this.jugador);
-				// superados++;
+
 				this.quest.superados++;
 				this.mjActual = generaMinijuego();
+				if (this.mjActual == -2) {
+					if (Props.Comun.ACTIVIDAD != null) {
+						Props.Comun.ACTIVIDAD.finish();
+						Props.Comun.ACTIVIDAD = null;// resetea
+					}
+					b = new Bundle();
+					b.putSerializable(Props.Comun.JUGADOR, jugador);
+					finish();
+					l.lanzaActivity(Props.Action.ENDGAME, b);
+					this.finish();
+				} else {
+					this.l.lanzaDialogoUpdatePquest(this.jugador);
+					this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_COMPLETO,
+							"Puntuacion obtenida: " + score);
+				}
 			} else {
 				this.l.lanzaAviso(Props.Strings.RESULTADO_MJ_INCOMPLETO,
 						"No has completado el MJ, no se guardara tu puntuacion.");
 			}
 
 			// this.mjActual = 1;
-			if (this.mjActual == -2) {
-				if (Props.Comun.ACTIVIDAD != null) {
-					Props.Comun.ACTIVIDAD.finish();
-					Props.Comun.ACTIVIDAD = null;// resetea
-				}
-				b = new Bundle();
-				b.putSerializable(Props.Comun.JUGADOR, jugador);
-				l.lanzaActivity(Props.Action.ENDGAME, b);
-				this.finish();
-			}
 
 		}
 
